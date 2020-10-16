@@ -1,2 +1,2 @@
-﻿51263
-C:\Users\PC\Downloads\Godot_v3.2.3-stable_mono_win64\Godot_v3.2.3-stable_mono_win64\Godot_v3.2.3-stable_mono_win64.exe
+﻿57191
+G:\Word and Study Software Engineering\Softwares\Godot_v3.2.3-stable_mono_win64\Godot_v3.2.3-stable_mono_win64\Godot_v3.2.3-stable_mono_win64.exe

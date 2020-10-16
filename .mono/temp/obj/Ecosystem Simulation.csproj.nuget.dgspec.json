@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\PC\\Documents\\Ecosystem Simulation\\Ecosystem-Simulation\\Ecosystem Simulation.csproj": {}
+    "G:\\Word and Study Software Engineering\\Softwares\\Ecosystem-Simulation\\Ecosystem Simulation.csproj": {}
   },
   "projects": {
-    "C:\\Users\\PC\\Documents\\Ecosystem Simulation\\Ecosystem-Simulation\\Ecosystem Simulation.csproj": {
+    "G:\\Word and Study Software Engineering\\Softwares\\Ecosystem-Simulation\\Ecosystem Simulation.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\PC\\Documents\\Ecosystem Simulation\\Ecosystem-Simulation\\Ecosystem Simulation.csproj",
+        "projectUniqueName": "G:\\Word and Study Software Engineering\\Softwares\\Ecosystem-Simulation\\Ecosystem Simulation.csproj",
         "projectName": "Ecosystem Simulation",
-        "projectPath": "C:\\Users\\PC\\Documents\\Ecosystem Simulation\\Ecosystem-Simulation\\Ecosystem Simulation.csproj",
-        "packagesPath": "C:\\Users\\PC\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\PC\\Documents\\Ecosystem Simulation\\Ecosystem-Simulation\\.mono\\temp\\obj\\",
+        "projectPath": "G:\\Word and Study Software Engineering\\Softwares\\Ecosystem-Simulation\\Ecosystem Simulation.csproj",
+        "packagesPath": "C:\\Users\\elimo\\.nuget\\packages\\",
+        "outputPath": "G:\\Word and Study Software Engineering\\Softwares\\Ecosystem-Simulation\\.mono\\temp\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\PC\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\elimo\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

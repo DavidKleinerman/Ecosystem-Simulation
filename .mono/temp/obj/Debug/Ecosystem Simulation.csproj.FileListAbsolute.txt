@@ -6,3 +6,11 @@ C:\Users\PC\Documents\Ecosystem Simulation\Ecosystem-Simulation\.mono\temp\obj\D
 C:\Users\PC\Documents\Ecosystem Simulation\Ecosystem-Simulation\.mono\temp\obj\Debug\Ecosystem Simulation.csproj.CoreCompileInputs.cache
 C:\Users\PC\Documents\Ecosystem Simulation\Ecosystem-Simulation\.mono\temp\obj\Debug\Ecosystem Simulation.dll
 C:\Users\PC\Documents\Ecosystem Simulation\Ecosystem-Simulation\.mono\temp\obj\Debug\Ecosystem Simulation.pdb
+G:\Word and Study Software Engineering\Softwares\Ecosystem-Simulation\.mono\temp\bin\Debug\Ecosystem Simulation.dll
+G:\Word and Study Software Engineering\Softwares\Ecosystem-Simulation\.mono\temp\bin\Debug\Ecosystem Simulation.pdb
+G:\Word and Study Software Engineering\Softwares\Ecosystem-Simulation\.mono\temp\obj\Debug\Ecosystem Simulation.csprojAssemblyReference.cache
+G:\Word and Study Software Engineering\Softwares\Ecosystem-Simulation\.mono\temp\obj\Debug\Ecosystem Simulation.AssemblyInfoInputs.cache
+G:\Word and Study Software Engineering\Softwares\Ecosystem-Simulation\.mono\temp\obj\Debug\Ecosystem Simulation.AssemblyInfo.cs
+G:\Word and Study Software Engineering\Softwares\Ecosystem-Simulation\.mono\temp\obj\Debug\Ecosystem Simulation.csproj.CoreCompileInputs.cache
+G:\Word and Study Software Engineering\Softwares\Ecosystem-Simulation\.mono\temp\obj\Debug\Ecosystem Simulation.dll
+G:\Word and Study Software Engineering\Softwares\Ecosystem-Simulation\.mono\temp\obj\Debug\Ecosystem Simulation.pdb
