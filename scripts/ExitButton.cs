@@ -16,7 +16,7 @@ public class ExitButton : Button
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.
 //  public override void _Process(float delta)
 //  {
-//      //hello hello
+//      //hello hello hello
 //  }
 
 	private void _on_ExitButton_pressed()
