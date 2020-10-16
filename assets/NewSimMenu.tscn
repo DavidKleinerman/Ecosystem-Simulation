@@ -1,0 +1,181 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://fonts/decovar/Decovar-VF.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://fonts/hi/Hi.otf" type="DynamicFontData" id=2]
+[ext_resource path="res://scripts/BackToMainMenu.cs" type="Script" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+size = 90
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 40
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 40
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 40
+font_data = ExtResource( 2 )
+
+[sub_resource type="StyleBoxFlat" id=10]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
+
+[sub_resource type="StyleBoxFlat" id=11]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
+
+[sub_resource type="StyleBoxFlat" id=12]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
+border_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="StyleBoxFlat" id=9]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
+
+[sub_resource type="DynamicFont" id=5]
+size = 40
+font_data = ExtResource( 2 )
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_right = 1925.0
+margin_bottom = 1085.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+margin_left = 610.0
+margin_top = 200.0
+margin_right = 1310.0
+margin_bottom = 300.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "NEW SIMULATION"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LaunchSim" type="Button" parent="."]
+margin_left = 710.0
+margin_top = 580.0
+margin_right = 1210.0
+margin_bottom = 640.0
+focus_mode = 0
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0.0784314, 0.156863, 0.8, 1 )
+custom_colors/font_color_pressed = Color( 0.921569, 0.937255, 0.521569, 1 )
+enabled_focus_mode = 0
+text = "Launch Simulation"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BackToMainMenu" type="Button" parent="."]
+margin_left = 760.0
+margin_top = 780.0
+margin_right = 1160.0
+margin_bottom = 840.0
+focus_mode = 0
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_hover = Color( 0.0784314, 0.156863, 0.8, 1 )
+custom_colors/font_color_pressed = Color( 0.921569, 0.937255, 0.521569, 1 )
+enabled_focus_mode = 0
+text = "Main Menu"
+flat = true
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="."]
+margin_left = 600.0
+margin_top = 680.0
+margin_right = 900.0
+margin_bottom = 740.0
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "WROLD SIZE"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ItemList" type="ItemList" parent="."]
+margin_left = 900.0
+margin_top = 680.0
+margin_right = 1320.0
+margin_bottom = 728.0
+custom_styles/selected_focus = SubResource( 10 )
+custom_styles/bg_focus = SubResource( 11 )
+custom_styles/selected = SubResource( 12 )
+custom_styles/bg = SubResource( 9 )
+custom_fonts/font = SubResource( 5 )
+custom_colors/guide_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_selected = Color( 0.0784314, 0.156863, 0.8, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+items = [ "16X16", null, false, "32X32", null, false, "64X64", null, false ]
+max_columns = 3
+icon_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label3" type="Label" parent="."]
+margin_left = 1005.69
+margin_top = 680.0
+margin_right = 1016.69
+margin_bottom = 721.0
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 0.0784314, 0.156863, 0.8, 1 )
+text = "|"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label4" type="Label" parent="."]
+margin_left = 1156.53
+margin_top = 680.0
+margin_right = 1167.53
+margin_bottom = 721.0
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 0.0784314, 0.156863, 0.8, 1 )
+text = "|"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label5" type="Label" parent="."]
+margin_left = 894.487
+margin_top = 680.0
+margin_right = 905.487
+margin_bottom = 721.0
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 0.0784314, 0.156863, 0.8, 1 )
+text = "|"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label6" type="Label" parent="."]
+margin_left = 1295.12
+margin_top = 680.0
+margin_right = 1306.12
+margin_bottom = 721.0
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 0.0784314, 0.156863, 0.8, 1 )
+text = "|"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="BackToMainMenu" to="BackToMainMenu" method="_on_BackToMainMenu_pressed"]

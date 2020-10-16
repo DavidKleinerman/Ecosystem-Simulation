@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://fonts/decovar/Decovar-VF.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://fonts/hi/Hi.otf" type="DynamicFontData" id=2]
 [ext_resource path="res://scripts/ExitButton.cs" type="Script" id=3]
+[ext_resource path="res://scripts/NewSimButton.cs" type="Script" id=4]
 
 [sub_resource type="DynamicFont" id=1]
 size = 90
@@ -64,6 +65,7 @@ custom_colors/font_color_pressed = Color( 0.921569, 0.937255, 0.521569, 1 )
 enabled_focus_mode = 0
 text = "New Simulation"
 flat = true
+script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -119,4 +121,5 @@ script = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+[connection signal="pressed" from="NewSimButton" to="NewSimButton" method="_on_NewSimButton_pressed"]
 [connection signal="pressed" from="ExitButton" to="ExitButton" method="_on_ExitButton_pressed"]
