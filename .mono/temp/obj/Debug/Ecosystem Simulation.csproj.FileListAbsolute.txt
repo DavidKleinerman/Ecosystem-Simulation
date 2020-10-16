@@ -1,0 +1,8 @@
+C:\Users\PC\Documents\Ecosystem Simulation\Ecosystem-Simulation\.mono\temp\bin\Debug\Ecosystem Simulation.dll
+C:\Users\PC\Documents\Ecosystem Simulation\Ecosystem-Simulation\.mono\temp\bin\Debug\Ecosystem Simulation.pdb
+C:\Users\PC\Documents\Ecosystem Simulation\Ecosystem-Simulation\.mono\temp\obj\Debug\Ecosystem Simulation.csprojAssemblyReference.cache
+C:\Users\PC\Documents\Ecosystem Simulation\Ecosystem-Simulation\.mono\temp\obj\Debug\Ecosystem Simulation.AssemblyInfoInputs.cache
+C:\Users\PC\Documents\Ecosystem Simulation\Ecosystem-Simulation\.mono\temp\obj\Debug\Ecosystem Simulation.AssemblyInfo.cs
+C:\Users\PC\Documents\Ecosystem Simulation\Ecosystem-Simulation\.mono\temp\obj\Debug\Ecosystem Simulation.csproj.CoreCompileInputs.cache
+C:\Users\PC\Documents\Ecosystem Simulation\Ecosystem-Simulation\.mono\temp\obj\Debug\Ecosystem Simulation.dll
+C:\Users\PC\Documents\Ecosystem Simulation\Ecosystem-Simulation\.mono\temp\obj\Debug\Ecosystem Simulation.pdb
