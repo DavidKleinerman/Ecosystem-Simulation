@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://fonts/Now FL/Now-Light.otf" type="DynamicFontData" id=1]
 [ext_resource path="res://fonts/hi/Hi.otf" type="DynamicFontData" id=2]
@@ -16,24 +16,20 @@ font_data = ExtResource( 1 )
 size = 40
 font_data = ExtResource( 1 )
 
-[sub_resource type="DynamicFont" id=4]
-size = 40
-font_data = ExtResource( 1 )
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
 
 [sub_resource type="StyleBoxFlat" id=5]
 bg_color = Color( 0.6, 0.6, 0.6, 0 )
 
 [sub_resource type="StyleBoxFlat" id=6]
 bg_color = Color( 0.6, 0.6, 0.6, 0 )
+border_color = Color( 0, 0, 0, 1 )
 
 [sub_resource type="StyleBoxFlat" id=7]
 bg_color = Color( 0.6, 0.6, 0.6, 0 )
-border_color = Color( 0, 0, 0, 1 )
 
-[sub_resource type="StyleBoxFlat" id=8]
-bg_color = Color( 0.6, 0.6, 0.6, 0 )
-
-[sub_resource type="DynamicFont" id=9]
+[sub_resource type="DynamicFont" id=8]
 size = 40
 font_data = ExtResource( 1 )
 
@@ -58,25 +54,8 @@ margin_right = 1360.0
 margin_bottom = 300.0
 custom_fonts/font = SubResource( 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "NEW SIMULATION"
+text = "SETTINGS"
 align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="LaunchSim" type="Button" parent="."]
-margin_left = 710.0
-margin_top = 580.0
-margin_right = 1210.0
-margin_bottom = 640.0
-focus_mode = 0
-custom_fonts/font = SubResource( 2 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_color_hover = Color( 0.0784314, 0.156863, 0.8, 1 )
-custom_colors/font_color_pressed = Color( 0.921569, 0.937255, 0.521569, 1 )
-enabled_focus_mode = 0
-text = "Launch Simulation"
-flat = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -87,7 +66,7 @@ margin_top = 780.0
 margin_right = 1160.0
 margin_bottom = 840.0
 focus_mode = 0
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_hover = Color( 0.0784314, 0.156863, 0.8, 1 )
 custom_colors/font_color_pressed = Color( 0.921569, 0.937255, 0.521569, 1 )
@@ -102,29 +81,29 @@ __meta__ = {
 [node name="Label2" type="Label" parent="."]
 margin_left = 700.0
 margin_top = 680.0
-margin_right = 900.0
+margin_right = 850.0
 margin_bottom = 740.0
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "World Size:"
+text = "Screen:"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="WorldSizePicker" type="ItemList" parent="."]
-margin_left = 900.0
+[node name="ItemList" type="ItemList" parent="."]
+margin_left = 850.0
 margin_top = 680.0
 margin_right = 1250.0
 margin_bottom = 740.0
-custom_styles/selected_focus = SubResource( 5 )
-custom_styles/bg_focus = SubResource( 6 )
-custom_styles/selected = SubResource( 7 )
-custom_styles/bg = SubResource( 8 )
-custom_fonts/font = SubResource( 9 )
+custom_styles/selected_focus = SubResource( 4 )
+custom_styles/bg_focus = SubResource( 5 )
+custom_styles/selected = SubResource( 6 )
+custom_styles/bg = SubResource( 7 )
+custom_fonts/font = SubResource( 8 )
 custom_colors/guide_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_selected = Color( 0.0784314, 0.156863, 0.8, 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-items = [ "16X16", null, false, "32X32", null, false, "64X64", null, false ]
+items = [ "Windowed", null, false, "Fullscreen", null, false ]
 max_columns = 3
 icon_mode = 0
 __meta__ = {
@@ -132,23 +111,11 @@ __meta__ = {
 }
 
 [node name="Label3" type="Label" parent="."]
-margin_left = 1004.69
+margin_left = 1020.69
 margin_top = 680.0
-margin_right = 1015.69
+margin_right = 1031.69
 margin_bottom = 734.0
-custom_fonts/font = SubResource( 4 )
-custom_colors/font_color = Color( 0.0784314, 0.156863, 0.8, 1 )
-text = "|"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label4" type="Label" parent="."]
-margin_left = 1116.53
-margin_top = 680.0
-margin_right = 1127.53
-margin_bottom = 734.0
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0.0784314, 0.156863, 0.8, 1 )
 text = "|"
 __meta__ = {
@@ -156,11 +123,11 @@ __meta__ = {
 }
 
 [node name="Label5" type="Label" parent="."]
-margin_left = 894.487
+margin_left = 841.487
 margin_top = 680.0
-margin_right = 905.487
-margin_bottom = 721.0
-custom_fonts/font = SubResource( 4 )
+margin_right = 852.487
+margin_bottom = 734.0
+custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0.0784314, 0.156863, 0.8, 1 )
 text = "|"
 __meta__ = {
@@ -168,11 +135,11 @@ __meta__ = {
 }
 
 [node name="Label6" type="Label" parent="."]
-margin_left = 1228.12
+margin_left = 1182.12
 margin_top = 680.0
-margin_right = 1239.12
+margin_right = 1193.12
 margin_bottom = 734.0
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0.0784314, 0.156863, 0.8, 1 )
 text = "|"
 __meta__ = {

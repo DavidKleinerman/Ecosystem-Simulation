@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class NewSimButton : Button
+public class SettingButton : Button
 {
 	// Declare member variables here. Examples:
 	// private int a = 2;
@@ -19,11 +19,10 @@ public class NewSimButton : Button
 //      
 //  }
 
-	private void _on_NewSimButton_pressed()
+	private void _on_SettingButton_pressed()
 	{
-		GetTree().ChangeScene("res://assets/NewSimMenu.tscn");
+		GetTree().ChangeScene("res://assets/SettingsMenu.tscn");
 	}
-
 }
 
 

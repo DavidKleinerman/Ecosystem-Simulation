@@ -1,29 +1,30 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
-[ext_resource path="res://fonts/decovar/Decovar-VF.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://fonts/Now FL/Now-Light.otf" type="DynamicFontData" id=1]
 [ext_resource path="res://fonts/hi/Hi.otf" type="DynamicFontData" id=2]
-[ext_resource path="res://scripts/ExitButton.cs" type="Script" id=3]
-[ext_resource path="res://scripts/NewSimButton.cs" type="Script" id=4]
+[ext_resource path="res://scripts/menus code/ExitButton.cs" type="Script" id=3]
+[ext_resource path="res://scripts/menus code/NewSimButton.cs" type="Script" id=4]
+[ext_resource path="res://scripts/menus code/SettingButton.cs" type="Script" id=5]
 
 [sub_resource type="DynamicFont" id=1]
 size = 90
-font_data = ExtResource( 1 )
+font_data = ExtResource( 2 )
 
 [sub_resource type="DynamicFont" id=2]
 size = 40
-font_data = ExtResource( 2 )
+font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=3]
 size = 40
-font_data = ExtResource( 2 )
+font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=4]
 size = 40
-font_data = ExtResource( 2 )
+font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=5]
 size = 40
-font_data = ExtResource( 2 )
+font_data = ExtResource( 1 )
 
 [node name="Control" type="Control"]
 anchor_right = 1.0
@@ -46,7 +47,7 @@ margin_right = 1210.0
 margin_bottom = 300.0
 custom_fonts/font = SubResource( 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "EVOECO"
+text = "EcoEvo"
 align = 1
 __meta__ = {
 "_edit_use_anchors_": false
@@ -100,6 +101,7 @@ custom_colors/font_color_pressed = Color( 0.921569, 0.937255, 0.521569, 1 )
 enabled_focus_mode = 0
 text = "Settings"
 flat = true
+script = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -122,4 +124,5 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 [connection signal="pressed" from="NewSimButton" to="NewSimButton" method="_on_NewSimButton_pressed"]
+[connection signal="pressed" from="SettingButton" to="SettingButton" method="_on_SettingButton_pressed"]
 [connection signal="pressed" from="ExitButton" to="ExitButton" method="_on_ExitButton_pressed"]
