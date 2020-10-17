@@ -103,6 +103,19 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Label9" type="Label" parent="."]
+margin_left = 698.0
+margin_top = 553.0
+margin_right = 984.0
+margin_bottom = 759.0
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Simulation Speed:
+"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="ItemList" type="ItemList" parent="."]
 margin_left = 850.0
 margin_top = 680.0
@@ -117,6 +130,26 @@ custom_colors/guide_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_selected = Color( 0.0784314, 0.156863, 0.8, 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 items = [ "Windowed", null, false, "Fullscreen", null, false ]
+max_columns = 3
+icon_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ItemList3" type="ItemList" parent="."]
+margin_left = 986.112
+margin_top = 551.285
+margin_right = 1433.11
+margin_bottom = 819.285
+custom_styles/selected_focus = SubResource( 4 )
+custom_styles/bg_focus = SubResource( 5 )
+custom_styles/selected = SubResource( 6 )
+custom_styles/bg = SubResource( 7 )
+custom_fonts/font = SubResource( 8 )
+custom_colors/guide_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_selected = Color( 0.0784314, 0.156863, 0.8, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+items = [ "Slow", null, false, "Normal", null, false, "Fast", null, false ]
 max_columns = 3
 icon_mode = 0
 __meta__ = {
@@ -167,9 +200,33 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Label10" type="Label" parent="."]
+margin_left = 1059.0
+margin_top = 550.0
+margin_right = 1170.0
+margin_bottom = 681.0
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 0.0784314, 0.156863, 0.8, 1 )
+text = "|"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Label8" type="Label" parent="."]
 margin_left = 1185.0
 margin_top = 618.0
+margin_right = 1315.0
+margin_bottom = 697.0
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 0.0784314, 0.156863, 0.8, 1 )
+text = "|"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label11" type="Label" parent="."]
+margin_left = 1185.0
+margin_top = 550.0
 margin_right = 1315.0
 margin_bottom = 697.0
 custom_fonts/font = SubResource( 3 )
