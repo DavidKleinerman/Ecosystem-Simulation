@@ -137,10 +137,10 @@ __meta__ = {
 }
 
 [node name="ItemList3" type="ItemList" parent="."]
-margin_left = 986.112
-margin_top = 551.285
-margin_right = 1433.11
-margin_bottom = 819.285
+margin_left = 986.0
+margin_top = 551.0
+margin_right = 1284.0
+margin_bottom = 612.0
 custom_styles/selected_focus = SubResource( 4 )
 custom_styles/bg_focus = SubResource( 5 )
 custom_styles/selected = SubResource( 6 )
@@ -157,9 +157,9 @@ __meta__ = {
 }
 
 [node name="ItemList2" type="ItemList" parent="."]
-margin_left = 987.561
+margin_left = 983.786
 margin_top = 620.0
-margin_right = 1527.56
+margin_right = 1523.79
 margin_bottom = 682.0
 custom_styles/selected_focus = SubResource( 4 )
 custom_styles/bg_focus = SubResource( 5 )
