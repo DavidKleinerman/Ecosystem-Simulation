@@ -16,6 +16,8 @@ public class Simulation : Spatial
 	private int selectedBiome = 4; //forest = 0, grassland = 1, desert = 2, tundra = 3, water = 4
 	private bool isWorldBuilding = true;
 
+	private bool mouseOnList = false;
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -45,7 +47,7 @@ public class Simulation : Spatial
 
 	public override void _PhysicsProcess(float delta)
 	{
-		if (isWorldBuilding)
+		if (isWorldBuilding && !mouseOnList)
 			ReplaceBiome();
 	}
 
@@ -66,7 +68,7 @@ public class Simulation : Spatial
 			if(Input.IsActionPressed("ui_select")){
 				GD.Print(selectedPos);
 				foreach (Node n in GetChildren()){
-					if (n.Name != "Control" && n.Name != "SpeciesHolder"){
+					if (n.Name != "Control" && n.Name != "SpeciesHolder" && n.Name != "DirectionalLight"){
 						Vector3 position = ((Spatial)n).Translation;
 						if (position.x == selectedPos.x && position.y == selectedPos.y && position.z == selectedPos.z){
 							GD.Print("Found it!\n");
@@ -112,7 +114,7 @@ public class Simulation : Spatial
 		Vector2 mousePos = (Vector2) new Vector2(0, 0);
 		mousePos = GetViewport().GetMousePosition();
 		Vector3 rayFrom = ToGlobal(((Camera)GetNode("CameraHolder/Camera")).ProjectRayOrigin(mousePos));
-		Vector3 rayTo = rayFrom + ToGlobal(((Camera)GetNode("CameraHolder/Camera")).ProjectRayNormal(mousePos)) * 1000;
+		Vector3 rayTo = rayFrom + ToGlobal(((Camera)GetNode("CameraHolder/Camera")).ProjectRayNormal(mousePos)) * 10000;
 		PhysicsDirectSpaceState spaceState = GetWorld().DirectSpaceState;
 		var hit = spaceState.IntersectRay(rayFrom, rayTo);
 		Node selection = (Node) new Node();
@@ -120,7 +122,16 @@ public class Simulation : Spatial
 			selection = (Node)hit["collider"];
 		return selection;
 	}
+
+	private void _on_ItemList_mouse_entered()
+	{
+		mouseOnList = true;
+	}
+
+	private void _on_ItemList_mouse_exited()
+	{
+		mouseOnList = false;
+	}
+
+
 }
-
-
-
