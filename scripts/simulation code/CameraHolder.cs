@@ -18,20 +18,20 @@ private const float speed = 900;
 	}
 
 	private void move(float delta){
-		if (Input.IsActionPressed("ui_right") && Input.IsActionPressed("ui_left"))
+		if (Input.IsActionPressed("right") && Input.IsActionPressed("left"))
 			velocity.x = 0;
-		else if (Input.IsActionPressed("ui_right"))
+		else if (Input.IsActionPressed("right"))
 			velocity.x = speed*delta;
-		else if (Input.IsActionPressed("ui_left"))
+		else if (Input.IsActionPressed("left"))
 			velocity.x = -speed*delta;
 		else
 			velocity.x = 0;
 
-		if (Input.IsActionPressed("ui_up") && Input.IsActionPressed("ui_down"))
+		if (Input.IsActionPressed("up") && Input.IsActionPressed("down"))
 			velocity.z = 0;
-		else if (Input.IsActionPressed("ui_up"))
+		else if (Input.IsActionPressed("up"))
 			velocity.z = -speed*delta;
-		else if (Input.IsActionPressed("ui_down"))
+		else if (Input.IsActionPressed("down"))
 			velocity.z = speed*delta;
 		else
 			velocity.z = 0;
