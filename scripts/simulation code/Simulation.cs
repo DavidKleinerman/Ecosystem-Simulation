@@ -11,6 +11,7 @@ public class Simulation : Spatial
 
 	private PackedScene TileSelector = (PackedScene)GD.Load("res://assets/TileSelector.tscn");
 
+	private Vector3 lastValidCameraPos;
 	private Node TileSelectInst;
 
 	private int selectedBiome = 4; //forest = 0, grassland = 1, desert = 2, tundra = 3, water = 4
@@ -41,8 +42,15 @@ public class Simulation : Spatial
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(float delta)
 	{
-		
-
+		Vector3 cameraPos = ToGlobal(((Spatial)GetNode("CameraHolder")).Translation);
+		if (cameraPos.y >= 100)
+			GetNode<CameraHolder>("CameraHolder").SetAtTop(true);
+		else if (cameraPos.y <= 8)
+			GetNode<CameraHolder>("CameraHolder").SetAtBottom(true);
+		else {
+			GetNode<CameraHolder>("CameraHolder").SetAtTop(false);
+			GetNode<CameraHolder>("CameraHolder").SetAtBottom(false);
+		}
 	}
 
 	public override void _PhysicsProcess(float delta)
