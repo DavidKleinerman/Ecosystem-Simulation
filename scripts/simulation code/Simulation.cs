@@ -141,5 +141,14 @@ public class Simulation : Spatial
 		mouseOnList = false;
 	}
 
+	private void _on_StartSimulation_mouse_entered()
+	{
+		mouseOnList = true;
+	}
+
+	private void _on_StartSimulation_mouse_exited()
+	{
+		mouseOnList = false;
+	}
 
 }

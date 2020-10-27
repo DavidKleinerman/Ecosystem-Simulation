@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://scripts/simulation code/Simulation.cs" type="Script" id=1]
 [ext_resource path="res://scripts/simulation code/CameraHolder.cs" type="Script" id=2]
@@ -19,6 +19,15 @@ bg_color = Color( 0.6, 0.6, 0.6, 0.470588 )
 bg_color = Color( 0.6, 0.6, 0.6, 0 )
 
 [sub_resource type="DynamicFont" id=6]
+size = 40
+outline_size = 1
+outline_color = Color( 0, 0, 0, 0.392157 )
+font_data = ExtResource( 3 )
+
+[sub_resource type="StyleBoxFlat" id=7]
+bg_color = Color( 0.6, 0.6, 0.6, 0.470588 )
+
+[sub_resource type="DynamicFont" id=8]
 size = 40
 outline_size = 1
 outline_color = Color( 0, 0, 0, 0.392157 )
@@ -67,12 +76,27 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="StartSimulation" type="Button" parent="Control"]
+margin_left = 1400.0
+margin_top = 920.0
+margin_right = 1800.0
+margin_bottom = 980.0
+focus_mode = 0
+custom_styles/hover = SubResource( 7 )
+custom_fonts/font = SubResource( 8 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 0.921569, 0.937255, 0.521569, 1 )
+text = "Start Simulation"
+flat = true
+
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
-transform = Transform( -0.264563, 0.571773, -0.776584, 0, 0.805277, 0.592899, 0.964368, 0.156859, -0.213047, -20, 160, 0 )
-light_energy = 0.66
+transform = Transform( -0.78339, 0.368505, -0.500504, 0, 0.805277, 0.592899, 0.621531, 0.464471, -0.630846, -20.6487, 160, 0 )
+light_energy = 0.8
 shadow_enabled = true
 shadow_contact = 14.0
 directional_shadow_blend_splits = true
 [connection signal="item_selected" from="Control/ItemList" to="." method="_on_ItemList_item_selected"]
 [connection signal="mouse_entered" from="Control/ItemList" to="." method="_on_ItemList_mouse_entered"]
 [connection signal="mouse_exited" from="Control/ItemList" to="." method="_on_ItemList_mouse_exited"]
+[connection signal="mouse_entered" from="Control/StartSimulation" to="." method="_on_StartSimulation_mouse_entered"]
+[connection signal="mouse_exited" from="Control/StartSimulation" to="." method="_on_StartSimulation_mouse_exited"]
