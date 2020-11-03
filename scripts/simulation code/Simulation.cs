@@ -37,6 +37,13 @@ public class Simulation : Spatial
 		AddChild(TileSelectInst);
 	}
 
+	private void _on_StartSimulation_pressed()
+	{
+		GetTree().CallGroup("GroundTiles", "StartTimer");
+		TileSelectInst.QueueFree();
+		isWorldBuilding = false;
+	}
+
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(float delta)
 	{
@@ -177,3 +184,4 @@ public class Simulation : Spatial
 	}
 
 }
+
