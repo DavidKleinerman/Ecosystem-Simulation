@@ -16,6 +16,12 @@ public class CameraHolder : KinematicBody
 
 	private bool atBottom = false;
 
+	private bool atFront = false;
+	private bool atBack = false;
+
+	private bool atRight = false;
+	private bool atLeft = false;
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -31,25 +37,31 @@ public class CameraHolder : KinematicBody
 
 	private void Move(float delta){
 		velocity.y = 0;
-		if (Input.IsActionPressed("right") && Input.IsActionPressed("left"))
-			velocity.x = 0;
-		else if (Input.IsActionPressed("right"))
-			velocity.x = speed*delta;
-		else if (Input.IsActionPressed("left"))
-			velocity.x = -speed*delta;
-		else
-			velocity.x = 0;
+		LeftRightMove(delta);
+		FrontBackMove(delta);
+		MoveAndSlide(velocity, Vector3.Up);
+	}
 
+	private void FrontBackMove(float delta){
 		if (Input.IsActionPressed("up") && Input.IsActionPressed("down"))
 			velocity.z = 0;
-		else if (Input.IsActionPressed("up"))
+		else if (Input.IsActionPressed("up") && !atFront)
 			velocity.z = -speed*delta;
-		else if (Input.IsActionPressed("down"))
+		else if (Input.IsActionPressed("down") && !atBack)
 			velocity.z = speed*delta;
 		else
 			velocity.z = 0;
+	}
 
-		MoveAndSlide(velocity, Vector3.Up);
+	private void LeftRightMove (float delta){
+		if (Input.IsActionPressed("right") && Input.IsActionPressed("left"))
+			velocity.x = 0;
+		else if (Input.IsActionPressed("right") && !atRight)
+			velocity.x = speed*delta;
+		else if (Input.IsActionPressed("left") && !atLeft)
+			velocity.x = -speed*delta;
+		else
+			velocity.x = 0;
 	}
 
 	private void Zoom(float delta){
@@ -63,11 +75,15 @@ public class CameraHolder : KinematicBody
 			zoomDirection = rayFrom + ((Camera)GetNode("Camera")).ProjectRayNormal(mousePos) * -zoomIntensity;
 		}
 		else {
-			zoomDirection.x = 0;
-			zoomDirection.y = 0;
-			zoomDirection.z = 0;
+			resetZoom();
 		}
-			MoveAndSlide(zoomDirection);
+		MoveAndSlide(zoomDirection);
+	}
+
+	private void resetZoom(){
+		zoomDirection.x = 0;
+		zoomDirection.y = 0;
+		zoomDirection.z = 0;
 	}
 
 
@@ -83,7 +99,42 @@ public class CameraHolder : KinematicBody
 		this.atBottom = atBottom;
 	}
 
-	public bool getBottom(){
+	public bool getAtBottom(){
 		return atBottom;
 	}
+
+	public void SetAtFront(bool atFront){
+		this.atFront = atFront;
+	}
+
+	public bool getAtFront(){
+		return atFront;
+	}
+
+	public void SetAtBack(bool atBack){
+		this.atBack = atBack;
+	}
+
+	public bool getAtBack(){
+		return atBack;
+	}
+
+	public void SetAtRight(bool atRight){
+		this.atRight = atRight;
+	}
+
+	public bool getAtRight(){
+		return atRight;
+	}
+
+	public void SetAtLeft(bool atLeft){
+		this.atLeft = atLeft;
+	}
+
+	public bool getAtLeft(){
+		return atLeft;
+	}
+
+
+
 }
