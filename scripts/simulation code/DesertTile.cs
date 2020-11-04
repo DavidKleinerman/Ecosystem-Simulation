@@ -1,21 +1,20 @@
 using Godot;
 using System;
 
-public class DesertTile : MeshInstance
+public class DesertTile : GroundTile
 {
-	// Declare member variables here. Examples:
-	// private int a = 2;
-	// private string b = "text";
-
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
-		
+	private const float desertGrowRate = 0.57f;
+	protected override void InitializePlantType(){
+		PlantType = (PackedScene)GD.Load("res://assets/Plants/DesertPlant.tscn");
 	}
 
-//  // Called every frame. 'delta' is the elapsed time since the previous frame.
-//  public override void _Process(float delta)
-//  {
-//      
-//  }
+	protected override float TotalGrowRate(){
+		return globalGrowRate * desertGrowRate;
+	}
+	
+	private void _on_Timer_timeout()
+	{
+		GeneratePlant();
+	}
 }
+

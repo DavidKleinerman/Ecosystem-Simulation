@@ -7,7 +7,9 @@
 
 [sub_resource type="BoxShape" id=2]
 
-[node name="ForestTile" type="MeshInstance"]
+[node name="ForestTile" type="MeshInstance" groups=[
+"GroundTiles",
+]]
 transform = Transform( 2, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0 )
 mesh = SubResource( 1 )
 material/0 = ExtResource( 1 )
@@ -19,4 +21,5 @@ script = ExtResource( 2 )
 shape = SubResource( 2 )
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 10.0
+wait_time = 5.0
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
