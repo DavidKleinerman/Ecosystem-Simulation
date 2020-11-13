@@ -116,7 +116,7 @@ public class Simulation : Spatial
 	private void ReplaceBiome(Vector3 selectedPos){
 		//GD.Print(selectedPos);
 		foreach (Node n in GetChildren()){
-			if (n.Name != "Control" && n.Name != "SpeciesHolder" && n.Name != "DirectionalLight"){
+			if (n.Name != "Control" && n.Name != "SpeciesHolder" && n.Name != "DirectionalLight" && n.Name != "NewSpeciesMenu"){
 				Vector3 position = ((Spatial)n).Translation;
 				if (position.x == selectedPos.x && position.y == selectedPos.y && position.z == selectedPos.z){
 					GD.Print("Found it!\n");
