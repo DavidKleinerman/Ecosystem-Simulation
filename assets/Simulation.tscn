@@ -40,15 +40,15 @@ font_data = ExtResource( 3 )
 [sub_resource type="StyleBoxFlat" id=9]
 bg_color = Color( 0.6, 0.6, 0.6, 0 )
 
-[sub_resource type="DynamicFont" id=12]
+[sub_resource type="DynamicFont" id=10]
 size = 25
 font_data = ExtResource( 3 )
 
-[sub_resource type="DynamicFont" id=10]
+[sub_resource type="DynamicFont" id=11]
 size = 40
 font_data = ExtResource( 3 )
 
-[sub_resource type="DynamicFont" id=11]
+[sub_resource type="DynamicFont" id=12]
 size = 20
 font_data = ExtResource( 3 )
 
@@ -166,7 +166,7 @@ __meta__ = {
 }
 
 [node name="VBoxContainer" type="VBoxContainer" parent="NewSpeciesMenu/ScrollContainer"]
-margin_bottom = 1080.0
+margin_bottom = 1560.0
 custom_constants/separation = 60
 
 [node name="SpeciesName" type="Control" parent="NewSpeciesMenu/ScrollContainer/VBoxContainer"]
@@ -177,7 +177,7 @@ margin_bottom = 60.0
 rect_min_size = Vector2( 580, 60 )
 focus_mode = 1
 custom_styles/normal = SubResource( 9 )
-custom_fonts/font = SubResource( 12 )
+custom_fonts/font = SubResource( 10 )
 max_length = 20
 placeholder_text = "Species Name"
 __meta__ = {
@@ -191,7 +191,7 @@ margin_bottom = 60.0
 [node name="Label" type="Label" parent="NewSpeciesMenu/ScrollContainer/VBoxContainer/Traits"]
 margin_left = 20.0
 margin_bottom = 54.0
-custom_fonts/font = SubResource( 10 )
+custom_fonts/font = SubResource( 11 )
 text = "Genetic Traits"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -218,7 +218,7 @@ __meta__ = {
 margin_left = 20.0
 margin_right = 180.0
 margin_bottom = 60.0
-custom_fonts/font = SubResource( 11 )
+custom_fonts/font = SubResource( 12 )
 text = "Trait 1"
 valign = 1
 __meta__ = {
@@ -246,7 +246,7 @@ __meta__ = {
 margin_left = 20.0
 margin_right = 180.0
 margin_bottom = 60.0
-custom_fonts/font = SubResource( 11 )
+custom_fonts/font = SubResource( 12 )
 text = "Trait 2"
 valign = 1
 __meta__ = {
@@ -274,7 +274,7 @@ __meta__ = {
 margin_left = 20.0
 margin_right = 180.0
 margin_bottom = 60.0
-custom_fonts/font = SubResource( 11 )
+custom_fonts/font = SubResource( 12 )
 text = "Trait 3"
 valign = 1
 __meta__ = {
@@ -302,7 +302,7 @@ __meta__ = {
 margin_left = 20.0
 margin_right = 180.0
 margin_bottom = 60.0
-custom_fonts/font = SubResource( 11 )
+custom_fonts/font = SubResource( 12 )
 text = "Trait 4"
 valign = 1
 __meta__ = {
@@ -330,7 +330,7 @@ __meta__ = {
 margin_left = 20.0
 margin_right = 180.0
 margin_bottom = 60.0
-custom_fonts/font = SubResource( 11 )
+custom_fonts/font = SubResource( 12 )
 text = "Trait 5"
 valign = 1
 __meta__ = {
@@ -358,7 +358,7 @@ __meta__ = {
 margin_left = 20.0
 margin_right = 180.0
 margin_bottom = 60.0
-custom_fonts/font = SubResource( 11 )
+custom_fonts/font = SubResource( 12 )
 text = "Trait 5"
 valign = 1
 __meta__ = {
@@ -386,7 +386,7 @@ __meta__ = {
 margin_left = 20.0
 margin_right = 180.0
 margin_bottom = 60.0
-custom_fonts/font = SubResource( 11 )
+custom_fonts/font = SubResource( 12 )
 text = "Trait 5"
 valign = 1
 __meta__ = {
@@ -414,7 +414,7 @@ __meta__ = {
 margin_left = 20.0
 margin_right = 180.0
 margin_bottom = 60.0
-custom_fonts/font = SubResource( 11 )
+custom_fonts/font = SubResource( 12 )
 text = "Trait 5"
 valign = 1
 __meta__ = {
@@ -442,7 +442,7 @@ __meta__ = {
 margin_left = 20.0
 margin_right = 180.0
 margin_bottom = 60.0
-custom_fonts/font = SubResource( 11 )
+custom_fonts/font = SubResource( 12 )
 text = "Trait 5"
 valign = 1
 __meta__ = {
@@ -470,7 +470,7 @@ __meta__ = {
 margin_left = 20.0
 margin_right = 180.0
 margin_bottom = 60.0
-custom_fonts/font = SubResource( 11 )
+custom_fonts/font = SubResource( 12 )
 text = "Trait 5"
 valign = 1
 __meta__ = {
@@ -498,7 +498,7 @@ __meta__ = {
 margin_left = 20.0
 margin_right = 180.0
 margin_bottom = 60.0
-custom_fonts/font = SubResource( 11 )
+custom_fonts/font = SubResource( 12 )
 text = "Trait 5"
 valign = 1
 __meta__ = {
@@ -526,7 +526,7 @@ __meta__ = {
 margin_left = 20.0
 margin_right = 180.0
 margin_bottom = 60.0
-custom_fonts/font = SubResource( 11 )
+custom_fonts/font = SubResource( 12 )
 text = "Trait 5"
 valign = 1
 __meta__ = {
@@ -554,7 +554,7 @@ __meta__ = {
 margin_left = 20.0
 margin_right = 180.0
 margin_bottom = 60.0
-custom_fonts/font = SubResource( 11 )
+custom_fonts/font = SubResource( 12 )
 text = "Trait 5"
 valign = 1
 __meta__ = {
@@ -582,7 +582,7 @@ __meta__ = {
 margin_left = 20.0
 margin_right = 180.0
 margin_bottom = 60.0
-custom_fonts/font = SubResource( 11 )
+custom_fonts/font = SubResource( 12 )
 text = "Trait 5"
 valign = 1
 __meta__ = {
@@ -610,18 +610,50 @@ __meta__ = {
 margin_left = 20.0
 margin_right = 180.0
 margin_bottom = 60.0
-custom_fonts/font = SubResource( 11 )
+custom_fonts/font = SubResource( 12 )
 text = "Trait 5"
 valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Trait16" type="Control" parent="NewSpeciesMenu/ScrollContainer/VBoxContainer"]
+[node name="Representations" type="Control" parent="NewSpeciesMenu/ScrollContainer/VBoxContainer"]
 margin_top = 1020.0
 margin_bottom = 1020.0
 
-[node name="HSlider" type="HSlider" parent="NewSpeciesMenu/ScrollContainer/VBoxContainer/Trait16"]
+[node name="Label" type="Label" parent="NewSpeciesMenu/ScrollContainer/VBoxContainer/Representations"]
+margin_left = 20.0
+margin_bottom = 54.0
+custom_fonts/font = SubResource( 11 )
+text = "3D Representations"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="Control" parent="NewSpeciesMenu/ScrollContainer/VBoxContainer"]
+margin_top = 1080.0
+margin_bottom = 1380.0
+rect_min_size = Vector2( 0, 300 )
+
+[node name="Additional" type="Control" parent="NewSpeciesMenu/ScrollContainer/VBoxContainer"]
+margin_top = 1440.0
+margin_bottom = 1440.0
+
+[node name="Label" type="Label" parent="NewSpeciesMenu/ScrollContainer/VBoxContainer/Additional"]
+margin_left = 20.0
+margin_bottom = 54.0
+custom_fonts/font = SubResource( 11 )
+text = "Additional Adjustments"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Extra setting" type="Control" parent="NewSpeciesMenu/ScrollContainer/VBoxContainer"]
+margin_top = 1500.0
+margin_bottom = 1560.0
+rect_min_size = Vector2( 0, 60 )
+
+[node name="HSlider" type="HSlider" parent="NewSpeciesMenu/ScrollContainer/VBoxContainer/Extra setting"]
 margin_left = 200.0
 margin_right = 450.0
 margin_bottom = 60.0
@@ -634,20 +666,16 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="NewSpeciesMenu/ScrollContainer/VBoxContainer/Trait16"]
+[node name="Label" type="Label" parent="NewSpeciesMenu/ScrollContainer/VBoxContainer/Extra setting"]
 margin_left = 20.0
 margin_right = 180.0
 margin_bottom = 60.0
-custom_fonts/font = SubResource( 11 )
-text = "Trait 5"
+custom_fonts/font = SubResource( 12 )
+text = "Extra Setting"
 valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="Control2" type="Control" parent="NewSpeciesMenu/ScrollContainer/VBoxContainer"]
-margin_top = 1080.0
-margin_bottom = 1080.0
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 transform = Transform( -0.78339, 0.368505, -0.500504, 0, 0.805277, 0.592899, 0.621531, 0.464471, -0.630846, -20.6487, 160, 0 )
@@ -660,10 +688,10 @@ directional_shadow_blend_splits = true
 [connection signal="mouse_exited" from="Control/ItemList" to="." method="_on_ItemList_mouse_exited"]
 [connection signal="mouse_entered" from="Control/StartSimulation" to="." method="_on_StartSimulation_mouse_entered"]
 [connection signal="mouse_exited" from="Control/StartSimulation" to="." method="_on_StartSimulation_mouse_exited"]
+[connection signal="pressed" from="Control/StartSimulation" to="." method="_on_StartSimulation_pressed"]
 [connection signal="pressed" from="Control/StartSimulation" to="Control/StartSimulation" method="_on_StartSimulation_pressed"]
 [connection signal="pressed" from="Control/StartSimulation" to="Control/AddNewSpecies" method="_on_StartSimulation_pressed"]
 [connection signal="pressed" from="Control/StartSimulation" to="Control/ItemList" method="_on_StartSimulation_pressed"]
-[connection signal="pressed" from="Control/StartSimulation" to="." method="_on_StartSimulation_pressed"]
 [connection signal="pressed" from="Control/AddNewSpecies" to="NewSpeciesMenu" method="_on_AddNewSpecies_pressed"]
 [connection signal="pressed" from="Control/AddNewSpecies" to="Control/AddNewSpecies" method="_on_AddNewSpecies_pressed"]
 [connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="NewSpeciesMenu" method="_on_CloseNewSpecies_pressed"]
