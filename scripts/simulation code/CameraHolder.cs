@@ -22,6 +22,8 @@ public class CameraHolder : KinematicBody
 	private bool atRight = false;
 	private bool atLeft = false;
 
+	private bool newSpeciesMenuOpened = false;
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -31,7 +33,12 @@ public class CameraHolder : KinematicBody
 	public override void _Process(float delta)
 	{	
 		Move(delta);
-		Zoom(delta);
+		if (newSpeciesMenuOpened){
+			Vector2 windowSize = GetViewport().Size;
+			Vector2 mousePos = GetViewport().GetMousePosition();
+			if (mousePos.x < windowSize.x - 600)
+				Zoom(delta);
+		} else Zoom(delta);
 		
 	}
 
@@ -86,7 +93,18 @@ public class CameraHolder : KinematicBody
 		zoomDirection.z = 0;
 	}
 
+	private void _on_AddNewSpecies_pressed()
+	{
+		newSpeciesMenuOpened = true;
+	}
 
+
+	private void _on_CloseNewSpecies_pressed()
+	{
+		newSpeciesMenuOpened = false;
+	}
+
+	
 	public void SetAtTop(bool atTop){
 		this.atTop = atTop;
 	}
@@ -134,7 +152,5 @@ public class CameraHolder : KinematicBody
 	public bool getAtLeft(){
 		return atLeft;
 	}
-
-
 
 }
