@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=35 format=2]
 
 [ext_resource path="res://scripts/simulation code/Simulation.cs" type="Script" id=1]
 [ext_resource path="res://scripts/simulation code/CameraHolder.cs" type="Script" id=2]
@@ -9,6 +9,16 @@
 [ext_resource path="res://scripts/sim UI code/new species menu/NewSpeciesMenu.cs" type="Script" id=7]
 [ext_resource path="res://assets/new species menu/Trait.tscn" type="PackedScene" id=8]
 [ext_resource path="res://scripts/sim UI code/new species menu/NewSpeciesContent.cs" type="Script" id=9]
+[ext_resource path="res://fonts/TitleFont.tres" type="DynamicFont" id=10]
+[ext_resource path="res://images/purple.png" type="Texture" id=11]
+[ext_resource path="res://images/blue.png" type="Texture" id=12]
+[ext_resource path="res://images/red.png" type="Texture" id=13]
+[ext_resource path="res://images/yellow.png" type="Texture" id=14]
+[ext_resource path="res://images/green.png" type="Texture" id=15]
+[ext_resource path="res://images/grey.png" type="Texture" id=16]
+[ext_resource path="res://images/lime.png" type="Texture" id=17]
+[ext_resource path="res://images/pink.png" type="Texture" id=18]
+[ext_resource path="res://images/orange.png" type="Texture" id=19]
 
 [sub_resource type="SphereShape" id=1]
 
@@ -46,11 +56,19 @@ bg_color = Color( 0.6, 0.6, 0.6, 0 )
 size = 25
 font_data = ExtResource( 3 )
 
-[sub_resource type="DynamicFont" id=11]
-size = 40
-font_data = ExtResource( 3 )
+[sub_resource type="StyleBoxFlat" id=11]
+bg_color = Color( 1, 1, 1, 1 )
 
-[sub_resource type="DynamicFont" id=12]
+[sub_resource type="StyleBoxFlat" id=12]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
+
+[sub_resource type="StyleBoxFlat" id=13]
+bg_color = Color( 1, 1, 1, 1 )
+
+[sub_resource type="StyleBoxFlat" id=14]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
+
+[sub_resource type="DynamicFont" id=15]
 size = 20
 font_data = ExtResource( 3 )
 
@@ -182,11 +200,14 @@ __meta__ = {
 }
 
 [node name="NewSpeciesContent" type="VBoxContainer" parent="NewSpeciesMenu/NewSpeciesScroll"]
-margin_bottom = 1020.0
+margin_right = 600.0
+margin_bottom = 1180.0
+rect_min_size = Vector2( 600, 0 )
 custom_constants/separation = 60
 script = ExtResource( 9 )
 
 [node name="SpeciesName" type="Control" parent="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent"]
+margin_right = 600.0
 
 [node name="LineEdit" type="LineEdit" parent="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent/SpeciesName"]
 margin_left = 20.0
@@ -203,97 +224,150 @@ __meta__ = {
 
 [node name="Traits" type="Control" parent="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent"]
 margin_top = 60.0
+margin_right = 600.0
 margin_bottom = 60.0
 
 [node name="Label" type="Label" parent="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent/Traits"]
 margin_left = 20.0
-margin_bottom = 54.0
-custom_fonts/font = SubResource( 11 )
+margin_bottom = 60.0
+custom_fonts/font = ExtResource( 10 )
 text = "Genetic Traits"
+valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Speed" parent="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent" instance=ExtResource( 8 )]
 margin_top = 120.0
+margin_right = 600.0
 margin_bottom = 120.0
 
 [node name="Perception" parent="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent" instance=ExtResource( 8 )]
 margin_top = 180.0
+margin_right = 600.0
 margin_bottom = 180.0
 
 [node name="MatingCycle" parent="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent" instance=ExtResource( 8 )]
 margin_top = 240.0
+margin_right = 600.0
 margin_bottom = 240.0
 
 [node name="HungerResistance" parent="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent" instance=ExtResource( 8 )]
 margin_top = 300.0
+margin_right = 600.0
 margin_bottom = 300.0
 
 [node name="ThirstResistance" parent="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent" instance=ExtResource( 8 )]
 margin_top = 360.0
+margin_right = 600.0
 margin_bottom = 360.0
 
 [node name="Gestation" parent="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent" instance=ExtResource( 8 )]
 margin_top = 420.0
+margin_right = 600.0
 margin_bottom = 420.0
 
 [node name="Representations" type="Control" parent="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent"]
 margin_top = 480.0
+margin_right = 600.0
 margin_bottom = 480.0
 
 [node name="Label" type="Label" parent="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent/Representations"]
 margin_left = 20.0
-margin_bottom = 54.0
-custom_fonts/font = SubResource( 11 )
+margin_bottom = 60.0
+custom_fonts/font = ExtResource( 10 )
 text = "3D Representations"
+valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Control" type="Control" parent="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent"]
 margin_top = 540.0
-margin_bottom = 840.0
-rect_min_size = Vector2( 0, 300 )
+margin_right = 600.0
+margin_bottom = 800.0
+rect_min_size = Vector2( 0, 260 )
+
+[node name="ItemList" type="ItemList" parent="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent/Control"]
+anchor_right = 1.0
+margin_left = 20.0
+margin_right = -10.0
+margin_bottom = 320.0
+rect_min_size = Vector2( 0, 320 )
+custom_styles/selected_focus = SubResource( 11 )
+custom_styles/bg_focus = SubResource( 12 )
+custom_styles/selected = SubResource( 13 )
+custom_styles/bg = SubResource( 14 )
+items = [ "", ExtResource( 15 ), false, "", ExtResource( 17 ), false, "", ExtResource( 14 ), false, "", ExtResource( 19 ), false, "", ExtResource( 13 ), false, "", ExtResource( 18 ), false, "", ExtResource( 11 ), false, "", ExtResource( 12 ), false, "", ExtResource( 16 ), false ]
+max_columns = 3
+same_column_width = true
+fixed_column_width = 182
+icon_mode = 0
+fixed_icon_size = Vector2( 160, 100 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Additional" type="Control" parent="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent"]
-margin_top = 900.0
-margin_bottom = 900.0
+margin_top = 860.0
+margin_right = 600.0
+margin_bottom = 860.0
 
 [node name="Label" type="Label" parent="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent/Additional"]
 margin_left = 20.0
-margin_bottom = 54.0
-custom_fonts/font = SubResource( 11 )
+margin_bottom = 60.0
+custom_fonts/font = ExtResource( 10 )
 text = "Additional Adjustments"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Extra setting" type="Control" parent="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent"]
-margin_top = 960.0
-margin_bottom = 1020.0
-rect_min_size = Vector2( 0, 60 )
-
-[node name="HSlider" type="HSlider" parent="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent/Extra setting"]
-margin_left = 200.0
-margin_right = 450.0
-margin_bottom = 60.0
-rect_min_size = Vector2( 250, 60 )
-step = 0.1
-value = 50.0
-scrollable = false
-ticks_on_borders = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="Label" parent="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent/Extra setting"]
-margin_left = 20.0
-margin_right = 180.0
-margin_bottom = 60.0
-custom_fonts/font = SubResource( 12 )
-text = "Extra Setting"
 valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GeneticVariation" parent="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent" instance=ExtResource( 8 )]
+margin_top = 920.0
+margin_right = 600.0
+margin_bottom = 920.0
+
+[node name="PopSizeWarning" type="Control" parent="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent"]
+margin_top = 980.0
+margin_right = 600.0
+margin_bottom = 980.0
+
+[node name="Label" type="Label" parent="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent/PopSizeWarning"]
+margin_left = 20.0
+margin_right = 560.0
+margin_bottom = 60.0
+custom_fonts/font = SubResource( 15 )
+text = "Max population is limited by the size of the habitable area!"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PopulationSize" parent="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent" instance=ExtResource( 8 )]
+margin_top = 1040.0
+margin_right = 600.0
+margin_bottom = 1040.0
+
+[node name="CreateNewSpecies" type="Control" parent="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent"]
+margin_top = 1100.0
+margin_right = 600.0
+margin_bottom = 1180.0
+rect_min_size = Vector2( 0, 80 )
+
+[node name="NewSpeciesButton" type="Button" parent="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent/CreateNewSpecies"]
+anchor_right = 1.0
+margin_left = 20.0
+margin_right = -20.0
+rect_min_size = Vector2( 560, 0 )
+focus_mode = 0
+custom_styles/hover = SubResource( 7 )
+custom_fonts/font = SubResource( 8 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 0.921569, 0.937255, 0.521569, 1 )
+enabled_focus_mode = 0
+text = "Create New Species"
+flat = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -309,13 +383,14 @@ directional_shadow_blend_splits = true
 [connection signal="mouse_exited" from="Control/ItemList" to="." method="_on_ItemList_mouse_exited"]
 [connection signal="mouse_entered" from="Control/StartSimulation" to="." method="_on_StartSimulation_mouse_entered"]
 [connection signal="mouse_exited" from="Control/StartSimulation" to="." method="_on_StartSimulation_mouse_exited"]
+[connection signal="pressed" from="Control/StartSimulation" to="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent" method="_on_StartSimulation_pressed"]
 [connection signal="pressed" from="Control/StartSimulation" to="Control/StartSimulation" method="_on_StartSimulation_pressed"]
-[connection signal="pressed" from="Control/StartSimulation" to="Control/ItemList" method="_on_StartSimulation_pressed"]
 [connection signal="pressed" from="Control/StartSimulation" to="Control/AddNewSpecies" method="_on_StartSimulation_pressed"]
+[connection signal="pressed" from="Control/StartSimulation" to="Control/ItemList" method="_on_StartSimulation_pressed"]
 [connection signal="pressed" from="Control/StartSimulation" to="." method="_on_StartSimulation_pressed"]
-[connection signal="pressed" from="Control/AddNewSpecies" to="Control/AddNewSpecies" method="_on_AddNewSpecies_pressed"]
 [connection signal="pressed" from="Control/AddNewSpecies" to="NewSpeciesMenu" method="_on_AddNewSpecies_pressed"]
+[connection signal="pressed" from="Control/AddNewSpecies" to="Control/AddNewSpecies" method="_on_AddNewSpecies_pressed"]
 [connection signal="pressed" from="Control/AddNewSpecies" to="CameraHolder" method="_on_AddNewSpecies_pressed"]
-[connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="Control/AddNewSpecies" method="_on_CloseNewSpecies_pressed"]
 [connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="NewSpeciesMenu" method="_on_CloseNewSpecies_pressed"]
+[connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="Control/AddNewSpecies" method="_on_CloseNewSpecies_pressed"]
 [connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="CameraHolder" method="_on_CloseNewSpecies_pressed"]
