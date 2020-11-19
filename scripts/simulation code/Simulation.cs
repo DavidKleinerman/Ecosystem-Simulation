@@ -11,6 +11,8 @@ public class Simulation : Spatial
 
 	private PackedScene TileSelector = (PackedScene)GD.Load("res://assets/TileSelector.tscn");
 
+	private PackedScene wallCollider = (PackedScene)GD.Load("res://assets/biomes/WallCollider.tscn");
+
 	private Vector3 lastValidCameraPos;
 	private Node TileSelectInst;
 
@@ -23,15 +25,15 @@ public class Simulation : Spatial
 	public override void _Ready()
 	{
 		Vector3 position = (Vector3) new Vector3(0,0,0);
-		position.x = -64;
-		position.z = -64;
+		position.x = -62;
+		position.z = -62;
 		for(int i = 0; i < 32; i++){
 			for(int j = 0; j < 32; j++){
 				AddTile(WaterTile, position);
 				position.z += 4;
 			}
 			position.x += 4;
-			position.z = -64;
+			position.z = -62;
 		}
 		TileSelectInst = TileSelector.Instance();
 		AddChild(TileSelectInst);
@@ -40,8 +42,26 @@ public class Simulation : Spatial
 	private void _on_StartSimulation_pressed()
 	{
 		GetTree().CallGroup("GroundTiles", "StartTimer");
+		GetTree().CallGroup("WaterTiles", "AddWallCollider");
 		TileSelectInst.QueueFree();
 		isWorldBuilding = false;
+		Vector3 position = (Vector3) new Vector3(0,0,0);
+		position.x = -66;
+		position.z = -66;
+		for (int i = 0; i < 34; i++){
+			if(i == 0 || i == 33){
+				position.x = -66;
+				for (int j = 0; j < 34; j++){
+					AddTile(wallCollider, position);
+					position.x += 4;
+				}
+			}
+			position.x = -66;
+			AddTile(wallCollider, position);
+			position.x = 66;
+			AddTile(wallCollider, position);
+			position.z += 4;
+		}
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

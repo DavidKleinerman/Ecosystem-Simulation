@@ -38,7 +38,13 @@ public class NewSpeciesContent : VBoxContainer
 		GetNode<Label>("PopSizeWarning/Label").MouseFilter = 0;
 
 	}
-}
 
+	private void _on_NewSpeciesButton_pressed()
+	{
+		String speciesName = GetNode<LineEdit>("SpeciesName/LineEdit").Text;
+		int popSize = (int)(GetNode<HSlider>("PopulationSize/HSlider").Value);
+		GetTree().CallGroup("SpeciesHolder", "AddSpecies", speciesName, popSize);
+	}
+}
 
 
