@@ -66,4 +66,8 @@ public class GroundTile : Spatial
         GeneratePlant();
 		GetNode<Timer>("Timer").Start(-1);
 	}
+
+	public void RemoveCollider(){
+		GetNode<StaticBody>("StaticBody").QueueFree();
+	}
 }

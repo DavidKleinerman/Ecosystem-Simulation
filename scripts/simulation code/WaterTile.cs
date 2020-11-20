@@ -13,18 +13,18 @@ public class WaterTile : Spatial
 
 	private bool IsNearGround(){
 		Vector3 position = this.Translation;
-		position.x = this.Translation.x + 4;
+		/*position.x = this.Translation.x + 4;
 		position.z = this.Translation.z + 4;
 		if (CheckCoordinate(position))
-			return true;
+			return true;*/
 		position.x = this.Translation.x + 4;
 		position.z = this.Translation.z;
 		if (CheckCoordinate(position))
 			return true;
-		position.x = this.Translation.x + 4;
+		/*position.x = this.Translation.x + 4;
 		position.z = this.Translation.z - 4;
 		if (CheckCoordinate(position))
-			return true;
+			return true;*/
 		position.x = this.Translation.x;
 		position.z = this.Translation.z + 4;
 		if (CheckCoordinate(position))
@@ -33,18 +33,18 @@ public class WaterTile : Spatial
 		position.z = this.Translation.z - 4;
 		if (CheckCoordinate(position))
 			return true;
-		position.x = this.Translation.x - 4;
+		/*position.x = this.Translation.x - 4;
 		position.z = this.Translation.z + 4;
 		if (CheckCoordinate(position))
-			return true;
+			return true;*/
 		position.x = this.Translation.x - 4;
 		position.z = this.Translation.z;
 		if (CheckCoordinate(position))
 			return true;
-		position.x = this.Translation.x - 4;
+		/*position.x = this.Translation.x - 4;
 		position.z = this.Translation.z - 4;
 		if (CheckCoordinate(position))
-			return true;
+			return true;*/
 		return false;
 	}
 
@@ -56,5 +56,9 @@ public class WaterTile : Spatial
 			}
 		}
 		return false;
+	}
+
+	public void RemoveCollider(){
+		GetNode<StaticBody>("WaterTile/StaticBody").QueueFree();
 	}
 }

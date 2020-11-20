@@ -2,11 +2,11 @@
 
 [ext_resource path="res://materials/tundraPlant_material.tres" type="Material" id=1]
 
-[sub_resource type="CapsuleMesh" id=1]
+[sub_resource type="CubeMesh" id=1]
 
 [node name="PlantMeshHolder" type="Spatial"]
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
-transform = Transform( 0.15, 0, 0, 0, -6.55671e-09, -0.3, 0, 0.15, -1.31134e-08, 0, 0.4, 0 )
+transform = Transform( 0.15, 0, 0, 0, 0.4, 0, 0, 0, 0.15, 0, 0.4, 0 )
 mesh = SubResource( 1 )
 material/0 = ExtResource( 1 )

@@ -11,10 +11,10 @@ public class SpeciesHolder : Spatial
 		
 	}
 
-	public void AddSpecies(String speciesName, int popSize){
+	public void AddSpecies(String speciesName, int popSize, Color color){
 		Node newSpeciesInst = Species.Instance();
 		AddChild(newSpeciesInst);
 		((Species)newSpeciesInst).SetSpeciesName(speciesName);
-		((Species)newSpeciesInst).AddNewCreatures(popSize);
+		((Species)newSpeciesInst).AddNewCreatures(popSize, color);
 	}
 }

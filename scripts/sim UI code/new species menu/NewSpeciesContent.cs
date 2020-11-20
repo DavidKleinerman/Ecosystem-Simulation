@@ -43,7 +43,8 @@ public class NewSpeciesContent : VBoxContainer
 	{
 		String speciesName = GetNode<LineEdit>("SpeciesName/LineEdit").Text;
 		int popSize = (int)(GetNode<HSlider>("PopulationSize/HSlider").Value);
-		GetTree().CallGroup("SpeciesHolder", "AddSpecies", speciesName, popSize);
+		Color speciesColor = GetNode<ColorPicker>("RepresentationsPicker/ColorPicker").Color;
+		GetTree().CallGroup("SpeciesHolder", "AddSpecies", speciesName, popSize, speciesColor);
 	}
 }
 

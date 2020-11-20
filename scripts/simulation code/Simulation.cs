@@ -41,14 +41,20 @@ public class Simulation : Spatial
 
 	private void _on_StartSimulation_pressed()
 	{
+		GetTree().CallGroup("GroundTiles", "RemoveCollider");
 		GetTree().CallGroup("GroundTiles", "StartTimer");
+		GetTree().CallGroup("WaterTiles", "RemoveCollider");
 		GetTree().CallGroup("WaterTiles", "AddWallCollider");
 		TileSelectInst.QueueFree();
 		isWorldBuilding = false;
+		PackedScene floor = (PackedScene)GD.Load("res://assets/biomes/Floor.tscn");
 		Vector3 position = (Vector3) new Vector3(0,0,0);
-		position.x = -66;
-		position.z = -66;
-		for (int i = 0; i < 34; i++){
+		AddTile(floor, position);
+		Node newWall1 = wallCollider.Instance();
+		for(int i = 0; i <= 3; i++){
+			AddWall(i);
+		}
+		/*for (int i = 0; i < 34; i++){
 			if(i == 0 || i == 33){
 				position.x = -66;
 				for (int j = 0; j < 34; j++){
@@ -61,7 +67,39 @@ public class Simulation : Spatial
 			position.x = 66;
 			AddTile(wallCollider, position);
 			position.z += 4;
+		}*/
+	}
+
+	private void AddWall(int side){
+		Vector3 position = (Vector3) new Vector3(0,0,0);
+		Vector3 scale = (Vector3) new Vector3(2,2,2);
+		switch(side){
+			case 0:
+				position.x = -66;
+				position.z = 0;
+				scale.z = 64;
+			break;
+			case 1:
+				position.x = 0;
+				position.z = 66;
+				scale.x = 64;
+			break;
+			case 2:
+				position.x = 0;
+				position.z = -66;
+				scale.x = 64;
+			break;
+			case 3:
+				position.x = 66;
+				position.z = 0;
+				scale.z = 64;
+			break;
 		}
+		
+		Node newWall = wallCollider.Instance();
+		((Spatial)newWall).Scale = scale;
+		((Spatial)newWall).Translation = position;
+		AddChild(newWall);
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
