@@ -40,19 +40,25 @@ public class Creature : KinematicBody
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _PhysicsProcess(float delta)
+	public override void _Process(float delta)
 	{
 		if(!RotateTimer.IsStopped()){
 			RotateY(Mathf.Deg2Rad(RoatationRate * RotateDirection * delta));
 		}
+		
+	}
+
+	public override void _PhysicsProcess(float delta)
+	{
 		if (FallingTimer.IsStopped()){
 			Vector3 frontVector = ToGlobal(GetNode<MeshInstance>("BodyHolder/Head").Translation) - ToGlobal(GetNode<MeshInstance>("BodyHolder/Body").Translation);
 			frontVector.y = 0;
 			velocity = frontVector.Normalized() * Speed * delta;
-		}
-		velocity.y -= GRAV * delta;
+		} else velocity.y -= GRAV * delta;
 		MoveAndSlide(velocity, Vector3.Up);
 	}
+
+	
 
 	public void SetMaterial(SpatialMaterial material){
 		SpeciesMaterial = material;
