@@ -23,18 +23,18 @@ public class NewSpeciesContent : VBoxContainer
 		GD.Print("number of ground tiles is" + numOfGroundTiles);
 		GetNode<SpinBox>("PopulationSize/SpinBox").MinValue = 1;
 		GetNode<HSlider>("PopulationSize/HSlider").MinValue = 1;
-		GetNode<SpinBox>("PopulationSize/SpinBox").MaxValue = numOfGroundTiles*4;
-		GetNode<HSlider>("PopulationSize/HSlider").MaxValue = numOfGroundTiles*4;
+		GetNode<SpinBox>("PopulationSize/SpinBox").MaxValue = numOfGroundTiles;
+		GetNode<HSlider>("PopulationSize/HSlider").MaxValue = numOfGroundTiles;
 		GetNode<SpinBox>("PopulationSize/SpinBox").Step = 1;
 		GetNode<HSlider>("PopulationSize/HSlider").Step = 1;
 		GetNode<SpinBox>("PopulationSize/SpinBox").Rounded = true;
 		GetNode<HSlider>("PopulationSize/HSlider").Rounded = true;
-		GetNode<SpinBox>("PopulationSize/SpinBox").HintTooltip = "Min is " + 1 + ". Max is " + numOfGroundTiles*4 + ".";
-		GetNode<HSlider>("PopulationSize/HSlider").HintTooltip = "Min is " + 1 + ". Max is " + numOfGroundTiles*4 + ".";
-		GetNode<Label>("PopSizeWarning/Label").Text = "Max Population Size = " + numOfGroundTiles*4;
-		GetNode<Label>("PopulationSize/Label").HintTooltip = "Max Population Size = Habitable Area x 4 : \n(" + numOfGroundTiles*4 + " = " + numOfGroundTiles + " x 4)";
+		GetNode<SpinBox>("PopulationSize/SpinBox").HintTooltip = "Min is " + 1 + ". Max is " + numOfGroundTiles;
+		GetNode<HSlider>("PopulationSize/HSlider").HintTooltip = "Min is " + 1 + ". Max is " + numOfGroundTiles;
+		GetNode<Label>("PopSizeWarning/Label").Text = "Max Population Size = " + numOfGroundTiles;
+		GetNode<Label>("PopulationSize/Label").HintTooltip = "Max population is limited by the size of the habitable area (" + numOfGroundTiles + ")";
 		GetNode<Label>("PopulationSize/Label").MouseFilter = 0;
-		GetNode<Label>("PopSizeWarning/Label").HintTooltip = "Max Population Size = Habitable Area x 4 : \n(" + numOfGroundTiles*4 + " = " + numOfGroundTiles + " x 4)";
+		GetNode<Label>("PopSizeWarning/Label").HintTooltip = "Max population is limited by the size of the habitable area (" + numOfGroundTiles + ")";
 		GetNode<Label>("PopSizeWarning/Label").MouseFilter = 0;
 
 	}
