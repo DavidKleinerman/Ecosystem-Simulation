@@ -42,7 +42,6 @@ public class Creature : KinematicBody
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(float delta)
 	{
-
 		if(!RotateTimer.IsStopped()){
 			RotateY(Mathf.Deg2Rad(RoatationRate * RotateDirection * delta));
 		}
@@ -51,7 +50,6 @@ public class Creature : KinematicBody
 
 	public override void _PhysicsProcess(float delta)
 	{
-
 		if (FallingTimer.IsStopped()){
 			Vector3 frontVector = ToGlobal(GetNode<MeshInstance>("BodyHolder/Head").Translation) - ToGlobal(GetNode<MeshInstance>("BodyHolder/Body").Translation);
 			frontVector.y = 0;
