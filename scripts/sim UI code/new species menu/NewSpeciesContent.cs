@@ -41,10 +41,18 @@ public class NewSpeciesContent : VBoxContainer
 
 	private void _on_NewSpeciesButton_pressed()
 	{
+		Godot.Collections.Array InitialValues = (Godot.Collections.Array) new Godot.Collections.Array();
+		InitialValues.Add((float)GetNode<HSlider>("Speed/HSlider").Value);
+		InitialValues.Add((float)GetNode<HSlider>("Perception/HSlider").Value);
+		InitialValues.Add((float)GetNode<HSlider>("MatingCycle/HSlider").Value);
+		InitialValues.Add((float)GetNode<HSlider>("HungerResistance/HSlider").Value);
+		InitialValues.Add((float)GetNode<HSlider>("ThirstResistance/HSlider").Value);
+		InitialValues.Add((float)GetNode<HSlider>("Gestation/HSlider").Value);
+		float geneticVariation = (float)GetNode<HSlider>("GeneticVariation/HSlider").Value;
 		String speciesName = GetNode<LineEdit>("SpeciesName/LineEdit").Text;
 		int popSize = (int)(GetNode<HSlider>("PopulationSize/HSlider").Value);
 		Color speciesColor = GetNode<ColorPicker>("RepresentationsPicker/ColorPicker").Color;
-		GetTree().CallGroup("SpeciesHolder", "AddSpecies", speciesName, popSize, speciesColor);
+		GetTree().CallGroup("SpeciesHolder", "AddSpecies", speciesName, popSize, speciesColor, InitialValues, geneticVariation);
 	}
 }
 

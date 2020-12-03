@@ -18,7 +18,7 @@ public class Species : Spatial
 		this.speciesName = speciesName;
 	}
 
-	public void AddNewCreatures(int popSize, Color color){
+	public void AddNewCreatures(int popSize, Color color, Godot.Collections.Array initialValues, float geneticVariation){
 		SpatialMaterial material = (SpatialMaterial) new SpatialMaterial();
 		material.AlbedoColor = color;
 		SpeciesMaterial = material;
@@ -26,6 +26,9 @@ public class Species : Spatial
 			Vector3 position = ((Spatial)n).Translation;
 			position.y = 5;
 			Node newCreatureInst = Creature.Instance();
+			Genome genome = new Genome();
+			genome.ArtificialCombine(initialValues, geneticVariation);
+			((Creature)newCreatureInst).SetGenome(genome);
 			((Spatial)newCreatureInst).Translation = position;
 			((Creature)newCreatureInst).SetMaterial(material);
 			AddChild(newCreatureInst);

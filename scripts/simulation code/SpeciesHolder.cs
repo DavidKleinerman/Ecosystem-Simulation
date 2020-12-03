@@ -11,10 +11,10 @@ public class SpeciesHolder : Spatial
 		
 	}
 
-	public void AddSpecies(String speciesName, int popSize, Color color){
+	public void AddSpecies(String speciesName, int popSize, Color color, Godot.Collections.Array initialValues, float geneticVariation){
 		Node newSpeciesInst = Species.Instance();
 		AddChild(newSpeciesInst);
 		((Species)newSpeciesInst).SetSpeciesName(speciesName);
-		((Species)newSpeciesInst).AddNewCreatures(popSize, color);
+		((Species)newSpeciesInst).AddNewCreatures(popSize, color, initialValues, geneticVariation);
 	}
 }

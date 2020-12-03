@@ -110,7 +110,7 @@ public class Creature : KinematicBody
 	}
 
 	private void InitializeTraitsFromGenome(){
-		Speed = MyGenome.GetTrait(Genome.GeneticTrait.Speed);
+		Speed = 50 + MyGenome.GetTrait(Genome.GeneticTrait.Speed) * 3.5f;
 		Perception = MyGenome.GetTrait(Genome.GeneticTrait.Perception);
 		HungerResistance = MyGenome.GetTrait(Genome.GeneticTrait.HungerResistance);
 		ThirstResistance = MyGenome.GetTrait(Genome.GeneticTrait.ThirstResistance);
