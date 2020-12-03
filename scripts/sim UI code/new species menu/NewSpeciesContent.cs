@@ -41,19 +41,42 @@ public class NewSpeciesContent : VBoxContainer
 
 	private void _on_NewSpeciesButton_pressed()
 	{
-		Godot.Collections.Array InitialValues = (Godot.Collections.Array) new Godot.Collections.Array();
-		InitialValues.Add((float)GetNode<HSlider>("Speed/HSlider").Value);
-		InitialValues.Add((float)GetNode<HSlider>("Perception/HSlider").Value);
-		InitialValues.Add((float)GetNode<HSlider>("MatingCycle/HSlider").Value);
-		InitialValues.Add((float)GetNode<HSlider>("HungerResistance/HSlider").Value);
-		InitialValues.Add((float)GetNode<HSlider>("ThirstResistance/HSlider").Value);
-		InitialValues.Add((float)GetNode<HSlider>("Gestation/HSlider").Value);
-		float geneticVariation = (float)GetNode<HSlider>("GeneticVariation/HSlider").Value;
-		String speciesName = GetNode<LineEdit>("SpeciesName/LineEdit").Text;
-		int popSize = (int)(GetNode<HSlider>("PopulationSize/HSlider").Value);
-		Color speciesColor = GetNode<ColorPicker>("RepresentationsPicker/ColorPicker").Color;
-		GetTree().CallGroup("SpeciesHolder", "AddSpecies", speciesName, popSize, speciesColor, InitialValues, geneticVariation);
+		Godot.Collections.Array speciesList = GetTree().GetNodesInGroup("Species");
+		Godot.Collections.Array speciesNames = (Godot.Collections.Array) new Godot.Collections.Array();
+		foreach (Node n in speciesList){
+			speciesNames.Add(((Species)n).GetSpeciesName());
+		}
+		if (speciesNames.Contains(GetNode<LineEdit>("SpeciesName/LineEdit").Text)){
+			GetParent<ScrollContainer>().ScrollVertical = 0;
+			GetNode<LineEdit>("SpeciesName/LineEdit").Clear();
+			GetNode<LineEdit>("SpeciesName/LineEdit").GrabFocus();
+			GetNode<LineEdit>("SpeciesName/LineEdit").PlaceholderText = "A Species With This Name Already Exists!";
+			GetNode<LineEdit>("SpeciesName/LineEdit").PlaceholderAlpha = 1;
+		} else {
+			Godot.Collections.Array InitialValues = (Godot.Collections.Array) new Godot.Collections.Array();
+			InitialValues.Add((float)GetNode<HSlider>("Speed/HSlider").Value);
+			InitialValues.Add((float)GetNode<HSlider>("Perception/HSlider").Value);
+			InitialValues.Add((float)GetNode<HSlider>("MatingCycle/HSlider").Value);
+			InitialValues.Add((float)GetNode<HSlider>("HungerResistance/HSlider").Value);
+			InitialValues.Add((float)GetNode<HSlider>("ThirstResistance/HSlider").Value);
+			InitialValues.Add((float)GetNode<HSlider>("Gestation/HSlider").Value);
+			float geneticVariation = (float)GetNode<HSlider>("GeneticVariation/HSlider").Value;
+			String speciesName = GetNode<LineEdit>("SpeciesName/LineEdit").Text;
+			int popSize = (int)(GetNode<HSlider>("PopulationSize/HSlider").Value);
+			Color speciesColor = GetNode<ColorPicker>("RepresentationsPicker/ColorPicker").Color;
+			GetTree().CallGroup("SpeciesHolder", "AddSpecies", speciesName, popSize, speciesColor, InitialValues, geneticVariation);
+			GetNode<LineEdit>("SpeciesName/LineEdit").Clear();
+		}
+	}
+
+	private void _on_LineEdit_gui_input(object @event)
+	{
+		GetNode<LineEdit>("SpeciesName/LineEdit").PlaceholderText = "Species Name";
+		GetNode<LineEdit>("SpeciesName/LineEdit").PlaceholderAlpha = 0.6f;
 	}
 }
+
+
+
 
 

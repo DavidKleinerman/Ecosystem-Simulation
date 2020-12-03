@@ -3,7 +3,7 @@ using System;
 
 public class Species : Spatial
 {
-	public String speciesName;
+	public String SpeciesName;
 
 	private SpatialMaterial SpeciesMaterial;
 	private PackedScene Creature = (PackedScene)GD.Load("res://assets/Creature.tscn");
@@ -15,7 +15,7 @@ public class Species : Spatial
 	}
 
 	public void SetSpeciesName (String speciesName){
-		this.speciesName = speciesName;
+		this.SpeciesName = speciesName;
 	}
 
 	public void AddNewCreatures(int popSize, Color color, Godot.Collections.Array initialValues, float geneticVariation){
@@ -53,5 +53,9 @@ public class Species : Spatial
 			indexList.Remove(indexList[x]);
 		}
 		return shuffledList;
+	}
+
+	public String GetSpeciesName(){
+		return SpeciesName;
 	}
 }
