@@ -14,6 +14,14 @@ public class GroundTile : Spatial
 
 	RandomNumberGenerator rng;
 
+	private PackedScene PlantAreaScene = (PackedScene)GD.Load("res://assets/Plants/PlantArea.tscn");
+
+	private PlantArea PlantArea;
+
+	private Godot.Collections.Array Eaters = (Godot.Collections.Array) new Godot.Collections.Array();
+
+	private Godot.Collections.Array FutureEaters = (Godot.Collections.Array) new Godot.Collections.Array();
+
     public override void _Ready()
 	{
 		rng = (RandomNumberGenerator) new RandomNumberGenerator();
@@ -28,6 +36,35 @@ public class GroundTile : Spatial
 		if(isPlantGrowing)
 			GrowPlant(delta);
 	}
+
+    public override void _PhysicsProcess(float delta)
+    {
+        if (Eaters.Count > 0){
+			Vector3 eatRate = (Vector3) new Vector3(1,1,1);
+			eatRate *= Eaters.Count * 0.5f * delta;
+			if (((Spatial)plant).Scale.x > 0)
+				((Spatial)plant).Scale -= eatRate;
+			else {
+				if (Eaters.Count > 0){
+					foreach (Creature c in Eaters){
+						c.StopEating();
+						RemoveEater(c);
+					}
+				}
+				if (FutureEaters.Count > 0){
+					foreach (Creature c in FutureEaters){
+						c.StopEating();
+						RemoveFutureEater(c);
+					}
+				}
+				plant.QueueFree();
+				PlantArea.QueueFree();
+				hasPlant = false;
+			}
+		}
+    }
+
+    
 
 	private void GrowPlant(float delta){
 		Vector3 currentScale = ((Spatial)plant).Scale;
@@ -47,17 +84,38 @@ public class GroundTile : Spatial
 			float plantChance = rng.RandfRange(0f, 100f);
 			if (plantChance < TotalGrowRate()){
 				plant = PlantType.Instance();
+				PlantArea = (PlantArea)PlantAreaScene.Instance();
+				PlantArea.SetMyTile(this);
 				Vector3 initialScale = (Vector3) new Vector3();
 				Vector3 initialPosition = (Vector3) new Vector3();
 				initialPosition.y = 1;
 				((Spatial)plant).Scale = initialScale;
 				((Spatial)plant).Translation = initialPosition;
 				AddChild(plant);
+				AddChild(PlantArea);
 				isPlantGrowing = true;
 				hasPlant = true;
 				GD.Print("spawned a plant!");
 			}
 		}
+	}
+
+	public void AddEater(Creature eater){
+		Eaters.Add(eater);
+	}
+
+	public void RemoveEater(Creature eater){
+		if (Eaters.Contains(eater))
+			Eaters.Remove(eater);
+	}
+
+	public void AddFutureEater(Creature eater){
+		FutureEaters.Add(eater);
+	}
+
+	public void RemoveFutureEater(Creature eater){
+		if (FutureEaters.Contains(eater))
+			FutureEaters.Remove(eater);
 	}
 
     protected virtual float TotalGrowRate(){ return globalGrowRate;}
