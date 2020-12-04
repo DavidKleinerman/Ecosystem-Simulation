@@ -23,4 +23,8 @@ public class DisplayCharts : Button
 	{
 		this.Visible = true;
 	}
+	private void _on_CloseChartMenu_pressed()
+	{
+		this.Visible = true;
+	}
 }
