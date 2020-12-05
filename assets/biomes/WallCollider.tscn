@@ -9,7 +9,7 @@ flags_transparent = true
 albedo_color = Color( 1, 1, 1, 0.458824 )
 
 [node name="StaticBody" type="StaticBody" groups=[
-"WaterColliders",
+"Water",
 ]]
 transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 1, 0 )
 collision_layer = 3
