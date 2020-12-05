@@ -90,7 +90,7 @@ public class Creature : KinematicBody
 			Energy += 25 * delta;
 			if (Energy > 100){ 
 				Energy = 100;
-				((PlantArea)CurrentTarget).RemoveEater(this);
+				CurrentTarget.GetParent().GetParent<GroundTile>().RemoveEater();
 				SetStateToExploring();
 			}
 		} else if (MyState == State.Drinking){
@@ -100,7 +100,6 @@ public class Creature : KinematicBody
 				SetStateToExploring();
 			} 
 		}
-		
 	}
 
 	public override void _PhysicsProcess(float delta)
@@ -120,20 +119,19 @@ public class Creature : KinematicBody
 
 	private void GoToTarget(Vector3 frontVector, float delta){
 		
-		if (ToGlobal(GetNode<MeshInstance>("BodyHolder/Head").Translation).DistanceTo(CurrentTarget.ToGlobal(CurrentTarget.Translation)) <= 0.5){
+		if (ToGlobal(GetNode<MeshInstance>("BodyHolder/Head").Translation).DistanceTo(CurrentTarget.ToGlobal(CurrentTarget.Translation)) <= 1.2){
 			Velocity = (Vector3) new Vector3();
-			if (MyState == State.GoingToFood) {
+			if (MyState == State.GoingToFood){
 				MyState = State.Eating;
-				((PlantArea)CurrentTarget).RemoveFutureEater(this);
-				((PlantArea)CurrentTarget).AddEater(this);
+				CurrentTarget.GetParent().GetParent<GroundTile>().AddEater();
 			}
-			else if (MyState == State.GoingToWater) MyState = State.Drinking;
+			else if (MyState == State.GoingToWater)
+				MyState = State.Drinking;
 		}
 		else{
 			Vector3 plantLocation = CurrentTarget.ToGlobal(CurrentTarget.Translation);
 			Vector3 myLocation = ToGlobal(GetNode<MeshInstance>("BodyHolder/Head").Translation);
 			Vector3 goToTarget = plantLocation - myLocation;
-			goToTarget.y = 0;
 			Velocity = goToTarget.Normalized();
 			RotateY(frontVector.AngleTo(goToTarget) * delta);
 		}
@@ -183,29 +181,18 @@ public class Creature : KinematicBody
 		ThirstResistance = MyGenome.GetTrait(Genome.GeneticTrait.ThirstResistance) / 50;
 	}
 
-	private void _on_PerceptionRadius_body_entered(object body)
-	{
-		if (body is Node){
-			if(((Node)body).IsInGroup("WaterColliders"))
-				GD.Print("detected water!");
-		}
-	}
-
-	public void StopEating(){
-		SetStateToExploring();
-	}
-
 	private void SetStateToExploring(){
 		MyState = State.ExploringTheEnvironment;
 		CurrentTarget = this;
 	}
+	private void _on_PerceptionRadius_body_entered(object body)
+	{
+
+	}
 
 	private void _on_PerceptionRadius_body_exited(object body)
 	{
-		if (body is Node){
-			if(((Node)body).IsInGroup("WaterColliders"))
-				GD.Print("bye bye water!");
-		}
+		
 	}
 
 	private void _on_PerceptionRadius_area_entered(object area)
@@ -218,7 +205,6 @@ public class Creature : KinematicBody
 				if (weight < 100 - Energy){
 					MyState = State.GoingToFood;
 					CurrentTarget = (Spatial)area;
-					((PlantArea)CurrentTarget).AddFutureEater(this);
 				}
 			}
 		}
@@ -226,9 +212,11 @@ public class Creature : KinematicBody
 
 	private void _on_PerceptionRadius_area_exited(object area)
 	{
-		if (area is Node){
-			if(((Node)area).IsInGroup("Plants"))
-				GD.Print("bye bye plant!");
+		if (area is Spatial){
+			if ((Spatial)area == CurrentTarget && MyState == State.Eating){
+				CurrentTarget.GetParent().GetParent<GroundTile>().RemoveEater();
+				SetStateToExploring();
+			}
 		}
 	}
 	
