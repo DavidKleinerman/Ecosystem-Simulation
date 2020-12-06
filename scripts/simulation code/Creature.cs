@@ -39,6 +39,9 @@ public class Creature : KinematicBody
 
 	private const float BaseEnergyDecay = 3;
 	private const float BaseThirstDecay = 5;
+	private const float MaxGoingToTime = 4;
+
+	private float GoingToTime = 0;
 
 	//*****Traits*****
 	private float Speed;
@@ -91,14 +94,13 @@ public class Creature : KinematicBody
 			if (Energy > 100){ 
 				Energy = 100;
 				CurrentTarget.GetParent().GetParent<GroundTile>().RemoveEater();
-				SetStateToExploring();
+				SetState(State.ExploringTheEnvironment);
 			}
 		} else if (MyState == State.Drinking){
 			Thirst -= 25 * delta;
-			GD.Print("Drinking");
 			if (Thirst < 0){
 				Thirst = 0;
-				SetStateToExploring();
+				SetState(State.ExploringTheEnvironment);
 			} 
 		}
 	}
@@ -118,24 +120,35 @@ public class Creature : KinematicBody
 	}
 
 	private void GoToTarget(Vector3 frontVector, float delta){
-		Vector3 plantLocation = CurrentTarget.ToGlobal(CurrentTarget.Translation);
-		Vector3 myLocation = ToGlobal(GetNode<MeshInstance>("BodyHolder/Head").Translation);
-		Vector3 goToTarget = plantLocation - myLocation;
-		Velocity = goToTarget.Normalized();
-		if (MyState == State.GoingToFood){
-			if (ToGlobal(GetNode<MeshInstance>("BodyHolder/Head").Translation).DistanceTo(CurrentTarget.ToGlobal(CurrentTarget.Translation)) <= 1.2){
-				MyState = State.Eating;
-				CurrentTarget.GetParent().GetParent<GroundTile>().AddEater();
-				Velocity = (Vector3) new Vector3();
-			} else RotateY(frontVector.AngleTo(goToTarget) * delta);
+		GoingToTime += delta;
+		if (GoingToTime < MaxGoingToTime){
+			Vector3 plantLocation = CurrentTarget.ToGlobal(CurrentTarget.Translation);
+			Vector3 myLocation = ToGlobal(GetNode<MeshInstance>("BodyHolder/Head").Translation);
+			Vector3 goToTarget = plantLocation - myLocation;
+			Velocity = goToTarget.Normalized();
+			if (MyState == State.GoingToFood){
+				if (ToGlobal(GetNode<MeshInstance>("BodyHolder/Head").Translation).DistanceTo(CurrentTarget.ToGlobal(CurrentTarget.Translation)) <= 1.2){
+					StopGoingTo(State.Eating);
+					CurrentTarget.GetParent().GetParent<GroundTile>().AddEater();
+				} else RotateY(frontVector.AngleTo(goToTarget) * delta);
+			}
+			else if (MyState == State.GoingToWater){
+				if (ToGlobal(GetNode<MeshInstance>("BodyHolder/Head").Translation).DistanceTo(CurrentTarget.ToGlobal(CurrentTarget.Translation)) <= 3){
+					StopGoingTo(State.Drinking);
+				} else RotateY(frontVector.AngleTo(goToTarget) * delta);
+			}
+		} else {
+			GoingToTime = 0;
+			SetState(State.ExploringTheEnvironment);
 		}
-		else if (MyState == State.GoingToWater){
-			if (ToGlobal(GetNode<MeshInstance>("BodyHolder/Head").Translation).DistanceTo(CurrentTarget.ToGlobal(CurrentTarget.Translation)) <= 3){
-				MyState = State.Drinking;
-				Velocity = (Vector3) new Vector3();
-			} else RotateY(frontVector.AngleTo(goToTarget) * delta);
-		}
-	} 
+	}
+
+	private void StopGoingTo(State state){
+		GoingToTime = 0;
+		SetState(state);
+		if (MyState != State.ExploringTheEnvironment)
+			Velocity = (Vector3) new Vector3();
+	}
 
 	public void SetMaterial(SpatialMaterial material){
 		SpeciesMaterial = material;
@@ -181,9 +194,10 @@ public class Creature : KinematicBody
 		ThirstResistance = MyGenome.GetTrait(Genome.GeneticTrait.ThirstResistance) / 50;
 	}
 
-	private void SetStateToExploring(){
-		MyState = State.ExploringTheEnvironment;
-		CurrentTarget = this;
+	private void SetState(State state){
+		MyState = state;
+		if (MyState == State.ExploringTheEnvironment)
+			CurrentTarget = this;
 	}
 	private void _on_PerceptionRadius_body_entered(object body)
 	{
@@ -225,7 +239,7 @@ public class Creature : KinematicBody
 		if (area is Spatial){
 			if ((Spatial)area == CurrentTarget && MyState == State.Eating){
 				CurrentTarget.GetParent().GetParent<GroundTile>().RemoveEater();
-				SetStateToExploring();
+				SetState(State.ExploringTheEnvironment);
 			}
 		}
 	}
