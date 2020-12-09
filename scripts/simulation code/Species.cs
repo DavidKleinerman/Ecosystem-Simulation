@@ -31,6 +31,7 @@ public class Species : Spatial
 			((Creature)newCreatureInst).SetGenome(genome);
 			((Spatial)newCreatureInst).Translation = position;
 			((Creature)newCreatureInst).SetMaterial(material);
+			((Creature)newCreatureInst).SpeciesName = SpeciesName;
 			AddChild(newCreatureInst);
 			popSize--;
 			if (popSize == 0)

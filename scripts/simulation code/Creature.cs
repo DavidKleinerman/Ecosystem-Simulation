@@ -3,6 +3,7 @@ using System;
 
 public class Creature : KinematicBody
 {
+	public String SpeciesName;
 	private SpatialMaterial SpeciesMaterial;
 	private Vector3 Velocity = (Vector3) new Vector3();
 	private float GRAV = 9.81f;
@@ -24,7 +25,8 @@ public class Creature : KinematicBody
 		GoingToWater,
 		Drinking,
 		GoingToFood,
-		Eating
+		Eating,
+		GoingToPotentialPartner
 	}
 
 	private State MyState;
@@ -37,8 +39,13 @@ public class Creature : KinematicBody
 	}
 	private Gender MyGender;
 
+	private Godot.Collections.Array RejectList = (Godot.Collections.Array) new Godot.Collections.Array();
+	private int TopOfRejectList = 0;
+	private const int RejectListMaxSize = 5;
+
 	private const float BaseEnergyDecay = 3;
 	private const float BaseThirstDecay = 5;
+	private const float BaseReproductiveUrgeGrowth = 2;
 	private const float MaxGoingToTime = 4;
 
 	private float GoingToTime = 0;
@@ -54,6 +61,7 @@ public class Creature : KinematicBody
 	//Resources
 	private float Energy;
 	private float Thirst;
+	private float ReproductiveUrge;
 
 
 	public override void _Ready()
@@ -62,11 +70,17 @@ public class Creature : KinematicBody
 		MyState = State.ExploringTheEnvironment;
 		Energy = 100;
 		Thirst = 0;
+		ReproductiveUrge = 0;
 		RandomNumberGenerator rng = (RandomNumberGenerator) new RandomNumberGenerator();
 		rng.Randomize();
-		if (rng.RandiRange(0, 1) == 0)
+		if (rng.RandiRange(0, 1) == 0){
 			MyGender = Gender.Female;
-		else MyGender = Gender.Male;
+			GetNode<MeshInstance>("BodyHolder/Head").SetSurfaceMaterial(0, GD.Load<SpatialMaterial>("res://materials/PinkCreature_material.tres"));
+		}
+		else {
+			MyGender = Gender.Male;
+			GetNode<MeshInstance>("BodyHolder/Head").SetSurfaceMaterial(0, GD.Load<SpatialMaterial>("res://materials/BlueCreature_material.tres"));
+		}
 		RotateTimer = GetNode<Timer>("RotateTimer");
 		StraightTimer = GetNode<Timer>("StraightTimer");
 		FallingTimer = GetNode<Timer>("FallingTimer");
@@ -82,6 +96,8 @@ public class Creature : KinematicBody
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(float delta)
 	{
+		if (ReproductiveUrge < 100) ReproductiveUrge += ((BaseReproductiveUrgeGrowth + MatingCycle * delta));
+		else ReproductiveUrge = 100;
 		if (MyState != State.Eating) Energy -= ((BaseEnergyDecay - HungerResistance) * delta);
 		if (MyState != State.Drinking) Thirst += ((BaseThirstDecay - ThirstResistance) * delta);
 		if (Energy < 0) Energy = 0;
@@ -112,7 +128,8 @@ public class Creature : KinematicBody
 			frontVector.y = 0;
 			if(MyState == State.ExploringTheEnvironment)
 				Velocity = frontVector.Normalized();
-			else if (MyState == State.GoingToWater || MyState == State.GoingToFood) GoToTarget(frontVector, delta);
+			else if (MyState == State.GoingToWater || MyState == State.GoingToFood || MyState == State.GoingToPotentialPartner)
+				GoToTarget(frontVector, delta);
 			Velocity *= Speed * delta;
 			Velocity.y = -GRAV * 10 * delta;
 		} else Velocity.y -= GRAV * delta;
@@ -122,25 +139,47 @@ public class Creature : KinematicBody
 	private void GoToTarget(Vector3 frontVector, float delta){
 		GoingToTime += delta;
 		if (GoingToTime < MaxGoingToTime){
-			Vector3 plantLocation = CurrentTarget.ToGlobal(CurrentTarget.Translation);
-			Vector3 myLocation = ToGlobal(GetNode<MeshInstance>("BodyHolder/Head").Translation);
-			Vector3 goToTarget = plantLocation - myLocation;
+			Vector3 targetLocation = CurrentTarget.ToGlobal(CurrentTarget.Translation);
+			Vector3 myLocation = ToGlobal(GetNode<Spatial>("PerceptionRadius").Translation);
+			Vector3 goToTarget = targetLocation - myLocation;
 			Velocity = goToTarget.Normalized();
+			targetLocation.y = 0;
 			if (MyState == State.GoingToFood){
 				if (ToGlobal(GetNode<MeshInstance>("BodyHolder/Head").Translation).DistanceTo(CurrentTarget.ToGlobal(CurrentTarget.Translation)) <= 1.2){
 					StopGoingTo(State.Eating);
 					CurrentTarget.GetParent().GetParent<GroundTile>().AddEater();
-				} else RotateY(frontVector.AngleTo(goToTarget) * delta);
+				} else RotateToTarget(targetLocation);
 			}
 			else if (MyState == State.GoingToWater){
 				if (ToGlobal(GetNode<MeshInstance>("BodyHolder/Head").Translation).DistanceTo(CurrentTarget.ToGlobal(CurrentTarget.Translation)) <= 3){
 					StopGoingTo(State.Drinking);
-				} else RotateY(frontVector.AngleTo(goToTarget) * delta);
+				} else RotateToTarget(targetLocation);
+			}
+			else if (MyState == State.GoingToPotentialPartner){
+				if (ToGlobal(GetNode<MeshInstance>("BodyHolder/Head").Translation).DistanceTo(CurrentTarget.ToGlobal(CurrentTarget.Translation)) <= 2){
+					//change all of this later
+					if (RejectList.Count < RejectListMaxSize)
+						RejectList.Add(CurrentTarget.GetParent<Creature>());
+					else RejectList.Insert(TopOfRejectList, CurrentTarget.GetParent<Creature>());
+					TopOfRejectList++;
+					if (TopOfRejectList >= RejectListMaxSize)
+						TopOfRejectList = 0;
+					GD.Print("Reached Potential Mate! ", MyGender, ", ", CurrentTarget.GetParent<Creature>().GetGender());
+					SetState(State.ExploringTheEnvironment); //change this later
+				} else RotateToTarget(targetLocation);
 			}
 		} else {
 			GoingToTime = 0;
 			SetState(State.ExploringTheEnvironment);
 		}
+	}
+
+	private void RotateToTarget(Vector3 targetLocation){
+		LookAt(targetLocation, Vector3.Up);
+		float myRoatation = Rotation.y;
+		Vector3 newRotation = (Vector3) new Vector3(0, myRoatation, 0);
+		Rotation = newRotation;
+
 	}
 
 	private void StopGoingTo(State state){
@@ -153,7 +192,6 @@ public class Creature : KinematicBody
 	public void SetMaterial(SpatialMaterial material){
 		SpeciesMaterial = material;
 		GetNode<MeshInstance>("BodyHolder/Body").SetSurfaceMaterial(0, material);
-		GetNode<MeshInstance>("BodyHolder/Head").SetSurfaceMaterial(0, material);
 	}
 
 	private void _on_RotateTimer_timeout()
@@ -190,6 +228,7 @@ public class Creature : KinematicBody
 		Speed = 50 + MyGenome.GetTrait(Genome.GeneticTrait.Speed) * 3.5f;
 		Perception = MyGenome.GetTrait(Genome.GeneticTrait.Perception) / 20;
 		GetNode<Area>("PerceptionRadius").Scale = (Vector3) new Vector3(Perception, 0.2f, Perception);
+		MatingCycle = MyGenome.GetTrait(Genome.GeneticTrait.MatingCycle) / 50;
 		HungerResistance = MyGenome.GetTrait(Genome.GeneticTrait.HungerResistance) / 50;
 		ThirstResistance = MyGenome.GetTrait(Genome.GeneticTrait.ThirstResistance) / 50;
 	}
@@ -201,17 +240,33 @@ public class Creature : KinematicBody
 	}
 	private void _on_PerceptionRadius_body_entered(object body)
 	{
-		if(body is Node){
-			if(((Node)body).IsInGroup("Water") && MyState == State.ExploringTheEnvironment){
-				RandomNumberGenerator rng = (RandomNumberGenerator) new RandomNumberGenerator();
-				rng.Randomize();
-				float weight = rng.RandfRange(0,100);
-				if (weight < Thirst){
+		if(body is Node && MyState == State.ExploringTheEnvironment){
+			if(((Node)body).IsInGroup("Water")){
+				if (Weight() < Thirst){
 					MyState = State.GoingToWater;
 					CurrentTarget = (Spatial)body;
 				}
 			}
 		}
+	}
+
+	private float Weight(){
+		RandomNumberGenerator rng = (RandomNumberGenerator) new RandomNumberGenerator();
+		rng.Randomize();
+		return rng.RandfRange(0,100);
+	}
+
+	public bool CheckPotentialPartner(Creature creature){
+		GD.Print("Got an interested potential partner!");
+		if (MyState != State.ExploringTheEnvironment) return false;
+		else if (!RejectList.Contains(creature)){
+			if (Weight() < ReproductiveUrge){
+				MyState = State.GoingToPotentialPartner;
+				CurrentTarget = creature.GetNode<Spatial>("PerceptionRadius");
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private void _on_PerceptionRadius_body_exited(object body)
@@ -223,12 +278,18 @@ public class Creature : KinematicBody
 	{
 		if (area is Node){
 			if(((Node)area).IsInGroup("Plants") && MyState == State.ExploringTheEnvironment){
-				RandomNumberGenerator rng = (RandomNumberGenerator) new RandomNumberGenerator();
-				rng.Randomize();
-				float weight = rng.RandfRange(0,100);
-				if (weight < 100 - Energy){
+				if (Weight() < 100 - Energy){
 					MyState = State.GoingToFood;
 					CurrentTarget = (Spatial)area;
+				}
+			} else if (((Node)area).GetParent().IsInGroup("Creatures")){
+				if (((Node)area).GetParent<Creature>().GetGender() != MyGender && ((Node)area).GetParent<Creature>().SpeciesName == SpeciesName && !RejectList.Contains(((Node)area).GetParent<Creature>())){
+					if (Weight() < ReproductiveUrge){
+						if (CheckPotentialPartner(this)){
+							MyState = State.GoingToPotentialPartner;
+							CurrentTarget = ((Spatial)area);
+						}
+					}
 				}
 			}
 		}
@@ -242,6 +303,10 @@ public class Creature : KinematicBody
 				SetState(State.ExploringTheEnvironment);
 			}
 		}
+	}
+
+	public Creature.Gender GetGender(){
+		return MyGender;
 	}
 	
 }
