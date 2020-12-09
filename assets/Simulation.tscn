@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=2]
+[gd_scene load_steps=74 format=2]
 
 [ext_resource path="res://scripts/simulation code/Simulation.cs" type="Script" id=1]
 [ext_resource path="res://scripts/simulation code/CameraHolder.cs" type="Script" id=2]
@@ -132,6 +132,137 @@ outline_color = Color( 1, 0, 0.945098, 1 )
 font_data = ExtResource( 3 )
 
 [sub_resource type="DynamicFont" id=28]
+size = 25
+outline_size = 1
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=29]
+size = 25
+outline_size = 1
+outline_color = Color( 0.0588235, 0.643137, 0, 1 )
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=30]
+size = 25
+outline_size = 1
+outline_color = Color( 0.0352941, 0, 0.517647, 1 )
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=31]
+size = 25
+outline_size = 1
+outline_color = Color( 0.470588, 0, 0.14902, 1 )
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=32]
+size = 25
+outline_size = 1
+outline_color = Color( 0.329412, 0, 0.156863, 1 )
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=33]
+size = 25
+outline_size = 1
+outline_color = Color( 0, 0.533333, 0.509804, 1 )
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=34]
+size = 25
+outline_size = 1
+outline_color = Color( 0.458824, 0, 0.215686, 1 )
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=35]
+size = 25
+outline_size = 1
+outline_color = Color( 0.513726, 0, 1, 1 )
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=36]
+size = 25
+outline_size = 1
+outline_color = Color( 0.509804, 0.509804, 0.509804, 1 )
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=37]
+size = 25
+outline_size = 1
+outline_color = Color( 1, 0.623529, 0.623529, 1 )
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=38]
+size = 25
+outline_size = 1
+outline_color = Color( 0.207843, 0.207843, 0.207843, 1 )
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=39]
+size = 25
+outline_size = 1
+outline_color = Color( 0.52549, 0.713726, 0.501961, 1 )
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=40]
+size = 25
+outline_size = 1
+outline_color = Color( 0.4, 0.203922, 0.203922, 1 )
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=41]
+size = 25
+outline_size = 1
+outline_color = Color( 0.329412, 0.321569, 0.0745098, 1 )
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=42]
+size = 25
+outline_size = 1
+outline_color = Color( 0.823529, 0.835294, 0.584314, 1 )
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=43]
+size = 25
+outline_size = 1
+outline_color = Color( 0.266667, 0.431373, 0.482353, 1 )
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=44]
+size = 25
+outline_size = 1
+outline_color = Color( 0.74902, 0.631373, 0.768627, 1 )
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=45]
+size = 25
+outline_size = 1
+outline_color = Color( 1, 0.447059, 0, 1 )
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=46]
+size = 25
+outline_size = 1
+outline_color = Color( 1, 0.976471, 0, 1 )
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=47]
+size = 25
+outline_size = 1
+outline_color = Color( 1, 0.788235, 0.960784, 1 )
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=48]
+size = 25
+outline_size = 1
+outline_color = Color( 0.47451, 0.337255, 0.0588235, 1 )
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=49]
+size = 25
+outline_size = 1
+outline_color = Color( 0.960784, 0.976471, 0.505882, 1 )
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=50]
 size = 25
 outline_size = 1
 font_data = ExtResource( 3 )
@@ -395,10 +526,10 @@ __meta__ = {
 }
 
 [node name="ColorPicker" type="ColorPicker" parent="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent/RepresentationsPicker"]
-margin_left = 40.0
-margin_top = 20.0
-margin_right = 540.0
-margin_bottom = 440.0
+margin_left = 52.0
+margin_top = 32.0
+margin_right = 552.0
+margin_bottom = 452.0
 rect_min_size = Vector2( 500, 420 )
 edit_alpha = false
 presets_enabled = false
@@ -488,8 +619,10 @@ __meta__ = {
 
 [node name="ChartsBackground" type="ColorRect" parent="DisplayChartsMenu"]
 anchor_bottom = 1.0
-margin_right = 1500.0
-margin_bottom = -30.0
+margin_left = -18.8546
+margin_top = 1.52423
+margin_right = 1481.15
+margin_bottom = -28.4757
 color = Color( 0, 0, 0, 0.627451 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -535,6 +668,7 @@ margin_bottom = 120.188
 custom_fonts/font = SubResource( 23 )
 custom_colors/font_color_hover_pressed = Color( 0, 0, 0, 1 )
 custom_colors/font_color = Color( 0.8, 0.129412, 0.129412, 1 )
+custom_colors/font_color_pressed = Color( 0.8, 0.129412, 0.129412, 1 )
 text = "Speed"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -546,7 +680,9 @@ margin_top = 76.1031
 margin_right = 587.761
 margin_bottom = 118.103
 custom_fonts/font = SubResource( 24 )
+custom_colors/font_color_hover_pressed = Color( 0, 0, 0, 1 )
 custom_colors/font_color = Color( 0, 0.964706, 1, 1 )
+custom_colors/font_color_pressed = Color( 0, 0.960784, 1, 1 )
 text = "Perception"
 flat = true
 __meta__ = {
@@ -560,6 +696,7 @@ margin_right = 838.589
 margin_bottom = 117.393
 custom_fonts/font = SubResource( 25 )
 custom_colors/font_color = Color( 0.360784, 1, 0, 1 )
+custom_colors/font_color_pressed = Color( 0.360784, 1, 0, 1 )
 text = "Mating Cycle"
 flat = true
 
@@ -570,6 +707,7 @@ margin_right = 360.127
 margin_bottom = 157.9
 custom_fonts/font = SubResource( 26 )
 custom_colors/font_color = Color( 1, 0.670588, 0, 1 )
+custom_colors/font_color_pressed = Color( 1, 0.670588, 0, 1 )
 text = "Gestation"
 flat = true
 
@@ -580,8 +718,12 @@ margin_right = 587.818
 margin_bottom = 155.007
 custom_fonts/font = SubResource( 27 )
 custom_colors/font_color = Color( 0.996078, 0, 0.945098, 1 )
+custom_colors/font_color_pressed = Color( 0.996078, 0, 0.945098, 1 )
 text = "Thirst Resistance"
 flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="HungerResistanceCheckButton" type="CheckButton" parent="DisplayChartsMenu"]
 margin_left = 574.957
@@ -592,28 +734,290 @@ custom_fonts/font = SubResource( 28 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "Hunger Resistance"
 flat = true
+
+[node name="PlantBiomassCheckButton" type="CheckButton" parent="DisplayChartsMenu"]
+margin_left = 668.81
+margin_top = 274.289
+margin_right = 879.81
+margin_bottom = 316.289
+custom_fonts/font = SubResource( 29 )
+custom_colors/font_color = Color( 0, 0.52549, 0.0313726, 1 )
+custom_colors/font_color_pressed = Color( 0, 0.52549, 0.0313726, 1 )
+text = "PlantBiomass"
+flat = true
+align = 2
+
+[node name="IntelligenceCheckButton" type="CheckButton" parent="DisplayChartsMenu"]
+margin_left = 855.15
+margin_top = 110.433
+margin_right = 1049.15
+margin_bottom = 152.433
+custom_fonts/font = SubResource( 30 )
+custom_colors/font_color = Color( 0, 0.141176, 1, 1 )
+custom_colors/font_color_pressed = Color( 0, 0.141176, 1, 1 )
+text = "Intelligence"
+flat = true
+
+[node name="LitterSizeCheckButton" type="CheckButton" parent="DisplayChartsMenu"]
+margin_left = 1072.6
+margin_top = 74.2097
+margin_right = 1248.6
+margin_bottom = 116.21
+custom_fonts/font = SubResource( 31 )
+custom_colors/font_color = Color( 0.623529, 0, 0.0784314, 1 )
+custom_colors/font_color_pressed = Color( 0.623529, 0, 0.0784314, 1 )
+text = "Litter Size"
+flat = true
+
+[node name="MemoryCheckButton" type="CheckButton" parent="DisplayChartsMenu"]
+margin_left = 199.623
+margin_top = 153.831
+margin_right = 359.623
+margin_bottom = 195.831
+custom_fonts/font = SubResource( 32 )
+custom_colors/font_color = Color( 0.458824, 0.0509804, 0.533333, 1 )
+custom_colors/font_color_pressed = Color( 0.458824, 0.0509804, 0.690196, 1 )
+text = "Memory"
+flat = true
+
+[node name="ColdResistanceCheckButton" type="CheckButton" parent="DisplayChartsMenu"]
+margin_left = 347.644
+margin_top = 151.863
+margin_right = 587.644
+margin_bottom = 193.863
+custom_fonts/font = SubResource( 33 )
+custom_colors/font_color = Color( 0, 1, 0.882353, 1 )
+custom_colors/font_color_pressed = Color( 0, 1, 0.882353, 1 )
+text = "Cold Resistance"
+flat = true
+
+[node name="HeatResistanceCheckButton" type="CheckButton" parent="DisplayChartsMenu"]
+margin_left = 596.932
+margin_top = 149.79
+margin_right = 838.932
+margin_bottom = 191.79
+custom_fonts/font = SubResource( 34 )
+custom_colors/font_color = Color( 0.552941, 0, 0.247059, 1 )
+custom_colors/font_color_pressed = Color( 0.552941, 0, 0.247059, 1 )
+text = "Heat Resistance"
+flat = true
+
+[node name="LongevityCheckButton" type="CheckButton" parent="DisplayChartsMenu"]
+margin_left = 1076.84
+margin_top = 109.078
+margin_right = 1248.84
+margin_bottom = 151.078
+custom_fonts/font = SubResource( 35 )
+custom_colors/font_color = Color( 0.937255, 0, 1, 1 )
+custom_colors/font_color_pressed = Color( 0.937255, 0, 1, 1 )
+text = "Longevity"
+flat = true
+
+[node name="HealingCheckButton" type="CheckButton" parent="DisplayChartsMenu"]
+margin_left = 891.566
+margin_top = 148.704
+margin_right = 1048.57
+margin_bottom = 190.704
+custom_fonts/font = SubResource( 36 )
+custom_colors/font_color = Color( 0.419608, 0.419608, 0.419608, 1 )
+custom_colors/font_color_pressed = Color( 0.419608, 0.419608, 0.419608, 1 )
+text = "Healing"
+flat = true
+
+[node name="StrengthCheckButton" type="CheckButton" parent="DisplayChartsMenu"]
+margin_left = 1086.6
+margin_top = 146.67
+margin_right = 1248.6
+margin_bottom = 188.67
+custom_fonts/font = SubResource( 37 )
+custom_colors/font_color = Color( 1, 0.596078, 0.596078, 1 )
+custom_colors/font_color_pressed = Color( 1, 0.596078, 0.596078, 1 )
+text = "Strength"
+flat = true
+
+[node name="DigestionCheckButton" type="CheckButton" parent="DisplayChartsMenu"]
+margin_left = 189.278
+margin_top = 192.123
+margin_right = 360.278
+margin_bottom = 234.123
+custom_fonts/font = SubResource( 38 )
+custom_colors/font_color = Color( 0.211765, 0.211765, 0.211765, 1 )
+custom_colors/font_color_pressed = Color( 0.211765, 0.211765, 0.211765, 1 )
+text = "Digestion"
+flat = true
+
+[node name="StaminaCheckButton" type="CheckButton" parent="DisplayChartsMenu"]
+margin_left = 427.875
+margin_top = 190.454
+margin_right = 587.875
+margin_bottom = 232.454
+custom_fonts/font = SubResource( 39 )
+custom_colors/font_color = Color( 0.52549, 0.713726, 0.501961, 1 )
+custom_colors/font_color_pressed = Color( 0.52549, 0.713726, 0.501961, 1 )
+text = "Stamina"
+flat = true
+
+[node name="SleepCycleCheckButton" type="CheckButton" parent="DisplayChartsMenu"]
+margin_left = 640.237
+margin_top = 187.554
+margin_right = 839.237
+margin_bottom = 229.554
+custom_fonts/font = SubResource( 40 )
+custom_colors/font_color = Color( 0.4, 0.203922, 0.203922, 1 )
+custom_colors/font_color_pressed = Color( 0.4, 0.203922, 0.203922, 1 )
+text = "Sleep Cycle"
+flat = true
+
+[node name="MutationRateCheckButton" type="CheckButton" parent="DisplayChartsMenu"]
+margin_left = 828.729
+margin_top = 75.2627
+margin_right = 1048.73
+margin_bottom = 117.263
+custom_fonts/font = SubResource( 41 )
+custom_colors/font_color = Color( 0.329412, 0.321569, 0.0745098, 1 )
+custom_colors/font_color_pressed = Color( 0.329412, 0.321569, 0.0745098, 1 )
+text = "Mutation Rate"
+flat = true
+
+[node name="PopulationSizeCheckButton" type="CheckButton" parent="DisplayChartsMenu"]
+margin_left = 1051.4
+margin_top = 266.506
+margin_right = 1282.4
+margin_bottom = 308.506
+custom_fonts/font = SubResource( 42 )
+custom_colors/font_color = Color( 0.823529, 0.835294, 0.584314, 1 )
+custom_colors/font_color_pressed = Color( 0.823529, 0.835294, 0.584314, 1 )
+text = "Population Size"
+flat = true
+
+[node name="DieteticCompositionCheckButton" type="CheckButton" parent="DisplayChartsMenu"]
+margin_left = 205.313
+margin_top = 268.561
+margin_right = 491.313
+margin_bottom = 310.561
+custom_fonts/font = SubResource( 43 )
+custom_colors/font_color_hover_pressed = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 0.266667, 0.431373, 0.482353, 1 )
+custom_colors/font_color_pressed = Color( 0.266667, 0.431373, 0.482353, 1 )
+text = "Dietetic Composition"
+flat = true
+
+[node name="DeathsFromStarvationCheckButton" type="CheckButton" parent="DisplayChartsMenu"]
+margin_left = 180.212
+margin_top = 357.933
+margin_right = 491.212
+margin_bottom = 399.933
+custom_fonts/font = SubResource( 44 )
+custom_colors/font_color = Color( 0.74902, 0.631373, 0.768627, 1 )
+custom_colors/font_color_pressed = Color( 0.74902, 0.631373, 0.768627, 1 )
+text = "Deaths From Starvation"
+flat = true
+
+[node name="DeathsFromDehydrationCheckButton" type="CheckButton" parent="DisplayChartsMenu"]
+margin_left = 955.117
+margin_top = 394.87
+margin_right = 1285.12
+margin_bottom = 436.87
+custom_fonts/font = SubResource( 45 )
+custom_colors/font_color = Color( 1, 0.447059, 0, 1 )
+custom_colors/font_color_pressed = Color( 1, 0.447059, 0, 1 )
+text = "Deaths From Dehydration"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DeathsFromBeingHuntedCheckButton" type="CheckButton" parent="DisplayChartsMenu"]
+margin_left = 940.901
+margin_top = 361.594
+margin_right = 1283.9
+margin_bottom = 403.594
+custom_fonts/font = SubResource( 46 )
+custom_colors/font_color = Color( 1, 0.976471, 0, 1 )
+custom_colors/font_color_pressed = Color( 1, 0.976471, 0, 1 )
+text = "Deaths From Being Hunted"
+flat = true
+
+[node name="DeathsFromHeatStrokeCheckButton" type="CheckButton" parent="DisplayChartsMenu"]
+margin_left = 160.673
+margin_top = 397.313
+margin_right = 489.673
+margin_bottom = 439.313
+custom_fonts/font = SubResource( 47 )
+custom_colors/font_color = Color( 1, 0.788235, 0.960784, 1 )
+custom_colors/font_color_pressed = Color( 1, 0.788235, 0.960784, 1 )
+text = "Deaths From Heat Stroke"
+flat = true
+
+[node name="DeathsFromFreezingCheckButton" type="CheckButton" parent="DisplayChartsMenu"]
+margin_left = 589.499
+margin_top = 395.305
+margin_right = 883.499
+margin_bottom = 437.305
+custom_fonts/font = SubResource( 48 )
+custom_colors/font_color = Color( 0.47451, 0.337255, 0.0588235, 1 )
+custom_colors/font_color_pressed = Color( 0.47451, 0.337255, 0.0588235, 1 )
+text = "Deaths From Freezing"
+
+[node name="DeathsFromSleepDeprivationCheckButton" type="CheckButton" parent="DisplayChartsMenu"]
+margin_left = 496.971
+margin_top = 357.194
+margin_right = 882.971
+margin_bottom = 399.194
+custom_fonts/font = SubResource( 49 )
+custom_colors/font_color = Color( 0.960784, 0.976471, 0.505882, 1 )
+text = "Deaths From Sleep Deprivation"
+flat = true
+
+[node name="Label" type="Label" parent="DisplayChartsMenu"]
+margin_left = 427.827
+margin_top = 21.8557
+margin_right = 877.827
+margin_bottom = 65.8557
+custom_fonts/font = SubResource( 50 )
+custom_colors/font_outline_modulate = Color( 1, 1, 1, 1 )
+text = "Charts about average gene values over time."
+
+[node name="Label3" type="Label" parent="DisplayChartsMenu"]
+margin_left = 425.519
+margin_top = 316.432
+margin_right = 875.519
+margin_bottom = 360.432
+custom_fonts/font = SubResource( 50 )
+custom_colors/font_outline_modulate = Color( 1, 1, 1, 1 )
+text = "Charts about variation in causes of death."
+
+[node name="Label2" type="Label" parent="DisplayChartsMenu"]
+margin_left = 422.207
+margin_top = 231.635
+margin_right = 872.207
+margin_bottom = 275.635
+custom_fonts/font = SubResource( 50 )
+custom_colors/font_outline_modulate = Color( 1, 1, 1, 1 )
+text = " Charts about the running simulation."
+percent_visible = -0.03125
 [connection signal="item_selected" from="Control/ItemList" to="." method="_on_ItemList_item_selected"]
 [connection signal="mouse_entered" from="Control/ItemList" to="." method="_on_ItemList_mouse_entered"]
 [connection signal="mouse_exited" from="Control/ItemList" to="." method="_on_ItemList_mouse_exited"]
 [connection signal="mouse_entered" from="Control/StartSimulation" to="." method="_on_StartSimulation_mouse_entered"]
 [connection signal="mouse_exited" from="Control/StartSimulation" to="." method="_on_StartSimulation_mouse_exited"]
-[connection signal="pressed" from="Control/StartSimulation" to="Control/ItemList" method="_on_StartSimulation_pressed"]
+[connection signal="pressed" from="Control/StartSimulation" to="Control/AddNewSpecies" method="_on_StartSimulation_pressed"]
 [connection signal="pressed" from="Control/StartSimulation" to="Control/DisplayCharts" method="_on_StartSimulation_pressed"]
 [connection signal="pressed" from="Control/StartSimulation" to="Control/StartSimulation" method="_on_StartSimulation_pressed"]
-[connection signal="pressed" from="Control/StartSimulation" to="Control/AddNewSpecies" method="_on_StartSimulation_pressed"]
+[connection signal="pressed" from="Control/StartSimulation" to="Control/ItemList" method="_on_StartSimulation_pressed"]
 [connection signal="pressed" from="Control/StartSimulation" to="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent" method="_on_StartSimulation_pressed"]
 [connection signal="pressed" from="Control/StartSimulation" to="." method="_on_StartSimulation_pressed"]
-[connection signal="pressed" from="Control/AddNewSpecies" to="CameraHolder" method="_on_AddNewSpecies_pressed"]
-[connection signal="pressed" from="Control/AddNewSpecies" to="Control/DisplayCharts" method="_on_AddNewSpecies_pressed"]
 [connection signal="pressed" from="Control/AddNewSpecies" to="Control/AddNewSpecies" method="_on_AddNewSpecies_pressed"]
+[connection signal="pressed" from="Control/AddNewSpecies" to="Control/DisplayCharts" method="_on_AddNewSpecies_pressed"]
 [connection signal="pressed" from="Control/AddNewSpecies" to="NewSpeciesMenu" method="_on_AddNewSpecies_pressed"]
+[connection signal="pressed" from="Control/AddNewSpecies" to="CameraHolder" method="_on_AddNewSpecies_pressed"]
 [connection signal="pressed" from="Control/DisplayCharts" to="Control/DisplayCharts" method="_on_DisplayCharts_pressed"]
-[connection signal="pressed" from="Control/DisplayCharts" to="DisplayChartsMenu" method="_on_DisplayCharts_pressed"]
 [connection signal="pressed" from="Control/DisplayCharts" to="DisplayChartsMenu/ItemList2" method="_on_DisplayCharts_pressed"]
-[connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="CameraHolder" method="_on_CloseNewSpecies_pressed"]
-[connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="Control/DisplayCharts" method="_on_CloseNewSpecies_pressed"]
+[connection signal="pressed" from="Control/DisplayCharts" to="DisplayChartsMenu" method="_on_DisplayCharts_pressed"]
 [connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="Control/AddNewSpecies" method="_on_CloseNewSpecies_pressed"]
+[connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="Control/DisplayCharts" method="_on_CloseNewSpecies_pressed"]
 [connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="NewSpeciesMenu" method="_on_CloseNewSpecies_pressed"]
+[connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="CameraHolder" method="_on_CloseNewSpecies_pressed"]
 [connection signal="gui_input" from="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent/SpeciesName/LineEdit" to="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent" method="_on_LineEdit_gui_input"]
 [connection signal="pressed" from="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent/CreateNewSpecies/NewSpeciesButton" to="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent" method="_on_NewSpeciesButton_pressed"]
 [connection signal="pressed" from="DisplayChartsMenu/CloseChartMenu" to="Control/DisplayCharts" method="_on_CloseChartMenu_pressed"]

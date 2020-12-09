@@ -11,4 +11,7 @@ public class ItemList2 : ItemList
 	{
    		this.Visible = true;
 	}
+	public void AddNewSpecies(String species){
+		AddItem(species);
+	}
 }
