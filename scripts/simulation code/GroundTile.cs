@@ -12,6 +12,8 @@ public class GroundTile : Spatial
 
 	private Node plant;
 
+	private float PlantGrowthTime = 0;
+
 	private int Eaters = 0;
 
 	RandomNumberGenerator rng;
@@ -46,12 +48,16 @@ public class GroundTile : Spatial
 
 	private void GrowPlant(float delta){
 		Vector3 currentScale = ((Spatial)plant).Scale;
-		if(currentScale.x < 1){
+		if(currentScale.x < 1 && PlantGrowthTime < 2.5){
+			PlantGrowthTime += delta;
 			currentScale.x += 0.5f * delta;
 			currentScale.y += 0.5f * delta;
 			currentScale.z += 0.5f * delta;
 			((Spatial)plant).Scale = currentScale;
-		} else isPlantGrowing = false;
+		} else {
+				PlantGrowthTime = 0;
+				isPlantGrowing = false;
+			}
 	}
 
 	protected void GeneratePlant()

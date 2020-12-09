@@ -298,9 +298,12 @@ public class Creature : KinematicBody
 	private void _on_PerceptionRadius_area_exited(object area)
 	{
 		if (area is Spatial){
-			if ((Spatial)area == CurrentTarget && MyState == State.Eating){
-				CurrentTarget.GetParent().GetParent<GroundTile>().RemoveEater();
-				SetState(State.ExploringTheEnvironment);
+			if ((Spatial)area == CurrentTarget){
+					if (MyState == State.Eating || MyState == State.GoingToFood){
+						if (MyState == State.Eating)
+							CurrentTarget.GetParent().GetParent<GroundTile>().RemoveEater();
+						SetState(State.ExploringTheEnvironment);
+				}
 			}
 		}
 	}
