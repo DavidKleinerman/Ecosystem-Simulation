@@ -17,4 +17,14 @@ public class SpeciesHolder : Spatial
 		((Species)newSpeciesInst).SetSpeciesName(speciesName);
 		((Species)newSpeciesInst).AddNewCreatures(popSize, color, initialValues, geneticVariation);
 	}
+
+	public Godot.Collections.Array GetTraitData(String species, Genome.GeneticTrait trait){
+		RandomNumberGenerator rng = (RandomNumberGenerator) new RandomNumberGenerator();
+		Godot.Collections.Array arr = (Godot.Collections.Array) new Godot.Collections.Array();
+		for (int i = 0; i < 100; i++){
+			rng.Randomize();
+			arr.Add(rng.Randf());
+		}
+		return arr;
+	}
 }
