@@ -326,8 +326,11 @@ public class Creature : KinematicBody
 	public Creature.Gender GetGender(){
 		return MyGender;
 	}
+
+	private void _on_AgeTimer_timeout()
+	{
+		Die("Old Age");
+	}
 	
 }
-
-
 
