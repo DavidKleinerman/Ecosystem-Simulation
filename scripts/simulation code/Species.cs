@@ -59,4 +59,8 @@ public class Species : Spatial
 	public String GetSpeciesName(){
 		return SpeciesName;
 	}
+
+	public void AddDead(String cause, Vector3 position){
+		GetTree().CallGroup("SpeciesHolder", "AddDead", position);
+	}
 }

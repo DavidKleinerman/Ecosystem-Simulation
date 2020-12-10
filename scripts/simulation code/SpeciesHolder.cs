@@ -27,4 +27,11 @@ public class SpeciesHolder : Spatial
 		}
 		return arr;
 	}
+
+	public void AddDead(Vector3 position){
+		PackedScene Meat = (PackedScene)GD.Load("res://assets/Meat.tscn");
+		Node meatInst = Meat.Instance();
+		((Spatial)meatInst).Translation = position;
+		AddChild(meatInst);
+	}
 }

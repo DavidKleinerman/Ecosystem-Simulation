@@ -43,7 +43,7 @@ public class Creature : KinematicBody
 	private int TopOfRejectList = 0;
 	private const int RejectListMaxSize = 5;
 
-	private const float BaseEnergyDecay = 3;
+	private const float BaseEnergyDecay = 2.5f;
 	private const float BaseThirstDecay = 5;
 	private const float BaseReproductiveUrgeGrowth = 2;
 	private const float MaxGoingToTime = 4;
@@ -62,6 +62,7 @@ public class Creature : KinematicBody
 	private float Energy;
 	private float Thirst;
 	private float ReproductiveUrge;
+	private float Age;
 
 
 	public override void _Ready()
@@ -96,12 +97,16 @@ public class Creature : KinematicBody
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(float delta)
 	{
-		if (ReproductiveUrge < 100) ReproductiveUrge += ((BaseReproductiveUrgeGrowth + MatingCycle * delta));
+		if (ReproductiveUrge < 100) ReproductiveUrge += ((BaseReproductiveUrgeGrowth + MatingCycle) * delta);
 		else ReproductiveUrge = 100;
 		if (MyState != State.Eating) Energy -= ((BaseEnergyDecay - HungerResistance) * delta);
 		if (MyState != State.Drinking) Thirst += ((BaseThirstDecay - ThirstResistance) * delta);
-		if (Energy < 0) Energy = 0;
-		if (Thirst > 100) Thirst = 100;
+		if (Energy < 0){
+			Die("Starvation");
+		}
+		if (Thirst > 100){
+			Die("Dehydration");
+		}
 		//GD.Print("Energy: " + Energy + " , Thirst: " + Thirst);
 		if(!RotateTimer.IsStopped() && MyState == State.ExploringTheEnvironment){
 			RotateY(Mathf.Deg2Rad(RoatationRate * RotateDirection * delta));
@@ -119,6 +124,17 @@ public class Creature : KinematicBody
 				SetState(State.ExploringTheEnvironment);
 			} 
 		}
+	}
+
+	private void Die(String cause){
+		if(MyState == State.GoingToPotentialPartner){
+			CurrentTarget.GetParent<Creature>().SetState(State.ExploringTheEnvironment);
+		} else if (MyState == State.Eating){
+			CurrentTarget.GetParent().GetParent<GroundTile>().RemoveEater();
+		}
+		GetParent<Species>().AddDead(cause, ToGlobal(GetNode<Spatial>("PerceptionRadius").Translation));
+		GD.Print(SpeciesName + " Died of " + cause);
+		QueueFree();
 	}
 
 	public override void _PhysicsProcess(float delta)
@@ -233,7 +249,7 @@ public class Creature : KinematicBody
 		ThirstResistance = MyGenome.GetTrait(Genome.GeneticTrait.ThirstResistance) / 50;
 	}
 
-	private void SetState(State state){
+	public void SetState(State state){
 		MyState = state;
 		if (MyState == State.ExploringTheEnvironment)
 			CurrentTarget = this;
@@ -242,7 +258,7 @@ public class Creature : KinematicBody
 	{
 		if(body is Node && MyState == State.ExploringTheEnvironment){
 			if(((Node)body).IsInGroup("Water")){
-				if (Weight() < Thirst){
+				if (Weight() < Thirst * 1.3){
 					MyState = State.GoingToWater;
 					CurrentTarget = (Spatial)body;
 				}
@@ -257,7 +273,6 @@ public class Creature : KinematicBody
 	}
 
 	public bool CheckPotentialPartner(Creature creature){
-		GD.Print("Got an interested potential partner!");
 		if (MyState != State.ExploringTheEnvironment) return false;
 		else if (!RejectList.Contains(creature)){
 			if (Weight() < ReproductiveUrge){
@@ -278,14 +293,14 @@ public class Creature : KinematicBody
 	{
 		if (area is Node){
 			if(((Node)area).IsInGroup("Plants") && MyState == State.ExploringTheEnvironment){
-				if (Weight() < 100 - Energy){
+				if (Weight() < (100 - Energy) * 1.3){
 					MyState = State.GoingToFood;
 					CurrentTarget = (Spatial)area;
 				}
 			} else if (((Node)area).GetParent().IsInGroup("Creatures")){
 				if (((Node)area).GetParent<Creature>().GetGender() != MyGender && ((Node)area).GetParent<Creature>().SpeciesName == SpeciesName && !RejectList.Contains(((Node)area).GetParent<Creature>())){
 					if (Weight() < ReproductiveUrge){
-						if (CheckPotentialPartner(this)){
+						if (((Node)area).GetParent<Creature>().CheckPotentialPartner(this)){
 							MyState = State.GoingToPotentialPartner;
 							CurrentTarget = ((Spatial)area);
 						}
