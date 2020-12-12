@@ -19,6 +19,7 @@ public class SpeciesHolder : Spatial
 		AddChild(newSpeciesInst);
 		((Species)newSpeciesInst).SetSpeciesName(speciesName);
 		((Species)newSpeciesInst).AddNewCreatures(popSize, color, initialValues, geneticVariation);
+		((Species)newSpeciesInst).InitDataArarys(GlobalTimeArray);
 	}
 
 	public Godot.Collections.Array GetTraitData(String species, Genome.GeneticTrait trait){
@@ -48,6 +49,7 @@ public class SpeciesHolder : Spatial
 	private void _on_GlobalTimeTicks_timeout()
 	{
 		GlobalTimeArray.Add(0);
+		GetTree().CallGroup("Species", "CollectData");
 	}
 	
 

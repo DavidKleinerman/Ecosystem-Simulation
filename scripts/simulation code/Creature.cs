@@ -20,18 +20,23 @@ public class Creature : KinematicBody
 
 	private Genome MyGenome;
 
+	private float Fitness = 0;
+
 	public enum State{
 		ExploringTheEnvironment,
 		GoingToWater,
 		Drinking,
 		GoingToFood,
 		Eating,
-		GoingToPotentialPartner
+		GoingToPotentialPartner,
+		Reproducing
 	}
 
 	private State MyState;
 
 	private Spatial CurrentTarget;
+
+	private float ReproTime = 0;
 
 	public enum Gender{
 		Female,
@@ -123,11 +128,19 @@ public class Creature : KinematicBody
 				Thirst = 0;
 				SetState(State.ExploringTheEnvironment);
 			} 
+		} else if (MyState == State.Reproducing){
+			ReproTime += delta;
+			if (ReproTime > 1.5){
+				GD.Print("Reproduction success!");
+				ReproTime = 0;
+				ReproductiveUrge = 0;
+				SetState(State.ExploringTheEnvironment);
+			}
 		}
 	}
 
 	private void Die(String cause){
-		if(MyState == State.GoingToPotentialPartner){
+		if(MyState == State.GoingToPotentialPartner || MyState == State.Reproducing){
 			if (CurrentTarget != null)
 				CurrentTarget.GetParent<Creature>().SetState(State.ExploringTheEnvironment);
 		} else if (MyState == State.Eating){
@@ -174,20 +187,46 @@ public class Creature : KinematicBody
 			}
 			else if (MyState == State.GoingToPotentialPartner){
 				if (ToGlobal(GetNode<MeshInstance>("BodyHolder/Head").Translation).DistanceTo(CurrentTarget.ToGlobal(CurrentTarget.Translation)) <= 2){
-					//change all of this later
-					if (RejectList.Count < RejectListMaxSize)
-						RejectList.Add(CurrentTarget.GetParent<Creature>());
-					else RejectList.Insert(TopOfRejectList, CurrentTarget.GetParent<Creature>());
-					TopOfRejectList++;
-					if (TopOfRejectList >= RejectListMaxSize)
-						TopOfRejectList = 0;
-					SetState(State.ExploringTheEnvironment); //change this later
+					if (CurrentTarget != null){
+						if (MyGender == Gender.Female){
+							if(CheckMale()){
+								StopGoingTo(State.Reproducing);
+								CurrentTarget.GetParent<Creature>().StopGoingTo(State.Reproducing);
+								GD.Print("Checking mate success!");
+							} else {
+								CurrentTarget.GetParent<Creature>().UpdateRejectList(this);
+								UpdateRejectList(CurrentTarget.GetParent<Creature>());
+								CurrentTarget.GetParent<Creature>().SetState(State.ExploringTheEnvironment);
+								SetState(State.ExploringTheEnvironment);
+								GD.Print("Checking mate failure!");
+							}
+						}
+					}
 				} else RotateToTarget(targetLocation);
 			}
 		} else {
 			GoingToTime = 0;
 			SetState(State.ExploringTheEnvironment);
 		}
+	}
+
+	public void UpdateRejectList(Creature creature){
+		if (RejectList.Count < RejectListMaxSize)
+			RejectList.Add(creature);
+		else RejectList.Insert(TopOfRejectList, creature);
+		TopOfRejectList++;
+		if (TopOfRejectList >= RejectListMaxSize)
+			TopOfRejectList = 0;
+	}
+
+	private bool CheckMale(){
+		float targetFitness = CurrentTarget.GetParent<Creature>().GetFitness();
+		float AvgFitness = GetParent<Species>().GetCurrentMaleFitness();
+		RandomNumberGenerator rng = (RandomNumberGenerator) new RandomNumberGenerator();
+		rng.Randomize();
+		if(rng.RandfRange(AvgFitness - 0.3f * AvgFitness, AvgFitness + 0.3f * AvgFitness) < targetFitness)
+			return true;
+		else return false;
 	}
 
 	private void RotateToTarget(Vector3 targetLocation){
@@ -247,6 +286,19 @@ public class Creature : KinematicBody
 		MatingCycle = MyGenome.GetTrait(Genome.GeneticTrait.MatingCycle) / 50;
 		HungerResistance = MyGenome.GetTrait(Genome.GeneticTrait.HungerResistance) / 50;
 		ThirstResistance = MyGenome.GetTrait(Genome.GeneticTrait.ThirstResistance) / 50;
+		CalcFitness();
+	}
+
+	private void CalcFitness(){
+		Fitness += Speed;
+		Fitness += Perception;
+		Fitness += MatingCycle;
+		Fitness += HungerResistance;
+		Fitness += ThirstResistance;
+	}
+
+	public float GetFitness(){
+		return Fitness;
 	}
 
 	public void SetState(State state){
