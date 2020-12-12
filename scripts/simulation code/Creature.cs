@@ -128,7 +128,8 @@ public class Creature : KinematicBody
 
 	private void Die(String cause){
 		if(MyState == State.GoingToPotentialPartner){
-			CurrentTarget.GetParent<Creature>().SetState(State.ExploringTheEnvironment);
+			if (CurrentTarget != null)
+				CurrentTarget.GetParent<Creature>().SetState(State.ExploringTheEnvironment);
 		} else if (MyState == State.Eating){
 			CurrentTarget.GetParent().GetParent<GroundTile>().RemoveEater();
 		}
@@ -180,7 +181,6 @@ public class Creature : KinematicBody
 					TopOfRejectList++;
 					if (TopOfRejectList >= RejectListMaxSize)
 						TopOfRejectList = 0;
-					GD.Print("Reached Potential Mate! ", MyGender, ", ", CurrentTarget.GetParent<Creature>().GetGender());
 					SetState(State.ExploringTheEnvironment); //change this later
 				} else RotateToTarget(targetLocation);
 			}
