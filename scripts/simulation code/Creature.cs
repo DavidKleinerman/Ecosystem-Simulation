@@ -6,7 +6,7 @@ public class Creature : KinematicBody
 	public String SpeciesName;
 	private SpatialMaterial SpeciesMaterial;
 	private Vector3 Velocity = (Vector3) new Vector3();
-	private float GRAV = 9.81f;
+	private const float GRAV = 9.81f;
 	private Timer RotateTimer;
 	private Timer StraightTimer;
 	private Timer FallingTimer;
@@ -44,10 +44,12 @@ public class Creature : KinematicBody
 	}
 	private Gender MyGender;
 
+	//Reject list
 	private Godot.Collections.Array RejectList = (Godot.Collections.Array) new Godot.Collections.Array();
 	private int TopOfRejectList = 0;
 	private const int RejectListMaxSize = 5;
 
+	//consts
 	private const float BaseEnergyDecay = 2.5f;
 	private const float BaseThirstDecay = 5;
 	private const float BaseReproductiveUrgeGrowth = 2;
@@ -68,6 +70,14 @@ public class Creature : KinematicBody
 	private float Thirst;
 	private float ReproductiveUrge;
 	private float Age;
+
+	// Passive states
+	private bool Pregnant = false;
+	private bool Growing = false;
+
+	//female only
+	private Genome PregnantWithGenome = null;
+	private float PregnancyTime = 0;
 
 
 	public override void _Ready()
@@ -106,11 +116,17 @@ public class Creature : KinematicBody
 		else ReproductiveUrge = 100;
 		if (MyState != State.Eating) Energy -= ((BaseEnergyDecay - HungerResistance) * delta);
 		if (MyState != State.Drinking) Thirst += ((BaseThirstDecay - ThirstResistance) * delta);
+		if (Pregnant) PregnancyTime += delta;
 		if (Energy < 0){
 			Die("Starvation");
 		}
 		if (Thirst > 100){
 			Die("Dehydration");
+		}
+		if (PregnancyTime >= Gestation){
+			PregnancyTime = 0;
+			Pregnant = false;
+			GD.Print("pregnancy successful");
 		}
 		//GD.Print("Energy: " + Energy + " , Thirst: " + Thirst);
 		if(!RotateTimer.IsStopped() && MyState == State.ExploringTheEnvironment){
@@ -134,6 +150,10 @@ public class Creature : KinematicBody
 				GD.Print("Reproduction success!");
 				ReproTime = 0;
 				ReproductiveUrge = 0;
+				if (MyGender == Gender.Female){
+					Pregnant = true;
+					PregnantWithGenome = CurrentTarget.GetParent<Creature>().GetGenome();
+				}
 				SetState(State.ExploringTheEnvironment);
 			}
 		}
@@ -300,6 +320,7 @@ public class Creature : KinematicBody
 		MatingCycle = MyGenome.GetTrait(Genome.GeneticTrait.MatingCycle) / 50;
 		HungerResistance = MyGenome.GetTrait(Genome.GeneticTrait.HungerResistance) / 50;
 		ThirstResistance = MyGenome.GetTrait(Genome.GeneticTrait.ThirstResistance) / 50;
+		Gestation = 10 + MyGenome.GetTrait(Genome.GeneticTrait.ThirstResistance) / 5;
 		CalcFitness();
 	}
 
@@ -380,10 +401,10 @@ public class Creature : KinematicBody
 	{
 		if (area is Spatial){
 			if ((Spatial)area == CurrentTarget){
-					if (MyState == State.Eating || MyState == State.GoingToFood){
-						if (MyState == State.Eating)
-							CurrentTarget.GetParent().GetParent<GroundTile>().RemoveEater();
-						SetState(State.ExploringTheEnvironment);
+				if (MyState == State.Eating || MyState == State.GoingToFood){
+					if (MyState == State.Eating)
+						CurrentTarget.GetParent().GetParent<GroundTile>().RemoveEater();
+					SetState(State.ExploringTheEnvironment);
 				}
 			}
 		}
