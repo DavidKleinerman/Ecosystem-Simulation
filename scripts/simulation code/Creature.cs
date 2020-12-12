@@ -141,8 +141,12 @@ public class Creature : KinematicBody
 
 	private void Die(String cause){
 		if(MyState == State.GoingToPotentialPartner || MyState == State.Reproducing){
-			if (CurrentTarget != null)
+			try {
 				CurrentTarget.GetParent<Creature>().SetState(State.ExploringTheEnvironment);
+			}
+			catch (Exception e) {
+				GD.Print("handeled: \n", e);
+			}
 		} else if (MyState == State.Eating){
 			CurrentTarget.GetParent().GetParent<GroundTile>().RemoveEater();
 		}
@@ -168,8 +172,14 @@ public class Creature : KinematicBody
 
 	private void GoToTarget(Vector3 frontVector, float delta){
 		GoingToTime += delta;
+		Vector3 targetLocation;
 		if (GoingToTime < MaxGoingToTime){
-			Vector3 targetLocation = CurrentTarget.ToGlobal(CurrentTarget.Translation);
+			try {
+				targetLocation = CurrentTarget.ToGlobal(CurrentTarget.Translation);
+			} catch (Exception e) {
+				StopGoingTo(State.ExploringTheEnvironment);
+				return;
+			}
 			Vector3 myLocation = ToGlobal(GetNode<Spatial>("PerceptionRadius").Translation);
 			Vector3 goToTarget = targetLocation - myLocation;
 			Velocity = goToTarget.Normalized();
@@ -186,23 +196,27 @@ public class Creature : KinematicBody
 				} else RotateToTarget(targetLocation);
 			}
 			else if (MyState == State.GoingToPotentialPartner){
-				if (ToGlobal(GetNode<MeshInstance>("BodyHolder/Head").Translation).DistanceTo(CurrentTarget.ToGlobal(CurrentTarget.Translation)) <= 2){
-					if (CurrentTarget != null){
-						if (MyGender == Gender.Female){
-							if(CheckMale()){
-								StopGoingTo(State.Reproducing);
-								CurrentTarget.GetParent<Creature>().StopGoingTo(State.Reproducing);
-								GD.Print("Checking mate success!");
-							} else {
-								CurrentTarget.GetParent<Creature>().UpdateRejectList(this);
-								UpdateRejectList(CurrentTarget.GetParent<Creature>());
-								CurrentTarget.GetParent<Creature>().SetState(State.ExploringTheEnvironment);
-								SetState(State.ExploringTheEnvironment);
-								GD.Print("Checking mate failure!");
+				try{
+					if (ToGlobal(GetNode<MeshInstance>("BodyHolder/Head").Translation).DistanceTo(CurrentTarget.ToGlobal(CurrentTarget.Translation)) <= 2){
+						if (CurrentTarget != null){
+							if (MyGender == Gender.Female){
+								if(CheckMale()){
+									StopGoingTo(State.Reproducing);
+									CurrentTarget.GetParent<Creature>().StopGoingTo(State.Reproducing);
+									GD.Print("Checking mate success!");
+								} else {
+									CurrentTarget.GetParent<Creature>().UpdateRejectList(this);
+									UpdateRejectList(CurrentTarget.GetParent<Creature>());
+									CurrentTarget.GetParent<Creature>().StopGoingTo(State.ExploringTheEnvironment);
+									StopGoingTo(State.ExploringTheEnvironment);
+									GD.Print("Checking mate failure!");
+								}
 							}
 						}
-					}
-				} else RotateToTarget(targetLocation);
+					} else RotateToTarget(targetLocation);
+				} catch (Exception e) {
+					StopGoingTo(State.ExploringTheEnvironment);
+				}
 			}
 		} else {
 			GoingToTime = 0;
@@ -237,7 +251,7 @@ public class Creature : KinematicBody
 
 	}
 
-	private void StopGoingTo(State state){
+	public void StopGoingTo(State state){
 		GoingToTime = 0;
 		SetState(state);
 		if (MyState != State.ExploringTheEnvironment)
