@@ -101,7 +101,7 @@ public class Genome
 		for (int i = 0; i < chromosomeSet.Count; i++){
 			rng.Randomize();
 			if (rng.RandfRange(0,1) < MinMutationRate)
-				chromosomeSet.Insert(i, (float)chromosomeSet[i] + rng.RandfRange(-5, 5));
+				chromosomeSet[i] = (float)chromosomeSet[i] + rng.RandfRange(-5, 5);
 		}
 		return chromosomeSet;
 	}

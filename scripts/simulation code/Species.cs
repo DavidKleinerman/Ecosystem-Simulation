@@ -39,18 +39,22 @@ public class Species : Spatial
 		foreach (Node n in ReshuffledGroundTiles()){
 			Vector3 position = ((Spatial)n).Translation;
 			position.y = 5;
-			Node newCreatureInst = CreatureScene.Instance();
 			Genome genome = new Genome();
 			genome.ArtificialCombine(initialValues, geneticVariation);
-			((Creature)newCreatureInst).SetGenome(genome);
-			((Spatial)newCreatureInst).Translation = position;
-			((Creature)newCreatureInst).SetMaterial(material);
-			((Creature)newCreatureInst).SpeciesName = SpeciesName;
-			AddChild(newCreatureInst);
+			AddCreature(genome, position, material);
 			popSize--;
 			if (popSize == 0)
 				break;
 		}
+	}
+
+	public void AddCreature(Genome genome, Vector3 position, SpatialMaterial material){
+		Node newCreatureInst = CreatureScene.Instance();
+		((Creature)newCreatureInst).SetGenome(genome);
+		((Spatial)newCreatureInst).Translation = position;
+		((Creature)newCreatureInst).SetMaterial(material);
+		((Creature)newCreatureInst).SpeciesName = SpeciesName;
+		AddChild(newCreatureInst);
 	}
 
 	private Godot.Collections.Array ReshuffledGroundTiles(){

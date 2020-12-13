@@ -29,7 +29,8 @@ public class Creature : KinematicBody
 		GoingToFood,
 		Eating,
 		GoingToPotentialPartner,
-		Reproducing
+		Reproducing,
+		GivingBirth
 	}
 
 	private State MyState;
@@ -78,6 +79,10 @@ public class Creature : KinematicBody
 	//female only
 	private Genome PregnantWithGenome = null;
 	private float PregnancyTime = 0;
+	private float PreviousPregnancyTime = 0;
+	private int BornChildren = 0;
+	private const int TimeToBirth = 3;
+	private float BirthingTime = 0;
 
 
 	public override void _Ready()
@@ -112,23 +117,36 @@ public class Creature : KinematicBody
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(float delta)
 	{
-		if (ReproductiveUrge < 100) ReproductiveUrge += ((BaseReproductiveUrgeGrowth + MatingCycle) * delta);
+		if (ReproductiveUrge < 100 && !Pregnant) ReproductiveUrge += ((BaseReproductiveUrgeGrowth + MatingCycle) * delta);
 		else ReproductiveUrge = 100;
 		if (MyState != State.Eating) Energy -= ((BaseEnergyDecay - HungerResistance) * delta);
 		if (MyState != State.Drinking) Thirst += ((BaseThirstDecay - ThirstResistance) * delta);
-		if (Pregnant) PregnancyTime += delta;
 		if (Energy < 0){
 			Die("Starvation");
 		}
 		if (Thirst > 100){
 			Die("Dehydration");
 		}
-		if (PregnancyTime >= Gestation){
-			PregnancyTime = 0;
-			Pregnant = false;
-			GD.Print("pregnancy successful");
+		if (Pregnant){ //female only
+			PregnancyTime += delta;
+			if (PregnancyTime >= Gestation){
+				StartBirthingProcess();
+			}
+			else if (PregnancyTime >= Gestation * 0.8f && PreviousPregnancyTime < Gestation * 0.8f){
+				if (Weight() < 50){
+					StartBirthingProcess();
+				}
+			}
+			else if (PregnancyTime >= Gestation * 0.6f && PreviousPregnancyTime < Gestation * 0.6f){
+				if (Weight() < 25){
+					StartBirthingProcess();
+				}
+			}
+			PreviousPregnancyTime = PregnancyTime;
 		}
-		//GD.Print("Energy: " + Energy + " , Thirst: " + Thirst);
+		if (MyState == State.GivingBirth){
+			BirthingProcess(delta);
+		}
 		if(!RotateTimer.IsStopped() && MyState == State.ExploringTheEnvironment){
 			RotateY(Mathf.Deg2Rad(RoatationRate * RotateDirection * delta));
 		} else if (MyState == State.Eating){
@@ -147,16 +165,46 @@ public class Creature : KinematicBody
 		} else if (MyState == State.Reproducing){
 			ReproTime += delta;
 			if (ReproTime > 1.5){
-				GD.Print("Reproduction success!");
 				ReproTime = 0;
 				ReproductiveUrge = 0;
-				if (MyGender == Gender.Female){
+				if (MyGender == Gender.Female){ //female only
 					Pregnant = true;
 					PregnantWithGenome = CurrentTarget.GetParent<Creature>().GetGenome();
 				}
 				SetState(State.ExploringTheEnvironment);
 			}
 		}
+	}
+
+	private void GiveBirth(){
+		Godot.Collections.Array paternal = PregnantWithGenome.Meiosis();
+		Godot.Collections.Array maternal = MyGenome.Meiosis();
+		Genome genome = new Genome();
+		genome.Recombination(maternal, paternal);
+		GetParent<Species>().AddCreature(genome, ToGlobal(GetNode<Spatial>("PerceptionRadius").Translation), SpeciesMaterial);
+	}
+
+	private void BirthingProcess(float delta){
+		BirthingTime += delta;
+		if (BirthingTime > TimeToBirth){
+			GiveBirth();
+			BirthingTime = 0;
+			BornChildren++;
+			if (BornChildren == 3){
+				BornChildren = 0;
+				PregnantWithGenome = null;
+				SetState(State.ExploringTheEnvironment);
+			}
+		}
+	}
+
+	private void StartBirthingProcess(){
+		PregnancyTime = 0;
+		PreviousPregnancyTime = 0;
+		Pregnant = false;
+		CurrentTarget = this;
+		SetState(State.GivingBirth);
+		Velocity = (Vector3) new Vector3();
 	}
 
 	private void Die(String cause){
@@ -219,7 +267,7 @@ public class Creature : KinematicBody
 				try{
 					if (ToGlobal(GetNode<MeshInstance>("BodyHolder/Head").Translation).DistanceTo(CurrentTarget.ToGlobal(CurrentTarget.Translation)) <= 2){
 						if (CurrentTarget != null){
-							if (MyGender == Gender.Female){
+							if (MyGender == Gender.Female){ //female only
 								if(CheckMale()){
 									StopGoingTo(State.Reproducing);
 									CurrentTarget.GetParent<Creature>().StopGoingTo(State.Reproducing);
@@ -253,6 +301,7 @@ public class Creature : KinematicBody
 			TopOfRejectList = 0;
 	}
 
+	//female only
 	private bool CheckMale(){
 		float targetFitness = CurrentTarget.GetParent<Creature>().GetFitness();
 		float AvgFitness = GetParent<Species>().GetCurrentMaleFitness();
@@ -378,8 +427,8 @@ public class Creature : KinematicBody
 
 	private void _on_PerceptionRadius_area_entered(object area)
 	{
-		if (area is Node){
-			if(((Node)area).IsInGroup("Plants") && MyState == State.ExploringTheEnvironment){
+		if (area is Node && MyState == State.ExploringTheEnvironment){
+			if(((Node)area).IsInGroup("Plants")){
 				if (Weight() < (100 - Energy) * 1.3){
 					MyState = State.GoingToFood;
 					CurrentTarget = (Spatial)area;
