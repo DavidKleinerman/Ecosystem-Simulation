@@ -168,8 +168,13 @@ public class Creature : KinematicBody
 				ReproTime = 0;
 				ReproductiveUrge = 0;
 				if (MyGender == Gender.Female){ //female only
+					try{
 					Pregnant = true;
 					PregnantWithGenome = CurrentTarget.GetParent<Creature>().GetGenome();
+					} catch (Exception e) {
+						Pregnant = false;
+						SetState(State.ExploringTheEnvironment);
+					}
 				}
 				SetState(State.ExploringTheEnvironment);
 			}
