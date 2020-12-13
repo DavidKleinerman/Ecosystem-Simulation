@@ -21,6 +21,8 @@ public class Genome
 	private Godot.Collections.Array DominanceMask;
 	private Godot.Collections.Array TotalGenome;
 
+	private const float MinMutationRate = 0.1f;
+
 	public Genome(){
 		MaternalChromosomeSet = (Godot.Collections.Array) new Godot.Collections.Array();
 		PaternalChromosomeSet = (Godot.Collections.Array) new Godot.Collections.Array();
@@ -78,19 +80,30 @@ public class Genome
 		return (float)((Godot.Collections.Array)TotalGenome[(int)DominanceMask[(int)traitIndex]])[(int)traitIndex];
 	}
 
-	// TO DO
-	/*
+	
 	public Godot.Collections.Array Meiosis(){
-		Godot.Collections.Array crossoveredSet = Crossover();
+		Godot.Collections.Array crossoveredSet = CrossOver();
 		return Mutation(crossoveredSet);
 	}
 
 	private Godot.Collections.Array CrossOver(){
-
+		Godot.Collections.Array newSet = (Godot.Collections.Array) new Godot.Collections.Array();
+		RandomNumberGenerator rng = (RandomNumberGenerator) new RandomNumberGenerator();
+		for (int i = 0; i < MaternalChromosomeSet.Count; i++){
+			rng.Randomize();
+			newSet.Add(((Godot.Collections.Array)TotalGenome[rng.RandiRange(0,1)])[i]);
+		}
+		return newSet;
 	}
 
-	private void Mutation(Godot.Collections.Array ChromosomeSet){
-
+	private Godot.Collections.Array Mutation(Godot.Collections.Array chromosomeSet){
+		RandomNumberGenerator rng = (RandomNumberGenerator) new RandomNumberGenerator();
+		for (int i = 0; i < chromosomeSet.Count; i++){
+			rng.Randomize();
+			if (rng.RandfRange(0,1) < MinMutationRate)
+				chromosomeSet.Insert(i, (float)chromosomeSet[i] + rng.RandfRange(-5, 5));
+		}
+		return chromosomeSet;
 	}
-	*/
+
 }
