@@ -14,6 +14,7 @@ public class Species : Spatial
 
 	//Data Arrays
 	private Godot.Collections.Array MaleFitness = (Godot.Collections.Array) new Godot.Collections.Array();
+	private Godot.Collections.Array SpeedArray = (Godot.Collections.Array) new Godot.Collections.Array();
 
 
 	public override void _Ready()
@@ -28,6 +29,7 @@ public class Species : Spatial
 	public void InitDataArarys(Godot.Collections.Array initArray){
 		for (int i = 0; i < initArray.Count; i++){
 			MaleFitness.Add(0);
+			SpeedArray.Add(0);
 		}
 		CurrentTimeTick = initArray.Count - 1;
 	}
@@ -99,7 +101,17 @@ public class Species : Spatial
 		if (maleFitnessCount > 0)
 			MaleFitness.Add(maleFitnessSum/maleFitnessCount);
 		else MaleFitness.Add(0);
-		GD.Print(MaleFitness);
+		GD.Print("male fitness: ", MaleFitness);
+		float speedSum = 0;
+		int speedCount = 0;
+		for (int i = 0; i < creaturesInSpecies.Count; i++){
+			speedSum += ((Creature)creaturesInSpecies[i]).GetGenome().GetTrait(Genome.GeneticTrait.Speed);
+			speedCount++;
+		}
+		if (speedCount > 0)
+			SpeedArray.Add(speedSum/speedCount);
+		else SpeedArray.Add(0);
+		GD.Print("Speed: ", SpeedArray);
 		CurrentTimeTick++;
 	}
 
