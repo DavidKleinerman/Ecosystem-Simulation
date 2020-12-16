@@ -81,4 +81,8 @@ public class Species : Spatial
 	public float GetCurrentMaleFitness(){
 		return SpeciesDataCollector.GetCurrentMaleFitness();
 	}
+
+	public DataCollector GetDataCollector(){
+		return SpeciesDataCollector;
+	}
 }
