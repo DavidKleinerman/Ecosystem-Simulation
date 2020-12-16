@@ -17,9 +17,8 @@ public class SpeciesHolder : Spatial
 	public void AddSpecies(String speciesName, int popSize, Color color, Godot.Collections.Array initialValues, float geneticVariation){
 		Node newSpeciesInst = Species.Instance();
 		AddChild(newSpeciesInst);
-		((Species)newSpeciesInst).SetSpeciesName(speciesName);
+		((Species)newSpeciesInst).InitSpecies(speciesName, GlobalTimeArray);
 		((Species)newSpeciesInst).AddNewCreatures(popSize, color, initialValues, geneticVariation);
-		((Species)newSpeciesInst).InitDataArarys(GlobalTimeArray);
 	}
 
 	public Godot.Collections.Array GetTraitData(String species, Genome.GeneticTrait trait){

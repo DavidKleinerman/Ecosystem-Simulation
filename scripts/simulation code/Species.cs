@@ -10,11 +10,7 @@ public class Species : Spatial
 
 	private RandomNumberGenerator rng;
 
-	private int CurrentTimeTick = 0;
-
-	//Data Arrays
-	private Godot.Collections.Array MaleFitness = (Godot.Collections.Array) new Godot.Collections.Array();
-	private Godot.Collections.Array SpeedArray = (Godot.Collections.Array) new Godot.Collections.Array();
+	private DataCollector SpeciesDataCollector;
 
 
 	public override void _Ready()
@@ -22,16 +18,9 @@ public class Species : Spatial
 		rng = (RandomNumberGenerator) new RandomNumberGenerator();
 	}
 
-	public void SetSpeciesName (String speciesName){
+	public void InitSpecies (String speciesName, Godot.Collections.Array initArray){
 		this.SpeciesName = speciesName;
-	}
-
-	public void InitDataArarys(Godot.Collections.Array initArray){
-		for (int i = 0; i < initArray.Count; i++){
-			MaleFitness.Add(0);
-			SpeedArray.Add(0);
-		}
-		CurrentTimeTick = initArray.Count - 1;
+		SpeciesDataCollector = (DataCollector) new DataCollector(initArray);
 	}
 
 	public void AddNewCreatures(int popSize, Color color, Godot.Collections.Array initialValues, float geneticVariation){
@@ -84,38 +73,12 @@ public class Species : Spatial
 		GetTree().CallGroup("SpeciesHolder", "AddDead", position);
 	}
 
-	public void UpdateTime(){
-
-	}
-
 	public void CollectData(){
 		Godot.Collections.Array creaturesInSpecies = GetChildren();
-		float maleFitnessSum = 0;
-		int maleFitnessCount = 0;
-		for(int i = 0; i < creaturesInSpecies.Count; i++){
-			if (((Creature)creaturesInSpecies[i]).GetGender() == Creature.Gender.Male){
-				maleFitnessSum += ((Creature)creaturesInSpecies[i]).GetFitness();
-				maleFitnessCount++;
-			}
-		}
-		if (maleFitnessCount > 0)
-			MaleFitness.Add(maleFitnessSum/maleFitnessCount);
-		else MaleFitness.Add(0);
-		GD.Print("male fitness: ", MaleFitness);
-		float speedSum = 0;
-		int speedCount = 0;
-		for (int i = 0; i < creaturesInSpecies.Count; i++){
-			speedSum += ((Creature)creaturesInSpecies[i]).GetGenome().GetTrait(Genome.GeneticTrait.Speed);
-			speedCount++;
-		}
-		if (speedCount > 0)
-			SpeedArray.Add(speedSum/speedCount);
-		else SpeedArray.Add(0);
-		GD.Print("Speed: ", SpeedArray);
-		CurrentTimeTick++;
+		SpeciesDataCollector.CollectData(creaturesInSpecies);
 	}
 
 	public float GetCurrentMaleFitness(){
-		return (float)MaleFitness[CurrentTimeTick];
+		return SpeciesDataCollector.GetCurrentMaleFitness();
 	}
 }
