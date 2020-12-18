@@ -1,4 +1,4 @@
-[gd_scene load_steps=75 format=2]
+[gd_scene load_steps=83 format=2]
 
 [ext_resource path="res://scripts/simulation code/Simulation.cs" type="Script" id=1]
 [ext_resource path="res://scripts/simulation code/CameraHolder.cs" type="Script" id=2]
@@ -24,6 +24,14 @@
 [ext_resource path="res://scripts/sim UI code/ItemList2.cs" type="Script" id=22]
 [ext_resource path="res://scripts/sim UI code/DisplayChartsMenu.cs" type="Script" id=23]
 [ext_resource path="res://fonts/Now FL/Now-ExtraLight.otf" type="DynamicFontData" id=24]
+[ext_resource path="res://scripts/gradients code/GradientControl.cs" type="Script" id=25]
+[ext_resource path="res://scripts/gradients code/StaminaGradient.cs" type="Script" id=26]
+[ext_resource path="res://scripts/gradients code/ThirstResistanceGradient.cs" type="Script" id=27]
+[ext_resource path="res://scripts/gradients code/PerceptionGradient.cs" type="Script" id=28]
+[ext_resource path="res://scripts/gradients code/MatingCycleGradient.cs" type="Script" id=29]
+[ext_resource path="res://scripts/gradients code/GestationGradient.cs" type="Script" id=30]
+[ext_resource path="res://scripts/gradients code/SpeedGradient.cs" type="Script" id=31]
+[ext_resource path="res://scripts/gradients code/HungerResistanceGradient.cs" type="Script" id=32]
 
 [sub_resource type="SphereShape" id=1]
 
@@ -500,10 +508,10 @@ __meta__ = {
 }
 
 [node name="ColorPicker" type="ColorPicker" parent="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent/RepresentationsPicker"]
-margin_left = 60.0
-margin_top = 40.0
-margin_right = 560.0
-margin_bottom = 460.0
+margin_left = 68.0
+margin_top = 48.0
+margin_right = 568.0
+margin_bottom = 468.0
 rect_min_size = Vector2( 500, 420 )
 edit_alpha = false
 presets_enabled = false
@@ -1058,6 +1066,61 @@ text = "Speed"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="GradientControl" type="Control" parent="DisplayChartsMenu"]
+margin_left = 325.0
+margin_top = 568.0
+margin_right = 1219.0
+margin_bottom = 995.0
+script = ExtResource( 25 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StaminaGradient" type="Line2D" parent="DisplayChartsMenu/GradientControl"]
+width = 1.0
+default_color = Color( 0.52549, 0.713726, 0.501961, 1 )
+script = ExtResource( 26 )
+
+[node name="ColorRect" type="ColorRect" parent="DisplayChartsMenu/GradientControl"]
+margin_left = 2.0
+margin_top = 1.0
+margin_right = 894.0
+margin_bottom = 421.0
+color = Color( 0, 0, 0, 0.317647 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GestationGradient" type="Line2D" parent="DisplayChartsMenu/GradientControl"]
+width = 1.0
+default_color = Color( 1, 0.670588, 0, 1 )
+script = ExtResource( 30 )
+
+[node name="SpeedGradient" type="Line2D" parent="DisplayChartsMenu/GradientControl"]
+width = 1.0
+default_color = Color( 0.8, 0.129412, 0.129412, 1 )
+script = ExtResource( 31 )
+
+[node name="PerceptionGradient" type="Line2D" parent="DisplayChartsMenu/GradientControl"]
+width = 1.0
+default_color = Color( 0, 0.964706, 1, 1 )
+script = ExtResource( 28 )
+
+[node name="MatingCycleGradient" type="Line2D" parent="DisplayChartsMenu/GradientControl"]
+width = 1.0
+default_color = Color( 0.360784, 1, 0, 1 )
+script = ExtResource( 29 )
+
+[node name="HungerResistanceGradient" type="Line2D" parent="DisplayChartsMenu/GradientControl"]
+width = 1.0
+default_color = Color( 1, 1, 1, 1 )
+script = ExtResource( 32 )
+
+[node name="ThirstResistanceGradient" type="Line2D" parent="DisplayChartsMenu/GradientControl"]
+width = 1.0
+default_color = Color( 0.996078, 0, 0.945098, 1 )
+script = ExtResource( 27 )
 [connection signal="timeout" from="SpeciesHolder/GlobalTimeTicks" to="SpeciesHolder" method="_on_GlobalTimeTicks_timeout"]
 [connection signal="item_selected" from="Control/ItemList" to="." method="_on_ItemList_item_selected"]
 [connection signal="mouse_entered" from="Control/ItemList" to="." method="_on_ItemList_mouse_entered"]
@@ -1065,24 +1128,31 @@ __meta__ = {
 [connection signal="mouse_entered" from="Control/StartSimulation" to="." method="_on_StartSimulation_mouse_entered"]
 [connection signal="mouse_exited" from="Control/StartSimulation" to="." method="_on_StartSimulation_mouse_exited"]
 [connection signal="pressed" from="Control/StartSimulation" to="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent" method="_on_StartSimulation_pressed"]
-[connection signal="pressed" from="Control/StartSimulation" to="Control/AddNewSpecies" method="_on_StartSimulation_pressed"]
 [connection signal="pressed" from="Control/StartSimulation" to="Control/ItemList" method="_on_StartSimulation_pressed"]
+[connection signal="pressed" from="Control/StartSimulation" to="Control/AddNewSpecies" method="_on_StartSimulation_pressed"]
 [connection signal="pressed" from="Control/StartSimulation" to="Control/StartSimulation" method="_on_StartSimulation_pressed"]
 [connection signal="pressed" from="Control/StartSimulation" to="Control/DisplayCharts" method="_on_StartSimulation_pressed"]
 [connection signal="pressed" from="Control/StartSimulation" to="." method="_on_StartSimulation_pressed"]
 [connection signal="pressed" from="Control/StartSimulation" to="SpeciesHolder" method="_on_StartSimulation_pressed"]
+[connection signal="pressed" from="Control/AddNewSpecies" to="CameraHolder" method="_on_AddNewSpecies_pressed"]
 [connection signal="pressed" from="Control/AddNewSpecies" to="NewSpeciesMenu" method="_on_AddNewSpecies_pressed"]
 [connection signal="pressed" from="Control/AddNewSpecies" to="Control/AddNewSpecies" method="_on_AddNewSpecies_pressed"]
 [connection signal="pressed" from="Control/AddNewSpecies" to="Control/DisplayCharts" method="_on_AddNewSpecies_pressed"]
-[connection signal="pressed" from="Control/AddNewSpecies" to="CameraHolder" method="_on_AddNewSpecies_pressed"]
 [connection signal="pressed" from="Control/DisplayCharts" to="DisplayChartsMenu" method="_on_DisplayCharts_pressed"]
 [connection signal="pressed" from="Control/DisplayCharts" to="Control/DisplayCharts" method="_on_DisplayCharts_pressed"]
 [connection signal="pressed" from="Control/DisplayCharts" to="DisplayChartsMenu/ItemList2" method="_on_DisplayCharts_pressed"]
+[connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="CameraHolder" method="_on_CloseNewSpecies_pressed"]
 [connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="NewSpeciesMenu" method="_on_CloseNewSpecies_pressed"]
 [connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="Control/AddNewSpecies" method="_on_CloseNewSpecies_pressed"]
 [connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="Control/DisplayCharts" method="_on_CloseNewSpecies_pressed"]
-[connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="CameraHolder" method="_on_CloseNewSpecies_pressed"]
 [connection signal="gui_input" from="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent/SpeciesName/LineEdit" to="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent" method="_on_LineEdit_gui_input"]
 [connection signal="pressed" from="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent/CreateNewSpecies/NewSpeciesButton" to="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent" method="_on_NewSpeciesButton_pressed"]
 [connection signal="pressed" from="DisplayChartsMenu/CloseChartMenu" to="DisplayChartsMenu" method="_on_CloseChartMenu_pressed"]
 [connection signal="pressed" from="DisplayChartsMenu/CloseChartMenu" to="Control/DisplayCharts" method="_on_CloseChartMenu_pressed"]
+[connection signal="toggled" from="DisplayChartsMenu/GeneValuesGridContainer/StaminaCheckButton" to="DisplayChartsMenu/GradientControl/StaminaGradient" method="_on_StaminaCheckButton_toggled"]
+[connection signal="toggled" from="DisplayChartsMenu/GeneValuesGridContainer/HungerResistanceCheckButton" to="DisplayChartsMenu/GradientControl/HungerResistanceGradient" method="_on_HungerResistanceCheckButton_toggled"]
+[connection signal="toggled" from="DisplayChartsMenu/GeneValuesGridContainer/ThirstResistanceCheckButton" to="DisplayChartsMenu/GradientControl/ThirstResistanceGradient" method="_on_ThirstResistanceCheckButton_toggled"]
+[connection signal="toggled" from="DisplayChartsMenu/GeneValuesGridContainer/GestationCheckButton" to="DisplayChartsMenu/GradientControl/GestationGradient" method="_on_GestationCheckButton_toggled"]
+[connection signal="toggled" from="DisplayChartsMenu/GeneValuesGridContainer/MatingCycleCheckButton" to="DisplayChartsMenu/GradientControl/MatingCycleGradient" method="_on_MatingCycleCheckButton_toggled"]
+[connection signal="toggled" from="DisplayChartsMenu/GeneValuesGridContainer/PerceptionCheckButton" to="DisplayChartsMenu/GradientControl/PerceptionGradient" method="_on_PerceptionCheckButton_toggled"]
+[connection signal="toggled" from="DisplayChartsMenu/GeneValuesGridContainer/SpeedCheckButton" to="DisplayChartsMenu/GradientControl/SpeedGradient" method="_on_SpeedCheckButton_toggled"]
