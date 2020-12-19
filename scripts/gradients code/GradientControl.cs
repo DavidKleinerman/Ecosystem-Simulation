@@ -22,38 +22,38 @@ public class GradientControl : Control
 		lineStamina = GetNode<Line2D>("StaminaGradient");
 		
 		for(int i=0; i < 10; i++){
-			Vector2 NewPoint = (Vector2) new Vector2((float)arr[i] *900 ,i*15 +150);
+			Vector2 NewPoint = (Vector2) new Vector2(i*98 ,370 +(float)arr[i]*30);
 			lineStamina.AddPoint(NewPoint);
 		}
 		//AddChild(line);
 		lineSpeed = GetNode<Line2D>("SpeedGradient");
 		for(int i=0; i < 10; i++){
-			Vector2 NewPoint = (Vector2) new Vector2((float)arr[i] *900 ,i*15 +150);
+			Vector2 NewPoint = (Vector2) new Vector2(i*98 ,300+ ((float)arr[i]*50)/2);
 			lineSpeed.AddPoint(NewPoint);
 		}
 		linePerception = GetNode<Line2D>("PerceptionGradient");
 		for(int i=0; i < 10; i++){
-			Vector2 NewPoint = (Vector2) new Vector2((float)arr[i] *900 ,i*15 +150);
+			Vector2 NewPoint = (Vector2) new Vector2(i*98 ,250+(float)arr[i]*50);
 			linePerception.AddPoint(NewPoint);
 		}
 		lineGestation = GetNode<Line2D>("GestationGradient");
 		for(int i=0; i < 10; i++){
-			Vector2 NewPoint = (Vector2) new Vector2((float)arr[i] *900 ,i*15 +150);
+			Vector2 NewPoint = (Vector2) new Vector2(i*98 ,340+(float)arr[i]*80);
 			lineGestation.AddPoint(NewPoint);
 		}
 		lineMatingCycle = GetNode<Line2D>("MatingCycleGradient");
 		for(int i=0; i < 10; i++){
-			Vector2 NewPoint = (Vector2) new Vector2((float)arr[i] *900 ,i*15 +150);
+			Vector2 NewPoint = (Vector2) new Vector2(i*98 ,330+(float)arr[i]*35);
 			lineMatingCycle.AddPoint(NewPoint);
 		}
 		lineThirstResistance = GetNode<Line2D>("ThirstResistanceGradient");
 		for(int i=0; i < 10; i++){
-			Vector2 NewPoint = (Vector2) new Vector2((float)arr[i] *900 ,i*15 +150);
+			Vector2 NewPoint = (Vector2) new Vector2(i*98 ,280+(float)arr[i]*50);
 			lineThirstResistance.AddPoint(NewPoint);
 		}
 		lineHungerResistance = GetNode<Line2D>("HungerResistanceGradient");
 		for(int i=0; i < 10; i++){
-			Vector2 NewPoint = (Vector2) new Vector2((float)arr[i] *900 ,i*15 +150);
+			Vector2 NewPoint = (Vector2) new Vector2(i*98 ,320+(float)arr[i]*50);
 			lineHungerResistance.AddPoint(NewPoint);
 		}
 		

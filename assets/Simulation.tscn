@@ -601,10 +601,10 @@ __meta__ = {
 
 [node name="ChartsBackground" type="ColorRect" parent="DisplayChartsMenu"]
 anchor_bottom = 1.0
-margin_left = -19.5741
-margin_top = -5.24793
-margin_right = 1480.43
-margin_bottom = -35.2478
+margin_left = 2.0
+margin_top = -1.0
+margin_right = 1320.0
+margin_bottom = 9.00208
 color = Color( 0, 0, 0, 0.627451 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -1078,7 +1078,7 @@ __meta__ = {
 }
 
 [node name="StaminaGradient" type="Line2D" parent="DisplayChartsMenu/GradientControl"]
-width = 1.0
+width = 3.0
 default_color = Color( 0.52549, 0.713726, 0.501961, 1 )
 script = ExtResource( 26 )
 
@@ -1093,34 +1093,74 @@ __meta__ = {
 }
 
 [node name="GestationGradient" type="Line2D" parent="DisplayChartsMenu/GradientControl"]
-width = 1.0
+width = 3.0
 default_color = Color( 1, 0.670588, 0, 1 )
 script = ExtResource( 30 )
 
 [node name="SpeedGradient" type="Line2D" parent="DisplayChartsMenu/GradientControl"]
-width = 1.0
+width = 3.0
 default_color = Color( 0.8, 0.129412, 0.129412, 1 )
 script = ExtResource( 31 )
 
 [node name="PerceptionGradient" type="Line2D" parent="DisplayChartsMenu/GradientControl"]
-width = 1.0
+width = 3.0
 default_color = Color( 0, 0.964706, 1, 1 )
 script = ExtResource( 28 )
 
 [node name="MatingCycleGradient" type="Line2D" parent="DisplayChartsMenu/GradientControl"]
-width = 1.0
+width = 3.0
 default_color = Color( 0.360784, 1, 0, 1 )
 script = ExtResource( 29 )
 
 [node name="HungerResistanceGradient" type="Line2D" parent="DisplayChartsMenu/GradientControl"]
-width = 1.0
+width = 3.0
 default_color = Color( 1, 1, 1, 1 )
 script = ExtResource( 32 )
 
 [node name="ThirstResistanceGradient" type="Line2D" parent="DisplayChartsMenu/GradientControl"]
-width = 1.0
+width = 3.0
 default_color = Color( 0.996078, 0, 0.945098, 1 )
 script = ExtResource( 27 )
+
+[node name="LabelX" type="Label" parent="DisplayChartsMenu/GradientControl"]
+margin_left = 870.58
+margin_top = 399.849
+margin_right = 958.58
+margin_bottom = 450.849
+text = "X"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LabelY" type="Label" parent="DisplayChartsMenu/GradientControl"]
+margin_left = 4.75446
+margin_top = 3.20276
+margin_right = 92.7545
+margin_bottom = 54.2028
+text = "Y
+"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HSeparator" type="HSeparator" parent="DisplayChartsMenu/GradientControl"]
+margin_left = 9.0
+margin_top = 398.0
+margin_right = 866.0
+margin_bottom = 416.0
+
+[node name="VSeparator" type="VSeparator" parent="DisplayChartsMenu/GradientControl"]
+margin_left = -9.0
+margin_top = 18.0
+margin_right = 28.0
+margin_bottom = 407.0
+
+[node name="Label" type="Label" parent="DisplayChartsMenu/GradientControl"]
+margin_left = 1.65668
+margin_top = 407.585
+margin_right = 41.6567
+margin_bottom = 421.585
+text = "(0,0)"
 [connection signal="timeout" from="SpeciesHolder/GlobalTimeTicks" to="SpeciesHolder" method="_on_GlobalTimeTicks_timeout"]
 [connection signal="item_selected" from="Control/ItemList" to="." method="_on_ItemList_item_selected"]
 [connection signal="mouse_entered" from="Control/ItemList" to="." method="_on_ItemList_mouse_entered"]
