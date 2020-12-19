@@ -118,7 +118,6 @@ public class Creature : KinematicBody
 	public override void _Process(float delta)
 	{
 		if (ReproductiveUrge < 100 && !Pregnant) ReproductiveUrge += ((BaseReproductiveUrgeGrowth + MatingCycle) * delta);
-		else ReproductiveUrge = 100;
 		if (MyState != State.Eating) Energy -= ((BaseEnergyDecay - HungerResistance) * delta);
 		if (MyState != State.Drinking) Thirst += ((BaseThirstDecay - ThirstResistance) * delta);
 		if (Energy < 0){
@@ -164,7 +163,7 @@ public class Creature : KinematicBody
 			} 
 		} else if (MyState == State.Reproducing){
 			ReproTime += delta;
-			if (ReproTime > 1.5){
+			if (ReproTime > 2){
 				ReproTime = 0;
 				ReproductiveUrge = 0;
 				if (MyGender == Gender.Female){ //female only

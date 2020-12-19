@@ -10,7 +10,7 @@ public class Species : Spatial
 
 	private RandomNumberGenerator rng;
 
-	private DataCollector SpeciesDataCollector;
+	private DataCollector SpeciesDataCollector = null;
 
 
 	public override void _Ready()
@@ -75,7 +75,8 @@ public class Species : Spatial
 
 	public void CollectData(){
 		Godot.Collections.Array creaturesInSpecies = GetChildren();
-		SpeciesDataCollector.CollectData(creaturesInSpecies);
+		if (SpeciesDataCollector != null)
+			SpeciesDataCollector.CollectData(creaturesInSpecies);
 	}
 
 	public float GetCurrentMaleFitness(){
