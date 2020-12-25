@@ -29,7 +29,7 @@ public class Species : Spatial
 		SpeciesMaterial = material;
 		foreach (Node n in ReshuffledGroundTiles()){
 			Vector3 position = ((Spatial)n).Translation;
-			position.y = 5;
+			position.y = 1;
 			Genome genome = new Genome();
 			genome.ArtificialCombine(initialValues, geneticVariation);
 			AddCreature(genome, position, material);

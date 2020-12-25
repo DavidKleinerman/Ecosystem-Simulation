@@ -47,10 +47,6 @@ public class Simulation : Spatial
 		GetTree().CallGroup("WaterTiles", "AddWallCollider");
 		TileSelectInst.QueueFree();
 		isWorldBuilding = false;
-		PackedScene floor = (PackedScene)GD.Load("res://assets/biomes/Floor.tscn");
-		Vector3 position = (Vector3) new Vector3(0,0,0);
-		AddTile(floor, position);
-		Node newWall1 = wallCollider.Instance();
 		for(int i = 0; i <= 3; i++){
 			AddWall(i);
 		}
@@ -95,8 +91,8 @@ public class Simulation : Spatial
 				scale.z = 64;
 			break;
 		}
-		
 		Node newWall = wallCollider.Instance();
+		newWall.RemoveFromGroup("Water");
 		((Spatial)newWall).Scale = scale;
 		((Spatial)newWall).Translation = position;
 		AddChild(newWall);
