@@ -19,16 +19,16 @@ public class SpeciesHolder : Spatial
 		AddChild(newSpeciesInst);
 		((Species)newSpeciesInst).InitSpecies(speciesName, GlobalTimeArray);
 		((Species)newSpeciesInst).AddNewCreatures(popSize, color, initialValues, geneticVariation);
+		GetParent().GetNode<ItemList2>("DisplayChartsMenu/ItemList2").AddNewSpecies(speciesName);
 	}
 
-	public Godot.Collections.Array GetTraitData(String species, Genome.GeneticTrait trait){
-		RandomNumberGenerator rng = (RandomNumberGenerator) new RandomNumberGenerator();
-		Godot.Collections.Array arr = (Godot.Collections.Array) new Godot.Collections.Array();
-		for (int i = 0; i < 100; i++){
-			rng.Randomize();
-			arr.Add(rng.Randf());
+	public DataCollector GetDataOfSpecies(String species){
+		Godot.Collections.Array existingSpecies = GetTree().GetNodesInGroup("Species");
+		foreach (Species s in existingSpecies){
+			if (s.GetSpeciesName() == species)
+				return s.GetDataCollector();
 		}
-		return arr;
+		return null;
 	}
 
 	public void AddDead(Vector3 position){
