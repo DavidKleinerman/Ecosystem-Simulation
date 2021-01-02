@@ -14,13 +14,13 @@ public class DataCollector
 
 	public DataCollector(Godot.Collections.Array initArray){
 		for (int i = 0; i < initArray.Count; i++){
-			MaleFitness.Add(0);
-			SpeedArray.Add(0);
-			PerceptionArray.Add(0);
-			MatingCycleArray.Add(0);
-			HungerResistanceArray.Add(0);
-			ThirstResistanceArray.Add(0);
-			GestationArray.Add(0);
+			MaleFitness.Add(0.0f);
+			SpeedArray.Add(0.0f);
+			PerceptionArray.Add(0.0f);
+			MatingCycleArray.Add(0.0f);
+			HungerResistanceArray.Add(0.0f);
+			ThirstResistanceArray.Add(0.0f);
+			GestationArray.Add(0.0f);
 		}
 		CurrentTimeTick = initArray.Count - 1;
 	}
@@ -47,7 +47,7 @@ public class DataCollector
 		}
 		if (maleFitnessCount > 0)
 			MaleFitness.Add(maleFitnessSum/maleFitnessCount);
-		else MaleFitness.Add(0);
+		else MaleFitness.Add(0.0f);
 		GD.Print("male fitness: ", MaleFitness);
 	}
 
@@ -61,7 +61,7 @@ public class DataCollector
 		if (Count > 0)
 			traitArray.Add(Sum/Count);
 		else 
-			traitArray.Add(0);
+			traitArray.Add(0.0f);
 		GD.Print(trait, ": ", traitArray);
 	}
 
@@ -78,7 +78,7 @@ public class DataCollector
 	public Godot.Collections.Array GetMatingCycleData(){
 		return MatingCycleArray;
 	}
-	public Godot.Collections.Array GetHungetResistanceData(){
+	public Godot.Collections.Array GetHungerResistanceData(){
 		return HungerResistanceArray;
 	}
 	public Godot.Collections.Array GetThirstResistanceData(){
