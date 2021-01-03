@@ -21,7 +21,7 @@ public class Genome
 	private Godot.Collections.Array DominanceMask;
 	private Godot.Collections.Array TotalGenome;
 
-	private const float MinMutationRate = 0.1f;
+	private const float MinMutationRate = 0.35f;
 
 	public Genome(){
 		MaternalChromosomeSet = (Godot.Collections.Array) new Godot.Collections.Array();
@@ -101,7 +101,7 @@ public class Genome
 		for (int i = 0; i < chromosomeSet.Count; i++){
 			rng.Randomize();
 			if (rng.RandfRange(0,1) < MinMutationRate)
-				chromosomeSet[i] = (float)chromosomeSet[i] + rng.RandfRange(-5, 5);
+				chromosomeSet[i] = NormalizeValue((float)chromosomeSet[i] + rng.RandfRange(-15, 15));
 		}
 		return chromosomeSet;
 	}

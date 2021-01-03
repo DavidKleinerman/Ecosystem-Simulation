@@ -17,7 +17,7 @@ public class GradientControl : Control
 	public Godot.Collections.Array HungerResistanceArray;// = (Godot.Collections.Array) new Godot.Collections.Array();
 	public Godot.Collections.Array ThirstResistanceArray;// = (Godot.Collections.Array) new Godot.Collections.Array();
 	public Godot.Collections.Array StaminaArray;// = (Godot.Collections.Array) new Godot.Collections.Array();
-	private bool mouseOnList = false;
+	private bool OpenedUp = false;
 	private int selectedSpecies;
 	public String SelectedSpecies;
 	public override void _Ready()
@@ -29,7 +29,7 @@ public class GradientControl : Control
 		
 		//DataCollector sp =  GetParent().GetParent().GetNode<SpeciesHolder>("SpeciesHolder").GetDataOfSpecies(SelectedSpecies);
 		//SpeedArray = GetParent().GetParent().GetNode<SpeciesHolder>("SpeciesHolder").RandomArrData();
-		if(SelectedSpecies != null){
+		if(SelectedSpecies != null && OpenedUp){
 			SpeedArray = GetParent().GetParent().GetNode<SpeciesHolder>("SpeciesHolder").GetDataOfSpecies(SelectedSpecies).GetSpeedData();
 			PerceptionArray = GetParent().GetParent().GetNode<SpeciesHolder>("SpeciesHolder").GetDataOfSpecies(SelectedSpecies).GetPerceptionData();
 			GestationArray = GetParent().GetParent().GetNode<SpeciesHolder>("SpeciesHolder").GetDataOfSpecies(SelectedSpecies).GetGestationData();
@@ -37,7 +37,6 @@ public class GradientControl : Control
 			HungerResistanceArray = GetParent().GetParent().GetNode<SpeciesHolder>("SpeciesHolder").GetDataOfSpecies(SelectedSpecies).GetHungerResistanceData();
 			ThirstResistanceArray = GetParent().GetParent().GetNode<SpeciesHolder>("SpeciesHolder").GetDataOfSpecies(SelectedSpecies).GetThirstResistanceData();
 			RandomNumberGenerator rng = (RandomNumberGenerator) new RandomNumberGenerator();
-			GD.Print("This is the speedArray\n" + SpeedArray);
 			Godot.Collections.Array arr = (Godot.Collections.Array) new Godot.Collections.Array();
 			for (int i = 0; i < 100; i++){
 				rng.Randomize();
@@ -133,4 +132,18 @@ public class GradientControl : Control
 		SelectedSpecies = GetParent().GetNode<ItemList2>("ItemList2").GetItem(index);
 		
 	}
+
+	private void _on_DisplayCharts_pressed()
+	{
+		OpenedUp = true;
+	}
+
+
+	private void _on_CloseChartMenu_pressed()
+	{
+		OpenedUp = false;
+	}
+
 }
+
+

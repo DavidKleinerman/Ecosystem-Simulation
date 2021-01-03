@@ -49,9 +49,9 @@ public class Creature : Area
 	private const int RejectListMaxSize = 5;
 
 	//consts
-	private const float BaseEnergyDecay = 2.5f;
-	private const float BaseThirstDecay = 5;
-	private const float BaseReproductiveUrgeGrowth = 2;
+	private const float BaseEnergyDecay = 3.5f;
+	private const float BaseThirstDecay = 4f;
+	private const float BaseReproductiveUrgeGrowth = 2.5f;
 	private const float MaxGoingToTime = 4;
 
 	private float GoingToTime = 0;
@@ -187,7 +187,7 @@ public class Creature : Area
 			GiveBirth();
 			BirthingTime = 0;
 			BornChildren++;
-			if (BornChildren == 3){
+			if (BornChildren == 2){
 				BornChildren = 0;
 				PregnantWithGenome = null;
 				SetState(State.ExploringTheEnvironment);
@@ -344,22 +344,22 @@ public class Creature : Area
 	}
 
 	private void InitializeTraitsFromGenome(){
-		Speed = 1.5f + MyGenome.GetTrait(Genome.GeneticTrait.Speed)/25;
+		Speed = 2 + MyGenome.GetTrait(Genome.GeneticTrait.Speed)/20;
 		Perception = MyGenome.GetTrait(Genome.GeneticTrait.Perception) / 20;
 		GetNode<Area>("PerceptionRadius").Scale = (Vector3) new Vector3(Perception, 0.2f, Perception);
 		MatingCycle = MyGenome.GetTrait(Genome.GeneticTrait.MatingCycle) / 50;
-		HungerResistance = MyGenome.GetTrait(Genome.GeneticTrait.HungerResistance) / 50;
-		ThirstResistance = MyGenome.GetTrait(Genome.GeneticTrait.ThirstResistance) / 50;
-		Gestation = 10 + MyGenome.GetTrait(Genome.GeneticTrait.ThirstResistance) / 5;
+		HungerResistance = MyGenome.GetTrait(Genome.GeneticTrait.HungerResistance) / 33;
+		ThirstResistance = MyGenome.GetTrait(Genome.GeneticTrait.ThirstResistance) / 33;
+		Gestation = 6 + MyGenome.GetTrait(Genome.GeneticTrait.ThirstResistance) / 5;
 		CalcFitness();
 	}
 
 	private void CalcFitness(){
-		Fitness += Speed;
-		Fitness += Perception;
-		Fitness += MatingCycle;
-		Fitness += HungerResistance;
-		Fitness += ThirstResistance;
+		Fitness += MyGenome.GetTrait(Genome.GeneticTrait.Speed);
+		Fitness += MyGenome.GetTrait(Genome.GeneticTrait.Perception);
+		Fitness += MyGenome.GetTrait(Genome.GeneticTrait.MatingCycle);
+		Fitness += MyGenome.GetTrait(Genome.GeneticTrait.HungerResistance);
+		Fitness += MyGenome.GetTrait(Genome.GeneticTrait.ThirstResistance);
 	}
 
 	public float GetFitness(){
