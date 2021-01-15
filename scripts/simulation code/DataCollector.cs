@@ -11,6 +11,8 @@ public class DataCollector
 	private Godot.Collections.Array HungerResistanceArray = (Godot.Collections.Array) new Godot.Collections.Array();
 	private Godot.Collections.Array ThirstResistanceArray = (Godot.Collections.Array) new Godot.Collections.Array();
 	private Godot.Collections.Array GestationArray = (Godot.Collections.Array) new Godot.Collections.Array();
+	private Godot.Collections.Array LitterSizeArray = (Godot.Collections.Array) new Godot.Collections.Array();
+	private Godot.Collections.Array LongevityArray = (Godot.Collections.Array) new Godot.Collections.Array();
 
 	public DataCollector(Godot.Collections.Array initArray){
 		for (int i = 0; i < initArray.Count; i++){
@@ -33,6 +35,8 @@ public class DataCollector
 		CollectTraitData(HungerResistanceArray, Genome.GeneticTrait.HungerResistance, creaturesInSpecies);
 		CollectTraitData(ThirstResistanceArray, Genome.GeneticTrait.ThirstResistance, creaturesInSpecies);
 		CollectTraitData(GestationArray, Genome.GeneticTrait.Gestation, creaturesInSpecies);
+		CollectTraitData(LitterSizeArray, Genome.GeneticTrait.LitterSize, creaturesInSpecies);
+		CollectTraitData(LongevityArray, Genome.GeneticTrait.Longevity, creaturesInSpecies);
 		CurrentTimeTick++;
 	}
 
@@ -86,5 +90,11 @@ public class DataCollector
 	}
 	public Godot.Collections.Array GetGestationData(){
 		return GestationArray;
+	}
+	public Godot.Collections.Array GetLitterSizeData(){
+		return LitterSizeArray;
+	}
+	public Godot.Collections.Array GetLongevityData(){
+		return LongevityArray;
 	}
 }

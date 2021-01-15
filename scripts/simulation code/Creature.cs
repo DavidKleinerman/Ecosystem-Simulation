@@ -63,6 +63,8 @@ public class Creature : Area
 	private float HungerResistance;
 	private float ThirstResistance;
 	private float Gestation;
+	private int LitterSize;
+	private float Longevity;
 
 	//Resources
 	private float Energy;
@@ -90,6 +92,7 @@ public class Creature : Area
 		Energy = 100;
 		Thirst = 0;
 		ReproductiveUrge = 0;
+		Age = 0;
 		RandomNumberGenerator rng = (RandomNumberGenerator) new RandomNumberGenerator();
 		rng.Randomize();
 		if (rng.RandiRange(0, 1) == 0){
@@ -110,6 +113,7 @@ public class Creature : Area
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(float delta)
 	{
+		Age += delta;
 		if (ReproductiveUrge < 100 && !Pregnant) ReproductiveUrge += ((BaseReproductiveUrgeGrowth + MatingCycle) * delta);
 		if (MyState != State.Eating) Energy -= ((BaseEnergyDecay - HungerResistance) * delta);
 		if (MyState != State.Drinking) Thirst += ((BaseThirstDecay - ThirstResistance) * delta);
@@ -118,6 +122,9 @@ public class Creature : Area
 		}
 		if (Thirst > 100){
 			Die("Dehydration");
+		}
+		if (Age > Longevity){
+			Die("Old Age");
 		}
 		if (Pregnant){ //female only
 			PregnancyTime += delta;
@@ -187,7 +194,7 @@ public class Creature : Area
 			GiveBirth();
 			BirthingTime = 0;
 			BornChildren++;
-			if (BornChildren == 2){
+			if (BornChildren == LitterSize){
 				BornChildren = 0;
 				PregnantWithGenome = null;
 				SetState(State.ExploringTheEnvironment);
@@ -350,7 +357,9 @@ public class Creature : Area
 		MatingCycle = MyGenome.GetTrait(Genome.GeneticTrait.MatingCycle) / 50;
 		HungerResistance = MyGenome.GetTrait(Genome.GeneticTrait.HungerResistance) / 33;
 		ThirstResistance = MyGenome.GetTrait(Genome.GeneticTrait.ThirstResistance) / 33;
-		Gestation = 6 + MyGenome.GetTrait(Genome.GeneticTrait.ThirstResistance) / 5;
+		Gestation = 6 + MyGenome.GetTrait(Genome.GeneticTrait.Gestation) / 5;
+		LitterSize = 1 + Mathf.RoundToInt(MyGenome.GetTrait(Genome.GeneticTrait.LitterSize) / 25);
+		Longevity = 20 + MyGenome.GetTrait(Genome.GeneticTrait.Longevity) / 1.25f;
 		CalcFitness();
 	}
 
@@ -360,6 +369,9 @@ public class Creature : Area
 		Fitness += MyGenome.GetTrait(Genome.GeneticTrait.MatingCycle);
 		Fitness += MyGenome.GetTrait(Genome.GeneticTrait.HungerResistance);
 		Fitness += MyGenome.GetTrait(Genome.GeneticTrait.ThirstResistance);
+		Fitness += MyGenome.GetTrait(Genome.GeneticTrait.Gestation);
+		Fitness += MyGenome.GetTrait(Genome.GeneticTrait.LitterSize);
+		Fitness += MyGenome.GetTrait(Genome.GeneticTrait.Longevity);
 	}
 
 	public float GetFitness(){
@@ -478,11 +490,6 @@ public class Creature : Area
 
 	public Creature.Gender GetGender(){
 		return MyGender;
-	}
-
-	private void _on_AgeTimer_timeout()
-	{
-		Die("Old Age");
 	}
 	
 }

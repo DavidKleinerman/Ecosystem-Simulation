@@ -9,7 +9,9 @@ public class Genome
 		MatingCycle,
 		HungerResistance,
 		ThirstResistance,
-		Gestation
+		Gestation,
+		LitterSize,
+		Longevity
 	}
 
 	public enum ChromosomeSet {
@@ -46,7 +48,7 @@ public class Genome
 	}
 
 	public void ArtificialCombine(Godot.Collections.Array initialValues, float geneticVariation){
-		if (initialValues.Count == 6){
+		if (initialValues.Count == 8){
 			MaternalChromosomeSet.Clear();
 			PaternalChromosomeSet.Clear();
 		} else return;
