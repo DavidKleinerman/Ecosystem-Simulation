@@ -23,6 +23,8 @@ public class DataCollector
 			HungerResistanceArray.Add(0.0f);
 			ThirstResistanceArray.Add(0.0f);
 			GestationArray.Add(0.0f);
+			LongevityArray.Add(0.0f);
+			LitterSizeArray.Add(0.0f);
 		}
 		CurrentTimeTick = initArray.Count - 1;
 	}

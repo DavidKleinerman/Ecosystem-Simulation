@@ -10,6 +10,8 @@ public class GradientControl : Control
 	private Line2D lineHungerResistance;
 	private Line2D lineThirstResistance;
 	private Line2D lineGestation;
+	private Line2D lineLongevity;
+	private Line2D lineLitterSize;
 	public Godot.Collections.Array SpeedArray; //= (Godot.Collections.Array) new Godot.Collections.Array();
 	public Godot.Collections.Array PerceptionArray; // = (Godot.Collections.Array) new Godot.Collections.Array();
 	public Godot.Collections.Array MatingCycleArray;// = (Godot.Collections.Array) new Godot.Collections.Array();
@@ -17,6 +19,8 @@ public class GradientControl : Control
 	public Godot.Collections.Array HungerResistanceArray;// = (Godot.Collections.Array) new Godot.Collections.Array();
 	public Godot.Collections.Array ThirstResistanceArray;// = (Godot.Collections.Array) new Godot.Collections.Array();
 	public Godot.Collections.Array StaminaArray;// = (Godot.Collections.Array) new Godot.Collections.Array();
+	public Godot.Collections.Array LongevityArray;
+	public Godot.Collections.Array LitterSizeArray;
 	private bool OpenedUp = false;
 	private int selectedSpecies;
 	public String SelectedSpecies;
@@ -36,6 +40,8 @@ public class GradientControl : Control
 			MatingCycleArray = GetParent().GetParent().GetNode<SpeciesHolder>("SpeciesHolder").GetDataOfSpecies(SelectedSpecies).GetMatingCycleData();
 			HungerResistanceArray = GetParent().GetParent().GetNode<SpeciesHolder>("SpeciesHolder").GetDataOfSpecies(SelectedSpecies).GetHungerResistanceData();
 			ThirstResistanceArray = GetParent().GetParent().GetNode<SpeciesHolder>("SpeciesHolder").GetDataOfSpecies(SelectedSpecies).GetThirstResistanceData();
+			LongevityArray = GetParent().GetParent().GetNode<SpeciesHolder>("SpeciesHolder").GetDataOfSpecies(SelectedSpecies).GetLongevityData();
+			LitterSizeArray = GetParent().GetParent().GetNode<SpeciesHolder>("SpeciesHolder").GetDataOfSpecies(SelectedSpecies).GetLitterSizeData();
 			RandomNumberGenerator rng = (RandomNumberGenerator) new RandomNumberGenerator();
 			Godot.Collections.Array arr = (Godot.Collections.Array) new Godot.Collections.Array();
 			for (int i = 0; i < 100; i++){
@@ -110,6 +116,30 @@ public class GradientControl : Control
 					NewPoint = (Vector2) new Vector2((i+1)*880/ThirstResistanceArray.Count ,415-(float)ThirstResistanceArray[i]*4.15f);
 				}
 				lineThirstResistance.AddPoint(NewPoint);
+			}
+			lineLongevity = GetNode<Line2D>("LongevityGradient");
+			lineLongevity.ClearPoints();
+			for(int i=0; i< LongevityArray.Count; i++){
+				Vector2 NewPoint;
+				if(i == 0){
+					NewPoint = (Vector2) new Vector2(10 ,415-(float)LongevityArray[i]*4.15f);
+				}
+				else{
+					NewPoint = (Vector2) new Vector2((i+1)*880/LongevityArray.Count ,415-(float)LongevityArray[i]*4.15f);
+				}
+				lineLongevity.AddPoint(NewPoint);
+			}
+			lineLitterSize = GetNode<Line2D>("LitterSizeGradient");
+			lineLitterSize.ClearPoints();
+			for(int i=0; i< LitterSizeArray.Count; i++){
+				Vector2 NewPoint;
+				if(i == 0){
+					NewPoint = (Vector2) new Vector2(10 ,415-(float)LitterSizeArray[i]*4.15f);
+				}
+				else{
+					NewPoint = (Vector2) new Vector2((i+1)*880/LitterSizeArray.Count ,415-(float)LitterSizeArray[i]*4.15f);
+				}
+				lineLitterSize.AddPoint(NewPoint);
 			}
 			lineHungerResistance = GetNode<Line2D>("HungerResistanceGradient");
 			lineHungerResistance.ClearPoints();
