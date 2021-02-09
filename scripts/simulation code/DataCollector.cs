@@ -5,6 +5,7 @@ public class DataCollector
 {
 	private int CurrentTimeTick = 0;
 	private int SpeciesCreationTime;
+	private Godot.Collections.Array PopulationSizeArray = (Godot.Collections.Array)new Godot.Collections.Array();
 	private Godot.Collections.Array MaleFitness = (Godot.Collections.Array)new Godot.Collections.Array();
 	private Godot.Collections.Array SpeedArray = (Godot.Collections.Array)new Godot.Collections.Array();
 	private Godot.Collections.Array PerceptionArray = (Godot.Collections.Array)new Godot.Collections.Array();
@@ -19,6 +20,7 @@ public class DataCollector
 	{
 		for (int i = 0; i < initArray.Count; i++)
 		{
+			PopulationSizeArray.Add(0.0f);
 			MaleFitness.Add(0.0f);
 			SpeedArray.Add(0.0f);
 			PerceptionArray.Add(0.0f);
@@ -35,6 +37,7 @@ public class DataCollector
 
 	public void CollectData(Godot.Collections.Array creaturesInSpecies)
 	{
+		PopulationSizeArray.Add((float)creaturesInSpecies.Count);
 		CollectMaleFitnessData(creaturesInSpecies);
 		CollectTraitData(SpeedArray, Genome.GeneticTrait.Speed, creaturesInSpecies);
 		CollectTraitData(PerceptionArray, Genome.GeneticTrait.Perception, creaturesInSpecies);
@@ -117,6 +120,10 @@ public class DataCollector
 	public Godot.Collections.Array GetLongevityData()
 	{
 		return LongevityArray;
+	}
+
+	public Godot.Collections.Array GetPopulationSizeData(){
+		return PopulationSizeArray;
 	}
 
 	public int GetSpeciesCreationTime()

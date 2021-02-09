@@ -49,6 +49,7 @@ public class SpeciesHolder : Spatial
 	{
 		GlobalTimeArray.Add(0);
 		GetTree().CallGroup("Species", "CollectData");
+		GetTree().CallGroup("GraphControl", "RefreshGraphs");
 	}
 	
 
