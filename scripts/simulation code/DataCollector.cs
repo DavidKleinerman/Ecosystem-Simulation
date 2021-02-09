@@ -4,18 +4,21 @@ using System;
 public class DataCollector
 {
 	private int CurrentTimeTick = 0;
-	private Godot.Collections.Array MaleFitness = (Godot.Collections.Array) new Godot.Collections.Array();
-	private Godot.Collections.Array SpeedArray = (Godot.Collections.Array) new Godot.Collections.Array();
-	private Godot.Collections.Array PerceptionArray = (Godot.Collections.Array) new Godot.Collections.Array();
-	private Godot.Collections.Array MatingCycleArray = (Godot.Collections.Array) new Godot.Collections.Array();
-	private Godot.Collections.Array HungerResistanceArray = (Godot.Collections.Array) new Godot.Collections.Array();
-	private Godot.Collections.Array ThirstResistanceArray = (Godot.Collections.Array) new Godot.Collections.Array();
-	private Godot.Collections.Array GestationArray = (Godot.Collections.Array) new Godot.Collections.Array();
-	private Godot.Collections.Array LitterSizeArray = (Godot.Collections.Array) new Godot.Collections.Array();
-	private Godot.Collections.Array LongevityArray = (Godot.Collections.Array) new Godot.Collections.Array();
+	private int SpeciesCreationTime;
+	private Godot.Collections.Array MaleFitness = (Godot.Collections.Array)new Godot.Collections.Array();
+	private Godot.Collections.Array SpeedArray = (Godot.Collections.Array)new Godot.Collections.Array();
+	private Godot.Collections.Array PerceptionArray = (Godot.Collections.Array)new Godot.Collections.Array();
+	private Godot.Collections.Array MatingCycleArray = (Godot.Collections.Array)new Godot.Collections.Array();
+	private Godot.Collections.Array HungerResistanceArray = (Godot.Collections.Array)new Godot.Collections.Array();
+	private Godot.Collections.Array ThirstResistanceArray = (Godot.Collections.Array)new Godot.Collections.Array();
+	private Godot.Collections.Array GestationArray = (Godot.Collections.Array)new Godot.Collections.Array();
+	private Godot.Collections.Array LitterSizeArray = (Godot.Collections.Array)new Godot.Collections.Array();
+	private Godot.Collections.Array LongevityArray = (Godot.Collections.Array)new Godot.Collections.Array();
 
-	public DataCollector(Godot.Collections.Array initArray){
-		for (int i = 0; i < initArray.Count; i++){
+	public DataCollector(Godot.Collections.Array initArray)
+	{
+		for (int i = 0; i < initArray.Count; i++)
+		{
 			MaleFitness.Add(0.0f);
 			SpeedArray.Add(0.0f);
 			PerceptionArray.Add(0.0f);
@@ -27,9 +30,11 @@ public class DataCollector
 			LitterSizeArray.Add(0.0f);
 		}
 		CurrentTimeTick = initArray.Count - 1;
+		SpeciesCreationTime = CurrentTimeTick;
 	}
 
-	public void CollectData(Godot.Collections.Array creaturesInSpecies){
+	public void CollectData(Godot.Collections.Array creaturesInSpecies)
+	{
 		CollectMaleFitnessData(creaturesInSpecies);
 		CollectTraitData(SpeedArray, Genome.GeneticTrait.Speed, creaturesInSpecies);
 		CollectTraitData(PerceptionArray, Genome.GeneticTrait.Perception, creaturesInSpecies);
@@ -42,61 +47,80 @@ public class DataCollector
 		CurrentTimeTick++;
 	}
 
-	private void CollectMaleFitnessData(Godot.Collections.Array creaturesInSpecies){
+	private void CollectMaleFitnessData(Godot.Collections.Array creaturesInSpecies)
+	{
 		float maleFitnessSum = 0;
 		int maleFitnessCount = 0;
-		for(int i = 0; i < creaturesInSpecies.Count; i++){
-			if (((Creature)creaturesInSpecies[i]).GetGender() == Creature.Gender.Male){
+		for (int i = 0; i < creaturesInSpecies.Count; i++)
+		{
+			if (((Creature)creaturesInSpecies[i]).GetGender() == Creature.Gender.Male)
+			{
 				maleFitnessSum += ((Creature)creaturesInSpecies[i]).GetFitness();
 				maleFitnessCount++;
 			}
 		}
 		if (maleFitnessCount > 0)
-			MaleFitness.Add(maleFitnessSum/maleFitnessCount);
+			MaleFitness.Add(maleFitnessSum / maleFitnessCount);
 		else MaleFitness.Add(0.0f);
 		GD.Print("male fitness: ", MaleFitness);
 	}
 
-	private void CollectTraitData(Godot.Collections.Array traitArray, Genome.GeneticTrait trait, Godot.Collections.Array creaturesInSpecies){
+	private void CollectTraitData(Godot.Collections.Array traitArray, Genome.GeneticTrait trait, Godot.Collections.Array creaturesInSpecies)
+	{
 		float Sum = 0;
 		int Count = 0;
-		for (int i = 0; i < creaturesInSpecies.Count; i++){
+		for (int i = 0; i < creaturesInSpecies.Count; i++)
+		{
 			Sum += ((Creature)creaturesInSpecies[i]).GetGenome().GetTrait(trait);
 			Count++;
 		}
 		if (Count > 0)
-			traitArray.Add(Sum/Count);
-		else 
+			traitArray.Add(Sum / Count);
+		else
 			traitArray.Add(0.0f);
 		GD.Print(trait, ": ", traitArray);
 	}
 
-	public float GetCurrentMaleFitness(){
+	public float GetCurrentMaleFitness()
+	{
 		return (float)MaleFitness[CurrentTimeTick];
 	}
 
-	public Godot.Collections.Array GetSpeedData(){
+	public Godot.Collections.Array GetSpeedData()
+	{
 		return SpeedArray;
 	}
-	public Godot.Collections.Array GetPerceptionData(){
+	public Godot.Collections.Array GetPerceptionData()
+	{
 		return PerceptionArray;
 	}
-	public Godot.Collections.Array GetMatingCycleData(){
+	public Godot.Collections.Array GetMatingCycleData()
+	{
 		return MatingCycleArray;
 	}
-	public Godot.Collections.Array GetHungerResistanceData(){
+	public Godot.Collections.Array GetHungerResistanceData()
+	{
 		return HungerResistanceArray;
 	}
-	public Godot.Collections.Array GetThirstResistanceData(){
+	public Godot.Collections.Array GetThirstResistanceData()
+	{
 		return ThirstResistanceArray;
 	}
-	public Godot.Collections.Array GetGestationData(){
+	public Godot.Collections.Array GetGestationData()
+	{
 		return GestationArray;
 	}
-	public Godot.Collections.Array GetLitterSizeData(){
+	public Godot.Collections.Array GetLitterSizeData()
+	{
 		return LitterSizeArray;
 	}
-	public Godot.Collections.Array GetLongevityData(){
+	public Godot.Collections.Array GetLongevityData()
+	{
 		return LongevityArray;
+	}
+
+	public int GetSpeciesCreationTime()
+	{
+		return SpeciesCreationTime;
 	}
 }
