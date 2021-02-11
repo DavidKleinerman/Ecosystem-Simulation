@@ -6,6 +6,7 @@ public class DataCollector
 	private int CurrentTimeTick = 0;
 	private int SpeciesCreationTime;
 	private Godot.Collections.Array PopulationSizeArray = (Godot.Collections.Array)new Godot.Collections.Array();
+	//genetic traits
 	private Godot.Collections.Array MaleFitness = (Godot.Collections.Array)new Godot.Collections.Array();
 	private Godot.Collections.Array SpeedArray = (Godot.Collections.Array)new Godot.Collections.Array();
 	private Godot.Collections.Array PerceptionArray = (Godot.Collections.Array)new Godot.Collections.Array();
@@ -15,6 +16,13 @@ public class DataCollector
 	private Godot.Collections.Array GestationArray = (Godot.Collections.Array)new Godot.Collections.Array();
 	private Godot.Collections.Array LitterSizeArray = (Godot.Collections.Array)new Godot.Collections.Array();
 	private Godot.Collections.Array LongevityArray = (Godot.Collections.Array)new Godot.Collections.Array();
+	//causes of death
+	private Godot.Collections.Array StarvationArray = (Godot.Collections.Array)new Godot.Collections.Array();
+	private Godot.Collections.Array DehydrationArray = (Godot.Collections.Array)new Godot.Collections.Array();
+	private Godot.Collections.Array OldAgeArray = (Godot.Collections.Array)new Godot.Collections.Array();
+	private int CurrentStarvationAmount = 0;
+	private int CurrentDehydrationAmount = 0;
+	private int CurrentOldAgeAmount = 0;
 
 	public DataCollector(Godot.Collections.Array initArray)
 	{
@@ -30,6 +38,9 @@ public class DataCollector
 			GestationArray.Add(0.0f);
 			LongevityArray.Add(0.0f);
 			LitterSizeArray.Add(0.0f);
+			StarvationArray.Add(0.0f);
+			DehydrationArray.Add(0.0f);
+			OldAgeArray.Add(0.0f);
 		}
 		CurrentTimeTick = initArray.Count - 1;
 		SpeciesCreationTime = CurrentTimeTick;
@@ -37,8 +48,10 @@ public class DataCollector
 
 	public void CollectData(Godot.Collections.Array creaturesInSpecies)
 	{
+		//update population and fitness data
 		PopulationSizeArray.Add((float)creaturesInSpecies.Count);
 		CollectMaleFitnessData(creaturesInSpecies);
+		//update genetic traits data
 		CollectTraitData(SpeedArray, Genome.GeneticTrait.Speed, creaturesInSpecies);
 		CollectTraitData(PerceptionArray, Genome.GeneticTrait.Perception, creaturesInSpecies);
 		CollectTraitData(MatingCycleArray, Genome.GeneticTrait.MatingCycle, creaturesInSpecies);
@@ -47,6 +60,14 @@ public class DataCollector
 		CollectTraitData(GestationArray, Genome.GeneticTrait.Gestation, creaturesInSpecies);
 		CollectTraitData(LitterSizeArray, Genome.GeneticTrait.LitterSize, creaturesInSpecies);
 		CollectTraitData(LongevityArray, Genome.GeneticTrait.Longevity, creaturesInSpecies);
+		//update causes of death data
+		CollectCauseOfDeathData(StarvationArray, CurrentStarvationAmount);
+		CollectCauseOfDeathData(DehydrationArray, CurrentDehydrationAmount);
+		CollectCauseOfDeathData(OldAgeArray, CurrentOldAgeAmount);
+		CurrentStarvationAmount = 0;
+		CurrentDehydrationAmount = 0;
+		CurrentOldAgeAmount = 0;
+		//update the current time tick
 		CurrentTimeTick++;
 	}
 
@@ -65,7 +86,11 @@ public class DataCollector
 		if (maleFitnessCount > 0)
 			MaleFitness.Add(maleFitnessSum / maleFitnessCount);
 		else MaleFitness.Add(0.0f);
-		GD.Print("male fitness: ", MaleFitness);
+	}
+
+	private void CollectCauseOfDeathData(Godot.Collections.Array causeOfDeathArray, int deathsAmount){
+		causeOfDeathArray.Add((float)deathsAmount);
+		GD.Print(causeOfDeathArray);
 	}
 
 	private void CollectTraitData(Godot.Collections.Array traitArray, Genome.GeneticTrait trait, Godot.Collections.Array creaturesInSpecies)
@@ -81,7 +106,17 @@ public class DataCollector
 			traitArray.Add(Sum / Count);
 		else
 			traitArray.Add(0.0f);
-		GD.Print(trait, ": ", traitArray);
+	}
+
+	public void updateStarvation(){
+		CurrentStarvationAmount++;
+	}
+
+	public void updateDehydration(){
+		CurrentDehydrationAmount++;
+	}
+	public void updateOldAge(){
+		CurrentOldAgeAmount++;
 	}
 
 	public float GetCurrentMaleFitness()

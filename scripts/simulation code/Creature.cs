@@ -31,6 +31,12 @@ public class Creature : Area
 		GivingBirth
 	}
 
+	public enum CauseOfDeath {
+		Starvation,
+		Dehydration,
+		OldAge
+	}
+
 	private State MyState;
 
 	private Spatial CurrentTarget;
@@ -118,13 +124,13 @@ public class Creature : Area
 		if (MyState != State.Eating) Energy -= ((BaseEnergyDecay - HungerResistance) * delta);
 		if (MyState != State.Drinking) Thirst += ((BaseThirstDecay - ThirstResistance) * delta);
 		if (Energy < 0){
-			Die("Starvation");
+			Die(Creature.CauseOfDeath.Starvation);
 		}
 		if (Thirst > 100){
-			Die("Dehydration");
+			Die(Creature.CauseOfDeath.Dehydration);
 		}
 		if (Age > Longevity){
-			Die("Old Age");
+			Die(Creature.CauseOfDeath.OldAge);
 		}
 		if (Pregnant){ //female only
 			PregnancyTime += delta;
@@ -211,7 +217,7 @@ public class Creature : Area
 		Velocity = new Vector3();
 	}
 
-	private void Die(String cause){
+	private void Die(Creature.CauseOfDeath cause){
 		if(MyState == State.GoingToPotentialPartner || MyState == State.Reproducing){
 			try {
 				CurrentTarget.GetParent<Creature>().SetState(State.ExploringTheEnvironment);
@@ -223,7 +229,6 @@ public class Creature : Area
 			CurrentTarget.GetParent().GetParent<GroundTile>().RemoveEater();
 		}
 		GetParent<Species>().AddDead(cause, ToGlobal(GetNode<Spatial>("PerceptionRadius").Translation));
-		GD.Print(SpeciesName + " Died of " + cause);
 		QueueFree();
 	}
 

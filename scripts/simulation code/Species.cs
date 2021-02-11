@@ -69,8 +69,19 @@ public class Species : Spatial
 		return SpeciesName;
 	}
 
-	public void AddDead(String cause, Vector3 position){
+	public void AddDead(Creature.CauseOfDeath cause, Vector3 position){
 		GetTree().CallGroup("SpeciesHolder", "AddDead", position);
+		switch (cause){
+			case Creature.CauseOfDeath.Starvation:
+				SpeciesDataCollector.updateStarvation();
+				break;
+			case Creature.CauseOfDeath.Dehydration:
+				SpeciesDataCollector.updateDehydration();
+				break;
+			case Creature.CauseOfDeath.OldAge:
+				SpeciesDataCollector.updateOldAge();
+				break;
+		}
 	}
 
 	public void CollectData(){
