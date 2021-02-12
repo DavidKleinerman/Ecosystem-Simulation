@@ -22,13 +22,16 @@ public class AddNewSpecies : Button
 	{
 		this.Visible = true;
 	}
+	private void _on_DisplayCharts_pressed()
+	{
+		this.Visible = false;
+	}
+	private void _on_CloseChartMenu_pressed()
+	{
+		this.Visible = true;
+	}
 
 }
-
-
-
-
-
 
 
 

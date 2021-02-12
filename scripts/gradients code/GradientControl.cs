@@ -91,14 +91,14 @@ public class GradientControl : Control
 		for(int i=0; i < dataArray.Count; i++){
 			Vector2 NewPoint;
 			if ( i == speciesCreationTime + 1){
-				Vector2 creationPoint = (Vector2) new Vector2((i+1)*880/dataArray.Count ,415);
+				Vector2 creationPoint = (Vector2) new Vector2((i+1)*1350/dataArray.Count ,520);
 				line.AddPoint(creationPoint);
 			}
 			if(i == 0){
-				NewPoint = (Vector2) new Vector2(10 ,415-(float)dataArray[i]*415f/MaxYvalue);
+				NewPoint = (Vector2) new Vector2(10 ,520-(float)dataArray[i]*520f/MaxYvalue);
 			}
 			else{
-				NewPoint = (Vector2) new Vector2((i+1)*880/dataArray.Count ,415-(float)dataArray[i]*415f/MaxYvalue);
+				NewPoint = (Vector2) new Vector2((i+1)*1350/dataArray.Count ,520-(float)dataArray[i]*520f/MaxYvalue);
 			}
 			line.AddPoint(NewPoint);
 		}

@@ -1,4 +1,4 @@
-[gd_scene load_steps=86 format=2]
+[gd_scene load_steps=73 format=2]
 
 [ext_resource path="res://scripts/simulation code/Simulation.cs" type="Script" id=1]
 [ext_resource path="res://scripts/simulation code/CameraHolder.cs" type="Script" id=2]
@@ -10,15 +10,6 @@
 [ext_resource path="res://assets/new species menu/Trait.tscn" type="PackedScene" id=8]
 [ext_resource path="res://scripts/sim UI code/new species menu/NewSpeciesContent.cs" type="Script" id=9]
 [ext_resource path="res://fonts/TitleFont.tres" type="DynamicFont" id=10]
-[ext_resource path="res://images/purple.png" type="Texture" id=11]
-[ext_resource path="res://images/blue.png" type="Texture" id=12]
-[ext_resource path="res://images/red.png" type="Texture" id=13]
-[ext_resource path="res://images/yellow.png" type="Texture" id=14]
-[ext_resource path="res://images/green.png" type="Texture" id=15]
-[ext_resource path="res://images/grey.png" type="Texture" id=16]
-[ext_resource path="res://images/lime.png" type="Texture" id=17]
-[ext_resource path="res://images/pink.png" type="Texture" id=18]
-[ext_resource path="res://images/orange.png" type="Texture" id=19]
 [ext_resource path="res://scripts/simulation code/SpeciesHolder.cs" type="Script" id=20]
 [ext_resource path="res://scripts/sim UI code/DisplayCharts.cs" type="Script" id=21]
 [ext_resource path="res://scripts/sim UI code/ItemList2.cs" type="Script" id=22]
@@ -75,18 +66,6 @@ bg_color = Color( 0.6, 0.6, 0.6, 0 )
 [sub_resource type="DynamicFont" id=11]
 size = 25
 font_data = ExtResource( 3 )
-
-[sub_resource type="StyleBoxFlat" id=12]
-bg_color = Color( 1, 1, 1, 1 )
-
-[sub_resource type="StyleBoxFlat" id=13]
-bg_color = Color( 0.6, 0.6, 0.6, 0 )
-
-[sub_resource type="StyleBoxFlat" id=14]
-bg_color = Color( 1, 1, 1, 1 )
-
-[sub_resource type="StyleBoxFlat" id=15]
-bg_color = Color( 0.6, 0.6, 0.6, 0 )
 
 [sub_resource type="DynamicFont" id=16]
 size = 20
@@ -498,33 +477,11 @@ margin_right = 600.0
 margin_bottom = 1080.0
 rect_min_size = Vector2( 0, 420 )
 
-[node name="ItemList" type="ItemList" parent="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent/RepresentationsPicker"]
-visible = false
-anchor_right = 1.0
-margin_left = 20.0
-margin_right = -10.0
-margin_bottom = 320.0
-rect_min_size = Vector2( 0, 320 )
-custom_styles/selected_focus = SubResource( 12 )
-custom_styles/bg_focus = SubResource( 13 )
-custom_styles/selected = SubResource( 14 )
-custom_styles/bg = SubResource( 15 )
-custom_constants/icon_margin = 5
-items = [ "", ExtResource( 15 ), false, "", ExtResource( 17 ), false, "", ExtResource( 14 ), false, "", ExtResource( 19 ), false, "", ExtResource( 13 ), false, "", ExtResource( 18 ), false, "", ExtResource( 11 ), false, "", ExtResource( 12 ), false, "", ExtResource( 16 ), false ]
-max_columns = 3
-same_column_width = true
-fixed_column_width = 182
-icon_mode = 0
-fixed_icon_size = Vector2( 160, 100 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="ColorPicker" type="ColorPicker" parent="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent/RepresentationsPicker"]
-margin_left = 50.0
-margin_top = 28.0
-margin_right = 550.0
-margin_bottom = 458.0
+margin_left = 58.0
+margin_top = 36.0
+margin_right = 558.0
+margin_bottom = 466.0
 rect_min_size = Vector2( 500, 420 )
 edit_alpha = false
 presets_enabled = false
@@ -604,9 +561,8 @@ shadow_contact = 16.0
 directional_shadow_mode = 0
 
 [node name="DisplayChartsMenu" type="Control" parent="."]
-margin_top = -3.63797
-margin_right = 1319.0
-margin_bottom = 1069.36
+margin_right = 1750.0
+margin_bottom = 1080.0
 script = ExtResource( 23 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -614,10 +570,7 @@ __meta__ = {
 
 [node name="ChartsBackground" type="ColorRect" parent="DisplayChartsMenu"]
 anchor_bottom = 1.0
-margin_left = -1.0
-margin_top = -1.0
-margin_right = 1320.0
-margin_bottom = 9.00208
+margin_right = 1750.0
 color = Color( 0, 0, 0, 0.627451 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -659,9 +612,9 @@ __meta__ = {
 
 [node name="Label" type="Label" parent="DisplayChartsMenu"]
 margin_left = 320.0
-margin_top = 15.121
+margin_top = 20.0
 margin_right = 770.0
-margin_bottom = 69.121
+margin_bottom = 74.0
 custom_fonts/font = SubResource( 23 )
 custom_colors/font_outline_modulate = Color( 1, 1, 1, 1 )
 text = "Gene Values"
@@ -670,10 +623,10 @@ __meta__ = {
 }
 
 [node name="Label3" type="Label" parent="DisplayChartsMenu"]
-margin_left = 320.0
-margin_top = 470.0
-margin_right = 770.0
-margin_bottom = 510.0
+margin_left = 1376.0
+margin_top = 20.0
+margin_right = 1826.0
+margin_bottom = 60.0
 custom_fonts/font = SubResource( 23 )
 custom_colors/font_outline_modulate = Color( 1, 1, 1, 1 )
 text = "Extra Charts"
@@ -682,10 +635,10 @@ __meta__ = {
 }
 
 [node name="Label2" type="Label" parent="DisplayChartsMenu"]
-margin_left = 320.0
-margin_top = 325.0
-margin_right = 770.0
-margin_bottom = 379.0
+margin_left = 1000.0
+margin_top = 20.0
+margin_right = 1450.0
+margin_bottom = 74.0
 custom_fonts/font = SubResource( 23 )
 custom_colors/font_outline_modulate = Color( 1, 1, 1, 1 )
 text = "Causes of Death"
@@ -694,11 +647,10 @@ __meta__ = {
 }
 
 [node name="DeathsGridContainer" type="GridContainer" parent="DisplayChartsMenu"]
-margin_left = 320.0
-margin_top = 370.0
-margin_right = 1486.0
-margin_bottom = 458.0
-columns = 3
+margin_left = 1000.0
+margin_top = 60.0
+margin_right = 1300.0
+margin_bottom = 332.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -713,9 +665,9 @@ text = "Sleep Deprivation"
 flat = true
 
 [node name="DeathsFromFreezingCheckButton" type="CheckButton" parent="DisplayChartsMenu/DeathsGridContainer"]
-margin_left = 304.0
-margin_right = 604.0
-margin_bottom = 42.0
+margin_top = 46.0
+margin_right = 300.0
+margin_bottom = 88.0
 rect_min_size = Vector2( 300, 0 )
 custom_fonts/font = SubResource( 25 )
 custom_colors/font_color = Color( 0.47451, 0.337255, 0.0588235, 1 )
@@ -726,9 +678,9 @@ __meta__ = {
 }
 
 [node name="DeathsFromHeatStrokeCheckButton" type="CheckButton" parent="DisplayChartsMenu/DeathsGridContainer"]
-margin_left = 608.0
-margin_right = 908.0
-margin_bottom = 42.0
+margin_top = 92.0
+margin_right = 300.0
+margin_bottom = 134.0
 rect_min_size = Vector2( 300, 0 )
 custom_fonts/font = SubResource( 26 )
 custom_colors/font_color = Color( 1, 0.788235, 0.960784, 1 )
@@ -740,9 +692,9 @@ __meta__ = {
 }
 
 [node name="DeathsFromBeingHuntedCheckButton" type="CheckButton" parent="DisplayChartsMenu/DeathsGridContainer"]
-margin_top = 46.0
+margin_top = 138.0
 margin_right = 300.0
-margin_bottom = 88.0
+margin_bottom = 180.0
 custom_fonts/font = SubResource( 27 )
 custom_colors/font_color = Color( 1, 0.976471, 0, 1 )
 custom_colors/font_color_pressed = Color( 1, 0.976471, 0, 1 )
@@ -753,10 +705,9 @@ __meta__ = {
 }
 
 [node name="DeathsFromDehydrationCheckButton" type="CheckButton" parent="DisplayChartsMenu/DeathsGridContainer"]
-margin_left = 304.0
-margin_top = 46.0
-margin_right = 604.0
-margin_bottom = 88.0
+margin_top = 184.0
+margin_right = 300.0
+margin_bottom = 226.0
 custom_fonts/font = SubResource( 28 )
 custom_colors/font_color = Color( 1, 0.447059, 0, 1 )
 custom_colors/font_color_pressed = Color( 1, 0.447059, 0, 1 )
@@ -767,10 +718,9 @@ __meta__ = {
 }
 
 [node name="DeathsFromStarvationCheckButton" type="CheckButton" parent="DisplayChartsMenu/DeathsGridContainer"]
-margin_left = 608.0
-margin_top = 46.0
-margin_right = 908.0
-margin_bottom = 88.0
+margin_top = 230.0
+margin_right = 300.0
+margin_bottom = 272.0
 custom_fonts/font = SubResource( 29 )
 custom_colors/font_color = Color( 0.74902, 0.631373, 0.768627, 1 )
 custom_colors/font_color_pressed = Color( 0.74902, 0.631373, 0.768627, 1 )
@@ -780,13 +730,25 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="DeathsFromOldAgeCheckButton" type="CheckButton" parent="DisplayChartsMenu/DeathsGridContainer"]
+margin_top = 276.0
+margin_right = 300.0
+margin_bottom = 318.0
+custom_fonts/font = SubResource( 29 )
+custom_colors/font_color = Color( 0.427451, 0.866667, 0.45098, 1 )
+custom_colors/font_color_pressed = Color( 0.427451, 0.866667, 0.45098, 1 )
+text = "Old Age"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="RunningSimGridContainer" type="GridContainer" parent="DisplayChartsMenu"]
-margin_left = 320.0
-margin_top = 510.0
-margin_right = 1486.0
-margin_bottom = 552.0
+margin_left = 1376.0
+margin_top = 60.0
+margin_right = 1676.0
+margin_bottom = 194.0
 rect_min_size = Vector2( 15, 0 )
-columns = 3
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -803,9 +765,9 @@ text = "Dietetic Composition"
 flat = true
 
 [node name="PlantBiomassCheckButton" type="CheckButton" parent="DisplayChartsMenu/RunningSimGridContainer"]
-margin_left = 304.0
-margin_right = 604.0
-margin_bottom = 42.0
+margin_top = 46.0
+margin_right = 300.0
+margin_bottom = 88.0
 rect_min_size = Vector2( 300, 0 )
 custom_fonts/font = SubResource( 31 )
 custom_colors/font_color = Color( 0, 0.52549, 0.0313726, 1 )
@@ -814,9 +776,9 @@ text = "PlantBiomass"
 flat = true
 
 [node name="PopulationSizeCheckButton" type="CheckButton" parent="DisplayChartsMenu/RunningSimGridContainer"]
-margin_left = 608.0
-margin_right = 908.0
-margin_bottom = 42.0
+margin_top = 92.0
+margin_right = 300.0
+margin_bottom = 134.0
 rect_min_size = Vector2( 300, 0 )
 custom_fonts/font = SubResource( 32 )
 custom_colors/font_color = Color( 0.823529, 0.835294, 0.584314, 1 )
@@ -829,10 +791,10 @@ __meta__ = {
 
 [node name="GeneValuesGridContainer" type="GridContainer" parent="DisplayChartsMenu"]
 margin_left = 320.0
-margin_top = 50.0
-margin_right = 1486.0
-margin_bottom = 322.0
-columns = 3
+margin_top = 60.0
+margin_right = 924.0
+margin_bottom = 470.0
+columns = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -865,9 +827,9 @@ __meta__ = {
 }
 
 [node name="StaminaCheckButton" type="CheckButton" parent="DisplayChartsMenu/GeneValuesGridContainer"]
-margin_left = 608.0
-margin_right = 908.0
-margin_bottom = 42.0
+margin_top = 46.0
+margin_right = 300.0
+margin_bottom = 88.0
 rect_min_size = Vector2( 300, 0 )
 custom_fonts/font = SubResource( 35 )
 custom_colors/font_color = Color( 0.52549, 0.713726, 0.501961, 1 )
@@ -879,8 +841,9 @@ __meta__ = {
 }
 
 [node name="DigestionCheckButton" type="CheckButton" parent="DisplayChartsMenu/GeneValuesGridContainer"]
+margin_left = 304.0
 margin_top = 46.0
-margin_right = 300.0
+margin_right = 604.0
 margin_bottom = 88.0
 custom_fonts/font = SubResource( 36 )
 custom_colors/font_color = Color( 0, 0.8, 0.56, 1 )
@@ -892,10 +855,9 @@ __meta__ = {
 }
 
 [node name="StrengthCheckButton" type="CheckButton" parent="DisplayChartsMenu/GeneValuesGridContainer"]
-margin_left = 304.0
-margin_top = 46.0
-margin_right = 604.0
-margin_bottom = 88.0
+margin_top = 92.0
+margin_right = 300.0
+margin_bottom = 134.0
 custom_fonts/font = SubResource( 37 )
 custom_colors/font_color = Color( 1, 0.596078, 0.596078, 1 )
 custom_colors/font_color_pressed = Color( 1, 0.596078, 0.596078, 1 )
@@ -921,10 +883,10 @@ __meta__ = {
 }
 
 [node name="LongevityCheckButton" type="CheckButton" parent="DisplayChartsMenu/GeneValuesGridContainer"]
-margin_left = 608.0
-margin_top = 46.0
-margin_right = 908.0
-margin_bottom = 88.0
+margin_left = 304.0
+margin_top = 92.0
+margin_right = 604.0
+margin_bottom = 134.0
 custom_fonts/font = SubResource( 39 )
 custom_colors/font_color = Color( 0.937255, 0, 1, 1 )
 custom_colors/font_color_pressed = Color( 0.937255, 0, 1, 1 )
@@ -935,9 +897,9 @@ __meta__ = {
 }
 
 [node name="HeatResistanceCheckButton" type="CheckButton" parent="DisplayChartsMenu/GeneValuesGridContainer"]
-margin_top = 92.0
+margin_top = 138.0
 margin_right = 300.0
-margin_bottom = 134.0
+margin_bottom = 180.0
 custom_fonts/font = SubResource( 40 )
 custom_colors/font_color = Color( 0.552941, 0, 0.247059, 1 )
 custom_colors/font_color_pressed = Color( 0.552941, 0, 0.247059, 1 )
@@ -949,9 +911,9 @@ __meta__ = {
 
 [node name="ColdResistanceCheckButton" type="CheckButton" parent="DisplayChartsMenu/GeneValuesGridContainer"]
 margin_left = 304.0
-margin_top = 92.0
+margin_top = 138.0
 margin_right = 604.0
-margin_bottom = 134.0
+margin_bottom = 180.0
 custom_fonts/font = SubResource( 41 )
 custom_colors/font_color = Color( 0, 1, 0.882353, 1 )
 custom_colors/font_color_pressed = Color( 0, 1, 0.882353, 1 )
@@ -962,10 +924,9 @@ __meta__ = {
 }
 
 [node name="MemoryCheckButton" type="CheckButton" parent="DisplayChartsMenu/GeneValuesGridContainer"]
-margin_left = 608.0
-margin_top = 92.0
-margin_right = 908.0
-margin_bottom = 134.0
+margin_top = 184.0
+margin_right = 300.0
+margin_bottom = 226.0
 custom_fonts/font = SubResource( 42 )
 custom_colors/font_color = Color( 0.458824, 0.0509804, 0.533333, 1 )
 custom_colors/font_color_pressed = Color( 0.458824, 0.0509804, 0.690196, 1 )
@@ -976,9 +937,10 @@ __meta__ = {
 }
 
 [node name="LitterSizeCheckButton" type="CheckButton" parent="DisplayChartsMenu/GeneValuesGridContainer"]
-margin_top = 138.0
-margin_right = 300.0
-margin_bottom = 180.0
+margin_left = 304.0
+margin_top = 184.0
+margin_right = 604.0
+margin_bottom = 226.0
 custom_fonts/font = SubResource( 43 )
 custom_colors/font_color = Color( 0.623529, 0, 0.0784314, 1 )
 custom_colors/font_color_pressed = Color( 0.623529, 0, 0.0784314, 1 )
@@ -989,10 +951,9 @@ __meta__ = {
 }
 
 [node name="IntelligenceCheckButton" type="CheckButton" parent="DisplayChartsMenu/GeneValuesGridContainer"]
-margin_left = 304.0
-margin_top = 138.0
-margin_right = 604.0
-margin_bottom = 180.0
+margin_top = 230.0
+margin_right = 300.0
+margin_bottom = 272.0
 custom_fonts/font = SubResource( 44 )
 custom_colors/font_color = Color( 0, 0.141176, 1, 1 )
 custom_colors/font_color_pressed = Color( 0, 0.141176, 1, 1 )
@@ -1000,10 +961,10 @@ text = "Intelligence"
 flat = true
 
 [node name="HungerResistanceCheckButton" type="CheckButton" parent="DisplayChartsMenu/GeneValuesGridContainer"]
-margin_left = 608.0
-margin_top = 138.0
-margin_right = 908.0
-margin_bottom = 180.0
+margin_left = 304.0
+margin_top = 230.0
+margin_right = 604.0
+margin_bottom = 272.0
 custom_fonts/font = SubResource( 45 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "Hunger Resistance"
@@ -1013,9 +974,9 @@ __meta__ = {
 }
 
 [node name="ThirstResistanceCheckButton" type="CheckButton" parent="DisplayChartsMenu/GeneValuesGridContainer"]
-margin_top = 184.0
+margin_top = 276.0
 margin_right = 300.0
-margin_bottom = 226.0
+margin_bottom = 318.0
 custom_fonts/font = SubResource( 46 )
 custom_colors/font_color = Color( 0.996078, 0, 0.945098, 1 )
 custom_colors/font_color_pressed = Color( 0.996078, 0, 0.945098, 1 )
@@ -1027,9 +988,9 @@ __meta__ = {
 
 [node name="GestationCheckButton" type="CheckButton" parent="DisplayChartsMenu/GeneValuesGridContainer"]
 margin_left = 304.0
-margin_top = 184.0
+margin_top = 276.0
 margin_right = 604.0
-margin_bottom = 226.0
+margin_bottom = 318.0
 custom_fonts/font = SubResource( 47 )
 custom_colors/font_color = Color( 1, 0.670588, 0, 1 )
 custom_colors/font_color_pressed = Color( 1, 0.670588, 0, 1 )
@@ -1040,10 +1001,9 @@ __meta__ = {
 }
 
 [node name="MatingCycleCheckButton" type="CheckButton" parent="DisplayChartsMenu/GeneValuesGridContainer"]
-margin_left = 608.0
-margin_top = 184.0
-margin_right = 908.0
-margin_bottom = 226.0
+margin_top = 322.0
+margin_right = 300.0
+margin_bottom = 364.0
 custom_fonts/font = SubResource( 48 )
 custom_colors/font_color = Color( 0.360784, 1, 0, 1 )
 custom_colors/font_color_pressed = Color( 0.360784, 1, 0, 1 )
@@ -1054,9 +1014,10 @@ __meta__ = {
 }
 
 [node name="PerceptionCheckButton" type="CheckButton" parent="DisplayChartsMenu/GeneValuesGridContainer"]
-margin_top = 230.0
-margin_right = 300.0
-margin_bottom = 272.0
+margin_left = 304.0
+margin_top = 322.0
+margin_right = 604.0
+margin_bottom = 364.0
 custom_fonts/font = SubResource( 49 )
 custom_colors/font_color_hover_pressed = Color( 0, 0, 0, 1 )
 custom_colors/font_color = Color( 0, 0.964706, 1, 1 )
@@ -1068,10 +1029,9 @@ __meta__ = {
 }
 
 [node name="SpeedCheckButton" type="CheckButton" parent="DisplayChartsMenu/GeneValuesGridContainer"]
-margin_left = 304.0
-margin_top = 230.0
-margin_right = 604.0
-margin_bottom = 272.0
+margin_top = 368.0
+margin_right = 300.0
+margin_bottom = 410.0
 custom_fonts/font = SubResource( 50 )
 custom_colors/font_color_hover_pressed = Color( 0, 0, 0, 1 )
 custom_colors/font_color = Color( 0.8, 0.129412, 0.129412, 1 )
@@ -1085,9 +1045,9 @@ __meta__ = {
 "GraphControl",
 ]]
 margin_left = 325.0
-margin_top = 568.0
-margin_right = 1219.0
-margin_bottom = 995.0
+margin_top = 500.0
+margin_right = 1680.0
+margin_bottom = 1030.0
 script = ExtResource( 25 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -1099,10 +1059,8 @@ default_color = Color( 0.52549, 0.713726, 0.501961, 1 )
 script = ExtResource( 26 )
 
 [node name="ColorRect" type="ColorRect" parent="DisplayChartsMenu/GradientControl"]
-margin_left = 2.0
-margin_top = 1.0
-margin_right = 894.0
-margin_bottom = 421.0
+anchor_right = 1.0
+anchor_bottom = 1.0
 color = Color( 0, 0, 0, 0.317647 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -1145,10 +1103,10 @@ antialiased = true
 script = ExtResource( 27 )
 
 [node name="LabelX" type="Label" parent="DisplayChartsMenu/GradientControl"]
-margin_left = 873.458
-margin_top = 410.143
-margin_right = 961.458
-margin_bottom = 461.143
+margin_left = 1340.0
+margin_top = 515.0
+margin_right = 1358.0
+margin_bottom = 533.0
 text = "X"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -1167,40 +1125,38 @@ __meta__ = {
 
 [node name="HSeparator" type="HSeparator" parent="DisplayChartsMenu/GradientControl"]
 margin_left = 9.0
-margin_top = 418.0
-margin_right = 866.0
-margin_bottom = 418.0
+margin_top = 520.0
+margin_right = 1334.0
+margin_bottom = 524.0
 
 [node name="HSeparator2" type="HSeparator" parent="DisplayChartsMenu/GradientControl"]
 margin_left = 4.0
-margin_top = 208.0
-margin_right = 891.0
-margin_bottom = 212.0
+margin_top = 260.0
+margin_right = 1354.0
+margin_bottom = 264.0
 
 [node name="VSeparator" type="VSeparator" parent="DisplayChartsMenu/GradientControl"]
-margin_left = -9.0
+margin_left = 6.0
 margin_top = 18.0
-margin_right = 28.0
-margin_bottom = 420.0
+margin_right = 12.0
+margin_bottom = 523.0
 
 [node name="Label" type="Label" parent="DisplayChartsMenu/GradientControl"]
-margin_left = -0.0933199
-margin_top = 420.085
-margin_right = 39.9067
-margin_bottom = 434.085
+margin_top = 532.0
+margin_right = 40.0
+margin_bottom = 546.0
 text = "(0,0)"
 
 [node name="MidLabel" type="Label" parent="DisplayChartsMenu/GradientControl"]
 margin_left = -45.0
-margin_top = 202.506
+margin_top = 255.0
 margin_right = -4.99998
-margin_bottom = 216.506
+margin_bottom = 269.0
 
 [node name="MaxLabel" type="Label" parent="DisplayChartsMenu/GradientControl"]
 margin_left = -45.0
-margin_top = 6.0
 margin_right = -4.99998
-margin_bottom = 20.0
+margin_bottom = 14.0
 
 [node name="LongevityGradient" type="Line2D" parent="DisplayChartsMenu/GradientControl"]
 width = 3.0
@@ -1226,28 +1182,30 @@ script = ExtResource( 35 )
 [connection signal="mouse_entered" from="Control/StartSimulation" to="." method="_on_StartSimulation_mouse_entered"]
 [connection signal="mouse_exited" from="Control/StartSimulation" to="." method="_on_StartSimulation_mouse_exited"]
 [connection signal="pressed" from="Control/StartSimulation" to="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent" method="_on_StartSimulation_pressed"]
+[connection signal="pressed" from="Control/StartSimulation" to="Control/ItemList" method="_on_StartSimulation_pressed"]
+[connection signal="pressed" from="Control/StartSimulation" to="Control/AddNewSpecies" method="_on_StartSimulation_pressed"]
+[connection signal="pressed" from="Control/StartSimulation" to="Control/StartSimulation" method="_on_StartSimulation_pressed"]
+[connection signal="pressed" from="Control/StartSimulation" to="Control/DisplayCharts" method="_on_StartSimulation_pressed"]
 [connection signal="pressed" from="Control/StartSimulation" to="SpeciesHolder" method="_on_StartSimulation_pressed"]
 [connection signal="pressed" from="Control/StartSimulation" to="." method="_on_StartSimulation_pressed"]
-[connection signal="pressed" from="Control/StartSimulation" to="Control/DisplayCharts" method="_on_StartSimulation_pressed"]
-[connection signal="pressed" from="Control/StartSimulation" to="Control/ItemList" method="_on_StartSimulation_pressed"]
-[connection signal="pressed" from="Control/StartSimulation" to="Control/StartSimulation" method="_on_StartSimulation_pressed"]
-[connection signal="pressed" from="Control/StartSimulation" to="Control/AddNewSpecies" method="_on_StartSimulation_pressed"]
 [connection signal="pressed" from="Control/AddNewSpecies" to="CameraHolder" method="_on_AddNewSpecies_pressed"]
 [connection signal="pressed" from="Control/AddNewSpecies" to="NewSpeciesMenu" method="_on_AddNewSpecies_pressed"]
-[connection signal="pressed" from="Control/AddNewSpecies" to="Control/DisplayCharts" method="_on_AddNewSpecies_pressed"]
 [connection signal="pressed" from="Control/AddNewSpecies" to="Control/AddNewSpecies" method="_on_AddNewSpecies_pressed"]
+[connection signal="pressed" from="Control/AddNewSpecies" to="Control/DisplayCharts" method="_on_AddNewSpecies_pressed"]
 [connection signal="pressed" from="Control/DisplayCharts" to="DisplayChartsMenu" method="_on_DisplayCharts_pressed"]
 [connection signal="pressed" from="Control/DisplayCharts" to="DisplayChartsMenu/GradientControl" method="_on_DisplayCharts_pressed"]
+[connection signal="pressed" from="Control/DisplayCharts" to="Control/AddNewSpecies" method="_on_DisplayCharts_pressed"]
 [connection signal="pressed" from="Control/DisplayCharts" to="Control/DisplayCharts" method="_on_DisplayCharts_pressed"]
 [connection signal="pressed" from="Control/DisplayCharts" to="DisplayChartsMenu/ItemList2" method="_on_DisplayCharts_pressed"]
 [connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="CameraHolder" method="_on_CloseNewSpecies_pressed"]
 [connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="NewSpeciesMenu" method="_on_CloseNewSpecies_pressed"]
-[connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="Control/DisplayCharts" method="_on_CloseNewSpecies_pressed"]
 [connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="Control/AddNewSpecies" method="_on_CloseNewSpecies_pressed"]
+[connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="Control/DisplayCharts" method="_on_CloseNewSpecies_pressed"]
 [connection signal="gui_input" from="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent/SpeciesName/LineEdit" to="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent" method="_on_LineEdit_gui_input"]
 [connection signal="pressed" from="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent/CreateNewSpecies/NewSpeciesButton" to="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent" method="_on_NewSpeciesButton_pressed"]
 [connection signal="pressed" from="DisplayChartsMenu/CloseChartMenu" to="DisplayChartsMenu" method="_on_CloseChartMenu_pressed"]
 [connection signal="pressed" from="DisplayChartsMenu/CloseChartMenu" to="DisplayChartsMenu/GradientControl" method="_on_CloseChartMenu_pressed"]
+[connection signal="pressed" from="DisplayChartsMenu/CloseChartMenu" to="Control/AddNewSpecies" method="_on_CloseChartMenu_pressed"]
 [connection signal="pressed" from="DisplayChartsMenu/CloseChartMenu" to="Control/DisplayCharts" method="_on_CloseChartMenu_pressed"]
 [connection signal="item_selected" from="DisplayChartsMenu/ItemList2" to="DisplayChartsMenu/GradientControl" method="_on_ItemList2_item_selected"]
 [connection signal="toggled" from="DisplayChartsMenu/RunningSimGridContainer/PopulationSizeCheckButton" to="DisplayChartsMenu/GradientControl/PopulationSizeGraph" method="_on_PopulationSizeCheckButton_toggled"]
