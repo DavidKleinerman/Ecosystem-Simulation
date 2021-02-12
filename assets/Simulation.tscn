@@ -1,4 +1,4 @@
-[gd_scene load_steps=73 format=2]
+[gd_scene load_steps=76 format=2]
 
 [ext_resource path="res://scripts/simulation code/Simulation.cs" type="Script" id=1]
 [ext_resource path="res://scripts/simulation code/CameraHolder.cs" type="Script" id=2]
@@ -10,6 +10,9 @@
 [ext_resource path="res://assets/new species menu/Trait.tscn" type="PackedScene" id=8]
 [ext_resource path="res://scripts/sim UI code/new species menu/NewSpeciesContent.cs" type="Script" id=9]
 [ext_resource path="res://fonts/TitleFont.tres" type="DynamicFont" id=10]
+[ext_resource path="res://scripts/gradients code/DehydrationGraph.cs" type="Script" id=11]
+[ext_resource path="res://scripts/gradients code/OldAgeGraph.cs" type="Script" id=12]
+[ext_resource path="res://scripts/gradients code/StarvationGraph.cs" type="Script" id=13]
 [ext_resource path="res://scripts/simulation code/SpeciesHolder.cs" type="Script" id=20]
 [ext_resource path="res://scripts/sim UI code/DisplayCharts.cs" type="Script" id=21]
 [ext_resource path="res://scripts/sim UI code/ItemList2.cs" type="Script" id=22]
@@ -1140,11 +1143,15 @@ margin_left = 6.0
 margin_top = 18.0
 margin_right = 12.0
 margin_bottom = 523.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Label" type="Label" parent="DisplayChartsMenu/GradientControl"]
-margin_top = 532.0
-margin_right = 40.0
-margin_bottom = 546.0
+margin_left = -30.0
+margin_top = 515.0
+margin_right = -2.0
+margin_bottom = 529.0
 text = "(0,0)"
 
 [node name="MidLabel" type="Label" parent="DisplayChartsMenu/GradientControl"]
@@ -1175,6 +1182,24 @@ width = 3.0
 default_color = Color( 0.823529, 0.835294, 0.584314, 1 )
 antialiased = true
 script = ExtResource( 35 )
+
+[node name="StarvationGraph" type="Line2D" parent="DisplayChartsMenu/GradientControl"]
+width = 3.0
+default_color = Color( 0.74902, 0.631373, 0.768627, 1 )
+antialiased = true
+script = ExtResource( 13 )
+
+[node name="DehydrationGraph" type="Line2D" parent="DisplayChartsMenu/GradientControl"]
+width = 3.0
+default_color = Color( 1, 0.447059, 0, 1 )
+antialiased = true
+script = ExtResource( 11 )
+
+[node name="OldAgeGraph" type="Line2D" parent="DisplayChartsMenu/GradientControl"]
+width = 3.0
+default_color = Color( 0.427451, 0.866667, 0.45098, 1 )
+antialiased = true
+script = ExtResource( 12 )
 [connection signal="timeout" from="SpeciesHolder/GlobalTimeTicks" to="SpeciesHolder" method="_on_GlobalTimeTicks_timeout"]
 [connection signal="item_selected" from="Control/ItemList" to="." method="_on_ItemList_item_selected"]
 [connection signal="mouse_entered" from="Control/ItemList" to="." method="_on_ItemList_mouse_entered"]
@@ -1208,6 +1233,9 @@ script = ExtResource( 35 )
 [connection signal="pressed" from="DisplayChartsMenu/CloseChartMenu" to="Control/AddNewSpecies" method="_on_CloseChartMenu_pressed"]
 [connection signal="pressed" from="DisplayChartsMenu/CloseChartMenu" to="Control/DisplayCharts" method="_on_CloseChartMenu_pressed"]
 [connection signal="item_selected" from="DisplayChartsMenu/ItemList2" to="DisplayChartsMenu/GradientControl" method="_on_ItemList2_item_selected"]
+[connection signal="toggled" from="DisplayChartsMenu/DeathsGridContainer/DeathsFromDehydrationCheckButton" to="DisplayChartsMenu/GradientControl/DehydrationGraph" method="_on_DeathsFromDehydrationCheckButton_toggled"]
+[connection signal="toggled" from="DisplayChartsMenu/DeathsGridContainer/DeathsFromStarvationCheckButton" to="DisplayChartsMenu/GradientControl/StarvationGraph" method="_on_DeathsFromStarvationCheckButton_toggled"]
+[connection signal="toggled" from="DisplayChartsMenu/DeathsGridContainer/DeathsFromOldAgeCheckButton" to="DisplayChartsMenu/GradientControl/OldAgeGraph" method="_on_DeathsFromOldAgeCheckButton_toggled"]
 [connection signal="toggled" from="DisplayChartsMenu/RunningSimGridContainer/PopulationSizeCheckButton" to="DisplayChartsMenu/GradientControl/PopulationSizeGraph" method="_on_PopulationSizeCheckButton_toggled"]
 [connection signal="toggled" from="DisplayChartsMenu/GeneValuesGridContainer/StaminaCheckButton" to="DisplayChartsMenu/GradientControl/StaminaGradient" method="_on_StaminaCheckButton_toggled"]
 [connection signal="toggled" from="DisplayChartsMenu/GeneValuesGridContainer/LongevityCheckButton" to="DisplayChartsMenu/GradientControl/LongevityGradient" method="_on_LongevityCheckButton_toggled"]

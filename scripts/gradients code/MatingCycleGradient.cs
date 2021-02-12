@@ -16,5 +16,6 @@ public class MatingCycleGradient : Line2D
 		if(!button_pressed){
 			this.Visible = false;
 		}
+		GetTree().CallGroup("GraphControl", "RefreshGraphs");
 	}
 }

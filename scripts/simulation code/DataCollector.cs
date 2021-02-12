@@ -161,6 +161,18 @@ public class DataCollector
 		return PopulationSizeArray;
 	}
 
+	public Godot.Collections.Array GetStarvationData(){
+		return StarvationArray;
+	}
+
+	public Godot.Collections.Array GetDehydrationData(){
+		return DehydrationArray;
+	}
+
+	public Godot.Collections.Array GetOldAgeData(){
+		return OldAgeArray;
+	}
+
 	public int GetSpeciesCreationTime()
 	{
 		return SpeciesCreationTime;

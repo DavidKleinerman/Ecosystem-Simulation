@@ -1,20 +1,25 @@
 using Godot;
 using System;
 
-public class LitterSizeGradient : Line2D
+public class StarvationGraph : Line2D
 {
 	public override void _Ready()
 	{
 		this.Visible = false;
 	}
-	private void _on_LitterSizeCheckButton_toggled(bool button_pressed)
+
+
+	private void _on_DeathsFromStarvationCheckButton_toggled(bool button_pressed)
 	{
 		if(button_pressed){
 			this.Visible = true;
 		}
-		if(!button_pressed){
+		else {
 			this.Visible = false;
 		}
 		GetTree().CallGroup("GraphControl", "RefreshGraphs");
 	}
 }
+
+
+
