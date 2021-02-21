@@ -24,19 +24,19 @@ public class Simulation : Spatial
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		Vector3 position = (Vector3) new Vector3(0,0,0);
-		position.x = -62;
-		position.z = -62;
-		for(int i = 0; i < 32; i++){
-			for(int j = 0; j < 32; j++){
-				AddTile(WaterTile, position);
-				position.z += 4;
-			}
-			position.x += 4;
-			position.z = -62;
-		}
-		TileSelectInst = TileSelector.Instance();
-		AddChild(TileSelectInst);
+		// Vector3 position = (Vector3) new Vector3(0,0,0);
+		// position.x = -62;
+		// position.z = -62;
+		// for(int i = 0; i < 32; i++){
+		// 	for(int j = 0; j < 32; j++){
+		// 		AddTile(WaterTile, position);
+		// 		position.z += 4;
+		// 	}
+		// 	position.x += 4;
+		// 	position.z = -62;
+		// }
+		// TileSelectInst = TileSelector.Instance();
+		// AddChild(TileSelectInst);
 	}
 
 	private void _on_StartSimulation_pressed()
@@ -140,11 +140,11 @@ public class Simulation : Spatial
 		}
 	}
 
-	public override void _PhysicsProcess(float delta)
-	{
-		if (isWorldBuilding && !mouseOnList)
-			SelectBiome();
-	}
+	// public override void _PhysicsProcess(float delta)
+	// {
+	// 	if (isWorldBuilding && !mouseOnList)
+	// 		SelectBiome();
+	// }
 
 	private void _on_ItemList_item_selected(int index)
 	{
@@ -152,70 +152,70 @@ public class Simulation : Spatial
 		GD.Print(index, "\n");
 	}
 
-	private void SelectBiome(){
-		Node selectedTile = GetObjectUnderMouse();
-		//GD.Print(selectedTile.Name);
-		if (selectedTile.Name == "StaticBody"){
-			Vector3 selectedPos = ((Spatial)selectedTile).ToGlobal(((Spatial)selectedTile).Translation);
-			Vector3 tileSelectorPos = selectedPos;
-			tileSelectorPos.y += 1;
-			((Spatial)TileSelectInst).Translation = tileSelectorPos;
-			if(Input.IsActionPressed("ui_select")){
-				ReplaceBiome(selectedPos);
-			}
-		}
+	// private void SelectBiome(){
+	// 	Node selectedTile = GetObjectUnderMouse();
+	// 	//GD.Print(selectedTile.Name);
+	// 	if (selectedTile.Name == "StaticBody"){
+	// 		Vector3 selectedPos = ((Spatial)selectedTile).ToGlobal(((Spatial)selectedTile).Translation);
+	// 		Vector3 tileSelectorPos = selectedPos;
+	// 		tileSelectorPos.y += 1;
+	// 		((Spatial)TileSelectInst).Translation = tileSelectorPos;
+	// 		if(Input.IsActionPressed("ui_select")){
+	// 			ReplaceBiome(selectedPos);
+	// 		}
+	// 	}
 
-	}
+	// }
 
-	private void ReplaceBiome(Vector3 selectedPos){
-		//GD.Print(selectedPos);
-		foreach (Node n in GetChildren()){
-			if (n.Name != "Control" && n.Name != "SpeciesHolder" && n.Name != "DirectionalLight" && n.Name != "NewSpeciesMenu" && n.Name != "DisplayChartsMenu" && n.Name != "GradientControl"){
-				Vector3 position = ((Spatial)n).Translation;
-				if (position.x == selectedPos.x && position.y == selectedPos.y && position.z == selectedPos.z){
-					GD.Print("Found it!\n");
-					n.QueueFree();
-					break;
-				}
-			}
-		}
-		switch(selectedBiome){
-			case 0:
-				AddTile(ForestTile, selectedPos);
-			break;
-			case 1:
-				AddTile(GrasslandTile, selectedPos);
-			break;
-			case 2:
-				AddTile(DesertTile, selectedPos);
-			break;
-			case 3:
-				AddTile(TundraTile, selectedPos);
-			break;
-			case 4:
-				AddTile(WaterTile, selectedPos);
-			break;
-		}
-	}
+	// private void ReplaceBiome(Vector3 selectedPos){
+	// 	//GD.Print(selectedPos);
+	// 	foreach (Node n in GetChildren()){
+	// 		if (n.Name != "Control" && n.Name != "SpeciesHolder" && n.Name != "DirectionalLight" && n.Name != "NewSpeciesMenu" && n.Name != "DisplayChartsMenu" && n.Name != "GradientControl"){
+	// 			Vector3 position = ((Spatial)n).Translation;
+	// 			if (position.x == selectedPos.x && position.y == selectedPos.y && position.z == selectedPos.z){
+	// 				GD.Print("Found it!\n");
+	// 				n.QueueFree();
+	// 				break;
+	// 			}
+	// 		}
+	// 	}
+	// 	switch(selectedBiome){
+	// 		case 0:
+	// 			AddTile(ForestTile, selectedPos);
+	// 		break;
+	// 		case 1:
+	// 			AddTile(GrasslandTile, selectedPos);
+	// 		break;
+	// 		case 2:
+	// 			AddTile(DesertTile, selectedPos);
+	// 		break;
+	// 		case 3:
+	// 			AddTile(TundraTile, selectedPos);
+	// 		break;
+	// 		case 4:
+	// 			AddTile(WaterTile, selectedPos);
+	// 		break;
+	// 	}
+	// }
 
-	private void AddTile(PackedScene tileType, Vector3 position){
-		Node newTileInst = tileType.Instance();
-		((Spatial)newTileInst).Translation = position;
-		AddChild(newTileInst);
-	}
+	// private void AddTile(PackedScene tileType, Vector3 position){
+	// 	Node newTileInst = tileType.Instance();
+	// 	((Spatial)newTileInst).Translation = position;
+	// 	AddChild(newTileInst);
+	// }
 
-	private Node GetObjectUnderMouse(){
-		Vector2 mousePos = (Vector2) new Vector2(0, 0);
-		mousePos = GetViewport().GetMousePosition();
-		Vector3 rayFrom = ToGlobal(((Camera)GetNode("CameraHolder/Camera")).ProjectRayOrigin(mousePos));
-		Vector3 rayTo = rayFrom + ToGlobal(((Camera)GetNode("CameraHolder/Camera")).ProjectRayNormal(mousePos)) * 10000;
-		PhysicsDirectSpaceState spaceState = GetWorld().DirectSpaceState;
-		var hit = spaceState.IntersectRay(rayFrom, rayTo);
-		Node selection = (Node) new Node();
-		if (hit.Contains("collider"))
-			selection = (Node)hit["collider"];
-		return selection;
-	}
+	// private Node GetObjectUnderMouse(){
+	// 	Vector2 mousePos = (Vector2) new Vector2(0, 0);
+	// 	mousePos = GetViewport().GetMousePosition();
+	// 	Vector3 rayFrom = ToGlobal(((Camera)GetNode("CameraHolder/Camera")).ProjectRayOrigin(mousePos));
+	// 	Vector3 rayTo = rayFrom + ToGlobal(((Camera)GetNode("CameraHolder/Camera")).ProjectRayNormal(mousePos)) * 10000;
+	// 	PhysicsDirectSpaceState spaceState = GetWorld().DirectSpaceState;
+	// 	var hit = spaceState.IntersectRay(rayFrom, rayTo);
+	// 	Node selection = (Node) new Node();
+	// 	if (hit.Contains("collider"))
+	// 		selection = (Node)hit["collider"];
+	// 	return selection;
+	// }
 
 	private void _on_ItemList_mouse_entered()
 	{

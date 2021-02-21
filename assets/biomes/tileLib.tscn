@@ -1,0 +1,48 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://materials/forest_material.tres" type="Material" id=1]
+[ext_resource path="res://materials/desert_material.tres" type="Material" id=2]
+[ext_resource path="res://materials/tundra_material.tres" type="Material" id=3]
+[ext_resource path="res://materials/water_material.tres" type="Material" id=4]
+[ext_resource path="res://materials/grassland_material.tres" type="Material" id=5]
+
+[sub_resource type="CubeMesh" id=1]
+size = Vector3( 4, 2, 4 )
+
+[sub_resource type="CubeMesh" id=2]
+size = Vector3( 4, 2, 4 )
+
+[sub_resource type="CubeMesh" id=3]
+size = Vector3( 4, 2, 4 )
+
+[sub_resource type="CubeMesh" id=4]
+size = Vector3( 4, 2, 4 )
+
+[sub_resource type="CubeMesh" id=5]
+size = Vector3( 4, 1.4, 4 )
+
+[node name="Spatial" type="Spatial"]
+
+[node name="ForestTile" type="MeshInstance" parent="."]
+mesh = SubResource( 1 )
+material/0 = ExtResource( 1 )
+
+[node name="DesertTile" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0 )
+mesh = SubResource( 2 )
+material/0 = ExtResource( 2 )
+
+[node name="GrasslandTile" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 0 )
+mesh = SubResource( 3 )
+material/0 = ExtResource( 5 )
+
+[node name="TundraTile" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 0 )
+mesh = SubResource( 4 )
+material/0 = ExtResource( 3 )
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 0 )
+mesh = SubResource( 5 )
+material/0 = ExtResource( 4 )
