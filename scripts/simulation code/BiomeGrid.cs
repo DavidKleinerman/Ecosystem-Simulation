@@ -3,11 +3,9 @@ using System;
 
 public class BiomeGrid : GridMap
 {
-	// Declare member variables here. Examples:
-	// private int a = 2;
-	// private string b = "text";
-
-	// Called when the node enters the scene tree for the first time.
+	private PackedScene TileSelector = (PackedScene)GD.Load("res://assets/TileSelector.tscn");
+	private PackedScene WallCollider = (PackedScene)GD.Load("res://assets/biomes/WallCollider.tscn");
+	private PackedScene TileCollider = (PackedScene)GD.Load("res://assets/biomes/TileCollider.tscn");
 	public override void _Ready()
 	{
 		Vector3 position = (Vector3) new Vector3(0,0,0);
@@ -20,6 +18,21 @@ public class BiomeGrid : GridMap
 			}
 			position.x += 1;
 			position.z = -16;
+		}
+
+		position = (Vector3) new Vector3(0,1,0);
+		position.x = -62;
+		position.z = -62;
+		for(int i = 0; i < 32; i++){
+			for(int j = 0; j < 32; j++){
+				Spatial tileCollInst = (Spatial)TileCollider.Instance();
+				tileCollInst.Translation = position;
+				tileCollInst.Scale = (Vector3) new Vector3(2, 0.7f, 2);
+				AddChild(tileCollInst);
+				position.z += 4;
+			}
+			position.x += 4;
+			position.z = -62;
 		}
 		//TileSelectInst = TileSelector.Instance();
 		//AddChild(TileSelectInst);
