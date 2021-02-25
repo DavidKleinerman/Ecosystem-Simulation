@@ -8,6 +8,8 @@ public class BiomeGrid : GridMap
 	private PackedScene TileCollider = (PackedScene)GD.Load("res://assets/biomes/TileCollider.tscn");
 	private int selectedBiome = 4; //forest = 0, grassland = 1, desert = 2, tundra = 3, water = 4
 	private bool mouseOnGUI = false;
+	private bool isWorldBuilding = true;
+	private Node TileSelectInst;
 	public override void _Ready()
 	{
 		Vector3 position = (Vector3) new Vector3(0,0,0);
@@ -36,8 +38,8 @@ public class BiomeGrid : GridMap
 			position.x += 4;
 			position.z = -62;
 		}
-		//TileSelectInst = TileSelector.Instance();
-		//AddChild(TileSelectInst);
+		TileSelectInst = TileSelector.Instance();
+		AddChild(TileSelectInst);
 	}
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -45,6 +47,65 @@ public class BiomeGrid : GridMap
 //  {
 //      
 //  }
+
+	public override void _PhysicsProcess(float delta)
+	{
+		if (isWorldBuilding && !mouseOnGUI)
+			SelectBiome();
+	}
+
+	private void SelectBiome(){
+		Node selectedTile = GetObjectUnderMouse();
+		if (selectedTile.IsInGroup("TileColliders")){
+			Vector3 selectedPos = ToLocal(((Spatial)selectedTile).Translation);
+			selectedPos.y += 1;
+			((Spatial)TileSelectInst).Translation = selectedPos;
+			selectedPos.y -= 1;
+			if(Input.IsActionPressed("ui_select")){
+				ReplaceBiome(selectedPos);
+			}
+		}
+
+	}
+
+	private void ReplaceBiome(Vector3 selectedPos){
+		switch(selectedBiome){
+			case 0:
+				SetCellItem((int)WorldToMap(selectedPos).x, (int)WorldToMap(selectedPos).y, (int)WorldToMap(selectedPos).z, 0);
+			break;
+			case 1:
+				SetCellItem((int)WorldToMap(selectedPos).x, (int)WorldToMap(selectedPos).y, (int)WorldToMap(selectedPos).z, 2);
+			break;
+			case 2:
+				SetCellItem((int)WorldToMap(selectedPos).x, (int)WorldToMap(selectedPos).y, (int)WorldToMap(selectedPos).z, 1);
+			break;
+			case 3:
+				SetCellItem((int)WorldToMap(selectedPos).x, (int)WorldToMap(selectedPos).y, (int)WorldToMap(selectedPos).z, 3);
+			break;
+			case 4:
+				SetCellItem((int)WorldToMap(selectedPos).x, (int)WorldToMap(selectedPos).y, (int)WorldToMap(selectedPos).z, 4);
+			break;
+		}
+	}
+
+	private void AddTile(PackedScene tileType, Vector3 position){
+		Node newTileInst = tileType.Instance();
+		((Spatial)newTileInst).Translation = position;
+		AddChild(newTileInst);
+	}
+
+	private Node GetObjectUnderMouse(){
+		Vector2 mousePos = (Vector2) new Vector2(0, 0);
+		mousePos = GetViewport().GetMousePosition();
+		Vector3 rayFrom = ToGlobal(((Camera)GetNode("../CameraHolder/Camera")).ProjectRayOrigin(mousePos));
+		Vector3 rayTo = rayFrom + ToGlobal(((Camera)GetNode("../CameraHolder/Camera")).ProjectRayNormal(mousePos)) * 10000;
+		PhysicsDirectSpaceState spaceState = GetWorld().DirectSpaceState;
+		var hit = spaceState.IntersectRay(rayFrom, rayTo);
+		Node selection = (Node) new Node();
+		if (hit.Contains("collider"))
+			selection = (Node)hit["collider"];
+		return selection;
+	}
 
 	private void _on_ItemList_item_selected(int index)
 	{

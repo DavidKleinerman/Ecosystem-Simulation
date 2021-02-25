@@ -6,14 +6,17 @@
 
 [sub_resource type="SpatialMaterial" id=3]
 flags_transparent = true
-albedo_color = Color( 1, 1, 1, 0.380392 )
+albedo_color = Color( 1, 1, 1, 0.117647 )
 
-[node name="TileCollision" type="StaticBody"]
+[node name="TileCollision" type="StaticBody" groups=[
+"TileColliders",
+]]
 transform = Transform( 2, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
+visible = false
 mesh = SubResource( 2 )
 material/0 = SubResource( 3 )
