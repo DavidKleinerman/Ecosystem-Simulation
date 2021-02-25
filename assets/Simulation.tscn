@@ -1214,10 +1214,15 @@ __meta__ = {
 "_editor_clip_": 0
 }
 [connection signal="timeout" from="SpeciesHolder/GlobalTimeTicks" to="SpeciesHolder" method="_on_GlobalTimeTicks_timeout"]
+[connection signal="item_selected" from="Control/ItemList" to="BiomeGrid" method="_on_ItemList_item_selected"]
 [connection signal="item_selected" from="Control/ItemList" to="." method="_on_ItemList_item_selected"]
+[connection signal="mouse_entered" from="Control/ItemList" to="BiomeGrid" method="_on_ItemList_mouse_entered"]
 [connection signal="mouse_entered" from="Control/ItemList" to="." method="_on_ItemList_mouse_entered"]
+[connection signal="mouse_exited" from="Control/ItemList" to="BiomeGrid" method="_on_ItemList_mouse_exited"]
 [connection signal="mouse_exited" from="Control/ItemList" to="." method="_on_ItemList_mouse_exited"]
+[connection signal="mouse_entered" from="Control/StartSimulation" to="BiomeGrid" method="_on_StartSimulation_mouse_entered"]
 [connection signal="mouse_entered" from="Control/StartSimulation" to="." method="_on_StartSimulation_mouse_entered"]
+[connection signal="mouse_exited" from="Control/StartSimulation" to="BiomeGrid" method="_on_StartSimulation_mouse_exited"]
 [connection signal="mouse_exited" from="Control/StartSimulation" to="." method="_on_StartSimulation_mouse_exited"]
 [connection signal="pressed" from="Control/StartSimulation" to="." method="_on_StartSimulation_pressed"]
 [connection signal="pressed" from="Control/StartSimulation" to="SpeciesHolder" method="_on_StartSimulation_pressed"]

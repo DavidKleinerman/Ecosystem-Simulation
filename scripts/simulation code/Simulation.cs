@@ -149,7 +149,7 @@ public class Simulation : Spatial
 	private void _on_ItemList_item_selected(int index)
 	{
 		selectedBiome = index;
-		GD.Print(index, "\n");
+		// GD.Print(index, "\n");
 	}
 
 	// private void SelectBiome(){
