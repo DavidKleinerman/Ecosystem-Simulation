@@ -41,15 +41,15 @@ public class Simulation : Spatial
 
 	private void _on_StartSimulation_pressed()
 	{
-		GetTree().CallGroup("GroundTiles", "RemoveCollider");
-		GetTree().CallGroup("GroundTiles", "StartTimer");
-		GetTree().CallGroup("WaterTiles", "RemoveCollider");
-		GetTree().CallGroup("WaterTiles", "AddWallCollider");
-		TileSelectInst.QueueFree();
-		isWorldBuilding = false;
-		for(int i = 0; i <= 3; i++){
-			AddWall(i);
-		}
+		// GetTree().CallGroup("GroundTiles", "RemoveCollider");
+		// GetTree().CallGroup("GroundTiles", "StartTimer");
+		// GetTree().CallGroup("WaterTiles", "RemoveCollider");
+		// GetTree().CallGroup("WaterTiles", "AddWallCollider");
+		// TileSelectInst.QueueFree();
+		// isWorldBuilding = false;
+		// for(int i = 0; i <= 3; i++){
+		// 	AddWall(i);
+		// }
 		/*for (int i = 0; i < 34; i++){
 			if(i == 0 || i == 33){
 				position.x = -66;

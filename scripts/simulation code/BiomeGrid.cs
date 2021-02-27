@@ -136,7 +136,14 @@ public class BiomeGrid : GridMap
 	{
 		mouseOnGUI = false;
 	}
+
+	private void _on_StartSimulation_pressed()
+	{
+		isWorldBuilding = false;
+		Godot.Collections.Array children = GetChildren();
+		foreach (Node c in children){
+			c.QueueFree();
+		}
+	}
 }
-
-
 
