@@ -3,6 +3,19 @@ using System;
 
 public class BiomeGrid : GridMap
 {
+	public enum PlantType {
+		desert,
+		grassland,
+		tundra,
+		forest
+	}
+	public struct Plant {
+		PlantType type;
+		Spatial plantSpatial;
+		float plantGrowthTime;
+		int EatersCount;
+		bool isGrowing;
+	}
 	private PackedScene TileSelector = (PackedScene)GD.Load("res://assets/TileSelector.tscn");
 	private PackedScene WallCollider = (PackedScene)GD.Load("res://assets/biomes/WallCollider.tscn");
 	private PackedScene TileCollider = (PackedScene)GD.Load("res://assets/biomes/TileCollider.tscn");
