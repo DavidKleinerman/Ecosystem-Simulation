@@ -3,18 +3,20 @@ using System;
 
 public class BiomeGrid : GridMap
 {
-	public enum PlantType {
+	public enum BiomeType {
 		desert,
 		grassland,
 		tundra,
 		forest
 	}
-	public struct Plant {
-		PlantType type;
-		Spatial plantSpatial;
-		float plantGrowthTime;
-		int EatersCount;
-		bool isGrowing;
+	public struct GroundTile {
+		public BiomeType type;
+		public Spatial plantSpatial;
+		public float plantGrowthTime;
+		public int EatersCount;
+		public bool isGrowing;
+		public bool hasPlant;
+		public Vector3 gridIndex;
 	}
 	private PackedScene TileSelector = (PackedScene)GD.Load("res://assets/TileSelector.tscn");
 	private PackedScene WallCollider = (PackedScene)GD.Load("res://assets/biomes/WallCollider.tscn");
@@ -23,6 +25,7 @@ public class BiomeGrid : GridMap
 	private bool mouseOnGUI = false;
 	private bool isWorldBuilding = true;
 	private Node TileSelectInst;
+	private Godot.Collections.Array GroundTiles = new Godot.Collections.Array();
 	public override void _Ready()
 	{
 		Vector3 position = (Vector3) new Vector3(0,0,0);
@@ -101,10 +104,16 @@ public class BiomeGrid : GridMap
 		}
 	}
 
-	private void AddTile(PackedScene tileType, Vector3 position){
-		Node newTileInst = tileType.Instance();
-		((Spatial)newTileInst).Translation = position;
-		AddChild(newTileInst);
+	private void AddTileToArray(BiomeType tileType, Vector3 position){
+		GroundTile newTile;
+		newTile.type = tileType;
+		newTile.plantSpatial = (Spatial) new Spatial();
+		newTile.plantGrowthTime = 0f;
+		newTile.EatersCount = 0;
+		newTile.isGrowing = false;
+		newTile.hasPlant = false;
+		newTile.gridIndex = position;
+		GroundTiles.Add(newTile);		
 	}
 
 	private Node GetObjectUnderMouse(){
@@ -156,6 +165,30 @@ public class BiomeGrid : GridMap
 		Godot.Collections.Array children = GetChildren();
 		foreach (Node c in children){
 			c.QueueFree();
+		}
+		Vector3 position = (Vector3) new Vector3(0,0,0);
+		position.x = -16;
+		position.z = -16;
+		for(int i = 0; i < 32; i++){
+			for(int j = 0; j < 32; j++){
+				switch(GetCellItem((int)position.x, (int)position.y, (int)position.z)){
+					case 0:
+						AddTileToArray(BiomeType.forest, position);
+					break;
+					case 1:
+						AddTileToArray(BiomeType.desert, position);
+					break;
+					case 2:
+						AddTileToArray(BiomeType.grassland, position);
+					break;
+					case 3:
+						AddTileToArray(BiomeType.tundra, position);
+					break;
+				}
+				position.z += 1;
+			}
+			position.x += 1;
+			position.z = -16;
 		}
 	}
 }
