@@ -18,6 +18,10 @@ public class BiomeGrid : GridMap
 		public bool hasPlant;
 		public Vector3 gridIndex;
 	}
+	private SpatialMaterial ForestMaterial = (SpatialMaterial)GD.Load<SpatialMaterial>("res://materials/forestPlant_material.tres");
+	private SpatialMaterial DesertMaterial = (SpatialMaterial)GD.Load<SpatialMaterial>("res://materials/desertPlant_material.tres");
+	private SpatialMaterial GrasslandMaterial = (SpatialMaterial)GD.Load<SpatialMaterial>("res://materials/forest_material.tres");
+	private SpatialMaterial TundraMaterial = (SpatialMaterial)GD.Load<SpatialMaterial>("res://materials/tundraPlant_material.tres");
 	private PackedScene TileSelector = (PackedScene)GD.Load("res://assets/TileSelector.tscn");
 	private PackedScene WallCollider = (PackedScene)GD.Load("res://assets/biomes/WallCollider.tscn");
 	private PackedScene TileCollider = (PackedScene)GD.Load("res://assets/biomes/TileCollider.tscn");
@@ -60,11 +64,25 @@ public class BiomeGrid : GridMap
 		MultiMeshPlants = GetParent().GetNode<MultiMeshInstance>("MultiMeshPlants");
 	}
 
-//  // Called every frame. 'delta' is the elapsed time since the previous frame.
-//  public override void _Process(float delta)
-//  {
-//      
-//  }
+	public override void _Process(float delta)
+	{
+		for (int i = 0; i < GroundTiles.Count; i++){
+			if (GroundTiles[i].isPlantGrowing){
+				Vector3 currentScale = GroundTiles[i].plantSpatial.Scale;
+				if(currentScale.x < 1 && GroundTiles[i].plantGrowthTime < 2.5){
+					GroundTiles[i].plantGrowthTime += delta;
+					currentScale.x += 0.5f * delta;
+					currentScale.y += 0.5f * delta;
+					currentScale.z += 0.5f * delta;
+					GroundTiles[i].plantSpatial.Scale = currentScale;
+					MultiMeshPlants.Multimesh.SetInstanceTransform(i, GroundTiles[i].plantSpatial.Transform);
+				} else {
+					GroundTiles[i].plantGrowthTime = 0;
+					GroundTiles[i].isPlantGrowing = false;
+				}
+			}
+		}
+	}
 
 	public override void _PhysicsProcess(float delta)
 	{
@@ -218,17 +236,41 @@ public class BiomeGrid : GridMap
 				break;
 		}
 	}
+
+	private void SetPlantColor(int inst, BiomeType type){
+		switch(type){
+			case BiomeType.desert:
+				MultiMeshPlants.Multimesh.SetInstanceColor(inst, DesertMaterial.AlbedoColor);
+				break;
+			case BiomeType.forest:
+				MultiMeshPlants.Multimesh.SetInstanceColor(inst, ForestMaterial.AlbedoColor);
+				break;
+			case BiomeType.grassland:
+				MultiMeshPlants.Multimesh.SetInstanceColor(inst, GrasslandMaterial.AlbedoColor);
+				break;
+			case BiomeType.tundra:
+				MultiMeshPlants.Multimesh.SetInstanceColor(inst, TundraMaterial.AlbedoColor);
+				break;
+		}
+	}
 	
 	private void _on_PlantGrowthTimer_timeout()
 	{
 		for(int i = 0; i < GroundTiles.Count; i++){
 			if(!GroundTiles[i].hasPlant){
 				if (PlantChance() < TotalGrowRate(GroundTiles[i].type)){
-					GD.Print("instance count: " + MultiMeshPlants.Multimesh.InstanceCount);
+					//GD.Print("instance count: " + MultiMeshPlants.Multimesh.InstanceCount);
 					GroundTiles[i].plantSpatial.Translation = MapToWorld((int)GroundTiles[i].gridIndex.x, (int)GroundTiles[i].gridIndex.y + 1, (int)GroundTiles[i].gridIndex.z);
-					GD.Print("transfrom: " + GroundTiles[i].plantSpatial.Transform);
+					//GD.Print("transfrom: " + GroundTiles[i].plantSpatial.Transform);
+					GroundTiles[i].plantSpatial.Scale = new Vector3();
 					MultiMeshPlants.Multimesh.SetInstanceTransform(i, GroundTiles[i].plantSpatial.Transform);
+					SetPlantColor(i, GroundTiles[i].type);
 					GroundTiles[i].hasPlant = true;
+					GroundTiles[i].isPlantGrowing = true;
+				}
+			} else if (GroundTiles[i].plantSpatial.Scale.x < 0.4f){
+				if (PlantChance() < TotalGrowRate(GroundTiles[i].type)){
+					GroundTiles[i].isPlantGrowing = true;
 				}
 			}
 			// else if (gt.plantSpatial.Scale.x < 0.4){

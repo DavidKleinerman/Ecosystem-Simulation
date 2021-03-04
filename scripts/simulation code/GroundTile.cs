@@ -74,7 +74,7 @@ public class GroundTile : Spatial
 				isPlantGrowing = true;
 				hasPlant = true;
 			}
-		} else if (((Spatial)plant).Scale.x < 0.4){
+		} else if (((Spatial)plant).Scale.x < 0.4f){
 			if (PlantChance() < TotalGrowRate()){
 				isPlantGrowing = true;
 			}
