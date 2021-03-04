@@ -9,12 +9,12 @@ public class BiomeGrid : GridMap
 		tundra,
 		forest
 	}
-	public struct GroundTile {
+	public class GroundTile : Godot.Object { //godot has major bugs when using structs. This is a workaround.
 		public BiomeType type;
 		public Spatial plantSpatial;
 		public float plantGrowthTime;
 		public int EatersCount;
-		public bool isGrowing;
+		public bool isPlantGrowing;
 		public bool hasPlant;
 		public Vector3 gridIndex;
 	}
@@ -25,7 +25,8 @@ public class BiomeGrid : GridMap
 	private bool mouseOnGUI = false;
 	private bool isWorldBuilding = true;
 	private Node TileSelectInst;
-	private Godot.Collections.Array GroundTiles = new Godot.Collections.Array();
+	private Godot.Collections.Array<GroundTile> GroundTiles = (Godot.Collections.Array<GroundTile>) new Godot.Collections.Array<GroundTile>();
+	MultiMeshInstance MultiMeshPlants;
 	public override void _Ready()
 	{
 		Vector3 position = (Vector3) new Vector3(0,0,0);
@@ -56,6 +57,7 @@ public class BiomeGrid : GridMap
 		}
 		TileSelectInst = TileSelector.Instance();
 		AddChild(TileSelectInst);
+		MultiMeshPlants = GetParent().GetNode<MultiMeshInstance>("MultiMeshPlants");
 	}
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -105,12 +107,12 @@ public class BiomeGrid : GridMap
 	}
 
 	private void AddTileToArray(BiomeType tileType, Vector3 position){
-		GroundTile newTile;
+		GroundTile newTile = new GroundTile();
 		newTile.type = tileType;
 		newTile.plantSpatial = (Spatial) new Spatial();
 		newTile.plantGrowthTime = 0f;
 		newTile.EatersCount = 0;
-		newTile.isGrowing = false;
+		newTile.isPlantGrowing = false;
 		newTile.hasPlant = false;
 		newTile.gridIndex = position;
 		GroundTiles.Add(newTile);		
@@ -190,6 +192,61 @@ public class BiomeGrid : GridMap
 			position.x += 1;
 			position.z = -16;
 		}
+		MultiMeshPlants.Multimesh.InstanceCount = GroundTiles.Count;
+		GetParent().GetNode<Timer>("PlantGrowthTimer").Start();
 	}
+
+	private float PlantChance(){
+		RandomNumberGenerator rng = new RandomNumberGenerator();
+		rng.Randomize();
+		return rng.RandfRange(0f, 100f);
+	}
+
+	private float TotalGrowRate(BiomeType biomeType){
+		switch(biomeType){
+			case BiomeType.desert:
+				return 0.57f * 5;
+				break;
+			case BiomeType.forest:
+				return 17.92f * 5;
+				break;
+			case BiomeType.grassland:
+				return 1.19f * 5;
+				break;
+			default:
+				return 0.18f * 5;
+				break;
+		}
+	}
+	
+	private void _on_PlantGrowthTimer_timeout()
+	{
+		for(int i = 0; i < GroundTiles.Count; i++){
+			if(!GroundTiles[i].hasPlant){
+				if (PlantChance() < TotalGrowRate(GroundTiles[i].type)){
+					GD.Print("instance count: " + MultiMeshPlants.Multimesh.InstanceCount);
+					GroundTiles[i].plantSpatial.Translation = MapToWorld((int)GroundTiles[i].gridIndex.x, (int)GroundTiles[i].gridIndex.y + 1, (int)GroundTiles[i].gridIndex.z);
+					GD.Print("transfrom: " + GroundTiles[i].plantSpatial.Transform);
+					MultiMeshPlants.Multimesh.SetInstanceTransform(i, GroundTiles[i].plantSpatial.Transform);
+					GroundTiles[i].hasPlant = true;
+				}
+			}
+			// else if (gt.plantSpatial.Scale.x < 0.4){
+			// 	if (PlantChance() < TotalGrowRate(gt.type)){
+			// 		gt.isPlantGrowing = true;
+			// 	}
+			// }
+		}
+
+		// for (int i = 0; i < MultiMeshPlants.Multimesh.InstanceCount; i++){
+		// 	GD.Print("this is my transform: " + MultiMeshPlants.Multimesh.GetInstanceTransform(i));
+		// }
+	}
+
+
+
 }
+
+
+
 

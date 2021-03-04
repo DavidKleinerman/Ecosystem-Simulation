@@ -570,6 +570,7 @@ __meta__ = {
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 transform = Transform( -0.78339, 0.368505, -0.500504, 0, 0.805277, 0.592899, 0.621531, 0.464471, -0.630846, -20.6487, 160, 0 )
 light_energy = 0.8
+shadow_enabled = true
 shadow_contact = 16.0
 directional_shadow_mode = 0
 
@@ -1224,40 +1225,43 @@ __meta__ = {
 
 [node name="MultiMeshPlants" type="MultiMeshInstance" parent="."]
 multimesh = SubResource( 48 )
+
+[node name="PlantGrowthTimer" type="Timer" parent="."]
+wait_time = 5.0
 [connection signal="timeout" from="SpeciesHolder/GlobalTimeTicks" to="SpeciesHolder" method="_on_GlobalTimeTicks_timeout"]
 [connection signal="item_selected" from="Control/ItemList" to="BiomeGrid" method="_on_ItemList_item_selected"]
 [connection signal="mouse_entered" from="Control/ItemList" to="BiomeGrid" method="_on_ItemList_mouse_entered"]
 [connection signal="mouse_exited" from="Control/ItemList" to="BiomeGrid" method="_on_ItemList_mouse_exited"]
-[connection signal="mouse_entered" from="Control/StartSimulation" to="BiomeGrid" method="_on_StartSimulation_mouse_entered"]
 [connection signal="mouse_entered" from="Control/StartSimulation" to="." method="_on_StartSimulation_mouse_entered"]
-[connection signal="mouse_exited" from="Control/StartSimulation" to="BiomeGrid" method="_on_StartSimulation_mouse_exited"]
+[connection signal="mouse_entered" from="Control/StartSimulation" to="BiomeGrid" method="_on_StartSimulation_mouse_entered"]
 [connection signal="mouse_exited" from="Control/StartSimulation" to="." method="_on_StartSimulation_mouse_exited"]
-[connection signal="pressed" from="Control/StartSimulation" to="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent" method="_on_StartSimulation_pressed"]
+[connection signal="mouse_exited" from="Control/StartSimulation" to="BiomeGrid" method="_on_StartSimulation_mouse_exited"]
 [connection signal="pressed" from="Control/StartSimulation" to="BiomeGrid" method="_on_StartSimulation_pressed"]
-[connection signal="pressed" from="Control/StartSimulation" to="Control/StartSimulation" method="_on_StartSimulation_pressed"]
+[connection signal="pressed" from="Control/StartSimulation" to="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent" method="_on_StartSimulation_pressed"]
 [connection signal="pressed" from="Control/StartSimulation" to="Control/AddNewSpecies" method="_on_StartSimulation_pressed"]
-[connection signal="pressed" from="Control/StartSimulation" to="Control/ItemList" method="_on_StartSimulation_pressed"]
+[connection signal="pressed" from="Control/StartSimulation" to="Control/StartSimulation" method="_on_StartSimulation_pressed"]
 [connection signal="pressed" from="Control/StartSimulation" to="Control/DisplayCharts" method="_on_StartSimulation_pressed"]
+[connection signal="pressed" from="Control/StartSimulation" to="Control/ItemList" method="_on_StartSimulation_pressed"]
 [connection signal="pressed" from="Control/StartSimulation" to="SpeciesHolder" method="_on_StartSimulation_pressed"]
 [connection signal="pressed" from="Control/AddNewSpecies" to="CameraHolder" method="_on_AddNewSpecies_pressed"]
 [connection signal="pressed" from="Control/AddNewSpecies" to="NewSpeciesMenu" method="_on_AddNewSpecies_pressed"]
 [connection signal="pressed" from="Control/AddNewSpecies" to="Control/AddNewSpecies" method="_on_AddNewSpecies_pressed"]
 [connection signal="pressed" from="Control/AddNewSpecies" to="Control/DisplayCharts" method="_on_AddNewSpecies_pressed"]
+[connection signal="pressed" from="Control/DisplayCharts" to="DisplayChartsMenu" method="_on_DisplayCharts_pressed"]
 [connection signal="pressed" from="Control/DisplayCharts" to="Control/AddNewSpecies" method="_on_DisplayCharts_pressed"]
 [connection signal="pressed" from="Control/DisplayCharts" to="Control/DisplayCharts" method="_on_DisplayCharts_pressed"]
 [connection signal="pressed" from="Control/DisplayCharts" to="DisplayChartsMenu/ItemList2" method="_on_DisplayCharts_pressed"]
 [connection signal="pressed" from="Control/DisplayCharts" to="DisplayChartsMenu/GradientControl" method="_on_DisplayCharts_pressed"]
-[connection signal="pressed" from="Control/DisplayCharts" to="DisplayChartsMenu" method="_on_DisplayCharts_pressed"]
 [connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="CameraHolder" method="_on_CloseNewSpecies_pressed"]
 [connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="NewSpeciesMenu" method="_on_CloseNewSpecies_pressed"]
 [connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="Control/AddNewSpecies" method="_on_CloseNewSpecies_pressed"]
 [connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="Control/DisplayCharts" method="_on_CloseNewSpecies_pressed"]
 [connection signal="gui_input" from="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent/SpeciesName/LineEdit" to="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent" method="_on_LineEdit_gui_input"]
 [connection signal="pressed" from="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent/CreateNewSpecies/NewSpeciesButton" to="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent" method="_on_NewSpeciesButton_pressed"]
+[connection signal="pressed" from="DisplayChartsMenu/CloseChartMenu" to="DisplayChartsMenu" method="_on_CloseChartMenu_pressed"]
 [connection signal="pressed" from="DisplayChartsMenu/CloseChartMenu" to="Control/AddNewSpecies" method="_on_CloseChartMenu_pressed"]
 [connection signal="pressed" from="DisplayChartsMenu/CloseChartMenu" to="Control/DisplayCharts" method="_on_CloseChartMenu_pressed"]
 [connection signal="pressed" from="DisplayChartsMenu/CloseChartMenu" to="DisplayChartsMenu/GradientControl" method="_on_CloseChartMenu_pressed"]
-[connection signal="pressed" from="DisplayChartsMenu/CloseChartMenu" to="DisplayChartsMenu" method="_on_CloseChartMenu_pressed"]
 [connection signal="item_selected" from="DisplayChartsMenu/ItemList2" to="DisplayChartsMenu/GradientControl" method="_on_ItemList2_item_selected"]
 [connection signal="toggled" from="DisplayChartsMenu/DeathsGridContainer/DeathsFromDehydrationCheckButton" to="DisplayChartsMenu/GradientControl/DehydrationGraph" method="_on_DeathsFromDehydrationCheckButton_toggled"]
 [connection signal="toggled" from="DisplayChartsMenu/DeathsGridContainer/DeathsFromStarvationCheckButton" to="DisplayChartsMenu/GradientControl/StarvationGraph" method="_on_DeathsFromStarvationCheckButton_toggled"]
@@ -1272,3 +1276,4 @@ multimesh = SubResource( 48 )
 [connection signal="toggled" from="DisplayChartsMenu/GeneValuesGridContainer/MatingCycleCheckButton" to="DisplayChartsMenu/GradientControl/MatingCycleGradient" method="_on_MatingCycleCheckButton_toggled"]
 [connection signal="toggled" from="DisplayChartsMenu/GeneValuesGridContainer/PerceptionCheckButton" to="DisplayChartsMenu/GradientControl/PerceptionGradient" method="_on_PerceptionCheckButton_toggled"]
 [connection signal="toggled" from="DisplayChartsMenu/GeneValuesGridContainer/SpeedCheckButton" to="DisplayChartsMenu/GradientControl/SpeedGradient" method="_on_SpeedCheckButton_toggled"]
+[connection signal="timeout" from="PlantGrowthTimer" to="BiomeGrid" method="_on_PlantGrowthTimer_timeout"]
