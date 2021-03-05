@@ -69,12 +69,15 @@ public class BiomeGrid : GridMap
 		for (int i = 0; i < GroundTiles.Count; i++){
 			if (GroundTiles[i].isPlantGrowing){
 				Vector3 currentScale = GroundTiles[i].plantSpatial.Scale;
+				Vector3 currentTranslation = GroundTiles[i].plantSpatial.Translation;
 				if(currentScale.x < 1 && GroundTiles[i].plantGrowthTime < 2.5){
 					GroundTiles[i].plantGrowthTime += delta;
 					currentScale.x += 0.5f * delta;
 					currentScale.y += 0.5f * delta;
 					currentScale.z += 0.5f * delta;
+					currentTranslation.y += 0.25f * delta;
 					GroundTiles[i].plantSpatial.Scale = currentScale;
+					GroundTiles[i].plantSpatial.Translation = currentTranslation;
 					MultiMeshPlants.Multimesh.SetInstanceTransform(i, GroundTiles[i].plantSpatial.Transform);
 				} else {
 					GroundTiles[i].plantGrowthTime = 0;
@@ -261,6 +264,7 @@ public class BiomeGrid : GridMap
 				if (PlantChance() < TotalGrowRate(GroundTiles[i].type)){
 					//GD.Print("instance count: " + MultiMeshPlants.Multimesh.InstanceCount);
 					GroundTiles[i].plantSpatial.Translation = MapToWorld((int)GroundTiles[i].gridIndex.x, (int)GroundTiles[i].gridIndex.y + 1, (int)GroundTiles[i].gridIndex.z);
+					GroundTiles[i].plantSpatial.Translation = new Vector3(GroundTiles[i].plantSpatial.Translation.x, GroundTiles[i].plantSpatial.Translation.y - 1.2f, GroundTiles[i].plantSpatial.Translation.z);
 					//GD.Print("transfrom: " + GroundTiles[i].plantSpatial.Transform);
 					GroundTiles[i].plantSpatial.Scale = new Vector3();
 					MultiMeshPlants.Multimesh.SetInstanceTransform(i, GroundTiles[i].plantSpatial.Transform);
