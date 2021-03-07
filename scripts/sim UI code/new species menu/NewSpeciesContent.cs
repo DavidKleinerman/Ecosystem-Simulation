@@ -21,7 +21,7 @@ public class NewSpeciesContent : VBoxContainer
 
 	private void _on_StartSimulation_pressed()
 	{
-		int numOfGroundTiles = GetTree().Root.GetTree().GetNodesInGroup("GroundTiles").Count;
+		int numOfGroundTiles = GetNode<BiomeGrid>("../../../BiomeGrid").GetGroundTiles().Count;
 		GD.Print("number of ground tiles is" + numOfGroundTiles);
 		GetNode<SpinBox>("PopulationSize/SpinBox").MinValue = 1;
 		GetNode<HSlider>("PopulationSize/HSlider").MinValue = 1;

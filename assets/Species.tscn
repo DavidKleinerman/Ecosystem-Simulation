@@ -2,7 +2,7 @@
 
 [ext_resource path="res://scripts/simulation code/Species.cs" type="Script" id=1]
 
-[node name="Species" type="Spatial" groups=[
+[node name="Species" type="MultiMeshInstance" groups=[
 "Species",
 ]]
 script = ExtResource( 1 )

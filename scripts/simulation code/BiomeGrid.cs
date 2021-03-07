@@ -3,13 +3,14 @@ using System;
 
 public class BiomeGrid : GridMap
 {
+
 	public enum BiomeType {
 		desert,
 		grassland,
 		tundra,
 		forest
 	}
-	public class GroundTile : Godot.Object { //godot has major bugs when using structs. This is a workaround.
+	public class GroundTile : Godot.Object { //godot has major bugs when using structs. This is a work-around.
 		public BiomeType type;
 		public Spatial plantSpatial;
 		public float plantGrowthTime;
@@ -18,6 +19,7 @@ public class BiomeGrid : GridMap
 		public bool hasPlant;
 		public Vector3 gridIndex;
 	}
+
 	private SpatialMaterial ForestMaterial = (SpatialMaterial)GD.Load<SpatialMaterial>("res://materials/forestPlant_material.tres");
 	private SpatialMaterial DesertMaterial = (SpatialMaterial)GD.Load<SpatialMaterial>("res://materials/desertPlant_material.tres");
 	private SpatialMaterial GrasslandMaterial = (SpatialMaterial)GD.Load<SpatialMaterial>("res://materials/forest_material.tres");
@@ -262,10 +264,8 @@ public class BiomeGrid : GridMap
 		for(int i = 0; i < GroundTiles.Count; i++){
 			if(!GroundTiles[i].hasPlant){
 				if (PlantChance() < TotalGrowRate(GroundTiles[i].type)){
-					//GD.Print("instance count: " + MultiMeshPlants.Multimesh.InstanceCount);
 					GroundTiles[i].plantSpatial.Translation = MapToWorld((int)GroundTiles[i].gridIndex.x, (int)GroundTiles[i].gridIndex.y + 1, (int)GroundTiles[i].gridIndex.z);
 					GroundTiles[i].plantSpatial.Translation = new Vector3(GroundTiles[i].plantSpatial.Translation.x, GroundTiles[i].plantSpatial.Translation.y - 1.2f, GroundTiles[i].plantSpatial.Translation.z);
-					//GD.Print("transfrom: " + GroundTiles[i].plantSpatial.Transform);
 					GroundTiles[i].plantSpatial.Scale = new Vector3();
 					MultiMeshPlants.Multimesh.SetInstanceTransform(i, GroundTiles[i].plantSpatial.Transform);
 					SetPlantColor(i, GroundTiles[i].type);
@@ -277,21 +277,15 @@ public class BiomeGrid : GridMap
 					GroundTiles[i].isPlantGrowing = true;
 				}
 			}
-			// else if (gt.plantSpatial.Scale.x < 0.4){
-			// 	if (PlantChance() < TotalGrowRate(gt.type)){
-			// 		gt.isPlantGrowing = true;
-			// 	}
-			// }
-		}
 
-		// for (int i = 0; i < MultiMeshPlants.Multimesh.InstanceCount; i++){
-		// 	GD.Print("this is my transform: " + MultiMeshPlants.Multimesh.GetInstanceTransform(i));
-		// }
+		}
 	}
 
-
-
+	public Godot.Collections.Array<GroundTile> GetGroundTiles(){
+		return GroundTiles;
+	}
 }
+
 
 
 

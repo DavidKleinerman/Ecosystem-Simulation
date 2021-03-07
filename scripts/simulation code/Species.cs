@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class Species : Spatial
+public class Species : MultiMeshInstance
 {
 	public String SpeciesName;
 
@@ -16,6 +16,11 @@ public class Species : Spatial
 	public override void _Ready()
 	{
 		rng = (RandomNumberGenerator) new RandomNumberGenerator();
+		Multimesh = new MultiMesh();
+		Multimesh.ColorFormat = Godot.MultiMesh.ColorFormatEnum.Float;
+		Multimesh.TransformFormat = Godot.MultiMesh.TransformFormatEnum.Transform3d;
+		Multimesh.Mesh = (Mesh)GD.Load<Mesh>("res://meshes/CreatureBody.tres");
+
 	}
 
 	public void InitSpecies (String speciesName, Godot.Collections.Array initArray){
@@ -24,17 +29,21 @@ public class Species : Spatial
 	}
 
 	public void AddNewCreatures(int popSize, Color color, Godot.Collections.Array initialValues, float geneticVariation){
-		SpatialMaterial material = (SpatialMaterial) new SpatialMaterial();
-		material.AlbedoColor = color;
-		SpeciesMaterial = material;
-		foreach (Node n in ReshuffledGroundTiles()){
-			Vector3 position = ((Spatial)n).Translation;
-			position.y = 1;
-			Genome genome = new Genome();
-			genome.ArtificialCombine(initialValues, geneticVariation);
-			AddCreature(genome, position, material);
-			popSize--;
-			if (popSize == 0)
+		BiomeGrid biomeGrid = GetNode<BiomeGrid>("../../BiomeGrid");
+		int creatureIndex = 0;
+		Multimesh.InstanceCount = popSize;
+		foreach (BiomeGrid.GroundTile gt in ReshuffledGroundTiles(biomeGrid.GetGroundTiles())){
+			Spatial creatureSpatial = new Spatial();
+			Vector3 position = biomeGrid.MapToWorld((int)gt.gridIndex.x, (int)gt.gridIndex.y, (int)gt.gridIndex.z);
+			position.y = 2.4f;
+			creatureSpatial.Translation = position;
+			//Genome genome = new Genome();
+			//genome.ArtificialCombine(initialValues, geneticVariation);
+			//AddCreature(genome, position, material);
+			Multimesh.SetInstanceTransform(creatureIndex, creatureSpatial.Transform);
+			Multimesh.SetInstanceColor(creatureIndex, color);
+			creatureIndex++;
+			if (creatureIndex == popSize)
 				break;
 		}
 	}
@@ -48,9 +57,8 @@ public class Species : Spatial
 		AddChild(newCreatureInst);
 	}
 
-	private Godot.Collections.Array ReshuffledGroundTiles(){
-		Godot.Collections.Array tilesList = GetTree().GetNodesInGroup("GroundTiles");
-		Godot.Collections.Array shuffledList = (Godot.Collections.Array) new Godot.Collections.Array(); 
+	private Godot.Collections.Array<BiomeGrid.GroundTile> ReshuffledGroundTiles(Godot.Collections.Array<BiomeGrid.GroundTile> tilesList){
+		Godot.Collections.Array<BiomeGrid.GroundTile> shuffledList = (Godot.Collections.Array<BiomeGrid.GroundTile>) new Godot.Collections.Array<BiomeGrid.GroundTile>(); 
 		Godot.Collections.Array indexList = (Godot.Collections.Array) new Godot.Collections.Array();
 		int ListSize = tilesList.Count;
 		for (int i = 0; i < ListSize; i++){

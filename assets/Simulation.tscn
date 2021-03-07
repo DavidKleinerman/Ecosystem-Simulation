@@ -257,6 +257,17 @@ script = ExtResource( 20 )
 
 [node name="GlobalTimeTicks" type="Timer" parent="SpeciesHolder"]
 
+[node name="BiomeGrid" type="GridMap" parent="."]
+mesh_library = ExtResource( 14 )
+cell_size = Vector3( 4, 2, 4 )
+data = {
+"cells": PoolIntArray(  )
+}
+script = ExtResource( 15 )
+__meta__ = {
+"_editor_clip_": 0
+}
+
 [node name="CameraHolder" type="KinematicBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 33.5828, 20 )
 collision_layer = 2147483651
@@ -1217,17 +1228,6 @@ default_color = Color( 0.427451, 0.866667, 0.45098, 1 )
 antialiased = true
 script = ExtResource( 12 )
 
-[node name="BiomeGrid" type="GridMap" parent="."]
-mesh_library = ExtResource( 14 )
-cell_size = Vector3( 4, 2, 4 )
-data = {
-"cells": PoolIntArray(  )
-}
-script = ExtResource( 15 )
-__meta__ = {
-"_editor_clip_": 0
-}
-
 [node name="MultiMeshPlants" type="MultiMeshInstance" parent="."]
 multimesh = SubResource( 49 )
 
@@ -1255,8 +1255,8 @@ wait_time = 5.0
 [connection signal="pressed" from="Control/DisplayCharts" to="Control/DisplayCharts" method="_on_DisplayCharts_pressed"]
 [connection signal="pressed" from="Control/DisplayCharts" to="Control/AddNewSpecies" method="_on_DisplayCharts_pressed"]
 [connection signal="pressed" from="Control/DisplayCharts" to="DisplayChartsMenu/ItemList2" method="_on_DisplayCharts_pressed"]
-[connection signal="pressed" from="Control/DisplayCharts" to="DisplayChartsMenu" method="_on_DisplayCharts_pressed"]
 [connection signal="pressed" from="Control/DisplayCharts" to="DisplayChartsMenu/GradientControl" method="_on_DisplayCharts_pressed"]
+[connection signal="pressed" from="Control/DisplayCharts" to="DisplayChartsMenu" method="_on_DisplayCharts_pressed"]
 [connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="CameraHolder" method="_on_CloseNewSpecies_pressed"]
 [connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="Control/DisplayCharts" method="_on_CloseNewSpecies_pressed"]
 [connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="Control/AddNewSpecies" method="_on_CloseNewSpecies_pressed"]
@@ -1265,8 +1265,8 @@ wait_time = 5.0
 [connection signal="pressed" from="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent/CreateNewSpecies/NewSpeciesButton" to="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent" method="_on_NewSpeciesButton_pressed"]
 [connection signal="pressed" from="DisplayChartsMenu/CloseChartMenu" to="Control/DisplayCharts" method="_on_CloseChartMenu_pressed"]
 [connection signal="pressed" from="DisplayChartsMenu/CloseChartMenu" to="Control/AddNewSpecies" method="_on_CloseChartMenu_pressed"]
-[connection signal="pressed" from="DisplayChartsMenu/CloseChartMenu" to="DisplayChartsMenu" method="_on_CloseChartMenu_pressed"]
 [connection signal="pressed" from="DisplayChartsMenu/CloseChartMenu" to="DisplayChartsMenu/GradientControl" method="_on_CloseChartMenu_pressed"]
+[connection signal="pressed" from="DisplayChartsMenu/CloseChartMenu" to="DisplayChartsMenu" method="_on_CloseChartMenu_pressed"]
 [connection signal="item_selected" from="DisplayChartsMenu/ItemList2" to="DisplayChartsMenu/GradientControl" method="_on_ItemList2_item_selected"]
 [connection signal="toggled" from="DisplayChartsMenu/DeathsGridContainer/DeathsFromDehydrationCheckButton" to="DisplayChartsMenu/GradientControl/DehydrationGraph" method="_on_DeathsFromDehydrationCheckButton_toggled"]
 [connection signal="toggled" from="DisplayChartsMenu/DeathsGridContainer/DeathsFromStarvationCheckButton" to="DisplayChartsMenu/GradientControl/StarvationGraph" method="_on_DeathsFromStarvationCheckButton_toggled"]
