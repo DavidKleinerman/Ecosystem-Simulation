@@ -191,7 +191,7 @@ public class Creature : Area
 		Godot.Collections.Array maternal = MyGenome.Meiosis();
 		Genome genome = new Genome();
 		genome.Recombination(maternal, paternal);
-		GetParent<Species>().AddCreature(genome, ToGlobal(GetNode<Spatial>("PerceptionRadius").Translation), SpeciesMaterial);
+		//GetParent<Species>().AddCreature(genome, ToGlobal(GetNode<Spatial>("PerceptionRadius").Translation), SpeciesMaterial);
 	}
 
 	private void BirthingProcess(float delta){
@@ -228,7 +228,7 @@ public class Creature : Area
 		} else if (MyState == State.Eating){
 			CurrentTarget.GetParent().GetParent<GroundTile>().RemoveEater();
 		}
-		GetParent<Species>().AddDead(cause, ToGlobal(GetNode<Spatial>("PerceptionRadius").Translation));
+		//GetParent<Species>().AddDead(cause, ToGlobal(GetNode<Spatial>("PerceptionRadius").Translation));
 		QueueFree();
 	}
 
