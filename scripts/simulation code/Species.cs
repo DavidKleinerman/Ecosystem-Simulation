@@ -7,6 +7,7 @@ public class Species : MultiMeshInstance
 	//private PackedScene CreatureScene = (PackedScene)GD.Load("res://assets/Creature.tscn");
 	private RandomNumberGenerator rng;
 	private DataCollector SpeciesDataCollector = null;
+	private BiomeGrid TileGrid;
 
 	//consts
 	private const float BaseEnergyDecay = 3.5f;
@@ -92,6 +93,7 @@ public class Species : MultiMeshInstance
 
 	public override void _Ready()
 	{
+		TileGrid = GetNode<BiomeGrid>("../../BiomeGrid");
 		rng = (RandomNumberGenerator) new RandomNumberGenerator();
 		Multimesh = new MultiMesh();
 		Multimesh.ColorFormat = Godot.MultiMesh.ColorFormatEnum.Float;
@@ -109,12 +111,21 @@ public class Species : MultiMeshInstance
 			// if (Creatures[i].MyState == State.GoingToWater || Creatures[i].MyState == State.GoingToFood || Creatures[i].MyState == State.GoingToPotentialPartner)
 			// 	GoToTarget(delta);
 			Creatures[i].Velocity *= Creatures[i].Speed * delta;
+			// Creatures[i].MySpatial.Translation = new Vector3(Creatures[i].MySpatial.Translation.x + Creatures[i].Velocity.x, 2.4f, Creatures[i].MySpatial.Translation.z + Creatures[i].Velocity.z);
+			// Multimesh.SetInstanceTransform(i, Creatures[i].MySpatial.Transform);
+			Vector3 collisionDetector = new Vector3(Creatures[i].MySpatial.Translation.x + Creatures[i].FrontVector.x, 1, Creatures[i].MySpatial.Translation.z + Creatures[i].FrontVector.z);
+			Vector3 posInGrid = TileGrid.WorldToMap(collisionDetector);
+			if (TileGrid.GetCellItem((int)posInGrid.x, (int)posInGrid.y, (int)posInGrid.z) == 4){
+				GD.Print("Collided!");
+				Creatures[i].MySpatial.RotateY(Mathf.Deg2Rad(180));
+				Creatures[i].FrontVector = Creatures[i].FrontVector.Rotated(Vector3.Up, Mathf.Deg2Rad(180));
+				Creatures[i].IsColliding = true;
+			}
 			Creatures[i].MySpatial.Translation = new Vector3(Creatures[i].MySpatial.Translation.x + Creatures[i].Velocity.x, 2.4f, Creatures[i].MySpatial.Translation.z + Creatures[i].Velocity.z);
 			Multimesh.SetInstanceTransform(i, Creatures[i].MySpatial.Transform);
-			// if (Creatures[i].IsColliding)
-			// 	IsStillColliding();
 		}
 	}
+
 	public override void _Process(float delta)
 	{
 		for (int i = 0; i < Creatures.Count; i++){
@@ -259,12 +270,11 @@ public class Species : MultiMeshInstance
 	}
 
 	public void AddNewCreatures(int popSize, Color color, Godot.Collections.Array initialValues, float geneticVariation){
-		BiomeGrid biomeGrid = GetNode<BiomeGrid>("../../BiomeGrid");
 		int creatureIndex = 0;
 		Multimesh.InstanceCount = popSize;
-		foreach (BiomeGrid.GroundTile gt in ReshuffledGroundTiles(biomeGrid.GetGroundTiles())){
+		foreach (BiomeGrid.GroundTile gt in ReshuffledGroundTiles(TileGrid.GetGroundTiles())){
 			Spatial creatureSpatial = new Spatial();
-			Vector3 position = biomeGrid.MapToWorld((int)gt.gridIndex.x, (int)gt.gridIndex.y, (int)gt.gridIndex.z);
+			Vector3 position = TileGrid.MapToWorld((int)gt.gridIndex.x, (int)gt.gridIndex.y, (int)gt.gridIndex.z);
 			position.y = 2.4f;
 			creatureSpatial.Translation = position;
 			Genome genome = new Genome();
