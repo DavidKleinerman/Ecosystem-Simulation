@@ -37,20 +37,22 @@ public class Species : MultiMeshInstance
 	}
 	public class Creature : Godot.Object { //godot has major bugs when using structs. This is a work-around.
 		//movement
-		public Vector3 Velocity;
-		public Spatial MySpatial;
-		public float RoatateTimer;
-		public float RatationRate;
-		public int RotationDiretion;
-		public bool IsColliding;
-		private float GoingToTime = 0;
+		public Vector3 Velocity  = (Vector3) new Vector3();
+		public Vector3 FrontVector = (Vector3) new Vector3();
+		public Spatial MySpatial = new Spatial();
+		public float CurrentRotationTime = 0;
+		public float NextRotationTime = 0;
+		public float RotationRate = 0;
+		public int RotationDirection = 0;
+		public bool IsColliding = false;
+		public float GoingToTime = 0;
 		//genetic and reproduction
 		public Genome MyGenome;
-		private Gender MyGender;
+		public Gender MyGender;
 		public float Fitness;
 		//state and target
-		public State MyState;
-		public Spatial CurrentTarget;
+		public State MyState = State.ExploringTheEnvironment;
+		public Spatial CurrentTarget = null;
 		
 		//Reject list
 		public Godot.Collections.Array RejectList = (Godot.Collections.Array) new Godot.Collections.Array();
@@ -68,10 +70,10 @@ public class Species : MultiMeshInstance
 		public float Longevity;
 
 		//Resources
-		public float Energy;
-		public float Thirst;
-		public float ReproductiveUrge;
-		public float Age;
+		public float Energy = 100;
+		public float Thirst = 0;
+		public float ReproductiveUrge = 0;
+		public float Age = 0;
 
 		// Passive states
 		public bool Pregnant = false;
@@ -98,6 +100,158 @@ public class Species : MultiMeshInstance
 
 	}
 
+	public override void _PhysicsProcess(float delta)
+	{
+		for (int i = 0; i < Creatures.Count; i++){
+			if (Creatures[i].MyState == State.ExploringTheEnvironment){
+				Creatures[i].Velocity = Creatures[i].FrontVector.Normalized();
+			}
+			// if (Creatures[i].MyState == State.GoingToWater || Creatures[i].MyState == State.GoingToFood || Creatures[i].MyState == State.GoingToPotentialPartner)
+			// 	GoToTarget(delta);
+			Creatures[i].Velocity *= Creatures[i].Speed * delta;
+			Creatures[i].MySpatial.Translation = new Vector3(Creatures[i].MySpatial.Translation.x + Creatures[i].Velocity.x, 2.4f, Creatures[i].MySpatial.Translation.z + Creatures[i].Velocity.z);
+			Multimesh.SetInstanceTransform(i, Creatures[i].MySpatial.Transform);
+			// if (Creatures[i].IsColliding)
+			// 	IsStillColliding();
+		}
+	}
+	public override void _Process(float delta)
+	{
+		for (int i = 0; i < Creatures.Count; i++){
+			Creatures[i].Age += delta;
+			Creatures[i].CurrentRotationTime += delta;
+			if (Creatures[i].ReproductiveUrge < 100 && !Creatures[i].Pregnant) Creatures[i].ReproductiveUrge += ((BaseReproductiveUrgeGrowth + Creatures[i].MatingCycle) * delta);
+			if (Creatures[i].MyState != State.Eating) Creatures[i].Energy -= ((BaseEnergyDecay - Creatures[i].HungerResistance) * delta);
+			if (Creatures[i].MyState != State.Drinking) Creatures[i].Thirst += ((BaseThirstDecay - Creatures[i].ThirstResistance) * delta);
+			if (Creatures[i].CurrentRotationTime >= Creatures[i].NextRotationTime){
+				RandomNumberGenerator rng = new RandomNumberGenerator();
+				rng.Randomize();
+				Creatures[i].RotationRate = rng.RandfRange(20, 200);
+				rng.Randomize();
+				Creatures[i].RotationDirection = rng.RandiRange(-1, 1);
+				rng.Randomize();
+				Creatures[i].NextRotationTime = rng.RandfRange(0.5f, 2);
+				Creatures[i].CurrentRotationTime = 0f;
+			}
+			// if (Creatures[i].Energy < 0){
+			// 	Die(Creature.CauseOfDeath.Starvation);
+			// }
+			// if (Creatures[i].Thirst > 100){
+			// 	Die(Creature.CauseOfDeath.Dehydration);
+			// }
+			// if (Creatures[i].Age > Longevity){
+			// 	Die(Creature.CauseOfDeath.OldAge);
+			// }
+			// if (Creatures[i].Pregnant){ //female only
+			// 	Creatures[i].PregnancyTime += delta;
+			// 	if (Creatures[i].PregnancyTime >= Creatures[i].Gestation){
+			// 		StartBirthingProcess();
+			// 	}
+			// 	else if (Creatures[i].PregnancyTime >= Creatures[i].Gestation * 0.8f && Creatures[i].PreviousPregnancyTime < Creatures[i].Gestation * 0.8f){
+			// 		if (Weight() < 50){
+			// 			StartBirthingProcess();
+			// 		}
+			// 	}
+			// 	else if (Creatures[i].PregnancyTime >= Creatures[i].Gestation * 0.6f && Creatures[i].PreviousPregnancyTime < Creatures[i].Gestation * 0.6f){
+			// 		if (Weight() < 25){
+			// 			StartBirthingProcess();
+			// 		}
+			// 	}
+			// 	Creatures[i].PreviousPregnancyTime = Creatures[i].PregnancyTime;
+			// }
+			// if (Creatures[i].MyState == State.GivingBirth){
+			// 	BirthingProcess(delta);
+			// }
+			if(Creatures[i].MyState == State.ExploringTheEnvironment){
+				Creatures[i].MySpatial.RotateY(Mathf.Deg2Rad(Creatures[i].RotationRate * Creatures[i].RotationDirection * delta));
+				Creatures[i].FrontVector = Creatures[i].FrontVector.Rotated(Vector3.Up, Mathf.Deg2Rad(Creatures[i].RotationRate * Creatures[i].RotationDirection * delta));
+			}
+			Multimesh.SetInstanceTransform(i, Creatures[i].MySpatial.Transform);
+			// else if (MyState == State.Eating){
+			// 	Energy += 25 * delta;
+			// 	if (Energy > 100){ 
+			// 		Energy = 100;
+			// 		CurrentTarget.GetParent().GetParent<GroundTile>().RemoveEater();
+			// 		SetState(State.ExploringTheEnvironment);
+			// 	}
+			// } else if (MyState == State.Drinking){
+			// 	Thirst -= 25 * delta;
+			// 	if (Thirst < 0){
+			// 		Thirst = 0;
+			// 		SetState(State.ExploringTheEnvironment);
+			// 	} 
+			// } else if (MyState == State.Reproducing){
+			// 	ReproTime += delta;
+			// 	if (ReproTime > 2){
+			// 		ReproTime = 0;
+			// 		ReproductiveUrge = 0;
+			// 		if (MyGender == Gender.Female){ //female only
+			// 			try{
+			// 			Pregnant = true;
+			// 			PregnantWithGenome = CurrentTarget.GetParent<Creature>().GetGenome();
+			// 			} catch (Exception e) {
+			// 				Pregnant = false;
+			// 				SetState(State.ExploringTheEnvironment);
+			// 			}
+			// 		}
+			// 		SetState(State.ExploringTheEnvironment);
+			// 	}
+			// }
+		}
+	}
+
+	
+	// private void GoToTarget(float delta){
+	// 	GoingToTime += delta;
+	// 	Vector3 targetLocation;
+	// 	if (GoingToTime < MaxGoingToTime){
+	// 		try {
+	// 			targetLocation = CurrentTarget.ToGlobal(CurrentTarget.Translation);
+	// 		} catch (Exception e) {
+	// 			StopGoingTo(State.ExploringTheEnvironment);
+	// 			return;
+	// 		}
+	// 		Vector3 myLocation = ToGlobal(GetNode<Spatial>("PerceptionRadius").Translation);
+	// 		Vector3 goToTarget = targetLocation - myLocation;
+	// 		Velocity = goToTarget.Normalized();
+	// 		if (MyState == State.GoingToFood){
+	// 			if (ToGlobal(GetNode<MeshInstance>("BodyHolder/Head").Translation).DistanceTo(CurrentTarget.ToGlobal(CurrentTarget.Translation)) <= 1.2){
+	// 				StopGoingTo(State.Eating);
+	// 				CurrentTarget.GetParent().GetParent<GroundTile>().AddEater();
+	// 			} else RotateToTarget(targetLocation);
+	// 		}
+	// 		else if (MyState == State.GoingToWater){
+	// 			if (ToGlobal(GetNode<MeshInstance>("BodyHolder/Head").Translation).DistanceTo(CurrentTarget.ToGlobal(CurrentTarget.Translation)) <= 3.8){
+	// 				StopGoingTo(State.Drinking);
+	// 			} else RotateToTarget(targetLocation);
+	// 		}
+	// 		else if (MyState == State.GoingToPotentialPartner){
+	// 			try{
+	// 				if (ToGlobal(GetNode<MeshInstance>("BodyHolder/Head").Translation).DistanceTo(CurrentTarget.ToGlobal(CurrentTarget.Translation)) <= 2){
+	// 					if (CurrentTarget != null){
+	// 						if (MyGender == Gender.Female){ //female only
+	// 							if(CheckMale()){
+	// 								StopGoingTo(State.Reproducing);
+	// 								CurrentTarget.GetParent<Creature>().StopGoingTo(State.Reproducing);
+	// 							} else {
+	// 								CurrentTarget.GetParent<Creature>().UpdateRejectList(this);
+	// 								UpdateRejectList(CurrentTarget.GetParent<Creature>());
+	// 								CurrentTarget.GetParent<Creature>().StopGoingTo(State.ExploringTheEnvironment);
+	// 								StopGoingTo(State.ExploringTheEnvironment);
+	// 							}
+	// 						}
+	// 					}
+	// 				} else RotateToTarget(targetLocation);
+	// 			} catch (Exception e) {
+	// 				StopGoingTo(State.ExploringTheEnvironment);
+	// 			}
+	// 		}
+	// 	} else {
+	// 		GoingToTime = 0;
+	// 		SetState(State.ExploringTheEnvironment);
+	// 	}
+	// }
+
 	
 	public void InitSpecies (String speciesName, Godot.Collections.Array initArray){
 		this.SpeciesName = speciesName;
@@ -118,6 +272,18 @@ public class Species : MultiMeshInstance
 			Creature creature = new Creature();
 			creature.MySpatial = creatureSpatial;
 			creature.MyGenome = genome;
+			creature.FrontVector = Vector3.Back;
+			RandomNumberGenerator rng = (RandomNumberGenerator) new RandomNumberGenerator();
+			rng.Randomize();
+			if (rng.RandiRange(0, 1) == 0){
+				creature.MyGender = Gender.Female;
+			}
+			else {
+				creature.MyGender = Gender.Male;
+			}
+			rng.Randomize();
+			creature.NextRotationTime = rng.RandfRange(0.5f, 2);
+			InitializeTraitsFromGenome(creature);
 			Creatures.Add(creature);
 			Multimesh.SetInstanceTransform(creatureIndex, creatureSpatial.Transform);
 			Multimesh.SetInstanceColor(creatureIndex, color);
@@ -125,6 +291,30 @@ public class Species : MultiMeshInstance
 			if (creatureIndex == popSize)
 				break;
 		}
+	}
+
+	private void InitializeTraitsFromGenome(Creature creature){
+		creature.Speed = 2 + creature.MyGenome.GetTrait(Genome.GeneticTrait.Speed)/20;
+		creature.Perception = creature.MyGenome.GetTrait(Genome.GeneticTrait.Perception) / 20;
+		//GetNode<Area>("PerceptionRadius").Scale = (Vector3) new Vector3(creature.Perception, 0.2f, creature.Perception);
+		creature.MatingCycle = creature.MyGenome.GetTrait(Genome.GeneticTrait.MatingCycle) / 50;
+		creature.HungerResistance = creature.MyGenome.GetTrait(Genome.GeneticTrait.HungerResistance) / 33;
+		creature.ThirstResistance = creature.MyGenome.GetTrait(Genome.GeneticTrait.ThirstResistance) / 33;
+		creature.Gestation = 6 + creature.MyGenome.GetTrait(Genome.GeneticTrait.Gestation) / 5;
+		creature.LitterSize = 1 + Mathf.RoundToInt(creature.MyGenome.GetTrait(Genome.GeneticTrait.LitterSize) / 25);
+		creature.Longevity = 20 + creature.MyGenome.GetTrait(Genome.GeneticTrait.Longevity) / 1.25f;
+		CalcFitness(creature);
+	}
+
+	private void CalcFitness(Creature creature){
+		creature.Fitness += creature.MyGenome.GetTrait(Genome.GeneticTrait.Speed);
+		creature.Fitness += creature.MyGenome.GetTrait(Genome.GeneticTrait.Perception);
+		creature.Fitness += creature.MyGenome.GetTrait(Genome.GeneticTrait.MatingCycle);
+		creature.Fitness += creature.MyGenome.GetTrait(Genome.GeneticTrait.HungerResistance);
+		creature.Fitness += creature.MyGenome.GetTrait(Genome.GeneticTrait.ThirstResistance);
+		creature.Fitness += creature.MyGenome.GetTrait(Genome.GeneticTrait.Gestation);
+		creature.Fitness += creature.MyGenome.GetTrait(Genome.GeneticTrait.LitterSize);
+		creature.Fitness += creature.MyGenome.GetTrait(Genome.GeneticTrait.Longevity);
 	}
 
 	// public void AddCreature(Genome genome, Vector3 position, SpatialMaterial material){
