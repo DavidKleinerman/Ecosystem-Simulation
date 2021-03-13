@@ -18,6 +18,7 @@ public class BiomeGrid : GridMap
 		public bool isPlantGrowing;
 		public bool hasPlant;
 		public Vector3 gridIndex;
+		public Godot.Collections.Array<Species.Creature> CreaturesInTile = (Godot.Collections.Array<Species.Creature>) new Godot.Collections.Array<Species.Creature>();
 	}
 
 	private SpatialMaterial ForestMaterial = (SpatialMaterial)GD.Load<SpatialMaterial>("res://materials/forestPlant_material.tres");
@@ -31,7 +32,7 @@ public class BiomeGrid : GridMap
 	private bool mouseOnGUI = false;
 	private bool isWorldBuilding = true;
 	private Node TileSelectInst;
-	private Godot.Collections.Array<GroundTile> GroundTiles = (Godot.Collections.Array<GroundTile>) new Godot.Collections.Array<GroundTile>();
+	private Godot.Collections.Dictionary<Vector3, GroundTile> GroundTiles = (Godot.Collections.Dictionary<Vector3, GroundTile>) new Godot.Collections.Dictionary<Vector3, GroundTile>();
 	MultiMeshInstance MultiMeshPlants;
 	public override void _Ready()
 	{
@@ -68,24 +69,26 @@ public class BiomeGrid : GridMap
 
 	public override void _Process(float delta)
 	{
-		for (int i = 0; i < GroundTiles.Count; i++){
-			if (GroundTiles[i].isPlantGrowing){
-				Vector3 currentScale = GroundTiles[i].plantSpatial.Scale;
-				Vector3 currentTranslation = GroundTiles[i].plantSpatial.Translation;
-				if(currentScale.x < 1 && GroundTiles[i].plantGrowthTime < 2.5){
-					GroundTiles[i].plantGrowthTime += delta;
+		int i = 0;
+		foreach (Vector3 key in GroundTiles.Keys){
+			if (GroundTiles[key].isPlantGrowing){
+				Vector3 currentScale = GroundTiles[key].plantSpatial.Scale;
+				Vector3 currentTranslation = GroundTiles[key].plantSpatial.Translation;
+				if(currentScale.x < 1 && GroundTiles[key].plantGrowthTime < 2.5){
+					GroundTiles[key].plantGrowthTime += delta;
 					currentScale.x += 0.5f * delta;
 					currentScale.y += 0.5f * delta;
 					currentScale.z += 0.5f * delta;
 					currentTranslation.y += 0.25f * delta;
-					GroundTiles[i].plantSpatial.Scale = currentScale;
-					GroundTiles[i].plantSpatial.Translation = currentTranslation;
-					MultiMeshPlants.Multimesh.SetInstanceTransform(i, GroundTiles[i].plantSpatial.Transform);
+					GroundTiles[key].plantSpatial.Scale = currentScale;
+					GroundTiles[key].plantSpatial.Translation = currentTranslation;
+					MultiMeshPlants.Multimesh.SetInstanceTransform(i, GroundTiles[key].plantSpatial.Transform);
 				} else {
-					GroundTiles[i].plantGrowthTime = 0;
-					GroundTiles[i].isPlantGrowing = false;
+					GroundTiles[key].plantGrowthTime = 0;
+					GroundTiles[key].isPlantGrowing = false;
 				}
 			}
+			i++;
 		}
 	}
 
@@ -93,6 +96,28 @@ public class BiomeGrid : GridMap
 	{
 		if (isWorldBuilding && !mouseOnGUI)
 			SelectBiome();
+		else if (!isWorldBuilding){
+			int i = 0;
+			foreach (Vector3 key in GroundTiles.Keys){
+				if (GroundTiles[key].EatersCount> 0){
+					Vector3 eatRate = (Vector3) new Vector3(1,1,1);
+					Vector3 currentTranslation = GroundTiles[key].plantSpatial.Translation;
+					Vector3 oldTranslation = GroundTiles[key].plantSpatial.Translation;
+					eatRate *= GroundTiles[key].EatersCount * 0.5f * delta;
+					currentTranslation.y -= GroundTiles[key].EatersCount * 0.25f * delta;
+					GroundTiles[key].plantSpatial.Scale -= eatRate;
+					GroundTiles[key].plantSpatial.Translation = currentTranslation;
+					if (GroundTiles[key].plantSpatial.Scale.x < 0.05f){
+						GroundTiles[key].plantSpatial.Scale = (Vector3) new Vector3(0.05f, 0.05f, 0.05f);
+						GroundTiles[key].plantSpatial.Translation = oldTranslation;
+						GroundTiles[key].hasPlant = false;
+					}
+					MultiMeshPlants.Multimesh.SetInstanceTransform(i, GroundTiles[key].plantSpatial.Transform);
+				}
+				i++;
+			}
+
+		}
 	}
 
 	private void SelectBiome(){
@@ -138,7 +163,7 @@ public class BiomeGrid : GridMap
 		newTile.isPlantGrowing = false;
 		newTile.hasPlant = false;
 		newTile.gridIndex = position;
-		GroundTiles.Add(newTile);		
+		GroundTiles.Add(newTile.gridIndex, newTile);		
 	}
 
 	private Node GetObjectUnderMouse(){
@@ -261,27 +286,28 @@ public class BiomeGrid : GridMap
 	
 	private void _on_PlantGrowthTimer_timeout()
 	{
-		for(int i = 0; i < GroundTiles.Count; i++){
-			if(!GroundTiles[i].hasPlant){
-				if (PlantChance() < TotalGrowRate(GroundTiles[i].type)){
-					GroundTiles[i].plantSpatial.Translation = MapToWorld((int)GroundTiles[i].gridIndex.x, (int)GroundTiles[i].gridIndex.y + 1, (int)GroundTiles[i].gridIndex.z);
-					GroundTiles[i].plantSpatial.Translation = new Vector3(GroundTiles[i].plantSpatial.Translation.x, GroundTiles[i].plantSpatial.Translation.y - 1.2f, GroundTiles[i].plantSpatial.Translation.z);
-					GroundTiles[i].plantSpatial.Scale = new Vector3();
-					MultiMeshPlants.Multimesh.SetInstanceTransform(i, GroundTiles[i].plantSpatial.Transform);
-					SetPlantColor(i, GroundTiles[i].type);
-					GroundTiles[i].hasPlant = true;
-					GroundTiles[i].isPlantGrowing = true;
+		int i = 0;
+		foreach (Vector3 key in GroundTiles.Keys){
+			if(!GroundTiles[key].hasPlant){
+				if (PlantChance() < TotalGrowRate(GroundTiles[key].type)){
+					GroundTiles[key].plantSpatial.Translation = MapToWorld((int)GroundTiles[key].gridIndex.x, (int)GroundTiles[key].gridIndex.y + 1, (int)GroundTiles[key].gridIndex.z);
+					GroundTiles[key].plantSpatial.Translation = new Vector3(GroundTiles[key].plantSpatial.Translation.x, GroundTiles[key].plantSpatial.Translation.y - 1.2f, GroundTiles[key].plantSpatial.Translation.z);
+					GroundTiles[key].plantSpatial.Scale = new Vector3();
+					MultiMeshPlants.Multimesh.SetInstanceTransform(i, GroundTiles[key].plantSpatial.Transform);
+					SetPlantColor(i, GroundTiles[key].type);
+					GroundTiles[key].hasPlant = true;
+					GroundTiles[key].isPlantGrowing = true;
 				}
-			} else if (GroundTiles[i].plantSpatial.Scale.x < 0.4f){
-				if (PlantChance() < TotalGrowRate(GroundTiles[i].type)){
-					GroundTiles[i].isPlantGrowing = true;
+			} else if (GroundTiles[key].plantSpatial.Scale.x < 0.4f){
+				if (PlantChance() < TotalGrowRate(GroundTiles[key].type)){
+					GroundTiles[key].isPlantGrowing = true;
 				}
 			}
-
+			i++;
 		}
 	}
 
-	public Godot.Collections.Array<GroundTile> GetGroundTiles(){
+	public Godot.Collections.Dictionary<Vector3, GroundTile> GetGroundTiles(){
 		return GroundTiles;
 	}
 }
