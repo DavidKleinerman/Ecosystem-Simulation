@@ -300,6 +300,7 @@ public class BiomeGrid : GridMap
 				}
 			} else if (GroundTiles[key].plantSpatial.Scale.x < 0.4f){
 				if (PlantChance() < TotalGrowRate(GroundTiles[key].type)){
+					GroundTiles[key].hasPlant = true;
 					GroundTiles[key].isPlantGrowing = true;
 				}
 			}
