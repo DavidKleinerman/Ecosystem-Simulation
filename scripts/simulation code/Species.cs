@@ -123,14 +123,15 @@ public class Species : MultiMeshInstance
 			Vector3 collisionDetector = new Vector3(Creatures[i].MySpatial.Translation.x + Creatures[i].FrontVector.x, 1, Creatures[i].MySpatial.Translation.z + Creatures[i].FrontVector.z);
 			Vector3 posInGrid = TileGrid.WorldToMap(collisionDetector);
 			if (TileGrid.GetCellItem((int)posInGrid.x, (int)posInGrid.y, (int)posInGrid.z) == 4 || TileGrid.GetCellItem((int)posInGrid.x, (int)posInGrid.y, (int)posInGrid.z) == -1){
-				//GD.Print("Collided!");
+				GD.Print("Collided!");
 				if (TileGrid.GetCellItem((int)posInGrid.x, (int)posInGrid.y, (int)posInGrid.z) == 4 && Creatures[i].MyState == State.GoingToWater){
 					GD.Print("reached water");
 					StopGoingTo(Creatures[i], State.Drinking);
 				}
-				else {
+				else if (Creatures[i].MyState != State.Drinking){
 					Creatures[i].MySpatial.RotateY(Mathf.Deg2Rad(180));
 					Creatures[i].FrontVector = Creatures[i].FrontVector.Rotated(Vector3.Up, Mathf.Deg2Rad(180));
+					SetState(Creatures[i], State.ExploringTheEnvironment);
 				}
 			}
 			Creatures[i].MySpatial.Translation = new Vector3(Creatures[i].MySpatial.Translation.x + Creatures[i].Velocity.x, 2.4f, Creatures[i].MySpatial.Translation.z + Creatures[i].Velocity.z);
@@ -238,6 +239,7 @@ public class Species : MultiMeshInstance
 				}
 			} else if (Creatures[i].MyState == State.Drinking){
 				Creatures[i].Thirst -= 25 * delta;
+				//GD.Print("Im drinking!");
 				if (Creatures[i].Thirst < 0){
 					Creatures[i].Thirst = 0;
 					SetState(Creatures[i], State.ExploringTheEnvironment);
@@ -363,7 +365,7 @@ public class Species : MultiMeshInstance
 			creature.MySpatial = creatureSpatial;
 			creature.SpeciesName = SpeciesName;
 			creature.MyGenome = genome;
-			creature.FrontVector = Vector3.Back;
+			creature.FrontVector = Vector3.Forward;
 			RandomNumberGenerator rng = (RandomNumberGenerator) new RandomNumberGenerator();
 			rng.Randomize();
 			if (rng.RandiRange(0, 1) == 0){
