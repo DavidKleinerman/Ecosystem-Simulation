@@ -54,7 +54,7 @@ public class Species : MultiMeshInstance
 		//state and target
 		public State MyState = State.ExploringTheEnvironment;
 		public Vector3 CurrentTarget = new Vector3();
-		public float ScanInterval = 2;
+		public float ScanInterval;
 		public float TimeSinceLastScan = 0;
 		//Reject list
 		public Godot.Collections.Array RejectList = (Godot.Collections.Array) new Godot.Collections.Array();
@@ -112,9 +112,9 @@ public class Species : MultiMeshInstance
 		Vector3 collisionDetector;
 		Vector3 posInGrid;
 		for (int i = 0; i < Creatures.Count; i++){
-			// Vector3 gridIndex = TileGrid.WorldToMap(new Vector3(Creatures[i].MySpatial.Translation.x, 1, Creatures[i].MySpatial.Translation.z));
-			// if(TileGrid.GetGroundTiles().ContainsKey(gridIndex))
-			// 	TileGrid.GetGroundTiles()[gridIndex].CreaturesInTile.Remove(Creatures[i]);
+			Vector3 gridIndex = TileGrid.WorldToMap(new Vector3(Creatures[i].MySpatial.Translation.x, 1, Creatures[i].MySpatial.Translation.z));
+			if(TileGrid.GetGroundTiles().ContainsKey(gridIndex))
+				TileGrid.GetGroundTiles()[gridIndex].CreaturesInTile.Remove(Creatures[i]);
 
 
 			if (Creatures[i].MyState == State.ExploringTheEnvironment)
@@ -142,9 +142,9 @@ public class Species : MultiMeshInstance
 			Multimesh.SetInstanceTransform(i, Creatures[i].MySpatial.Transform);
 
 
-			// gridIndex = TileGrid.WorldToMap(new Vector3(Creatures[i].MySpatial.Translation.x, 1, Creatures[i].MySpatial.Translation.z));
-			// if(TileGrid.GetGroundTiles().ContainsKey(gridIndex))
-			// 	TileGrid.GetGroundTiles()[gridIndex].CreaturesInTile.Add(Creatures[i]);
+			gridIndex = TileGrid.WorldToMap(new Vector3(Creatures[i].MySpatial.Translation.x, 1, Creatures[i].MySpatial.Translation.z));
+			if(TileGrid.GetGroundTiles().ContainsKey(gridIndex))
+				TileGrid.GetGroundTiles()[gridIndex].CreaturesInTile.Add(Creatures[i]);
 		}
 	}
 	private float Weight(){
@@ -160,27 +160,7 @@ public class Species : MultiMeshInstance
 			// scan environment within perception radius
 			Creatures[i].TimeSinceLastScan += delta;
 			if (Creatures[i].TimeSinceLastScan > Creatures[i].ScanInterval && Creatures[i].MyState == State.ExploringTheEnvironment){
-				gridIndex = TileGrid.WorldToMap(new Vector3(Creatures[i].MySpatial.Translation.x, 1, Creatures[i].MySpatial.Translation.z));
-				for(int x = (int)(gridIndex.x - Creatures[i].Perception); x <= (int)(gridIndex.x + Creatures[i].Perception); x++){
-					for (int z = (int)(gridIndex.z - Creatures[i].Perception); z <= (int)(gridIndex.z + Creatures[i].Perception); z++){
-						if(TileGrid.GetCellItem(x, 0, z) == 4){
-							if (Creatures[i].Thirst * 1.3 > 10){
-								Creatures[i].MyState = State.GoingToWater;
-								Creatures[i].CurrentTarget = TileGrid.MapToWorld(x, 0, z);
-							}
-						} 
-						else if (TileGrid.GetCellItem(x, 0, z) <= 3 && TileGrid.GetCellItem(x, 0, z) >= 0){
-							gt = TileGrid.GetGroundTiles()[new Vector3(x, 0, z)];
-							if ((100 - Creatures[i].Energy) * 1.3f > 10 && gt.hasPlant){
-								if(gt.plantSpatial.Scale.x > 0.1f){
-									Creatures[i].MyState = State.GoingToFood;
-									Creatures[i].CurrentTarget = TileGrid.MapToWorld(x, 0, z);;
-								}
-							}
-						}
-					}
-				}
-				Creatures[i].TimeSinceLastScan = 0;
+				ScanEnvironment(Creatures[i]);
 			}
 			Creatures[i].Age += delta;
 			Creatures[i].CurrentRotationTime += delta;
@@ -275,6 +255,47 @@ public class Species : MultiMeshInstance
 			// 		SetState(State.ExploringTheEnvironment);
 			// 	}
 			// }
+		}
+	}
+
+	private void ScanEnvironment(Creature creature){
+		Vector3 gridIndex = TileGrid.WorldToMap(new Vector3(creature.MySpatial.Translation.x, 1, creature.MySpatial.Translation.z));
+		rng.Randomize();
+		int scanMethod = rng.RandiRange(0,1);
+		switch(scanMethod){
+			case 0:
+				for(int x = (int)(gridIndex.x - creature.Perception); x <= (int)(gridIndex.x + creature.Perception); x++){
+					for (int z = (int)(gridIndex.z - creature.Perception); z <= (int)(gridIndex.z + creature.Perception); z++){
+						CheckTile(creature, x, z);
+					}
+				}
+				break;
+			case 1:
+				for(int x = (int)(gridIndex.x + creature.Perception); x >= (int)(gridIndex.x - creature.Perception); x--){
+					for (int z = (int)(gridIndex.z + creature.Perception); z >= (int)(gridIndex.z - creature.Perception); z--){
+						CheckTile(creature, x, z);
+					}
+				}
+				break;
+		}
+		creature.TimeSinceLastScan = 0;
+	}
+
+	private void CheckTile(Creature creature, int x, int z){
+		BiomeGrid.GroundTile gt;
+		int cellType = TileGrid.GetCellItem(x, 0, z);
+		if(cellType == 4){
+			if (creature.Thirst * 1.3 > 10){
+				creature.MyState = State.GoingToWater;
+				creature.CurrentTarget = TileGrid.MapToWorld(x, 0, z);
+			}
+		} 
+		else if (cellType <= 3 && cellType >= 0){
+			gt = TileGrid.GetGroundTiles()[new Vector3(x, 0, z)];
+			if ((100 - creature.Energy) * 1.3f > 10 && gt.hasPlant){
+				creature.MyState = State.GoingToFood;
+				creature.CurrentTarget = TileGrid.MapToWorld(x, 0, z);
+			}
 		}
 	}
 
@@ -383,6 +404,8 @@ public class Species : MultiMeshInstance
 		creature.Gestation = 6 + creature.MyGenome.GetTrait(Genome.GeneticTrait.Gestation) / 5;
 		creature.LitterSize = 1 + Mathf.RoundToInt(creature.MyGenome.GetTrait(Genome.GeneticTrait.LitterSize) / 25);
 		creature.Longevity = 20 + creature.MyGenome.GetTrait(Genome.GeneticTrait.Longevity) / 1.25f;
+		rng.Randomize();
+		creature.ScanInterval = rng.RandfRange(1.8f, 2.2f);
 		CalcFitness(creature);
 	}
 
