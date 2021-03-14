@@ -4,9 +4,9 @@ using System;
 public class Species : MultiMeshInstance
 {
 	public String SpeciesName;
-	//private PackedScene CreatureScene = (PackedScene)GD.Load("res://assets/Creature.tscn");
 	private RandomNumberGenerator rng;
 	private DataCollector SpeciesDataCollector = null;
+	private Color SpeciesColor;
 	private BiomeGrid TileGrid;
 
 	//consts
@@ -36,7 +36,7 @@ public class Species : MultiMeshInstance
 		Female,
 		Male
 	}
-	public class Creature : Godot.Object { //godot has major bugs when using structs. This is a work-around.
+	public class Creature : Godot.Reference { //godot has major bugs when using structs. This is a work-around.
 		public string SpeciesName;
 		//movement
 		public Vector3 Velocity  = (Vector3) new Vector3();
@@ -93,6 +93,8 @@ public class Species : MultiMeshInstance
 	private Spatial AssistSpatial;
 	private Spatial AssistSpatial2;
 	private Godot.Collections.Array<Creature> Creatures = (Godot.Collections.Array<Creature>) new Godot.Collections.Array<Creature>();
+	//private Godot.Collections.Array<Creature> CreaturesPhysics = (Godot.Collections.Array<Creature>) new Godot.Collections.Array<Creature>();
+	private Godot.Collections.Array DeadArray = (Godot.Collections.Array) new Godot.Collections.Array();
 
 	public override void _Ready()
 	{
@@ -107,46 +109,36 @@ public class Species : MultiMeshInstance
 
 	}
 
-	public override void _PhysicsProcess(float delta)
-	{
-		Vector3 collisionDetector;
-		Vector3 posInGrid;
-		for (int i = 0; i < Creatures.Count; i++){
-			Vector3 gridIndex = TileGrid.WorldToMap(new Vector3(Creatures[i].MySpatial.Translation.x, 1, Creatures[i].MySpatial.Translation.z));
-			if(TileGrid.GetGroundTiles().ContainsKey(gridIndex))
-				TileGrid.GetGroundTiles()[gridIndex].CreaturesInTile.Remove(Creatures[i]);
-
-
-			if (Creatures[i].MyState == State.ExploringTheEnvironment)
-				Creatures[i].Velocity = Creatures[i].FrontVector;
-			// if (Creatures[i].MyState == State.Eating || Creatures[i].MyState == State.Drinking)
-			// 	Creatures[i].Velocity = new Vector3();
-			if (Creatures[i].MyState == State.GoingToWater || Creatures[i].MyState == State.GoingToFood || Creatures[i].MyState == State.GoingToPotentialPartner)
-				GoToTarget(Creatures[i], delta);
-			Creatures[i].Velocity *= Creatures[i].Speed * delta;
-			// Creatures[i].MySpatial.Translation = new Vector3(Creatures[i].MySpatial.Translation.x + Creatures[i].Velocity.x, 2.4f, Creatures[i].MySpatial.Translation.z + Creatures[i].Velocity.z);
-			// Multimesh.SetInstanceTransform(i, Creatures[i].MySpatial.Transform);
-			collisionDetector = new Vector3(Creatures[i].MySpatial.Translation.x + Creatures[i].FrontVector.x, 1, Creatures[i].MySpatial.Translation.z + Creatures[i].FrontVector.z);
-			posInGrid = TileGrid.WorldToMap(collisionDetector);
-			if (TileGrid.GetCellItem((int)posInGrid.x, (int)posInGrid.y, (int)posInGrid.z) == 4 || TileGrid.GetCellItem((int)posInGrid.x, (int)posInGrid.y, (int)posInGrid.z) == -1){
-				if (TileGrid.GetCellItem((int)posInGrid.x, (int)posInGrid.y, (int)posInGrid.z) == 4 && Creatures[i].MyState == State.GoingToWater){
-					StopGoingTo(Creatures[i], State.Drinking);
-				}
-				else if (Creatures[i].MyState != State.Drinking) {
-					Creatures[i].MySpatial.RotateY(Mathf.Deg2Rad(180));
-					Creatures[i].FrontVector = Creatures[i].FrontVector.Rotated(Vector3.Up, Mathf.Deg2Rad(180));
-					SetState(Creatures[i], State.ExploringTheEnvironment);
-				}
-			}
-			Creatures[i].MySpatial.Translation = new Vector3(Creatures[i].MySpatial.Translation.x + Creatures[i].Velocity.x, 2.4f, Creatures[i].MySpatial.Translation.z + Creatures[i].Velocity.z);
-			Multimesh.SetInstanceTransform(i, Creatures[i].MySpatial.Transform);
-
-
-			gridIndex = TileGrid.WorldToMap(new Vector3(Creatures[i].MySpatial.Translation.x, 1, Creatures[i].MySpatial.Translation.z));
-			if(TileGrid.GetGroundTiles().ContainsKey(gridIndex))
-				TileGrid.GetGroundTiles()[gridIndex].CreaturesInTile.Add(Creatures[i]);
-		}
-	}
+	// public override void _PhysicsProcess(float delta)
+	// {
+	// 	Vector3 collisionDetector;
+	// 	Vector3 posInGrid;
+	// 	for (int i = 0; i < CreaturesPhysics.Count; i++){
+	// 		if (CreaturesPhysics[i].MyState == State.ExploringTheEnvironment)
+	// 			CreaturesPhysics[i].Velocity = CreaturesPhysics[i].FrontVector;
+	// 		// if (Creatures[i].MyState == State.Eating || Creatures[i].MyState == State.Drinking)
+	// 		// 	Creatures[i].Velocity = new Vector3();
+	// 		if (CreaturesPhysics[i].MyState == State.GoingToWater || CreaturesPhysics[i].MyState == State.GoingToFood || CreaturesPhysics[i].MyState == State.GoingToPotentialPartner)
+	// 			GoToTarget(CreaturesPhysics[i], delta);
+	// 		CreaturesPhysics[i].Velocity *= CreaturesPhysics[i].Speed * delta;
+	// 		// Creatures[i].MySpatial.Translation = new Vector3(Creatures[i].MySpatial.Translation.x + Creatures[i].Velocity.x, 2.4f, Creatures[i].MySpatial.Translation.z + Creatures[i].Velocity.z);
+	// 		// Multimesh.SetInstanceTransform(i, Creatures[i].MySpatial.Transform);
+	// 		collisionDetector = new Vector3(CreaturesPhysics[i].MySpatial.Translation.x + CreaturesPhysics[i].FrontVector.x, 1, CreaturesPhysics[i].MySpatial.Translation.z + CreaturesPhysics[i].FrontVector.z);
+	// 		posInGrid = TileGrid.WorldToMap(collisionDetector);
+	// 		if (TileGrid.GetCellItem((int)posInGrid.x, (int)posInGrid.y, (int)posInGrid.z) == 4 || TileGrid.GetCellItem((int)posInGrid.x, (int)posInGrid.y, (int)posInGrid.z) == -1){
+	// 			if (TileGrid.GetCellItem((int)posInGrid.x, (int)posInGrid.y, (int)posInGrid.z) == 4 && CreaturesPhysics[i].MyState == State.GoingToWater){
+	// 				StopGoingTo(CreaturesPhysics[i], State.Drinking);
+	// 			}
+	// 			else if (CreaturesPhysics[i].MyState != State.Drinking) {
+	// 				CreaturesPhysics[i].MySpatial.RotateY(Mathf.Deg2Rad(180));
+	// 				CreaturesPhysics[i].FrontVector = CreaturesPhysics[i].FrontVector.Rotated(Vector3.Up, Mathf.Deg2Rad(180));
+	// 				SetState(CreaturesPhysics[i], State.ExploringTheEnvironment);
+	// 			}
+	// 		}
+	// 		CreaturesPhysics[i].MySpatial.Translation = new Vector3(CreaturesPhysics[i].MySpatial.Translation.x + CreaturesPhysics[i].Velocity.x, 2.4f, CreaturesPhysics[i].MySpatial.Translation.z + CreaturesPhysics[i].Velocity.z);
+	// 		Multimesh.SetInstanceTransform(i, CreaturesPhysics[i].MySpatial.Transform);
+	// 	}
+	// }
 	private float Weight(){
 		rng.Randomize();
 		return rng.RandfRange(0,100);
@@ -156,6 +148,22 @@ public class Species : MultiMeshInstance
 	{
 		Vector3 gridIndex;
 		BiomeGrid.GroundTile gt;
+		Vector3 collisionDetector;
+		Vector3 posInGrid;
+		Godot.Collections.Array<Creature> temp = (Godot.Collections.Array<Creature>) new Godot.Collections.Array<Creature>();
+		for (int i = 0; i < Creatures.Count; i++){
+			if (!DeadArray.Contains(i))
+				temp.Add(Creatures[i]);
+		}
+		Creatures.Clear();
+		for (int i=0; i < temp.Count; i++){
+			Creatures.Add(temp[i]);
+		}
+		DeadArray.Clear();
+		temp.Clear();
+		Multimesh.InstanceCount = Creatures.Count;
+
+
 		for (int i = 0; i < Creatures.Count; i++){
 			// scan environment within perception radius
 			Creatures[i].TimeSinceLastScan += delta;
@@ -178,16 +186,14 @@ public class Species : MultiMeshInstance
 			}
 
 			if (Creatures[i].Energy < 0){
-				// Die(Creature.CauseOfDeath.Starvation);
-				Creatures[i].Energy = 0;
+				Die(Creatures[i], i, CauseOfDeath.Starvation);
 			}
 			if (Creatures[i].Thirst > 100){
-				// Die(Creature.CauseOfDeath.Dehydration);
-				Creatures[i].Thirst = 100;
+				Die(Creatures[i], i, CauseOfDeath.Dehydration);
 			}
-			// if (Creatures[i].Age > Longevity){
-			// 	Die(Creature.CauseOfDeath.OldAge);
-			// }
+			if (Creatures[i].Age > Creatures[i].Longevity){
+				Die(Creatures[i], i, CauseOfDeath.OldAge);
+			}
 			// if (Creatures[i].Pregnant){ //female only
 			// 	Creatures[i].PregnancyTime += delta;
 			// 	if (Creatures[i].PregnancyTime >= Creatures[i].Gestation){
@@ -216,7 +222,6 @@ public class Species : MultiMeshInstance
 				gridIndex = TileGrid.WorldToMap(new Vector3(Creatures[i].CurrentTarget.x, 1, Creatures[i].CurrentTarget.z));
 				gt = TileGrid.GetGroundTiles()[gridIndex];
 				if (gt.hasPlant){
-					GD.Print("Im eating!");
 					Creatures[i].Energy += 25 * delta;
 				}
 				else {
@@ -231,13 +236,11 @@ public class Species : MultiMeshInstance
 				
 			} else if (Creatures[i].MyState == State.Drinking){
 				Creatures[i].Thirst -= 25 * delta;
-				GD.Print("Im drinking!");
 				if (Creatures[i].Thirst < 0){
 					Creatures[i].Thirst = 0;
 					SetState(Creatures[i], State.ExploringTheEnvironment);
 				} 
 			}
-			Multimesh.SetInstanceTransform(i, Creatures[i].MySpatial.Transform);
 			// else if (MyState == State.Reproducing){
 			// 	ReproTime += delta;
 			// 	if (ReproTime > 2){
@@ -255,6 +258,36 @@ public class Species : MultiMeshInstance
 			// 		SetState(State.ExploringTheEnvironment);
 			// 	}
 			// }
+
+
+
+
+
+
+			if (Creatures[i].MyState == State.ExploringTheEnvironment)
+				Creatures[i].Velocity = Creatures[i].FrontVector;
+			// if (Creatures[i].MyState == State.Eating || Creatures[i].MyState == State.Drinking)
+			// 	Creatures[i].Velocity = new Vector3();
+			if (Creatures[i].MyState == State.GoingToWater || Creatures[i].MyState == State.GoingToFood || Creatures[i].MyState == State.GoingToPotentialPartner)
+				GoToTarget(Creatures[i], delta);
+			Creatures[i].Velocity *= Creatures[i].Speed * delta;
+			// Creatures[i].MySpatial.Translation = new Vector3(Creatures[i].MySpatial.Translation.x + Creatures[i].Velocity.x, 2.4f, Creatures[i].MySpatial.Translation.z + Creatures[i].Velocity.z);
+			// Multimesh.SetInstanceTransform(i, Creatures[i].MySpatial.Transform);
+			collisionDetector = new Vector3(Creatures[i].MySpatial.Translation.x + Creatures[i].FrontVector.x, 1, Creatures[i].MySpatial.Translation.z + Creatures[i].FrontVector.z);
+			posInGrid = TileGrid.WorldToMap(collisionDetector);
+			if (TileGrid.GetCellItem((int)posInGrid.x, (int)posInGrid.y, (int)posInGrid.z) == 4 || TileGrid.GetCellItem((int)posInGrid.x, (int)posInGrid.y, (int)posInGrid.z) == -1){
+				if (TileGrid.GetCellItem((int)posInGrid.x, (int)posInGrid.y, (int)posInGrid.z) == 4 && Creatures[i].MyState == State.GoingToWater){
+					StopGoingTo(Creatures[i], State.Drinking);
+				}
+				else if (Creatures[i].MyState != State.Drinking) {
+					Creatures[i].MySpatial.RotateY(Mathf.Deg2Rad(180));
+					Creatures[i].FrontVector = Creatures[i].FrontVector.Rotated(Vector3.Up, Mathf.Deg2Rad(180));
+					SetState(Creatures[i], State.ExploringTheEnvironment);
+				}
+			}
+			Creatures[i].MySpatial.Translation = new Vector3(Creatures[i].MySpatial.Translation.x + Creatures[i].Velocity.x, 2.4f, Creatures[i].MySpatial.Translation.z + Creatures[i].Velocity.z);
+			Multimesh.SetInstanceTransform(i, Creatures[i].MySpatial.Transform);
+			Multimesh.SetInstanceColor(i, SpeciesColor);
 		}
 	}
 
@@ -297,6 +330,22 @@ public class Species : MultiMeshInstance
 				creature.CurrentTarget = TileGrid.MapToWorld(x, 0, z);
 			}
 		}
+	}
+
+	private void Die(Creature creature,int index, CauseOfDeath cause){
+		// if(MyState == State.GoingToPotentialPartner || MyState == State.Reproducing){
+		// 	try {
+		// 		CurrentTarget.GetParent<Creature>().SetState(State.ExploringTheEnvironment);
+		// 	}
+		// 	catch (Exception e) {
+		// 		GD.Print("handeled: \n", e);
+		// 	}
+		// } else if (MyState == State.Eating){
+		// 	CurrentTarget.GetParent().GetParent<GroundTile>().RemoveEater();
+		// }
+		DeadArray.Add(index);
+		AddDead(cause, creature.MySpatial.Translation);
+
 	}
 
 	private void GoToTarget(Creature creature, float delta){
@@ -379,6 +428,7 @@ public class Species : MultiMeshInstance
 	public void AddNewCreatures(int popSize, Color color, Godot.Collections.Array initialValues, float geneticVariation){
 		int creatureIndex = 0;
 		Multimesh.InstanceCount = popSize;
+		SpeciesColor = color;
 		foreach (BiomeGrid.GroundTile gt in ReshuffledGroundTiles()){
 			Spatial creatureSpatial = new Spatial();
 			Vector3 position = TileGrid.MapToWorld((int)gt.gridIndex.x, (int)gt.gridIndex.y, (int)gt.gridIndex.z);
@@ -388,7 +438,7 @@ public class Species : MultiMeshInstance
 			genome.ArtificialCombine(initialValues, geneticVariation);
 			AddCreature(genome, creatureSpatial, gt);
 			Multimesh.SetInstanceTransform(creatureIndex, creatureSpatial.Transform);
-			Multimesh.SetInstanceColor(creatureIndex, color);
+			Multimesh.SetInstanceColor(creatureIndex, SpeciesColor);
 			creatureIndex++;
 			if (creatureIndex == popSize)
 				break;
@@ -438,7 +488,6 @@ public class Species : MultiMeshInstance
 		creature.NextRotationTime = rng.RandfRange(0.5f, 2);
 		InitializeTraitsFromGenome(creature);
 		Creatures.Add(creature);
-		gt.CreaturesInTile.Add(creature);
 	}
 
 	private Godot.Collections.Array<BiomeGrid.GroundTile> ReshuffledGroundTiles(){
@@ -465,20 +514,20 @@ public class Species : MultiMeshInstance
 		return SpeciesName;
 	}
 
-	// public void AddDead(Creature.CauseOfDeath cause, Vector3 position){
-	// 	GetTree().CallGroup("SpeciesHolder", "AddDead", position);
-	// 	switch (cause){
-	// 		case Creature.CauseOfDeath.Starvation:
-	// 			SpeciesDataCollector.updateStarvation();
-	// 			break;
-	// 		case Creature.CauseOfDeath.Dehydration:
-	// 			SpeciesDataCollector.updateDehydration();
-	// 			break;
-	// 		case Creature.CauseOfDeath.OldAge:
-	// 			SpeciesDataCollector.updateOldAge();
-	// 			break;
-	// 	}
-	// }
+	public void AddDead(CauseOfDeath cause, Vector3 position){
+		//GetTree().CallGroup("SpeciesHolder", "AddDead", position);
+		switch (cause){
+			case CauseOfDeath.Starvation:
+				SpeciesDataCollector.updateStarvation();
+				break;
+			case CauseOfDeath.Dehydration:
+				SpeciesDataCollector.updateDehydration();
+				break;
+			case CauseOfDeath.OldAge:
+				SpeciesDataCollector.updateOldAge();
+				break;
+		}
+	}
 
 	public void CollectData(){
 		// Godot.Collections.Array creaturesInSpecies = GetChildren();

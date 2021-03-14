@@ -10,7 +10,7 @@ public class BiomeGrid : GridMap
 		tundra,
 		forest
 	}
-	public class GroundTile : Godot.Object { //godot has major bugs when using structs. This is a work-around.
+	public class GroundTile : Godot.Reference { //godot has major bugs when using structs. This is a work-around.
 		public BiomeType type;
 		public Spatial plantSpatial;
 		public float plantGrowthTime;
@@ -18,7 +18,6 @@ public class BiomeGrid : GridMap
 		public bool isPlantGrowing;
 		public bool hasPlant;
 		public Vector3 gridIndex;
-		public Godot.Collections.Array<Species.Creature> CreaturesInTile = (Godot.Collections.Array<Species.Creature>) new Godot.Collections.Array<Species.Creature>();
 	}
 
 	private SpatialMaterial ForestMaterial = (SpatialMaterial)GD.Load<SpatialMaterial>("res://materials/forestPlant_material.tres");
@@ -67,30 +66,30 @@ public class BiomeGrid : GridMap
 		MultiMeshPlants = GetParent().GetNode<MultiMeshInstance>("MultiMeshPlants");
 	}
 
-	public override void _Process(float delta)
-	{
-		int i = 0;
-		foreach (Vector3 key in GroundTiles.Keys){
-			if (GroundTiles[key].isPlantGrowing){
-				Vector3 currentScale = GroundTiles[key].plantSpatial.Scale;
-				Vector3 currentTranslation = GroundTiles[key].plantSpatial.Translation;
-				if(currentScale.x < 1 && GroundTiles[key].plantGrowthTime < 2.5){
-					GroundTiles[key].plantGrowthTime += delta;
-					currentScale.x += 0.5f * delta;
-					currentScale.y += 0.5f * delta;
-					currentScale.z += 0.5f * delta;
-					currentTranslation.y += 0.25f * delta;
-					GroundTiles[key].plantSpatial.Scale = currentScale;
-					GroundTiles[key].plantSpatial.Translation = currentTranslation;
-					MultiMeshPlants.Multimesh.SetInstanceTransform(i, GroundTiles[key].plantSpatial.Transform);
-				} else {
-					GroundTiles[key].plantGrowthTime = 0;
-					GroundTiles[key].isPlantGrowing = false;
-				}
-			}
-			i++;
-		}
-	}
+	// public override void _Process(float delta)
+	// {
+	// 	int i = 0;
+	// 	foreach (Vector3 key in GroundTiles.Keys){
+	// 		if (GroundTiles[key].isPlantGrowing){
+	// 			Vector3 currentScale = GroundTiles[key].plantSpatial.Scale;
+	// 			Vector3 currentTranslation = GroundTiles[key].plantSpatial.Translation;
+	// 			if(currentScale.x < 1 && GroundTiles[key].plantGrowthTime < 2.5){
+	// 				GroundTiles[key].plantGrowthTime += delta;
+	// 				currentScale.x += 0.5f * delta;
+	// 				currentScale.y += 0.5f * delta;
+	// 				currentScale.z += 0.5f * delta;
+	// 				currentTranslation.y += 0.25f * delta;
+	// 				GroundTiles[key].plantSpatial.Scale = currentScale;
+	// 				GroundTiles[key].plantSpatial.Translation = currentTranslation;
+	// 				MultiMeshPlants.Multimesh.SetInstanceTransform(i, GroundTiles[key].plantSpatial.Transform);
+	// 			} else {
+	// 				GroundTiles[key].plantGrowthTime = 0;
+	// 				GroundTiles[key].isPlantGrowing = false;
+	// 			}
+	// 		}
+	// 		i++;
+	// 	}
+	// }
 
 	public override void _PhysicsProcess(float delta)
 	{
@@ -99,6 +98,23 @@ public class BiomeGrid : GridMap
 		else if (!isWorldBuilding){
 			int i = 0;
 			foreach (Vector3 key in GroundTiles.Keys){
+				if (GroundTiles[key].isPlantGrowing){
+					Vector3 currentScale = GroundTiles[key].plantSpatial.Scale;
+					Vector3 currentTranslation = GroundTiles[key].plantSpatial.Translation;
+					if(currentScale.x < 1 && GroundTiles[key].plantGrowthTime < 2.5){
+						GroundTiles[key].plantGrowthTime += delta;
+						currentScale.x += 0.5f * delta;
+						currentScale.y += 0.5f * delta;
+						currentScale.z += 0.5f * delta;
+						currentTranslation.y += 0.25f * delta;
+						GroundTiles[key].plantSpatial.Scale = currentScale;
+						GroundTiles[key].plantSpatial.Translation = currentTranslation;
+						MultiMeshPlants.Multimesh.SetInstanceTransform(i, GroundTiles[key].plantSpatial.Transform);
+					} else {
+						GroundTiles[key].plantGrowthTime = 0;
+						GroundTiles[key].isPlantGrowing = false;
+					}
+				}
 				if (GroundTiles[key].EatersCount> 0){
 					Vector3 eatRate = (Vector3) new Vector3(1,1,1);
 					Vector3 currentTranslation = GroundTiles[key].plantSpatial.Translation;
@@ -114,6 +130,7 @@ public class BiomeGrid : GridMap
 					}
 					MultiMeshPlants.Multimesh.SetInstanceTransform(i, GroundTiles[key].plantSpatial.Transform);
 				}
+
 				i++;
 			}
 
