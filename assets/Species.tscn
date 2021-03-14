@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://scripts/simulation code/Species.cs" type="Script" id=1]
+
+[sub_resource type="CylinderShape" id=1]
 
 [node name="Species" type="MultiMeshInstance" groups=[
 "Species",
@@ -10,3 +12,9 @@ script = ExtResource( 1 )
 [node name="AssistSpatial" type="Spatial" parent="."]
 
 [node name="AssistSpatial2" type="Spatial" parent="AssistSpatial"]
+
+[node name="PerceptionRadius" type="Area" parent="."]
+
+[node name="CollisionShape" type="CollisionShape" parent="PerceptionRadius"]
+transform = Transform( 2, 0, 0, 0, 0.2, 0, 0, 0, 2, 0, 0, 0 )
+shape = SubResource( 1 )

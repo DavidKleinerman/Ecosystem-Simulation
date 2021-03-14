@@ -8,6 +8,8 @@ public class Species : MultiMeshInstance
 	private DataCollector SpeciesDataCollector = null;
 	private Color SpeciesColor;
 	private BiomeGrid TileGrid;
+	private PackedScene Collider = (PackedScene)GD.Load("res://assets/CreatureCollider.tscn");
+	private Area PerceptionCollider;
 
 	//consts
 	private const float BaseEnergyDecay = 3.5f;
@@ -42,6 +44,7 @@ public class Species : MultiMeshInstance
 		public Vector3 Velocity  = (Vector3) new Vector3();
 		public Vector3 FrontVector = (Vector3) new Vector3();
 		public Spatial MySpatial = new Spatial();
+		public CreatureCollider Collider;
 		public float CurrentRotationTime = 0;
 		public float NextRotationTime = 0;
 		public float RotationRate = 0;
@@ -98,6 +101,7 @@ public class Species : MultiMeshInstance
 
 	public override void _Ready()
 	{
+		PerceptionCollider = GetNode<Area>("PerceptionRadius");
 		AssistSpatial = GetNode<Spatial>("AssistSpatial");
 		AssistSpatial2 = GetNode<Spatial>("AssistSpatial/AssistSpatial2");
 		TileGrid = GetNode<BiomeGrid>("../../BiomeGrid");
@@ -288,6 +292,7 @@ public class Species : MultiMeshInstance
 			Creatures[i].MySpatial.Translation = new Vector3(Creatures[i].MySpatial.Translation.x + Creatures[i].Velocity.x, 2.4f, Creatures[i].MySpatial.Translation.z + Creatures[i].Velocity.z);
 			Multimesh.SetInstanceTransform(i, Creatures[i].MySpatial.Transform);
 			Multimesh.SetInstanceColor(i, SpeciesColor);
+			Creatures[i].Collider.Translation = Creatures[i].MySpatial.Translation;
 		}
 	}
 
@@ -311,6 +316,15 @@ public class Species : MultiMeshInstance
 				}
 				break;
 		}
+		PerceptionCollider.Translation = creature.MySpatial.Translation;
+		PerceptionCollider.Scale = new Vector3(2 + (creature.Perception * 4), 0.2f, 2 + (creature.Perception * 4));
+		// foreach(Node n in PerceptionCollider.GetOverlappingAreas()){
+
+		// }
+		// if (PerceptionCollider.GetOverlappingAreas().Count > 1)
+		// 	GD.Print("detected other creature!");
+		// else
+		// 	GD.Print("I'm alone :(");
 		creature.TimeSinceLastScan = 0;
 	}
 
@@ -344,6 +358,7 @@ public class Species : MultiMeshInstance
 		// 	CurrentTarget.GetParent().GetParent<GroundTile>().RemoveEater();
 		// }
 		DeadArray.Add(index);
+		creature.Collider.QueueFree();
 		AddDead(cause, creature.MySpatial.Translation);
 
 	}
@@ -447,7 +462,7 @@ public class Species : MultiMeshInstance
 
 	private void InitializeTraitsFromGenome(Creature creature){
 		creature.Speed = 2 + creature.MyGenome.GetTrait(Genome.GeneticTrait.Speed)/20;
-		creature.Perception = 1 + creature.MyGenome.GetTrait(Genome.GeneticTrait.Perception) / 25;
+		creature.Perception = creature.MyGenome.GetTrait(Genome.GeneticTrait.Perception) / 25;
 		creature.MatingCycle = creature.MyGenome.GetTrait(Genome.GeneticTrait.MatingCycle) / 50;
 		creature.HungerResistance = creature.MyGenome.GetTrait(Genome.GeneticTrait.HungerResistance) / 33;
 		creature.ThirstResistance = creature.MyGenome.GetTrait(Genome.GeneticTrait.ThirstResistance) / 33;
@@ -476,6 +491,9 @@ public class Species : MultiMeshInstance
 		creature.SpeciesName = SpeciesName;
 		creature.MyGenome = genome;
 		creature.FrontVector = Vector3.Forward;
+		creature.Collider = (CreatureCollider)(Collider.Instance());
+		creature.Collider.Translation = creature.MySpatial.Translation;
+		creature.Collider.MyCreature = creature;
 		RandomNumberGenerator rng = (RandomNumberGenerator) new RandomNumberGenerator();
 		rng.Randomize();
 		if (rng.RandiRange(0, 1) == 0){
@@ -488,6 +506,7 @@ public class Species : MultiMeshInstance
 		creature.NextRotationTime = rng.RandfRange(0.5f, 2);
 		InitializeTraitsFromGenome(creature);
 		Creatures.Add(creature);
+		AddChild(creature.Collider);
 	}
 
 	private Godot.Collections.Array<BiomeGrid.GroundTile> ReshuffledGroundTiles(){
