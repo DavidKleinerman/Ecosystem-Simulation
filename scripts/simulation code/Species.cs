@@ -266,10 +266,6 @@ public class Species : MultiMeshInstance
 			}
 
 
-
-
-
-
 			if (Creatures[i].MyState == State.ExploringTheEnvironment)
 				Creatures[i].Velocity = Creatures[i].FrontVector;
 			// if (Creatures[i].MyState == State.Eating || Creatures[i].MyState == State.Drinking)
@@ -597,9 +593,9 @@ public class Species : MultiMeshInstance
 	}
 
 	public void CollectData(){
-		// Godot.Collections.Array creaturesInSpecies = GetChildren();
-		// if (SpeciesDataCollector != null)
-		// 	SpeciesDataCollector.CollectData(creaturesInSpecies);
+		Godot.Collections.Array<Species.Creature> creaturesInSpecies = Creatures;
+		if (SpeciesDataCollector != null)
+			SpeciesDataCollector.CollectData(creaturesInSpecies);
 	}
 
 	public float GetCurrentMaleFitness(){

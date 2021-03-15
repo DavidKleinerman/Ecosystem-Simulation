@@ -46,7 +46,7 @@ public class DataCollector
 		SpeciesCreationTime = CurrentTimeTick;
 	}
 
-	public void CollectData(Godot.Collections.Array creaturesInSpecies)
+	public void CollectData(Godot.Collections.Array<Species.Creature> creaturesInSpecies)
 	{
 		//update population and fitness data
 		PopulationSizeArray.Add((float)creaturesInSpecies.Count);
@@ -71,15 +71,15 @@ public class DataCollector
 		CurrentTimeTick++;
 	}
 
-	private void CollectMaleFitnessData(Godot.Collections.Array creaturesInSpecies)
+	private void CollectMaleFitnessData(Godot.Collections.Array<Species.Creature> creaturesInSpecies)
 	{
 		float maleFitnessSum = 0;
 		int maleFitnessCount = 0;
 		for (int i = 0; i < creaturesInSpecies.Count; i++)
 		{
-			if (((Creature)creaturesInSpecies[i]).GetGender() == Creature.Gender.Male)
+			if (creaturesInSpecies[i].MyGender == Species.Gender.Male)
 			{
-				maleFitnessSum += ((Creature)creaturesInSpecies[i]).GetFitness();
+				maleFitnessSum += creaturesInSpecies[i].Fitness;
 				maleFitnessCount++;
 			}
 		}
@@ -93,13 +93,13 @@ public class DataCollector
 		GD.Print(causeOfDeathArray);
 	}
 
-	private void CollectTraitData(Godot.Collections.Array traitArray, Genome.GeneticTrait trait, Godot.Collections.Array creaturesInSpecies)
+	private void CollectTraitData(Godot.Collections.Array traitArray, Genome.GeneticTrait trait, Godot.Collections.Array<Species.Creature> creaturesInSpecies)
 	{
 		float Sum = 0;
 		int Count = 0;
 		for (int i = 0; i < creaturesInSpecies.Count; i++)
 		{
-			Sum += ((Creature)creaturesInSpecies[i]).GetGenome().GetTrait(trait);
+			Sum += creaturesInSpecies[i].MyGenome.GetTrait(trait);
 			Count++;
 		}
 		if (Count > 0)
