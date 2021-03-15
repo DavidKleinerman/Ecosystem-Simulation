@@ -54,15 +54,17 @@ public class Species : MultiMeshInstance
 		public Genome MyGenome;
 		public Gender MyGender;
 		public float Fitness;
+		public float ReproTime = 0;
 		//state and target
 		public State MyState = State.ExploringTheEnvironment;
 		public Vector3 CurrentTarget = new Vector3();
+		public Creature TargetCreature;
 		public float ScanInterval;
 		public float TimeSinceLastScan = 0;
 		//Reject list
 		public Godot.Collections.Array RejectList = (Godot.Collections.Array) new Godot.Collections.Array();
 		public int TopOfRejectList = 0;
-		public const int RejectListMaxSize = 5;
+		public int RejectListMaxSize = 5;
 
 		//*****Traits*****
 		public float Speed;
@@ -245,23 +247,23 @@ public class Species : MultiMeshInstance
 					SetState(Creatures[i], State.ExploringTheEnvironment);
 				} 
 			}
-			// else if (MyState == State.Reproducing){
-			// 	ReproTime += delta;
-			// 	if (ReproTime > 2){
-			// 		ReproTime = 0;
-			// 		ReproductiveUrge = 0;
-			// 		if (MyGender == Gender.Female){ //female only
-			// 			try{
-			// 			Pregnant = true;
-			// 			PregnantWithGenome = CurrentTarget.GetParent<Creature>().GetGenome();
-			// 			} catch (Exception e) {
-			// 				Pregnant = false;
-			// 				SetState(State.ExploringTheEnvironment);
-			// 			}
-			// 		}
-			// 		SetState(State.ExploringTheEnvironment);
-			// 	}
-			// }
+			else if (Creatures[i].MyState == State.Reproducing){
+				Creatures[i].ReproTime += delta;
+				if (Creatures[i].ReproTime > 2){
+					Creatures[i].ReproTime = 0;
+					Creatures[i].ReproductiveUrge = 0;
+					// if (Creatures[i].MyGender == Gender.Female){ //female only
+					// 	try{
+					// 	Pregnant = true;
+					// 	PregnantWithGenome = CurrentTarget.GetParent<Creature>().GetGenome();
+					// 	} catch (Exception e) {
+					// 		Pregnant = false;
+					// 		SetState(State.ExploringTheEnvironment);
+					// 	}
+					// }
+					SetState(Creatures[i], State.ExploringTheEnvironment);
+				}
+			}
 
 
 
@@ -287,6 +289,8 @@ public class Species : MultiMeshInstance
 					Creatures[i].MySpatial.RotateY(Mathf.Deg2Rad(180));
 					Creatures[i].FrontVector = Creatures[i].FrontVector.Rotated(Vector3.Up, Mathf.Deg2Rad(180));
 					SetState(Creatures[i], State.ExploringTheEnvironment);
+					if (Creatures[i].MyState == State.GoingToPotentialPartner)
+						SetState(Creatures[i].TargetCreature, State.ExploringTheEnvironment);
 				}
 			}
 			Creatures[i].MySpatial.Translation = new Vector3(Creatures[i].MySpatial.Translation.x + Creatures[i].Velocity.x, 2.4f, Creatures[i].MySpatial.Translation.z + Creatures[i].Velocity.z);
@@ -300,63 +304,92 @@ public class Species : MultiMeshInstance
 		Vector3 gridIndex = TileGrid.WorldToMap(new Vector3(creature.MySpatial.Translation.x, 1, creature.MySpatial.Translation.z));
 		rng.Randomize();
 		int scanMethod = rng.RandiRange(0,1);
-		switch(scanMethod){
-			case 0:
-				for(int x = (int)(gridIndex.x - creature.Perception); x <= (int)(gridIndex.x + creature.Perception); x++){
-					for (int z = (int)(gridIndex.z - creature.Perception); z <= (int)(gridIndex.z + creature.Perception); z++){
-						CheckTile(creature, x, z);
+		bool scanForWater = Weight() < creature.Thirst * 1.3f;
+		bool scanForFood = Weight() < (100 - creature.Energy) * 1.3f;
+		bool scanForReproduction = Weight() < creature.ReproductiveUrge;
+		if (scanForFood || scanForWater){
+			switch(scanMethod){
+				case 0:
+					for(int x = (int)(gridIndex.x - creature.Perception); x <= (int)(gridIndex.x + creature.Perception); x++){
+						for (int z = (int)(gridIndex.z - creature.Perception); z <= (int)(gridIndex.z + creature.Perception); z++){
+							CheckTile(creature, x, z, scanForFood, scanForWater);
+							if(creature.MyState != State.ExploringTheEnvironment)
+								break;
+						}
 					}
-				}
-				break;
-			case 1:
-				for(int x = (int)(gridIndex.x + creature.Perception); x >= (int)(gridIndex.x - creature.Perception); x--){
-					for (int z = (int)(gridIndex.z + creature.Perception); z >= (int)(gridIndex.z - creature.Perception); z--){
-						CheckTile(creature, x, z);
+					break;
+				case 1:
+					for(int x = (int)(gridIndex.x + creature.Perception); x >= (int)(gridIndex.x - creature.Perception); x--){
+						for (int z = (int)(gridIndex.z + creature.Perception); z >= (int)(gridIndex.z - creature.Perception); z--){
+							CheckTile(creature, x, z, scanForFood, scanForWater);
+							if(creature.MyState != State.ExploringTheEnvironment)
+								break;
+						}
 					}
-				}
-				break;
+					break;
+			}
 		}
+
 		PerceptionCollider.Translation = creature.MySpatial.Translation;
 		PerceptionCollider.Scale = new Vector3(2 + (creature.Perception * 4), 0.2f, 2 + (creature.Perception * 4));
-		// foreach(Node n in PerceptionCollider.GetOverlappingAreas()){
-
-		// }
-		// if (PerceptionCollider.GetOverlappingAreas().Count > 1)
-		// 	GD.Print("detected other creature!");
-		// else
-		// 	GD.Print("I'm alone :(");
+		foreach(Node n in PerceptionCollider.GetOverlappingAreas()){
+			if (((CreatureCollider)n) != creature.Collider){
+				Creature detectedCreature = ((CreatureCollider)n).MyCreature;
+				if (scanForReproduction){
+					if (detectedCreature.MyGender != creature.MyGender && detectedCreature.SpeciesName == SpeciesName && !creature.RejectList.Contains(detectedCreature)){
+						if (CheckPotentialPartner(creature, detectedCreature)){
+							creature.MyState = State.GoingToPotentialPartner;
+							creature.TargetCreature = detectedCreature;
+							break;
+						}
+					}
+				}
+			} 
+		}
 		creature.TimeSinceLastScan = 0;
 	}
 
-	private void CheckTile(Creature creature, int x, int z){
+	private void CheckTile(Creature creature, int x, int z, bool scanForFood, bool scanForWater){
 		BiomeGrid.GroundTile gt;
 		int cellType = TileGrid.GetCellItem(x, 0, z);
-		if(cellType == 4){
-			if (creature.Thirst * 1.3 > 10){
-				creature.MyState = State.GoingToWater;
-				creature.CurrentTarget = TileGrid.MapToWorld(x, 0, z);
-			}
+		if(scanForWater && cellType == 4){
+			creature.MyState = State.GoingToWater;
+			creature.CurrentTarget = TileGrid.MapToWorld(x, 0, z);
 		} 
-		else if (cellType <= 3 && cellType >= 0){
+		else if (scanForFood && cellType <= 3 && cellType >= 0){
 			gt = TileGrid.GetGroundTiles()[new Vector3(x, 0, z)];
-			if ((100 - creature.Energy) * 1.3f > 10 && gt.hasPlant){
+			if (gt.hasPlant){
 				creature.MyState = State.GoingToFood;
 				creature.CurrentTarget = TileGrid.MapToWorld(x, 0, z);
 			}
 		}
 	}
 
+	private bool CheckPotentialPartner(Creature checkingCreature, Creature checkedCreature){
+		if (checkedCreature.MyState != State.ExploringTheEnvironment) return false;
+		else if (!checkedCreature.RejectList.Contains(checkingCreature)){
+			if (Weight() < checkedCreature.ReproductiveUrge){
+				checkedCreature.MyState = State.GoingToPotentialPartner;
+				checkedCreature.TargetCreature = checkingCreature;
+				return true;
+			}
+		}
+		return false;
+	}
+
 	private void Die(Creature creature,int index, CauseOfDeath cause){
-		// if(MyState == State.GoingToPotentialPartner || MyState == State.Reproducing){
-		// 	try {
-		// 		CurrentTarget.GetParent<Creature>().SetState(State.ExploringTheEnvironment);
-		// 	}
-		// 	catch (Exception e) {
-		// 		GD.Print("handeled: \n", e);
-		// 	}
-		// } else if (MyState == State.Eating){
-		// 	CurrentTarget.GetParent().GetParent<GroundTile>().RemoveEater();
-		// }
+		if(creature.MyState == State.GoingToPotentialPartner || creature.MyState == State.Reproducing){
+			try {
+				SetState(creature.TargetCreature, State.ExploringTheEnvironment);
+			}
+			catch (Exception e) {
+				GD.Print("handeled: \n", e);
+			}
+		} else if (creature.MyState == State.Eating){
+			Vector3 gridIndex = TileGrid.WorldToMap(new Vector3(creature.CurrentTarget.x, 1, creature.CurrentTarget.z));
+			BiomeGrid.GroundTile gt = TileGrid.GetGroundTiles()[gridIndex];
+			gt.EatersCount--;
+		}
 		DeadArray.Add(index);
 		creature.Collider.QueueFree();
 		AddDead(cause, creature.MySpatial.Translation);
@@ -366,7 +399,6 @@ public class Species : MultiMeshInstance
 	private void GoToTarget(Creature creature, float delta){
 		creature.GoingToTime += delta;
 		if (creature.GoingToTime < MaxGoingToTime){
-			creature.Velocity = (creature.CurrentTarget - creature.MySpatial.Translation).Normalized();
 			if (creature.MyState == State.GoingToFood){
 				Vector3 gridIndex = TileGrid.WorldToMap(new Vector3(creature.CurrentTarget.x, 1, creature.CurrentTarget.z));
 				BiomeGrid.GroundTile gt = TileGrid.GetGroundTiles()[gridIndex];
@@ -382,39 +414,55 @@ public class Species : MultiMeshInstance
 			else if (creature.MyState == State.GoingToWater){
 				RotateToTarget(creature, creature.CurrentTarget);
 			}
-
-
-			// else if (MyState == State.GoingToPotentialPartner){
-			// 	try{
-			// 		if (ToGlobal(GetNode<MeshInstance>("BodyHolder/Head").Translation).DistanceTo(CurrentTarget.ToGlobal(CurrentTarget.Translation)) <= 2){
-			// 			if (CurrentTarget != null){
-			// 				if (MyGender == Gender.Female){ //female only
-			// 					if(CheckMale()){
-			// 						StopGoingTo(State.Reproducing);
-			// 						CurrentTarget.GetParent<Creature>().StopGoingTo(State.Reproducing);
-			// 					} else {
-			// 						CurrentTarget.GetParent<Creature>().UpdateRejectList(this);
-			// 						UpdateRejectList(CurrentTarget.GetParent<Creature>());
-			// 						CurrentTarget.GetParent<Creature>().StopGoingTo(State.ExploringTheEnvironment);
-			// 						StopGoingTo(State.ExploringTheEnvironment);
-			// 					}
-			// 				}
-			// 			}
-			// 		} else RotateToTarget(targetLocation);
-			// 	} catch (Exception e) {
-			// 		StopGoingTo(State.ExploringTheEnvironment);
-			// 	}
-			// }
+			else if (creature.MyState == State.GoingToPotentialPartner){
+				try{
+					if (creature.MySpatial.Translation.DistanceTo(creature.TargetCreature.MySpatial.Translation) <= 2){
+							if (creature.MyGender == Gender.Female){ //female only
+								if(CheckMale(creature.TargetCreature)){
+									StopGoingTo(creature, State.Reproducing);
+									StopGoingTo(creature.TargetCreature, State.Reproducing);
+								} else {
+									UpdateRejectList(creature, creature.TargetCreature);
+									UpdateRejectList(creature.TargetCreature, creature);
+									StopGoingTo(creature, State.ExploringTheEnvironment);
+									StopGoingTo(creature.TargetCreature, State.ExploringTheEnvironment);
+								}
+							}
+					} else {
+						creature.CurrentTarget = creature.TargetCreature.MySpatial.Translation;
+						RotateToTarget(creature, creature.TargetCreature.MySpatial.Translation);
+					}
+				} catch (Exception e) {
+					StopGoingTo(creature, State.ExploringTheEnvironment);
+				}
+			}
+			creature.Velocity = (creature.CurrentTarget - creature.MySpatial.Translation).Normalized();
 		} else {
 			creature.GoingToTime = 0;
 			SetState(creature, State.ExploringTheEnvironment);
 		}
 	}
 
+	public void UpdateRejectList(Creature listOwner, Creature creature){
+		if (listOwner.RejectList.Count < listOwner.RejectListMaxSize)
+			listOwner.RejectList.Add(creature);
+		else listOwner.RejectList.Insert(listOwner.TopOfRejectList, creature);
+		listOwner.TopOfRejectList++;
+		if (listOwner.TopOfRejectList >= listOwner.RejectListMaxSize)
+			listOwner.TopOfRejectList = 0;
+	}
+
+	//female only
+	private bool CheckMale(Creature male){
+		float AvgFitness = GetCurrentMaleFitness();
+		rng.Randomize();
+		if(rng.RandfRange(AvgFitness - 0.3f * AvgFitness, AvgFitness + 0.3f * AvgFitness) < male.Fitness)
+			return true;
+		else return false;
+	}
+
 	public void SetState(Creature creature, State state){
 		creature.MyState = state;
-		// if (creature.MyState == State.ExploringTheEnvironment)
-		// 	creature.CurrentTarget = null;
 	}
 
 	public void StopGoingTo(Creature creature, State state){
