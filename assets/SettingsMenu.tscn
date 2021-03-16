@@ -44,10 +44,10 @@ __meta__ = {
 }
 
 [node name="ColorRect" type="ColorRect" parent="."]
-margin_left = 1.41425
-margin_top = -5.18658
-margin_right = 1926.42
-margin_bottom = 1079.82
+margin_left = 0.470398
+margin_top = -6.24603
+margin_right = 1925.47
+margin_bottom = 1078.76
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -66,10 +66,10 @@ __meta__ = {
 }
 
 [node name="BackToMainMenu" type="Button" parent="."]
-margin_left = 762.648
-margin_top = 921.222
-margin_right = 1162.65
-margin_bottom = 981.222
+margin_left = 762.327
+margin_top = 907.815
+margin_right = 1162.33
+margin_bottom = 967.815
 focus_mode = 0
 custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
@@ -84,10 +84,10 @@ __meta__ = {
 }
 
 [node name="SaveChanges" type="Button" parent="."]
-margin_left = 766.555
-margin_top = 872.359
-margin_right = 1166.56
-margin_bottom = 932.359
+margin_left = 766.37
+margin_top = 859.697
+margin_right = 1166.37
+margin_bottom = 919.697
 focus_mode = 0
 custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
@@ -120,6 +120,18 @@ margin_bottom = 794.675
 custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Resolution:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label20" type="Label" parent="."]
+margin_left = 700.05
+margin_top = 580.14
+margin_right = 870.05
+margin_bottom = 640.14
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Anti Aliasing:"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -203,6 +215,26 @@ custom_colors/guide_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_selected = Color( 0.0784314, 0.156863, 0.8, 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 items = [ "1080p", null, false, "720p", null, false, "480p", null, false ]
+max_columns = 3
+icon_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ItemList5" type="ItemList" parent="."]
+margin_left = 914.472
+margin_top = 579.107
+margin_right = 1224.47
+margin_bottom = 639.107
+custom_styles/selected_focus = SubResource( 4 )
+custom_styles/bg_focus = SubResource( 5 )
+custom_styles/selected = SubResource( 6 )
+custom_styles/bg = SubResource( 7 )
+custom_fonts/font = SubResource( 8 )
+custom_colors/guide_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_selected = Color( 0.0784314, 0.156863, 0.8, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+items = [ "0x", null, false, "2x", null, false, "4x", null, false ]
 max_columns = 3
 icon_mode = 0
 __meta__ = {
@@ -313,6 +345,54 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Label24" type="Label" parent="."]
+margin_left = 1043.51
+margin_top = 577.161
+margin_right = 1054.51
+margin_bottom = 631.161
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 0.0784314, 0.156863, 0.8, 1 )
+text = "|"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label23" type="Label" parent="."]
+margin_left = 997.447
+margin_top = 577.732
+margin_right = 1008.45
+margin_bottom = 631.732
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 0.0784314, 0.156863, 0.8, 1 )
+text = "|"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label22" type="Label" parent="."]
+margin_left = 950.411
+margin_top = 577.7
+margin_right = 961.411
+margin_bottom = 631.7
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 0.0784314, 0.156863, 0.8, 1 )
+text = "|"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label21" type="Label" parent="."]
+margin_left = 904.35
+margin_top = 579.277
+margin_right = 915.35
+margin_bottom = 633.277
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 0.0784314, 0.156863, 0.8, 1 )
+text = "|"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Label9" type="Label" parent="."]
 margin_left = 1063.26
 margin_top = 628.5
@@ -401,4 +481,5 @@ __meta__ = {
 [connection signal="item_selected" from="ItemList" to="." method="_on_ItemList_item_selected"]
 [connection signal="item_selected" from="ItemList2" to="." method="_on_ItemList2_item_selected"]
 [connection signal="item_selected" from="ItemList3" to="." method="_on_ItemList3_item_selected"]
+[connection signal="item_selected" from="ItemList5" to="." method="_on_ItemList5_item_selected"]
 [connection signal="item_selected" from="ItemList4" to="." method="_on_ItemList4_item_selected"]

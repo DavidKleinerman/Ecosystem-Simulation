@@ -7,6 +7,8 @@ public class SettingsMenu : Control
 	public int Multiplier=1;
 	public bool flag = false;
 	Vector2 Resolution = (Vector2) new Vector2(1920,1080);
+	//public MSAA DispFix;
+	public int Aliasing = 0;
 	
 	public override void _Ready()
 	{
@@ -71,7 +73,19 @@ public class SettingsMenu : Control
 		Global.enableVSync = this.enableVSync;
 		Global.Resolution = this.Resolution;
 		GetViewport().Size = Resolution;
+		//OS.Alert("This is your message", "Message Title");
+		if(this.Aliasing == 0){
+			GetViewport().SetMsaa(0);
+		}
+		else if(this.Aliasing == 2){
+			GetViewport().SetMsaa(Viewport.MSAA.Msaa2x);
+		}
+		else if(this.Aliasing == 4){
+			GetViewport().SetMsaa(Viewport.MSAA.Msaa4x);
+		}
+		
 	}
+	
 	private void _on_ItemList3_item_selected(int index)
 	{
 		if(index == 0){
@@ -84,15 +98,16 @@ public class SettingsMenu : Control
 			this.Resolution = new Vector2(640,480);
 		}
 	}
+	private void _on_ItemList5_item_selected(int index)
+	{
+		if(index == 0){
+			this.Aliasing = 0;
+		}
+		else if(index == 1){
+			this.Aliasing = 2;
+		}
+		else if(index == 2){
+			this.Aliasing = 4;
+		}
+	}
 }
-
-
-
-
-
-
-
-
-
-
-
