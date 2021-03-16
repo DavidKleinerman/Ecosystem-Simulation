@@ -14,9 +14,9 @@ public class Species : MultiMeshInstance
 	//consts
 	private const float BaseEnergyDecay = 3.5f;
 	private const float BaseThirstDecay = 4f;
-	private const float BaseReproductiveUrgeGrowth = 2.5f;
+	private const float BaseReproductiveUrgeGrowth = 0.5f;
 	private const float MaxGoingToTime = 4;
-
+	private const int TimeToBirth = 3;
 	//enums
 	public enum State{
 		ExploringTheEnvironment,
@@ -91,14 +91,13 @@ public class Species : MultiMeshInstance
 		public float PregnancyTime = 0;
 		public float PreviousPregnancyTime = 0;
 		public int BornChildren = 0;
-		public const int TimeToBirth = 3;
 		public float BirthingTime = 0;
 	}
 
 	private Spatial AssistSpatial;
 	private Spatial AssistSpatial2;
 	private Godot.Collections.Array<Creature> Creatures = (Godot.Collections.Array<Creature>) new Godot.Collections.Array<Creature>();
-	//private Godot.Collections.Array<Creature> CreaturesPhysics = (Godot.Collections.Array<Creature>) new Godot.Collections.Array<Creature>();
+	private Godot.Collections.Array<Creature> NewBorn = (Godot.Collections.Array<Creature>) new Godot.Collections.Array<Creature>();
 	private Godot.Collections.Array DeadArray = (Godot.Collections.Array) new Godot.Collections.Array();
 
 	public override void _Ready()
@@ -165,7 +164,12 @@ public class Species : MultiMeshInstance
 		for (int i=0; i < temp.Count; i++){
 			Creatures.Add(temp[i]);
 		}
+		for(int i = 0; i < NewBorn.Count; i++){
+			Creatures.Add(NewBorn[i]);
+			AddChild(NewBorn[i].Collider);
+		}
 		DeadArray.Clear();
+		NewBorn.Clear();
 		temp.Clear();
 		Multimesh.InstanceCount = Creatures.Count;
 
@@ -200,26 +204,26 @@ public class Species : MultiMeshInstance
 			if (Creatures[i].Age > Creatures[i].Longevity){
 				Die(Creatures[i], i, CauseOfDeath.OldAge);
 			}
-			// if (Creatures[i].Pregnant){ //female only
-			// 	Creatures[i].PregnancyTime += delta;
-			// 	if (Creatures[i].PregnancyTime >= Creatures[i].Gestation){
-			// 		StartBirthingProcess();
-			// 	}
-			// 	else if (Creatures[i].PregnancyTime >= Creatures[i].Gestation * 0.8f && Creatures[i].PreviousPregnancyTime < Creatures[i].Gestation * 0.8f){
-			// 		if (Weight() < 50){
-			// 			StartBirthingProcess();
-			// 		}
-			// 	}
-			// 	else if (Creatures[i].PregnancyTime >= Creatures[i].Gestation * 0.6f && Creatures[i].PreviousPregnancyTime < Creatures[i].Gestation * 0.6f){
-			// 		if (Weight() < 25){
-			// 			StartBirthingProcess();
-			// 		}
-			// 	}
-			// 	Creatures[i].PreviousPregnancyTime = Creatures[i].PregnancyTime;
-			// }
-			// if (Creatures[i].MyState == State.GivingBirth){
-			// 	BirthingProcess(delta);
-			// }
+			if (Creatures[i].Pregnant){ //female only
+				Creatures[i].PregnancyTime += delta;
+				if (Creatures[i].PregnancyTime >= Creatures[i].Gestation){
+					StartBirthingProcess(Creatures[i]);
+				}
+				else if (Creatures[i].PregnancyTime >= Creatures[i].Gestation * 0.8f && Creatures[i].PreviousPregnancyTime < Creatures[i].Gestation * 0.8f){
+					if (Weight() < 50){
+						StartBirthingProcess(Creatures[i]);
+					}
+				}
+				else if (Creatures[i].PregnancyTime >= Creatures[i].Gestation * 0.6f && Creatures[i].PreviousPregnancyTime < Creatures[i].Gestation * 0.6f){
+					if (Weight() < 25){
+						StartBirthingProcess(Creatures[i]);
+					}
+				}
+				Creatures[i].PreviousPregnancyTime = Creatures[i].PregnancyTime;
+			}
+			if (Creatures[i].MyState == State.GivingBirth){
+				BirthingProcess(Creatures[i], delta);
+			}
 			if(Creatures[i].MyState == State.ExploringTheEnvironment){
 				Creatures[i].MySpatial.RotateY(Mathf.Deg2Rad(Creatures[i].RotationRate * Creatures[i].RotationDirection * delta));
 				Creatures[i].FrontVector = Creatures[i].FrontVector.Rotated(Vector3.Up, Mathf.Deg2Rad(Creatures[i].RotationRate * Creatures[i].RotationDirection * delta));
@@ -252,15 +256,15 @@ public class Species : MultiMeshInstance
 				if (Creatures[i].ReproTime > 2){
 					Creatures[i].ReproTime = 0;
 					Creatures[i].ReproductiveUrge = 0;
-					// if (Creatures[i].MyGender == Gender.Female){ //female only
-					// 	try{
-					// 	Pregnant = true;
-					// 	PregnantWithGenome = CurrentTarget.GetParent<Creature>().GetGenome();
-					// 	} catch (Exception e) {
-					// 		Pregnant = false;
-					// 		SetState(State.ExploringTheEnvironment);
-					// 	}
-					// }
+					if (Creatures[i].MyGender == Gender.Female){ //female only
+						try{
+						Creatures[i].Pregnant = true;
+						Creatures[i].PregnantWithGenome = Creatures[i].TargetCreature.MyGenome;
+						} catch (Exception e) {
+							Creatures[i].Pregnant = false;
+							SetState(Creatures[i], State.ExploringTheEnvironment);
+						}
+					}
 					SetState(Creatures[i], State.ExploringTheEnvironment);
 				}
 			}
@@ -296,6 +300,36 @@ public class Species : MultiMeshInstance
 		}
 	}
 
+	private void GiveBirth(Creature mother){
+		Godot.Collections.Array paternal = mother.PregnantWithGenome.Meiosis();
+		Godot.Collections.Array maternal = mother.MyGenome.Meiosis();
+		Genome genome = new Genome();
+		genome.Recombination(maternal, paternal);
+		AddCreature(genome, mother.MySpatial.Translation, NewBorn);
+	}
+
+	private void BirthingProcess(Creature mother, float delta){
+		mother.BirthingTime += delta;
+		if (mother.BirthingTime > TimeToBirth){
+			GiveBirth(mother);
+			mother.BirthingTime = 0;
+			mother.BornChildren++;
+			if (mother.BornChildren == mother.LitterSize){
+				mother.BornChildren = 0;
+				mother.PregnantWithGenome = null;
+				SetState(mother, State.ExploringTheEnvironment);
+			}
+		}
+	}
+
+	private void StartBirthingProcess(Creature mother){
+		mother.PregnancyTime = 0;
+		mother.PreviousPregnancyTime = 0;
+		mother.Pregnant = false;
+		SetState(mother, State.GivingBirth);
+		mother.Velocity = new Vector3();
+	}
+
 	private void ScanEnvironment(Creature creature){
 		Vector3 gridIndex = TileGrid.WorldToMap(new Vector3(creature.MySpatial.Translation.x, 1, creature.MySpatial.Translation.z));
 		rng.Randomize();
@@ -329,14 +363,16 @@ public class Species : MultiMeshInstance
 		PerceptionCollider.Translation = creature.MySpatial.Translation;
 		PerceptionCollider.Scale = new Vector3(2 + (creature.Perception * 4), 0.2f, 2 + (creature.Perception * 4));
 		foreach(Node n in PerceptionCollider.GetOverlappingAreas()){
-			if (((CreatureCollider)n) != creature.Collider){
-				Creature detectedCreature = ((CreatureCollider)n).MyCreature;
-				if (scanForReproduction){
-					if (detectedCreature.MyGender != creature.MyGender && detectedCreature.SpeciesName == SpeciesName && !creature.RejectList.Contains(detectedCreature)){
-						if (CheckPotentialPartner(creature, detectedCreature)){
-							creature.MyState = State.GoingToPotentialPartner;
-							creature.TargetCreature = detectedCreature;
-							break;
+			if (n is CreatureCollider){
+				if (((CreatureCollider)n) != creature.Collider){
+					Creature detectedCreature = ((CreatureCollider)n).MyCreature;
+					if (scanForReproduction){
+						if (detectedCreature.MyGender != creature.MyGender && detectedCreature.SpeciesName == SpeciesName && !creature.RejectList.Contains(detectedCreature)){
+							if (CheckPotentialPartner(creature, detectedCreature)){
+								creature.MyState = State.GoingToPotentialPartner;
+								creature.TargetCreature = detectedCreature;
+								break;
+							}
 						}
 					}
 				}
@@ -489,15 +525,14 @@ public class Species : MultiMeshInstance
 		Multimesh.InstanceCount = popSize;
 		SpeciesColor = color;
 		foreach (BiomeGrid.GroundTile gt in ReshuffledGroundTiles()){
-			Spatial creatureSpatial = new Spatial();
 			Vector3 position = TileGrid.MapToWorld((int)gt.gridIndex.x, (int)gt.gridIndex.y, (int)gt.gridIndex.z);
 			position.y = 2.4f;
-			creatureSpatial.Translation = position;
 			Genome genome = new Genome();
 			genome.ArtificialCombine(initialValues, geneticVariation);
-			AddCreature(genome, creatureSpatial, gt);
-			Multimesh.SetInstanceTransform(creatureIndex, creatureSpatial.Transform);
+			AddCreature(genome, position, Creatures);
+			Multimesh.SetInstanceTransform(creatureIndex, Creatures[creatureIndex].MySpatial.Transform);
 			Multimesh.SetInstanceColor(creatureIndex, SpeciesColor);
+			AddChild(Creatures[creatureIndex].Collider);
 			creatureIndex++;
 			if (creatureIndex == popSize)
 				break;
@@ -529,8 +564,10 @@ public class Species : MultiMeshInstance
 		creature.Fitness += creature.MyGenome.GetTrait(Genome.GeneticTrait.Longevity);
 	}
 
-	public void AddCreature(Genome genome, Spatial creatureSpatial, BiomeGrid.GroundTile gt){
+	public void AddCreature(Genome genome, Vector3 position, Godot.Collections.Array<Creature> list){
 		Creature creature = new Creature();
+		Spatial creatureSpatial = new Spatial();
+		creatureSpatial.Translation = position;
 		creature.MySpatial = creatureSpatial;
 		creature.SpeciesName = SpeciesName;
 		creature.MyGenome = genome;
@@ -538,7 +575,6 @@ public class Species : MultiMeshInstance
 		creature.Collider = (CreatureCollider)(Collider.Instance());
 		creature.Collider.Translation = creature.MySpatial.Translation;
 		creature.Collider.MyCreature = creature;
-		RandomNumberGenerator rng = (RandomNumberGenerator) new RandomNumberGenerator();
 		rng.Randomize();
 		if (rng.RandiRange(0, 1) == 0){
 			creature.MyGender = Gender.Female;
@@ -549,8 +585,7 @@ public class Species : MultiMeshInstance
 		rng.Randomize();
 		creature.NextRotationTime = rng.RandfRange(0.5f, 2);
 		InitializeTraitsFromGenome(creature);
-		Creatures.Add(creature);
-		AddChild(creature.Collider);
+		list.Add(creature);
 	}
 
 	private Godot.Collections.Array<BiomeGrid.GroundTile> ReshuffledGroundTiles(){
