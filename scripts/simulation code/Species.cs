@@ -363,14 +363,16 @@ public class Species : MultiMeshInstance
 		PerceptionCollider.Translation = creature.MySpatial.Translation;
 		PerceptionCollider.Scale = new Vector3(2 + (creature.Perception * 4), 0.2f, 2 + (creature.Perception * 4));
 		foreach(Node n in PerceptionCollider.GetOverlappingAreas()){
-			if (((CreatureCollider)n) != creature.Collider){
-				Creature detectedCreature = ((CreatureCollider)n).MyCreature;
-				if (scanForReproduction){
-					if (detectedCreature.MyGender != creature.MyGender && detectedCreature.SpeciesName == SpeciesName && !creature.RejectList.Contains(detectedCreature)){
-						if (CheckPotentialPartner(creature, detectedCreature)){
-							creature.MyState = State.GoingToPotentialPartner;
-							creature.TargetCreature = detectedCreature;
-							break;
+			if (n is CreatureCollider){
+				if (((CreatureCollider)n) != creature.Collider){
+					Creature detectedCreature = ((CreatureCollider)n).MyCreature;
+					if (scanForReproduction){
+						if (detectedCreature.MyGender != creature.MyGender && detectedCreature.SpeciesName == SpeciesName && !creature.RejectList.Contains(detectedCreature)){
+							if (CheckPotentialPartner(creature, detectedCreature)){
+								creature.MyState = State.GoingToPotentialPartner;
+								creature.TargetCreature = detectedCreature;
+								break;
+							}
 						}
 					}
 				}
