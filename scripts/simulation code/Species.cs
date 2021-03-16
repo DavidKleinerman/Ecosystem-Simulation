@@ -59,12 +59,11 @@ public class Species : MultiMeshInstance
 		public State MyState = State.ExploringTheEnvironment;
 		public Vector3 CurrentTarget = new Vector3();
 		public Creature TargetCreature;
-		public float ScanInterval;
 		public float TimeSinceLastScan = 0;
 		//Reject list
 		public Godot.Collections.Array RejectList = (Godot.Collections.Array) new Godot.Collections.Array();
 		public int TopOfRejectList = 0;
-		public int RejectListMaxSize = 5;
+		//public int RejectListMaxSize = 5;
 
 		//*****Traits*****
 		public float Speed;
@@ -75,7 +74,8 @@ public class Species : MultiMeshInstance
 		public float Gestation;
 		public int LitterSize;
 		public float Longevity;
-
+		public float Intelligence;
+		public int Memory;
 		//Resources
 		public float Energy = 100;
 		public float Thirst = 0;
@@ -177,7 +177,7 @@ public class Species : MultiMeshInstance
 		for (int i = 0; i < Creatures.Count; i++){
 			// scan environment within perception radius
 			Creatures[i].TimeSinceLastScan += delta;
-			if (Creatures[i].TimeSinceLastScan > Creatures[i].ScanInterval && Creatures[i].MyState == State.ExploringTheEnvironment){
+			if (Creatures[i].TimeSinceLastScan > Creatures[i].Intelligence && Creatures[i].MyState == State.ExploringTheEnvironment){
 				ScanEnvironment(Creatures[i]);
 			}
 			Creatures[i].Age += delta;
@@ -476,11 +476,11 @@ public class Species : MultiMeshInstance
 	}
 
 	public void UpdateRejectList(Creature listOwner, Creature creature){
-		if (listOwner.RejectList.Count < listOwner.RejectListMaxSize)
+		if (listOwner.RejectList.Count < listOwner.Memory)
 			listOwner.RejectList.Add(creature);
 		else listOwner.RejectList.Insert(listOwner.TopOfRejectList, creature);
 		listOwner.TopOfRejectList++;
-		if (listOwner.TopOfRejectList >= listOwner.RejectListMaxSize)
+		if (listOwner.TopOfRejectList >= listOwner.Memory)
 			listOwner.TopOfRejectList = 0;
 	}
 
@@ -548,8 +548,8 @@ public class Species : MultiMeshInstance
 		creature.Gestation = 6 + creature.MyGenome.GetTrait(Genome.GeneticTrait.Gestation) / 5;
 		creature.LitterSize = 1 + Mathf.RoundToInt(creature.MyGenome.GetTrait(Genome.GeneticTrait.LitterSize) / 25);
 		creature.Longevity = 20 + creature.MyGenome.GetTrait(Genome.GeneticTrait.Longevity) / 1.25f;
-		rng.Randomize();
-		creature.ScanInterval = rng.RandfRange(1.8f, 2.2f);
+		creature.Intelligence = 1.8f + (100 - creature.MyGenome.GetTrait(Genome.GeneticTrait.Intelligence)/100);
+		creature.Memory = (int)(3 + creature.MyGenome.GetTrait(Genome.GeneticTrait.Memory)/20);
 		CalcFitness(creature);
 	}
 
@@ -562,6 +562,8 @@ public class Species : MultiMeshInstance
 		creature.Fitness += creature.MyGenome.GetTrait(Genome.GeneticTrait.Gestation);
 		creature.Fitness += creature.MyGenome.GetTrait(Genome.GeneticTrait.LitterSize);
 		creature.Fitness += creature.MyGenome.GetTrait(Genome.GeneticTrait.Longevity);
+		creature.Fitness += creature.MyGenome.GetTrait(Genome.GeneticTrait.Intelligence);
+		creature.Fitness += creature.MyGenome.GetTrait(Genome.GeneticTrait.Memory);
 	}
 
 	public void AddCreature(Genome genome, Vector3 position, Godot.Collections.Array<Creature> list){

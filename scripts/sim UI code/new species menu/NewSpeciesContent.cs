@@ -14,6 +14,8 @@ public class NewSpeciesContent : VBoxContainer
 		GetNode<Label>("Gestation/Label").Text = "Gestation";
 		GetNode<Label>("LitterSize/Label").Text = "LitterSize";
 		GetNode<Label>("Longevity/Label").Text = "Longevity";
+		GetNode<Label>("Intelligence/Label").Text = "Intelligence";
+		GetNode<Label>("Memory/Label").Text = "Memory";
 		GetNode<Label>("GeneticVariation/Label").Text = "Genetic Variation";
 		GetNode<Label>("PopulationSize/Label").Text = "Population Size";
 		
@@ -64,6 +66,8 @@ public class NewSpeciesContent : VBoxContainer
 			InitialValues.Add((float)GetNode<HSlider>("Gestation/HSlider").Value);
 			InitialValues.Add((float)GetNode<HSlider>("LitterSize/HSlider").Value);
 			InitialValues.Add((float)GetNode<HSlider>("Longevity/HSlider").Value);
+			InitialValues.Add((float)GetNode<HSlider>("Intelligence/HSlider").Value);
+			InitialValues.Add((float)GetNode<HSlider>("Memory/HSlider").Value);
 			float geneticVariation = (float)GetNode<HSlider>("GeneticVariation/HSlider").Value;
 			String speciesName = GetNode<LineEdit>("SpeciesName/LineEdit").Text;
 			int popSize = (int)(GetNode<HSlider>("PopulationSize/HSlider").Value);

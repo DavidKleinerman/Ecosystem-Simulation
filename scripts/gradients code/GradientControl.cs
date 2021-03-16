@@ -15,6 +15,8 @@ public class GradientControl : Control
 	private Line2D lineGestation;
 	private Line2D lineLongevity;
 	private Line2D lineLitterSize;
+	private Line2D lineIntelligence;
+	private Line2D lineMemory;
 	//causes of death
 	private Line2D lineStarvation;
 	private Line2D lineDehydration;

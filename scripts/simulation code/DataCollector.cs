@@ -16,6 +16,8 @@ public class DataCollector
 	private Godot.Collections.Array GestationArray = (Godot.Collections.Array)new Godot.Collections.Array();
 	private Godot.Collections.Array LitterSizeArray = (Godot.Collections.Array)new Godot.Collections.Array();
 	private Godot.Collections.Array LongevityArray = (Godot.Collections.Array)new Godot.Collections.Array();
+	private Godot.Collections.Array IntelligenceArray = (Godot.Collections.Array)new Godot.Collections.Array();
+	private Godot.Collections.Array MemoryArray = (Godot.Collections.Array)new Godot.Collections.Array();
 	//causes of death
 	private Godot.Collections.Array StarvationArray = (Godot.Collections.Array)new Godot.Collections.Array();
 	private Godot.Collections.Array DehydrationArray = (Godot.Collections.Array)new Godot.Collections.Array();
@@ -60,6 +62,8 @@ public class DataCollector
 		CollectTraitData(GestationArray, Genome.GeneticTrait.Gestation, creaturesInSpecies);
 		CollectTraitData(LitterSizeArray, Genome.GeneticTrait.LitterSize, creaturesInSpecies);
 		CollectTraitData(LongevityArray, Genome.GeneticTrait.Longevity, creaturesInSpecies);
+		CollectTraitData(IntelligenceArray, Genome.GeneticTrait.Intelligence, creaturesInSpecies);
+		CollectTraitData(MemoryArray, Genome.GeneticTrait.Memory, creaturesInSpecies);
 		//update causes of death data
 		CollectCauseOfDeathData(StarvationArray, CurrentStarvationAmount);
 		CollectCauseOfDeathData(DehydrationArray, CurrentDehydrationAmount);
@@ -155,6 +159,15 @@ public class DataCollector
 	public Godot.Collections.Array GetLongevityData()
 	{
 		return LongevityArray;
+	}
+
+	public Godot.Collections.Array GetIntelligenceData()
+	{
+		return IntelligenceArray;
+	}
+	public Godot.Collections.Array GetMemoryData()
+	{
+		return MemoryArray;
 	}
 
 	public Godot.Collections.Array GetPopulationSizeData(){
