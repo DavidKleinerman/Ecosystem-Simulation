@@ -1,4 +1,4 @@
-[gd_scene load_steps=81 format=2]
+[gd_scene load_steps=83 format=2]
 
 [ext_resource path="res://scripts/simulation code/Simulation.cs" type="Script" id=1]
 [ext_resource path="res://scripts/simulation code/CameraHolder.cs" type="Script" id=2]
@@ -15,6 +15,8 @@
 [ext_resource path="res://scripts/gradients code/StarvationGraph.cs" type="Script" id=13]
 [ext_resource path="res://meshes/tileLib.meshlib" type="MeshLibrary" id=14]
 [ext_resource path="res://scripts/simulation code/BiomeGrid.cs" type="Script" id=15]
+[ext_resource path="res://scripts/gradients code/IntelligenceGraph.cs" type="Script" id=16]
+[ext_resource path="res://scripts/gradients code/MemoryGraph.cs" type="Script" id=17]
 [ext_resource path="res://scripts/simulation code/SpeciesHolder.cs" type="Script" id=20]
 [ext_resource path="res://scripts/sim UI code/DisplayCharts.cs" type="Script" id=21]
 [ext_resource path="res://scripts/sim UI code/ItemList2.cs" type="Script" id=22]
@@ -1238,6 +1240,18 @@ default_color = Color( 0.427451, 0.866667, 0.45098, 1 )
 antialiased = true
 script = ExtResource( 12 )
 
+[node name="IntelligenceGraph" type="Line2D" parent="DisplayChartsMenu/GradientControl"]
+width = 3.0
+default_color = Color( 0, 0.141176, 1, 1 )
+antialiased = true
+script = ExtResource( 16 )
+
+[node name="MemoryGraph" type="Line2D" parent="DisplayChartsMenu/GradientControl"]
+width = 3.0
+default_color = Color( 0.458824, 0.0509804, 0.533333, 1 )
+antialiased = true
+script = ExtResource( 17 )
+
 [node name="MultiMeshPlants" type="MultiMeshInstance" parent="."]
 multimesh = SubResource( 49 )
 
@@ -1284,7 +1298,9 @@ wait_time = 5.0
 [connection signal="toggled" from="DisplayChartsMenu/RunningSimGridContainer/PopulationSizeCheckButton" to="DisplayChartsMenu/GradientControl/PopulationSizeGraph" method="_on_PopulationSizeCheckButton_toggled"]
 [connection signal="toggled" from="DisplayChartsMenu/GeneValuesGridContainer/StaminaCheckButton" to="DisplayChartsMenu/GradientControl/StaminaGradient" method="_on_StaminaCheckButton_toggled"]
 [connection signal="toggled" from="DisplayChartsMenu/GeneValuesGridContainer/LongevityCheckButton" to="DisplayChartsMenu/GradientControl/LongevityGradient" method="_on_LongevityCheckButton_toggled"]
+[connection signal="toggled" from="DisplayChartsMenu/GeneValuesGridContainer/MemoryCheckButton" to="DisplayChartsMenu/GradientControl/MemoryGraph" method="_on_MemoryCheckButton_toggled"]
 [connection signal="toggled" from="DisplayChartsMenu/GeneValuesGridContainer/LitterSizeCheckButton" to="DisplayChartsMenu/GradientControl/LitterSizeGradient" method="_on_LitterSizeCheckButton_toggled"]
+[connection signal="toggled" from="DisplayChartsMenu/GeneValuesGridContainer/IntelligenceCheckButton" to="DisplayChartsMenu/GradientControl/IntelligenceGraph" method="_on_IntelligenceCheckButton_toggled"]
 [connection signal="toggled" from="DisplayChartsMenu/GeneValuesGridContainer/HungerResistanceCheckButton" to="DisplayChartsMenu/GradientControl/HungerResistanceGradient" method="_on_HungerResistanceCheckButton_toggled"]
 [connection signal="toggled" from="DisplayChartsMenu/GeneValuesGridContainer/ThirstResistanceCheckButton" to="DisplayChartsMenu/GradientControl/ThirstResistanceGradient" method="_on_ThirstResistanceCheckButton_toggled"]
 [connection signal="toggled" from="DisplayChartsMenu/GeneValuesGridContainer/GestationCheckButton" to="DisplayChartsMenu/GradientControl/GestationGradient" method="_on_GestationCheckButton_toggled"]

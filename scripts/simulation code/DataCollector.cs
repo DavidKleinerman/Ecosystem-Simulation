@@ -40,6 +40,8 @@ public class DataCollector
 			GestationArray.Add(0.0f);
 			LongevityArray.Add(0.0f);
 			LitterSizeArray.Add(0.0f);
+			IntelligenceArray.Add(0.0f);
+			MemoryArray.Add(0.0f);
 			StarvationArray.Add(0.0f);
 			DehydrationArray.Add(0.0f);
 			OldAgeArray.Add(0.0f);

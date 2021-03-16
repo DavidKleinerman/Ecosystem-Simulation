@@ -548,7 +548,7 @@ public class Species : MultiMeshInstance
 		creature.Gestation = 6 + creature.MyGenome.GetTrait(Genome.GeneticTrait.Gestation) / 5;
 		creature.LitterSize = 1 + Mathf.RoundToInt(creature.MyGenome.GetTrait(Genome.GeneticTrait.LitterSize) / 25);
 		creature.Longevity = 20 + creature.MyGenome.GetTrait(Genome.GeneticTrait.Longevity) / 1.25f;
-		creature.Intelligence = 1.8f + (100 - creature.MyGenome.GetTrait(Genome.GeneticTrait.Intelligence)/100);
+		creature.Intelligence = 1.8f + ((100 - creature.MyGenome.GetTrait(Genome.GeneticTrait.Intelligence))/100);
 		creature.Memory = (int)(3 + creature.MyGenome.GetTrait(Genome.GeneticTrait.Memory)/20);
 		CalcFitness(creature);
 	}

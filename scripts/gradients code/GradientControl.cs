@@ -35,6 +35,8 @@ public class GradientControl : Control
 	//public Godot.Collections.Array StaminaArray;
 	public Godot.Collections.Array LongevityArray;
 	public Godot.Collections.Array LitterSizeArray;
+	public Godot.Collections.Array IntelligenceArray;
+	public Godot.Collections.Array MemoryArray;
 	//causes of death arrays
 	public Godot.Collections.Array StarvationArray;
 	public Godot.Collections.Array DehydrationArray;
@@ -56,6 +58,8 @@ public class GradientControl : Control
 		lineLongevity = GetNode<Line2D>("LongevityGradient");
 		lineLitterSize = GetNode<Line2D>("LitterSizeGradient");
 		lineHungerResistance = GetNode<Line2D>("HungerResistanceGradient");
+		lineIntelligence = GetNode<Line2D>("IntelligenceGraph");
+		lineMemory = GetNode<Line2D>("MemoryGraph");
 		//causes of death
 		lineStarvation = GetNode<Line2D>("StarvationGraph");
 		lineDehydration = GetNode<Line2D>("DehydrationGraph");
@@ -77,6 +81,8 @@ public class GradientControl : Control
 			ThirstResistanceArray = speciesData.GetThirstResistanceData();
 			LongevityArray = speciesData.GetLongevityData();
 			LitterSizeArray = speciesData.GetLitterSizeData();
+			IntelligenceArray = speciesData.GetIntelligenceData();
+			MemoryArray = speciesData.GetMemoryData();
 			StarvationArray = speciesData.GetStarvationData();
 			DehydrationArray = speciesData.GetDehydrationData();
 			OldAgeArray = speciesData.GetOldAgeData();
@@ -92,6 +98,8 @@ public class GradientControl : Control
 			DrawGraph(ThirstResistanceArray, lineThirstResistance, speciesCreationTime);
 			DrawGraph(LongevityArray, lineLongevity, speciesCreationTime);
 			DrawGraph(LitterSizeArray, lineLitterSize, speciesCreationTime);
+			DrawGraph(IntelligenceArray, lineIntelligence, speciesCreationTime);
+			DrawGraph(MemoryArray, lineMemory, speciesCreationTime);
 			DrawGraph(StarvationArray, lineStarvation, speciesCreationTime);
 			DrawGraph(DehydrationArray, lineDehydration, speciesCreationTime);
 			DrawGraph(OldAgeArray, lineOldAge, speciesCreationTime);
@@ -142,7 +150,8 @@ public class GradientControl : Control
 		return (lineSpeed.Visible || linePerception.Visible ||
 				lineMatingCycle.Visible || lineHungerResistance.Visible ||
 				lineThirstResistance.Visible || lineGestation.Visible ||
-				lineLongevity.Visible || lineLitterSize.Visible);
+				lineLongevity.Visible || lineLitterSize.Visible ||
+				lineIntelligence.Visible || lineMemory.Visible);
 	}
 
 	private void DrawGraph(Godot.Collections.Array dataArray, Line2D line, int speciesCreationTime){
