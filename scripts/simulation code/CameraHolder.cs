@@ -53,9 +53,9 @@ public class CameraHolder : KinematicBody
 		if (Input.IsActionPressed("up") && Input.IsActionPressed("down"))
 			velocity.z = 0;
 		else if (Input.IsActionPressed("up") && !atFront)
-			velocity.z = -speed*delta;
+			velocity.z = -speed*delta*Global.Multiplier;
 		else if (Input.IsActionPressed("down") && !atBack)
-			velocity.z = speed*delta;
+			velocity.z = speed*delta*Global.Multiplier;
 		else
 			velocity.z = 0;
 	}
@@ -64,9 +64,9 @@ public class CameraHolder : KinematicBody
 		if (Input.IsActionPressed("right") && Input.IsActionPressed("left"))
 			velocity.x = 0;
 		else if (Input.IsActionPressed("right") && !atRight)
-			velocity.x = speed*delta;
+			velocity.x = speed*delta*Global.Multiplier;
 		else if (Input.IsActionPressed("left") && !atLeft)
-			velocity.x = -speed*delta;
+			velocity.x = -speed*delta*Global.Multiplier;
 		else
 			velocity.x = 0;
 	}

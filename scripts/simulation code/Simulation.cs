@@ -20,10 +20,11 @@ public class Simulation : Spatial
 	private bool isWorldBuilding = true;
 
 	private bool mouseOnList = false;
-
+	//public static Global screenBorder;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		//screenBorder = GetNode<Global>("Global");
 		// Vector3 position = (Vector3) new Vector3(0,0,0);
 		// position.x = -62;
 		// position.z = -62;
@@ -37,6 +38,7 @@ public class Simulation : Spatial
 		// }
 		// TileSelectInst = TileSelector.Instance();
 		// AddChild(TileSelectInst);
+		OS.SetUseVsync(Global.enableVSync);
 	}
 
 	private void _on_StartSimulation_pressed()
