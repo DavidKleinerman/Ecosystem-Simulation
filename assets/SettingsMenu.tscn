@@ -160,6 +160,18 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Label25" type="Label" parent="."]
+margin_left = 701.179
+margin_top = 529.401
+margin_right = 1001.18
+margin_bottom = 589.401
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Shadow Quality:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="ItemList" type="ItemList" parent="."]
 margin_left = 850.0
 margin_top = 680.0
@@ -177,6 +189,26 @@ items = [ "Windowed", null, false, "Fullscreen", null, false ]
 max_columns = 3
 icon_mode = 0
 script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ShadowQuality" type="ItemList" parent="."]
+margin_left = 975.543
+margin_top = 532.092
+margin_right = 1335.54
+margin_bottom = 592.092
+custom_styles/selected_focus = SubResource( 4 )
+custom_styles/bg_focus = SubResource( 5 )
+custom_styles/selected = SubResource( 6 )
+custom_styles/bg = SubResource( 7 )
+custom_fonts/font = SubResource( 8 )
+custom_colors/guide_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_selected = Color( 0.0784314, 0.156863, 0.8, 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+items = [ "Enabled", null, false, "Disabled", null, false ]
+max_columns = 3
+icon_mode = 0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -393,6 +425,42 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Label27" type="Label" parent="."]
+margin_left = 1104.8
+margin_top = 527.605
+margin_right = 1115.8
+margin_bottom = 581.605
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 0.0784314, 0.156863, 0.8, 1 )
+text = "|"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label28" type="Label" parent="."]
+margin_left = 1255.36
+margin_top = 526.714
+margin_right = 1266.36
+margin_bottom = 580.714
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 0.0784314, 0.156863, 0.8, 1 )
+text = "|"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label26" type="Label" parent="."]
+margin_left = 968.495
+margin_top = 530.277
+margin_right = 979.495
+margin_bottom = 584.277
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 0.0784314, 0.156863, 0.8, 1 )
+text = "|"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Label9" type="Label" parent="."]
 margin_left = 1063.26
 margin_top = 628.5
@@ -479,6 +547,7 @@ __meta__ = {
 [connection signal="pressed" from="BackToMainMenu" to="BackToMainMenu" method="_on_BackToMainMenu_pressed"]
 [connection signal="pressed" from="SaveChanges" to="." method="_on_SaveChanges_pressed"]
 [connection signal="item_selected" from="ItemList" to="." method="_on_ItemList_item_selected"]
+[connection signal="item_selected" from="ShadowQuality" to="." method="_on_ShadowQuality_item_selected"]
 [connection signal="item_selected" from="ItemList2" to="." method="_on_ItemList2_item_selected"]
 [connection signal="item_selected" from="ItemList3" to="." method="_on_ItemList3_item_selected"]
 [connection signal="item_selected" from="ItemList5" to="." method="_on_ItemList5_item_selected"]

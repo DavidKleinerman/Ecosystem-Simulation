@@ -9,6 +9,7 @@ public class SettingsMenu : Control
 	Vector2 Resolution = (Vector2) new Vector2(1920,1080);
 	//public MSAA DispFix;
 	public int Aliasing = 0;
+	public bool enableShadows;
 	
 	public override void _Ready()
 	{
@@ -83,6 +84,7 @@ public class SettingsMenu : Control
 		else if(this.Aliasing == 4){
 			GetViewport().SetMsaa(Viewport.MSAA.Msaa4x);
 		}
+		Global.enableShadows = this.enableShadows;
 		
 	}
 	
@@ -108,6 +110,15 @@ public class SettingsMenu : Control
 		}
 		else if(index == 2){
 			this.Aliasing = 4;
+		}
+	}
+	private void _on_ShadowQuality_item_selected(int index)
+	{
+		if(index == 0){
+			this.enableShadows = true;
+		}
+		else if(index == 1){
+			this.enableShadows = false;
 		}
 	}
 }
