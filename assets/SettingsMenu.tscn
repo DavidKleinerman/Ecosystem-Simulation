@@ -44,10 +44,10 @@ __meta__ = {
 }
 
 [node name="ColorRect" type="ColorRect" parent="."]
-margin_left = 0.470398
-margin_top = -6.24603
-margin_right = 1925.47
-margin_bottom = 1078.76
+margin_left = -86.142
+margin_top = 1.32202
+margin_right = 1838.86
+margin_bottom = 1086.33
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -167,7 +167,7 @@ margin_right = 1001.18
 margin_bottom = 589.401
 custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "Shadow Quality:"
+text = "Shadows:"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -194,10 +194,10 @@ __meta__ = {
 }
 
 [node name="ShadowQuality" type="ItemList" parent="."]
-margin_left = 975.543
-margin_top = 532.092
-margin_right = 1335.54
-margin_bottom = 592.092
+margin_left = 863.704
+margin_top = 530.41
+margin_right = 1223.7
+margin_bottom = 590.41
 custom_styles/selected_focus = SubResource( 4 )
 custom_styles/bg_focus = SubResource( 5 )
 custom_styles/selected = SubResource( 6 )
@@ -426,10 +426,10 @@ __meta__ = {
 }
 
 [node name="Label27" type="Label" parent="."]
-margin_left = 1104.8
-margin_top = 527.605
-margin_right = 1115.8
-margin_bottom = 581.605
+margin_left = 993.804
+margin_top = 526.764
+margin_right = 1004.8
+margin_bottom = 580.764
 custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0.0784314, 0.156863, 0.8, 1 )
 text = "|"
@@ -438,10 +438,10 @@ __meta__ = {
 }
 
 [node name="Label28" type="Label" parent="."]
-margin_left = 1255.36
-margin_top = 526.714
-margin_right = 1266.36
-margin_bottom = 580.714
+margin_left = 1144.37
+margin_top = 525.032
+margin_right = 1155.37
+margin_bottom = 579.032
 custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0.0784314, 0.156863, 0.8, 1 )
 text = "|"
@@ -450,10 +450,10 @@ __meta__ = {
 }
 
 [node name="Label26" type="Label" parent="."]
-margin_left = 968.495
-margin_top = 530.277
-margin_right = 979.495
-margin_bottom = 584.277
+margin_left = 858.337
+margin_top = 526.914
+margin_right = 869.337
+margin_bottom = 580.914
 custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0.0784314, 0.156863, 0.8, 1 )
 text = "|"
