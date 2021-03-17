@@ -39,6 +39,7 @@ public class Simulation : Spatial
 		// TileSelectInst = TileSelector.Instance();
 		// AddChild(TileSelectInst);
 		OS.SetUseVsync(Global.enableVSync);
+		GetNode<DirectionalLight>("DirectionalLight").ShadowEnabled = Global.enableShadows;
 	}
 
 	private void _on_StartSimulation_pressed()
