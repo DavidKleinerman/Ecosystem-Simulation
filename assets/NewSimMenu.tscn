@@ -66,10 +66,10 @@ __meta__ = {
 }
 
 [node name="LaunchSim" type="Button" parent="."]
-margin_left = 710.0
-margin_top = 580.0
-margin_right = 1210.0
-margin_bottom = 640.0
+margin_left = 707.755
+margin_top = 509.285
+margin_right = 1207.76
+margin_bottom = 569.285
 focus_mode = 0
 custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
@@ -84,17 +84,17 @@ __meta__ = {
 }
 
 [node name="BackToMainMenu" type="Button" parent="."]
-margin_left = 760.0
-margin_top = 780.0
-margin_right = 1160.0
-margin_bottom = 840.0
+margin_left = 757.003
+margin_top = 802.475
+margin_right = 1157.0
+margin_bottom = 862.475
 focus_mode = 0
 custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_hover = Color( 0.0784314, 0.156863, 0.8, 1 )
 custom_colors/font_color_pressed = Color( 0.921569, 0.937255, 0.521569, 1 )
 enabled_focus_mode = 0
-text = "Main Menu"
+text = "Back To Main Menu"
 flat = true
 script = ExtResource( 3 )
 __meta__ = {

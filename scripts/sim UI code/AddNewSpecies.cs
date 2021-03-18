@@ -30,8 +30,16 @@ public class AddNewSpecies : Button
 	{
 		this.Visible = true;
 	}
-
+	private void _on_Pause_pressed()
+	{
+		this.Visible = false;
+	}
+	private void _on_Resume_pressed()
+	{
+		this.Visible = true;
+	}
 }
+
 
 
 

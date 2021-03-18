@@ -1,4 +1,4 @@
-[gd_scene load_steps=83 format=2]
+[gd_scene load_steps=85 format=2]
 
 [ext_resource path="res://scripts/simulation code/Simulation.cs" type="Script" id=1]
 [ext_resource path="res://scripts/simulation code/CameraHolder.cs" type="Script" id=2]
@@ -17,6 +17,8 @@
 [ext_resource path="res://scripts/simulation code/BiomeGrid.cs" type="Script" id=15]
 [ext_resource path="res://scripts/gradients code/IntelligenceGraph.cs" type="Script" id=16]
 [ext_resource path="res://scripts/gradients code/MemoryGraph.cs" type="Script" id=17]
+[ext_resource path="res://scripts/menus code/PauseMenu.cs" type="Script" id=18]
+[ext_resource path="res://scripts/menus code/Pause.cs" type="Script" id=19]
 [ext_resource path="res://scripts/simulation code/SpeciesHolder.cs" type="Script" id=20]
 [ext_resource path="res://scripts/sim UI code/DisplayCharts.cs" type="Script" id=21]
 [ext_resource path="res://scripts/sim UI code/ItemList2.cs" type="Script" id=22]
@@ -286,6 +288,8 @@ far = 1000.0
 [node name="Control" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_top = -1.41425
+margin_bottom = -1.41431
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -334,16 +338,16 @@ __meta__ = {
 [node name="AddNewSpecies" type="Button" parent="Control"]
 anchor_left = 1.0
 anchor_right = 1.0
-margin_left = -400.0
-margin_top = 80.0
-margin_right = -80.0
-margin_bottom = 140.0
+margin_left = -349.619
+margin_top = 83.5355
+margin_right = -131.619
+margin_bottom = 143.536
 focus_mode = 0
 custom_styles/hover = SubResource( 7 )
 custom_fonts/font = SubResource( 8 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_hover = Color( 0.921569, 0.937255, 0.521569, 1 )
-text = "+ New Species"
+text = "New Species"
 flat = true
 script = ExtResource( 6 )
 __meta__ = {
@@ -351,16 +355,31 @@ __meta__ = {
 }
 
 [node name="DisplayCharts" type="Button" parent="Control"]
-margin_left = 1.54066
-margin_top = 66.65
-margin_right = 455.541
-margin_bottom = 182.65
+margin_left = 1569.91
+margin_top = 140.663
+margin_right = 1809.91
+margin_bottom = 200.663
 custom_fonts/font = SubResource( 9 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_hover = Color( 0.756863, 0.87451, 0.0196078, 1 )
-text = "+ Display Charts"
+text = "Display Charts"
 flat = true
 script = ExtResource( 21 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Pause" type="Button" parent="Control"]
+margin_left = 1626.72
+margin_top = 199.196
+margin_right = 1732.72
+margin_bottom = 259.196
+custom_fonts/font = SubResource( 9 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 0.756863, 0.87451, 0.0196078, 1 )
+text = "Pause"
+flat = true
+script = ExtResource( 19 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -519,10 +538,10 @@ margin_bottom = 1200.0
 rect_min_size = Vector2( 0, 420 )
 
 [node name="ColorPicker" type="ColorPicker" parent="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent/RepresentationsPicker"]
-margin_left = 50.0
-margin_top = 20.0
-margin_right = 550.0
-margin_bottom = 440.0
+margin_left = 58.0
+margin_top = 28.0
+margin_right = 558.0
+margin_bottom = 448.0
 rect_min_size = Vector2( 500, 420 )
 edit_alpha = false
 presets_enabled = false
@@ -603,6 +622,7 @@ shadow_contact = 16.0
 directional_shadow_mode = 0
 
 [node name="DisplayChartsMenu" type="Control" parent="."]
+visible = false
 margin_right = 1750.0
 margin_bottom = 1080.0
 script = ExtResource( 23 )
@@ -910,11 +930,10 @@ __meta__ = {
 }
 
 [node name="HealingCheckButton" type="CheckButton" parent="DisplayChartsMenu/GeneValuesGridContainer"]
-visible = false
 margin_left = 304.0
-margin_top = 46.0
+margin_top = 92.0
 margin_right = 604.0
-margin_bottom = 88.0
+margin_bottom = 134.0
 custom_fonts/font = SubResource( 34 )
 custom_colors/font_color = Color( 0.419608, 0.419608, 0.419608, 1 )
 custom_colors/font_color_pressed = Color( 0.419608, 0.419608, 0.419608, 1 )
@@ -925,10 +944,9 @@ __meta__ = {
 }
 
 [node name="LongevityCheckButton" type="CheckButton" parent="DisplayChartsMenu/GeneValuesGridContainer"]
-margin_left = 304.0
-margin_top = 92.0
-margin_right = 604.0
-margin_bottom = 134.0
+margin_top = 138.0
+margin_right = 300.0
+margin_bottom = 180.0
 custom_fonts/font = SubResource( 35 )
 custom_colors/font_color = Color( 0.937255, 0, 1, 1 )
 custom_colors/font_color_pressed = Color( 0.937255, 0, 1, 1 )
@@ -939,8 +957,9 @@ __meta__ = {
 }
 
 [node name="HeatResistanceCheckButton" type="CheckButton" parent="DisplayChartsMenu/GeneValuesGridContainer"]
+margin_left = 304.0
 margin_top = 138.0
-margin_right = 300.0
+margin_right = 604.0
 margin_bottom = 180.0
 custom_fonts/font = SubResource( 36 )
 custom_colors/font_color = Color( 0.552941, 0, 0.247059, 1 )
@@ -952,10 +971,9 @@ __meta__ = {
 }
 
 [node name="ColdResistanceCheckButton" type="CheckButton" parent="DisplayChartsMenu/GeneValuesGridContainer"]
-margin_left = 304.0
-margin_top = 138.0
-margin_right = 604.0
-margin_bottom = 180.0
+margin_top = 184.0
+margin_right = 300.0
+margin_bottom = 226.0
 custom_fonts/font = SubResource( 37 )
 custom_colors/font_color = Color( 0, 1, 0.882353, 1 )
 custom_colors/font_color_pressed = Color( 0, 1, 0.882353, 1 )
@@ -966,8 +984,9 @@ __meta__ = {
 }
 
 [node name="MemoryCheckButton" type="CheckButton" parent="DisplayChartsMenu/GeneValuesGridContainer"]
+margin_left = 304.0
 margin_top = 184.0
-margin_right = 300.0
+margin_right = 604.0
 margin_bottom = 226.0
 custom_fonts/font = SubResource( 38 )
 custom_colors/font_color = Color( 0.458824, 0.0509804, 0.533333, 1 )
@@ -979,10 +998,9 @@ __meta__ = {
 }
 
 [node name="LitterSizeCheckButton" type="CheckButton" parent="DisplayChartsMenu/GeneValuesGridContainer"]
-margin_left = 304.0
-margin_top = 184.0
-margin_right = 604.0
-margin_bottom = 226.0
+margin_top = 230.0
+margin_right = 300.0
+margin_bottom = 272.0
 custom_fonts/font = SubResource( 39 )
 custom_colors/font_color = Color( 0.623529, 0, 0.0784314, 1 )
 custom_colors/font_color_pressed = Color( 0.623529, 0, 0.0784314, 1 )
@@ -993,8 +1011,9 @@ __meta__ = {
 }
 
 [node name="IntelligenceCheckButton" type="CheckButton" parent="DisplayChartsMenu/GeneValuesGridContainer"]
+margin_left = 304.0
 margin_top = 230.0
-margin_right = 300.0
+margin_right = 604.0
 margin_bottom = 272.0
 custom_fonts/font = SubResource( 40 )
 custom_colors/font_color = Color( 0, 0.141176, 1, 1 )
@@ -1003,10 +1022,9 @@ text = "Intelligence"
 flat = true
 
 [node name="HungerResistanceCheckButton" type="CheckButton" parent="DisplayChartsMenu/GeneValuesGridContainer"]
-margin_left = 304.0
-margin_top = 230.0
-margin_right = 604.0
-margin_bottom = 272.0
+margin_top = 276.0
+margin_right = 300.0
+margin_bottom = 318.0
 custom_fonts/font = SubResource( 41 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "Hunger Resistance"
@@ -1016,8 +1034,9 @@ __meta__ = {
 }
 
 [node name="ThirstResistanceCheckButton" type="CheckButton" parent="DisplayChartsMenu/GeneValuesGridContainer"]
+margin_left = 304.0
 margin_top = 276.0
-margin_right = 300.0
+margin_right = 604.0
 margin_bottom = 318.0
 custom_fonts/font = SubResource( 42 )
 custom_colors/font_color = Color( 0.996078, 0, 0.945098, 1 )
@@ -1029,10 +1048,9 @@ __meta__ = {
 }
 
 [node name="GestationCheckButton" type="CheckButton" parent="DisplayChartsMenu/GeneValuesGridContainer"]
-margin_left = 304.0
-margin_top = 276.0
-margin_right = 604.0
-margin_bottom = 318.0
+margin_top = 322.0
+margin_right = 300.0
+margin_bottom = 364.0
 custom_fonts/font = SubResource( 43 )
 custom_colors/font_color = Color( 1, 0.670588, 0, 1 )
 custom_colors/font_color_pressed = Color( 1, 0.670588, 0, 1 )
@@ -1043,8 +1061,9 @@ __meta__ = {
 }
 
 [node name="MatingCycleCheckButton" type="CheckButton" parent="DisplayChartsMenu/GeneValuesGridContainer"]
+margin_left = 304.0
 margin_top = 322.0
-margin_right = 300.0
+margin_right = 604.0
 margin_bottom = 364.0
 custom_fonts/font = SubResource( 44 )
 custom_colors/font_color = Color( 0.360784, 1, 0, 1 )
@@ -1056,10 +1075,9 @@ __meta__ = {
 }
 
 [node name="PerceptionCheckButton" type="CheckButton" parent="DisplayChartsMenu/GeneValuesGridContainer"]
-margin_left = 304.0
-margin_top = 322.0
-margin_right = 604.0
-margin_bottom = 364.0
+margin_top = 368.0
+margin_right = 300.0
+margin_bottom = 410.0
 custom_fonts/font = SubResource( 45 )
 custom_colors/font_color_hover_pressed = Color( 0, 0, 0, 1 )
 custom_colors/font_color = Color( 0, 0.964706, 1, 1 )
@@ -1071,8 +1089,9 @@ __meta__ = {
 }
 
 [node name="SpeedCheckButton" type="CheckButton" parent="DisplayChartsMenu/GeneValuesGridContainer"]
+margin_left = 304.0
 margin_top = 368.0
-margin_right = 300.0
+margin_right = 604.0
 margin_bottom = 410.0
 custom_fonts/font = SubResource( 46 )
 custom_colors/font_color_hover_pressed = Color( 0, 0, 0, 1 )
@@ -1257,36 +1276,121 @@ multimesh = SubResource( 49 )
 
 [node name="PlantGrowthTimer" type="Timer" parent="."]
 wait_time = 5.0
+
+[node name="PauseMenu" type="Control" parent="."]
+margin_left = 810.0
+margin_top = 252.0
+margin_right = 1129.0
+margin_bottom = 712.0
+script = ExtResource( 18 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="PauseMenu"]
+margin_left = -4.0
+margin_top = 4.0
+margin_right = 321.0
+margin_bottom = 463.0
+color = Color( 0, 0, 0, 0.705882 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Resume" type="Button" parent="PauseMenu"]
+margin_left = -76.9012
+margin_top = 38.3338
+margin_right = 390.0
+margin_bottom = 154.334
+custom_fonts/font = SubResource( 9 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 0.756863, 0.87451, 0.0196078, 1 )
+text = "Resume"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SaveSimulation" type="Button" parent="PauseMenu"]
+margin_left = -76.6746
+margin_top = 124.618
+margin_right = 390.0
+margin_bottom = 240.618
+custom_fonts/font = SubResource( 9 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 0.756863, 0.87451, 0.0196078, 1 )
+text = "Save Simulation"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BackToMainMenu" type="Button" parent="PauseMenu"]
+margin_left = -66.5724
+margin_top = 218.469
+margin_right = 390.0
+margin_bottom = 334.469
+custom_fonts/font = SubResource( 9 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 0.756863, 0.87451, 0.0196078, 1 )
+text = "Main Menu"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Exit" type="Button" parent="PauseMenu"]
+margin_left = -76.175
+margin_top = 304.253
+margin_right = 390.0
+margin_bottom = 420.253
+custom_fonts/font = SubResource( 9 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 0.756863, 0.87451, 0.0196078, 1 )
+text = "Exit"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="timeout" from="SpeciesHolder/GlobalTimeTicks" to="SpeciesHolder" method="_on_GlobalTimeTicks_timeout"]
 [connection signal="item_selected" from="Control/ItemList" to="BiomeGrid" method="_on_ItemList_item_selected"]
 [connection signal="mouse_entered" from="Control/ItemList" to="BiomeGrid" method="_on_ItemList_mouse_entered"]
 [connection signal="mouse_exited" from="Control/ItemList" to="BiomeGrid" method="_on_ItemList_mouse_exited"]
-[connection signal="mouse_entered" from="Control/StartSimulation" to="." method="_on_StartSimulation_mouse_entered"]
 [connection signal="mouse_entered" from="Control/StartSimulation" to="BiomeGrid" method="_on_StartSimulation_mouse_entered"]
-[connection signal="mouse_exited" from="Control/StartSimulation" to="." method="_on_StartSimulation_mouse_exited"]
+[connection signal="mouse_entered" from="Control/StartSimulation" to="." method="_on_StartSimulation_mouse_entered"]
 [connection signal="mouse_exited" from="Control/StartSimulation" to="BiomeGrid" method="_on_StartSimulation_mouse_exited"]
-[connection signal="pressed" from="Control/StartSimulation" to="Control/StartSimulation" method="_on_StartSimulation_pressed"]
-[connection signal="pressed" from="Control/StartSimulation" to="Control/ItemList" method="_on_StartSimulation_pressed"]
-[connection signal="pressed" from="Control/StartSimulation" to="Control/DisplayCharts" method="_on_StartSimulation_pressed"]
-[connection signal="pressed" from="Control/StartSimulation" to="Control/AddNewSpecies" method="_on_StartSimulation_pressed"]
-[connection signal="pressed" from="Control/StartSimulation" to="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent" method="_on_StartSimulation_pressed"]
-[connection signal="pressed" from="Control/StartSimulation" to="SpeciesHolder" method="_on_StartSimulation_pressed"]
+[connection signal="mouse_exited" from="Control/StartSimulation" to="." method="_on_StartSimulation_mouse_exited"]
+[connection signal="pressed" from="Control/StartSimulation" to="Control/Pause" method="_on_StartSimulation_pressed"]
 [connection signal="pressed" from="Control/StartSimulation" to="BiomeGrid" method="_on_StartSimulation_pressed"]
+[connection signal="pressed" from="Control/StartSimulation" to="Control/StartSimulation" method="_on_StartSimulation_pressed"]
+[connection signal="pressed" from="Control/StartSimulation" to="Control/DisplayCharts" method="_on_StartSimulation_pressed"]
+[connection signal="pressed" from="Control/StartSimulation" to="Control/ItemList" method="_on_StartSimulation_pressed"]
+[connection signal="pressed" from="Control/StartSimulation" to="Control/AddNewSpecies" method="_on_StartSimulation_pressed"]
+[connection signal="pressed" from="Control/StartSimulation" to="SpeciesHolder" method="_on_StartSimulation_pressed"]
+[connection signal="pressed" from="Control/StartSimulation" to="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent" method="_on_StartSimulation_pressed"]
+[connection signal="pressed" from="Control/AddNewSpecies" to="Control/Pause" method="_on_AddNewSpecies_pressed"]
+[connection signal="pressed" from="Control/AddNewSpecies" to="CameraHolder" method="_on_AddNewSpecies_pressed"]
 [connection signal="pressed" from="Control/AddNewSpecies" to="Control/DisplayCharts" method="_on_AddNewSpecies_pressed"]
 [connection signal="pressed" from="Control/AddNewSpecies" to="Control/AddNewSpecies" method="_on_AddNewSpecies_pressed"]
 [connection signal="pressed" from="Control/AddNewSpecies" to="NewSpeciesMenu" method="_on_AddNewSpecies_pressed"]
-[connection signal="pressed" from="Control/AddNewSpecies" to="CameraHolder" method="_on_AddNewSpecies_pressed"]
+[connection signal="pressed" from="Control/DisplayCharts" to="Control/Pause" method="_on_DisplayCharts_pressed"]
 [connection signal="pressed" from="Control/DisplayCharts" to="Control/DisplayCharts" method="_on_DisplayCharts_pressed"]
 [connection signal="pressed" from="Control/DisplayCharts" to="Control/AddNewSpecies" method="_on_DisplayCharts_pressed"]
+[connection signal="pressed" from="Control/DisplayCharts" to="DisplayChartsMenu/ItemList2" method="_on_DisplayCharts_pressed"]
 [connection signal="pressed" from="Control/DisplayCharts" to="DisplayChartsMenu" method="_on_DisplayCharts_pressed"]
 [connection signal="pressed" from="Control/DisplayCharts" to="DisplayChartsMenu/GradientControl" method="_on_DisplayCharts_pressed"]
-[connection signal="pressed" from="Control/DisplayCharts" to="DisplayChartsMenu/ItemList2" method="_on_DisplayCharts_pressed"]
+[connection signal="pressed" from="Control/Pause" to="Control/Pause" method="_on_Pause_pressed"]
+[connection signal="pressed" from="Control/Pause" to="Control/DisplayCharts" method="_on_Pause_pressed"]
+[connection signal="pressed" from="Control/Pause" to="Control/AddNewSpecies" method="_on_Pause_pressed"]
+[connection signal="pressed" from="Control/Pause" to="PauseMenu" method="_on_Pause_pressed"]
+[connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="Control/Pause" method="_on_CloseNewSpecies_pressed"]
+[connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="CameraHolder" method="_on_CloseNewSpecies_pressed"]
 [connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="Control/DisplayCharts" method="_on_CloseNewSpecies_pressed"]
 [connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="Control/AddNewSpecies" method="_on_CloseNewSpecies_pressed"]
 [connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="NewSpeciesMenu" method="_on_CloseNewSpecies_pressed"]
-[connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="CameraHolder" method="_on_CloseNewSpecies_pressed"]
 [connection signal="gui_input" from="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent/SpeciesName/LineEdit" to="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent" method="_on_LineEdit_gui_input"]
 [connection signal="pressed" from="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent/CreateNewSpecies/NewSpeciesButton" to="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent" method="_on_NewSpeciesButton_pressed"]
+[connection signal="pressed" from="DisplayChartsMenu/CloseChartMenu" to="Control/Pause" method="_on_CloseChartMenu_pressed"]
 [connection signal="pressed" from="DisplayChartsMenu/CloseChartMenu" to="Control/DisplayCharts" method="_on_CloseChartMenu_pressed"]
 [connection signal="pressed" from="DisplayChartsMenu/CloseChartMenu" to="Control/AddNewSpecies" method="_on_CloseChartMenu_pressed"]
 [connection signal="pressed" from="DisplayChartsMenu/CloseChartMenu" to="DisplayChartsMenu" method="_on_CloseChartMenu_pressed"]
@@ -1308,3 +1412,9 @@ wait_time = 5.0
 [connection signal="toggled" from="DisplayChartsMenu/GeneValuesGridContainer/PerceptionCheckButton" to="DisplayChartsMenu/GradientControl/PerceptionGradient" method="_on_PerceptionCheckButton_toggled"]
 [connection signal="toggled" from="DisplayChartsMenu/GeneValuesGridContainer/SpeedCheckButton" to="DisplayChartsMenu/GradientControl/SpeedGradient" method="_on_SpeedCheckButton_toggled"]
 [connection signal="timeout" from="PlantGrowthTimer" to="BiomeGrid" method="_on_PlantGrowthTimer_timeout"]
+[connection signal="pressed" from="PauseMenu/Resume" to="Control/Pause" method="_on_Resume_pressed"]
+[connection signal="pressed" from="PauseMenu/Resume" to="Control/DisplayCharts" method="_on_Resume_pressed"]
+[connection signal="pressed" from="PauseMenu/Resume" to="Control/AddNewSpecies" method="_on_Resume_pressed"]
+[connection signal="pressed" from="PauseMenu/Resume" to="PauseMenu" method="_on_Resume_pressed"]
+[connection signal="pressed" from="PauseMenu/BackToMainMenu" to="PauseMenu" method="_on_BackToMainMenu_pressed"]
+[connection signal="pressed" from="PauseMenu/Exit" to="PauseMenu" method="_on_Exit_pressed"]
