@@ -44,10 +44,10 @@ __meta__ = {
 }
 
 [node name="ColorRect" type="ColorRect" parent="."]
-margin_left = -86.142
-margin_top = 1.32202
-margin_right = 1838.86
-margin_bottom = 1086.33
+margin_left = -4.53525
+margin_top = -0.390039
+margin_right = 1920.47
+margin_bottom = 1084.62
 __meta__ = {
 "_edit_use_anchors_": false
 }

@@ -338,10 +338,10 @@ __meta__ = {
 [node name="AddNewSpecies" type="Button" parent="Control"]
 anchor_left = 1.0
 anchor_right = 1.0
-margin_left = -349.619
-margin_top = 83.5355
-margin_right = -131.619
-margin_bottom = 143.536
+margin_left = -1852.63
+margin_top = 76.5677
+margin_right = -1634.63
+margin_bottom = 136.568
 focus_mode = 0
 custom_styles/hover = SubResource( 7 )
 custom_fonts/font = SubResource( 8 )
@@ -355,10 +355,10 @@ __meta__ = {
 }
 
 [node name="DisplayCharts" type="Button" parent="Control"]
-margin_left = 1569.91
-margin_top = 140.663
-margin_right = 1809.91
-margin_bottom = 200.663
+margin_left = 67.0
+margin_top = 139.455
+margin_right = 307.0
+margin_bottom = 199.455
 custom_fonts/font = SubResource( 9 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_hover = Color( 0.756863, 0.87451, 0.0196078, 1 )
@@ -370,10 +370,10 @@ __meta__ = {
 }
 
 [node name="Pause" type="Button" parent="Control"]
-margin_left = 1626.72
-margin_top = 199.196
-margin_right = 1732.72
-margin_bottom = 259.196
+margin_left = 67.0
+margin_top = 200.506
+margin_right = 173.0
+margin_bottom = 260.506
 custom_fonts/font = SubResource( 9 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_hover = Color( 0.756863, 0.87451, 0.0196078, 1 )
@@ -622,7 +622,6 @@ shadow_contact = 16.0
 directional_shadow_mode = 0
 
 [node name="DisplayChartsMenu" type="Control" parent="."]
-visible = false
 margin_right = 1750.0
 margin_bottom = 1080.0
 script = ExtResource( 23 )
