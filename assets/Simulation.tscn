@@ -1277,10 +1277,10 @@ multimesh = SubResource( 49 )
 wait_time = 5.0
 
 [node name="PauseMenu" type="Control" parent="."]
-margin_left = 810.0
-margin_top = 252.0
-margin_right = 1129.0
-margin_bottom = 712.0
+margin_left = 800.0
+margin_top = 310.0
+margin_right = 1119.0
+margin_bottom = 770.0
 script = ExtResource( 18 )
 __meta__ = {
 "_edit_use_anchors_": false
