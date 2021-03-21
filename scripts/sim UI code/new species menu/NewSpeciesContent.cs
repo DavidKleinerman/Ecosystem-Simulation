@@ -7,16 +7,27 @@ public class NewSpeciesContent : VBoxContainer
 	public override void _Ready()
 	{
 		GetNode<Label>("Speed/Label").Text = "Speed";
+		GetNode<Label>("Speed/Label").HintTooltip = "The creature's movement speed.\nThe faster the creature moves the higher is the energy cost.\nLarger number = higher speed.";
 		GetNode<Label>("Perception/Label").Text = "Perception";
+		GetNode<Label>("Perception/Label").HintTooltip = "How far the creature can detect objects (water, food, and other creatures).\nMore advanced sensory system requires more energy upkeep.\nLarger number = larger detection radius.";
 		GetNode<Label>("MatingCycle/Label").Text = "Mating Cycle";
+		GetNode<Label>("MatingCycle/Label").HintTooltip = "How often the creature will want to reproduce.\nLarger number = more frequent reproduction.";
 		GetNode<Label>("HungerResistance/Label").Text = "Hunger Resistance";
+		GetNode<Label>("HungerResistance/Label").HintTooltip = "Reduces the passive dacay of the creature's energy.\nLarger number = larger the reduction to the energy decay.";
 		GetNode<Label>("ThirstResistance/Label").Text = "Thirst Resistance";
+		GetNode<Label>("ThirstResistance/Label").HintTooltip = "Reduces the passive growth of the creature's thirst.\nLarger number = larger the reduction to the thirst growth.";
 		GetNode<Label>("Gestation/Label").Text = "Gestation";
+		GetNode<Label>("Gestation/Label").HintTooltip = "Females Only. Determines the length of the pregnancy period.\nLarger number = longer pregnancies but with stronger offsprings.";
 		GetNode<Label>("LitterSize/Label").Text = "LitterSize";
+		GetNode<Label>("LitterSize/Label").HintTooltip = "Females Only. How many offsprings are born in a single clutch.\nEach child born reduces the mother's energy.\nLarger number = more children born per clutch.";
 		GetNode<Label>("Longevity/Label").Text = "Longevity";
+		GetNode<Label>("Longevity/Label").HintTooltip = "How long the creature will live.\nLarger number = longer lifespan.";
 		GetNode<Label>("Intelligence/Label").Text = "Intelligence";
+		GetNode<Label>("Intelligence/Label").HintTooltip = "How long it takes for the creature to process its environment.\nA bigger brain with higher intelligence requires a higher energy upkeep.\nLarger number = smaller delay between environment scans.";
 		GetNode<Label>("Memory/Label").Text = "Memory";
+		GetNode<Label>("Memory/Label").HintTooltip = "If male: how many females that rejected him he can remember.\nIf female: how many rejected males she can remember.\nIf predator: how many unsuccessful hunting attapts the predastor can remember.\nA bigger brain with better memory requires a higher energy upkeep.\nLarger number = better memory.";
 		GetNode<Label>("GeneticVariation/Label").Text = "Genetic Variation";
+		GetNode<Label>("GeneticVariation/Label").HintTooltip = "The difference of each indvidual's trait value, in the initial population, form the values set by the user.";
 		GetNode<Label>("PopulationSize/Label").Text = "Population Size";
 		
 	}
