@@ -19,6 +19,7 @@ public class BiomeGrid : GridMap
 		public bool hasPlant;
 		public Vector3 gridIndex;
 	}
+	private float GlobalGrowthRate;
 
 	private SpatialMaterial ForestMaterial = (SpatialMaterial)GD.Load<SpatialMaterial>("res://materials/forestPlant_material.tres");
 	private SpatialMaterial DesertMaterial = (SpatialMaterial)GD.Load<SpatialMaterial>("res://materials/desertPlant_material.tres");
@@ -35,6 +36,10 @@ public class BiomeGrid : GridMap
 	MultiMeshInstance MultiMeshPlants;
 	public override void _Ready()
 	{
+		GlobalGrowthRate = Global.biomeGrowthRate;
+
+
+
 		Vector3 position = (Vector3) new Vector3(0,0,0);
 		position.x = -16;
 		position.z = -16;
@@ -270,16 +275,16 @@ public class BiomeGrid : GridMap
 	private float TotalGrowRate(BiomeType biomeType){
 		switch(biomeType){
 			case BiomeType.desert:
-				return 0.57f * 5;
+				return 0.57f * GlobalGrowthRate;
 				break;
 			case BiomeType.forest:
-				return 17.92f * 5;
+				return 17.92f * GlobalGrowthRate;
 				break;
 			case BiomeType.grassland:
-				return 1.19f * 5;
+				return 1.19f * GlobalGrowthRate;
 				break;
 			default:
-				return 0.18f * 5;
+				return 0.18f * GlobalGrowthRate;
 				break;
 		}
 	}
