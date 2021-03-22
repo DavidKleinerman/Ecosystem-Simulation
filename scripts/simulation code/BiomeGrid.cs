@@ -21,6 +21,7 @@ public class BiomeGrid : GridMap
 	}
 	private float GlobalGrowthRate;
 	private int InitialBiome;
+	private int WorldSize;
 	private SpatialMaterial ForestMaterial = (SpatialMaterial)GD.Load<SpatialMaterial>("res://materials/forestPlant_material.tres");
 	private SpatialMaterial DesertMaterial = (SpatialMaterial)GD.Load<SpatialMaterial>("res://materials/desertPlant_material.tres");
 	private SpatialMaterial GrasslandMaterial = (SpatialMaterial)GD.Load<SpatialMaterial>("res://materials/forest_material.tres");
@@ -54,25 +55,25 @@ public class BiomeGrid : GridMap
 				InitialBiome = 3;
 			break;
 		}
-
+		WorldSize = Global.worldSize;
 
 		Vector3 position = (Vector3) new Vector3(0,0,0);
-		position.x = -16;
-		position.z = -16;
-		for(int i = 0; i < 32; i++){
-			for(int j = 0; j < 32; j++){
+		position.x = -WorldSize/2;
+		position.z = -WorldSize/2;
+		for(int i = 0; i < WorldSize; i++){
+			for(int j = 0; j < WorldSize; j++){
 				SetCellItem((int)position.x, (int)position.y, (int)position.z, InitialBiome);
 				position.z += 1;
 			}
 			position.x += 1;
-			position.z = -16;
+			position.z = -WorldSize/2;
 		}
 
 		position = (Vector3) new Vector3(0,1,0);
-		position.x = -62;
-		position.z = -62;
-		for(int i = 0; i < 32; i++){
-			for(int j = 0; j < 32; j++){
+		position.x = -(WorldSize*2 - 2);
+		position.z = -(WorldSize*2 - 2);
+		for(int i = 0; i < WorldSize; i++){
+			for(int j = 0; j < WorldSize; j++){
 				Spatial tileCollInst = (Spatial)TileCollider.Instance();
 				tileCollInst.Translation = position;
 				tileCollInst.Scale = (Vector3) new Vector3(2, 0.7f, 2);
@@ -80,7 +81,7 @@ public class BiomeGrid : GridMap
 				position.z += 4;
 			}
 			position.x += 4;
-			position.z = -62;
+			position.z = -(WorldSize*2 - 2);
 		}
 		TileSelectInst = TileSelector.Instance();
 		AddChild(TileSelectInst);
@@ -255,10 +256,10 @@ public class BiomeGrid : GridMap
 			c.QueueFree();
 		}
 		Vector3 position = (Vector3) new Vector3(0,0,0);
-		position.x = -16;
-		position.z = -16;
-		for(int i = 0; i < 32; i++){
-			for(int j = 0; j < 32; j++){
+		position.x = -WorldSize/2;
+		position.z = -WorldSize/2;
+		for(int i = 0; i < WorldSize; i++){
+			for(int j = 0; j < WorldSize; j++){
 				switch(GetCellItem((int)position.x, (int)position.y, (int)position.z)){
 					case 0:
 						AddTileToArray(BiomeType.forest, position);
