@@ -20,7 +20,7 @@ public class BiomeGrid : GridMap
 		public Vector3 gridIndex;
 	}
 	private float GlobalGrowthRate;
-
+	private int InitialBiome;
 	private SpatialMaterial ForestMaterial = (SpatialMaterial)GD.Load<SpatialMaterial>("res://materials/forestPlant_material.tres");
 	private SpatialMaterial DesertMaterial = (SpatialMaterial)GD.Load<SpatialMaterial>("res://materials/desertPlant_material.tres");
 	private SpatialMaterial GrasslandMaterial = (SpatialMaterial)GD.Load<SpatialMaterial>("res://materials/forest_material.tres");
@@ -37,7 +37,23 @@ public class BiomeGrid : GridMap
 	public override void _Ready()
 	{
 		GlobalGrowthRate = Global.biomeGrowthRate;
-
+		switch (Global.biomeType){
+			case 0:
+				InitialBiome = 4;
+			break;
+			case 1:
+				InitialBiome = 0;
+			break;
+			case 2:
+				InitialBiome = 1;
+			break;
+			case 3:
+				InitialBiome = 2;
+			break;
+			case 4:
+				InitialBiome = 3;
+			break;
+		}
 
 
 		Vector3 position = (Vector3) new Vector3(0,0,0);
@@ -45,7 +61,7 @@ public class BiomeGrid : GridMap
 		position.z = -16;
 		for(int i = 0; i < 32; i++){
 			for(int j = 0; j < 32; j++){
-				SetCellItem((int)position.x, (int)position.y, (int)position.z, 4);
+				SetCellItem((int)position.x, (int)position.y, (int)position.z, InitialBiome);
 				position.z += 1;
 			}
 			position.x += 1;
