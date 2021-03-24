@@ -86,6 +86,7 @@ public class BiomeGrid : GridMap
 		TileSelectInst = TileSelector.Instance();
 		AddChild(TileSelectInst);
 		MultiMeshPlants = GetParent().GetNode<MultiMeshInstance>("MultiMeshPlants");
+		MultiMeshPlants.Multimesh.InstanceCount = 0;
 	}
 
 	// public override void _Process(float delta)
