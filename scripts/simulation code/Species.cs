@@ -76,6 +76,17 @@ public class Species : MultiMeshInstance
 		public float Longevity;
 		public float Intelligence;
 		public int Memory;
+
+		public float MaxSpeed;
+		public float MaxPerception;
+		public float MaxMatingCycle;
+		public float MaxHungerResistance;
+		public float MaxThirstResistance;
+		public float MaxGestation;
+		public int MaxLitterSize;
+		public float MaxLongevity;
+		public float MaxIntelligence;
+		public int MaxMemory;
 		//Resources
 		public float Energy = 100;
 		public float Thirst = 0;
@@ -182,7 +193,7 @@ public class Species : MultiMeshInstance
 			}
 			Creatures[i].Age += delta;
 			Creatures[i].CurrentRotationTime += delta;
-			if (Creatures[i].ReproductiveUrge < 100 && !Creatures[i].Pregnant) Creatures[i].ReproductiveUrge += ((BaseReproductiveUrgeGrowth + Creatures[i].MatingCycle) * delta);
+			if (Creatures[i].ReproductiveUrge < 100 && !Creatures[i].Pregnant && !Creatures[i].Growing) Creatures[i].ReproductiveUrge += ((BaseReproductiveUrgeGrowth + Creatures[i].MatingCycle) * delta);
 			if (Creatures[i].MyState != State.Eating) Creatures[i].Energy -= ((BaseEnergyDecay - Creatures[i].HungerResistance) * delta);
 			if (Creatures[i].MyState != State.Drinking) Creatures[i].Thirst += ((BaseThirstDecay - Creatures[i].ThirstResistance) * delta);
 			if (Creatures[i].CurrentRotationTime >= Creatures[i].NextRotationTime){
@@ -203,6 +214,37 @@ public class Species : MultiMeshInstance
 			}
 			if (Creatures[i].Age > Creatures[i].Longevity){
 				Die(Creatures[i], i, CauseOfDeath.OldAge);
+			}
+			if (Creatures[i].Growing){
+				Vector3 tempScale = Creatures[i].MySpatial.Scale;
+				tempScale.x += 0.06667f * delta;
+				tempScale.y += 0.06667f * delta;
+				tempScale.z += 0.06667f * delta;
+				Creatures[i].MySpatial.Scale = tempScale;
+				Creatures[i].Speed += (Creatures[i].MaxSpeed/15) * delta;
+				Creatures[i].Perception = (Creatures[i].MaxPerception/15) * delta;
+				Creatures[i].MatingCycle = (Creatures[i].MaxMatingCycle/15) * delta;
+				Creatures[i].HungerResistance = (Creatures[i].MaxHungerResistance/15) * delta;
+				Creatures[i].ThirstResistance = (Creatures[i].MaxThirstResistance/15) * delta;
+				Creatures[i].Gestation = (Creatures[i].MaxGestation/15) * delta;
+				Creatures[i].LitterSize = (int)(((float)Creatures[i].MaxLitterSize/15) * delta);
+				Creatures[i].Intelligence = (Creatures[i].MaxIntelligence/15) * delta;
+				Creatures[i].Memory = (int)(((float)Creatures[i].MaxMemory/15) * delta);
+
+				if (Creatures[i].Speed >= Creatures[i].MaxSpeed){
+					Creatures[i].Speed = Creatures[i].MaxSpeed;
+					Creatures[i].Perception = Creatures[i].MaxPerception;
+					Creatures[i].MatingCycle = Creatures[i].MaxMatingCycle;
+					Creatures[i].HungerResistance = Creatures[i].MaxHungerResistance;
+					Creatures[i].ThirstResistance = Creatures[i].MaxThirstResistance;
+					Creatures[i].Gestation = Creatures[i].MaxGestation;
+					Creatures[i].LitterSize = Creatures[i].MaxLitterSize;
+					Creatures[i].Intelligence = Creatures[i].MaxIntelligence;
+					Creatures[i].Memory = Creatures[i].MaxMemory;
+					Creatures[i].MySpatial.Scale = new Vector3(1,1,1);
+					Creatures[i].Growing = false;
+
+				}
 			}
 			if (Creatures[i].Pregnant){ //female only
 				Creatures[i].PregnancyTime += delta;
@@ -305,7 +347,8 @@ public class Species : MultiMeshInstance
 		Godot.Collections.Array maternal = mother.MyGenome.Meiosis();
 		Genome genome = new Genome();
 		genome.Recombination(maternal, paternal);
-		AddCreature(genome, mother.MySpatial.Translation, NewBorn);
+		AddCreature(genome, mother.MySpatial.Translation, NewBorn, true, mother.PregnancyTime);
+		GD.Print("gave birth!");
 	}
 
 	private void BirthingProcess(Creature mother, float delta){
@@ -316,6 +359,8 @@ public class Species : MultiMeshInstance
 			mother.BornChildren++;
 			if (mother.BornChildren == mother.LitterSize){
 				mother.BornChildren = 0;
+				mother.PregnancyTime = 0;
+				mother.PreviousPregnancyTime = 0;
 				mother.PregnantWithGenome = null;
 				SetState(mother, State.ExploringTheEnvironment);
 			}
@@ -323,8 +368,6 @@ public class Species : MultiMeshInstance
 	}
 
 	private void StartBirthingProcess(Creature mother){
-		mother.PregnancyTime = 0;
-		mother.PreviousPregnancyTime = 0;
 		mother.Pregnant = false;
 		SetState(mother, State.GivingBirth);
 		mother.Velocity = new Vector3();
@@ -336,7 +379,7 @@ public class Species : MultiMeshInstance
 		int scanMethod = rng.RandiRange(0,1);
 		bool scanForWater = Weight() < creature.Thirst * 1.3f;
 		bool scanForFood = Weight() < (100 - creature.Energy) * 1.3f;
-		bool scanForReproduction = Weight() < creature.ReproductiveUrge;
+		bool scanForReproduction = Weight() < creature.ReproductiveUrge && !creature.Growing;
 		if (scanForFood || scanForWater){
 			switch(scanMethod){
 				case 0:
@@ -367,7 +410,7 @@ public class Species : MultiMeshInstance
 				if (((CreatureCollider)n) != creature.Collider){
 					Creature detectedCreature = ((CreatureCollider)n).MyCreature;
 					if (scanForReproduction){
-						if (detectedCreature.MyGender != creature.MyGender && detectedCreature.SpeciesName == SpeciesName && !creature.RejectList.Contains(detectedCreature)){
+						if (!detectedCreature.Growing && detectedCreature.MyGender != creature.MyGender && detectedCreature.SpeciesName == SpeciesName && !creature.RejectList.Contains(detectedCreature)){
 							if (CheckPotentialPartner(creature, detectedCreature)){
 								creature.MyState = State.GoingToPotentialPartner;
 								creature.TargetCreature = detectedCreature;
@@ -529,7 +572,7 @@ public class Species : MultiMeshInstance
 			position.y = 2.4f;
 			Genome genome = new Genome();
 			genome.ArtificialCombine(initialValues, geneticVariation);
-			AddCreature(genome, position, Creatures);
+			AddCreature(genome, position, Creatures, false, 0f);
 			Multimesh.SetInstanceTransform(creatureIndex, Creatures[creatureIndex].MySpatial.Transform);
 			Multimesh.SetInstanceColor(creatureIndex, SpeciesColor);
 			AddChild(Creatures[creatureIndex].Collider);
@@ -539,17 +582,36 @@ public class Species : MultiMeshInstance
 		}
 	}
 
-	private void InitializeTraitsFromGenome(Creature creature){
-		creature.Speed = 2 + creature.MyGenome.GetTrait(Genome.GeneticTrait.Speed)/20;
-		creature.Perception = creature.MyGenome.GetTrait(Genome.GeneticTrait.Perception) / 25;
-		creature.MatingCycle = creature.MyGenome.GetTrait(Genome.GeneticTrait.MatingCycle) / 50;
-		creature.HungerResistance = creature.MyGenome.GetTrait(Genome.GeneticTrait.HungerResistance) / 33;
-		creature.ThirstResistance = creature.MyGenome.GetTrait(Genome.GeneticTrait.ThirstResistance) / 33;
-		creature.Gestation = 6 + creature.MyGenome.GetTrait(Genome.GeneticTrait.Gestation) / 5;
-		creature.LitterSize = 1 + Mathf.RoundToInt(creature.MyGenome.GetTrait(Genome.GeneticTrait.LitterSize) / 25);
+	private void InitializeTraitsFromGenome(Creature creature, bool isBaby, float pregnancyTime){
+		float multiplier;
+		creature.MaxSpeed = 2 + creature.MyGenome.GetTrait(Genome.GeneticTrait.Speed)/20;
+		creature.MaxPerception = creature.MyGenome.GetTrait(Genome.GeneticTrait.Perception) / 25;
+		creature.MaxMatingCycle = creature.MyGenome.GetTrait(Genome.GeneticTrait.MatingCycle) / 50;
+		creature.MaxHungerResistance = creature.MyGenome.GetTrait(Genome.GeneticTrait.HungerResistance) / 33;
+		creature.MaxThirstResistance = creature.MyGenome.GetTrait(Genome.GeneticTrait.ThirstResistance) / 33;
+		creature.MaxGestation = 6 + creature.MyGenome.GetTrait(Genome.GeneticTrait.Gestation) / 5;
+		creature.MaxLitterSize = 1 + Mathf.RoundToInt(creature.MyGenome.GetTrait(Genome.GeneticTrait.LitterSize) / 25);
+
 		creature.Longevity = 20 + creature.MyGenome.GetTrait(Genome.GeneticTrait.Longevity) / 1.25f;
-		creature.Intelligence = 1.8f + ((100 - creature.MyGenome.GetTrait(Genome.GeneticTrait.Intelligence))/100);
-		creature.Memory = (int)(3 + creature.MyGenome.GetTrait(Genome.GeneticTrait.Memory)/20);
+
+		creature.MaxIntelligence = 1.8f + ((100 - creature.MyGenome.GetTrait(Genome.GeneticTrait.Intelligence))/100);
+		creature.MaxMemory = (int)(3 + creature.MyGenome.GetTrait(Genome.GeneticTrait.Memory)/20);
+		if (isBaby){
+			multiplier = (pregnancyTime/26) * 0.8f;
+			creature.MySpatial.Scale = new Vector3(multiplier, multiplier, multiplier);
+			creature.Growing = true;
+		}
+		else multiplier = 1;
+
+		creature.Speed = creature.MaxSpeed * multiplier;
+		creature.Perception = creature.MaxPerception * multiplier;
+		creature.MatingCycle = creature.MaxMatingCycle * multiplier;
+		creature.HungerResistance = creature.MaxHungerResistance * multiplier;
+		creature.ThirstResistance = creature.MaxThirstResistance * multiplier;
+		creature.Gestation = creature.MaxGestation * multiplier;
+		creature.LitterSize = (int)((float)creature.MaxLitterSize * multiplier);
+		creature.Intelligence = creature.MaxIntelligence * multiplier;
+		creature.Memory = (int)((float)creature.MaxMemory * multiplier);
 		CalcFitness(creature);
 	}
 
@@ -566,7 +628,7 @@ public class Species : MultiMeshInstance
 		creature.Fitness += creature.MyGenome.GetTrait(Genome.GeneticTrait.Memory);
 	}
 
-	public void AddCreature(Genome genome, Vector3 position, Godot.Collections.Array<Creature> list){
+	public void AddCreature(Genome genome, Vector3 position, Godot.Collections.Array<Creature> list, bool isBaby, float pregnancyTime){
 		Creature creature = new Creature();
 		Spatial creatureSpatial = new Spatial();
 		creatureSpatial.Translation = position;
@@ -586,7 +648,7 @@ public class Species : MultiMeshInstance
 		}
 		rng.Randomize();
 		creature.NextRotationTime = rng.RandfRange(0.5f, 2);
-		InitializeTraitsFromGenome(creature);
+		InitializeTraitsFromGenome(creature, isBaby, pregnancyTime);
 		list.Add(creature);
 	}
 
