@@ -14,10 +14,12 @@ public class Pause : Button
 	private void _on_Pause_pressed()
 	{
 		this.Visible = false;
+		GetTree().Paused = true;
 	}
 	private void _on_Resume_pressed()
 	{
 		this.Visible = true;
+		GetTree().Paused = false;
 	}
 	private void _on_AddNewSpecies_pressed()
 	{
