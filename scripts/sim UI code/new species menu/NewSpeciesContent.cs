@@ -26,6 +26,8 @@ public class NewSpeciesContent : VBoxContainer
 		GetNode<Label>("Intelligence/Label").HintTooltip = "How long it takes for the creature to process its environment.\nA bigger brain with higher intelligence requires a higher energy upkeep.\nLarger number = smaller delay between environment scans.";
 		GetNode<Label>("Memory/Label").Text = "Memory";
 		GetNode<Label>("Memory/Label").HintTooltip = "If male: how many females that rejected him he can remember.\nIf female: how many rejected males she can remember.\nIf predator: how many unsuccessful hunting attapts the predastor can remember.\nA bigger brain with better memory requires a higher energy upkeep.\nLarger number = better memory.";
+		GetNode<Label>("Strength/Label").Text = "Strength";
+		GetNode<Label>("Strength/Label").HintTooltip = "Influences the foodchain since creature would not hunt other creature that are stronger than them.\nRepresents the muscular strength and the mass of the creature.\nBigger muscles and mass require a higher energy upkeep.\nLarger number = higher strength.";
 		GetNode<Label>("GeneticVariation/Label").Text = "Genetic Variation";
 		GetNode<Label>("GeneticVariation/Label").HintTooltip = "The difference of each indvidual's trait value, in the initial population, form the values set by the user.";
 		GetNode<Label>("PopulationSize/Label").Text = "Population Size";
