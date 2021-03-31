@@ -13,6 +13,7 @@ public class PauseMenu : Control
 	}
 	private void _on_BackToMainMenu_pressed()
 	{
+		GetTree().Paused = false;
 		GetTree().ChangeScene("res://assets/MainMenu.tscn");
 	}
 	private void _on_Exit_pressed()
