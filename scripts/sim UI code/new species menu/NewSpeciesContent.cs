@@ -81,6 +81,7 @@ public class NewSpeciesContent : VBoxContainer
 			InitialValues.Add((float)GetNode<HSlider>("Longevity/HSlider").Value);
 			InitialValues.Add((float)GetNode<HSlider>("Intelligence/HSlider").Value);
 			InitialValues.Add((float)GetNode<HSlider>("Memory/HSlider").Value);
+			InitialValues.Add((float)GetNode<HSlider>("Strength/HSlider").Value);
 			float geneticVariation = (float)GetNode<HSlider>("GeneticVariation/HSlider").Value;
 			String speciesName = GetNode<LineEdit>("SpeciesName/LineEdit").Text;
 			int popSize = (int)(GetNode<HSlider>("PopulationSize/HSlider").Value);
