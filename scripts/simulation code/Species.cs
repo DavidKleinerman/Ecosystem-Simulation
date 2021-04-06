@@ -407,7 +407,7 @@ public class Species : MultiMeshInstance
 		PerceptionCollider.Scale = new Vector3(2 + (creature.Perception * 4), 0.2f, 2 + (creature.Perception * 4));
 		foreach(Node n in PerceptionCollider.GetOverlappingAreas()){
 			if (n is CreatureCollider){
-				if (((CreatureCollider)n) != creature.Collider){
+				if (((CreatureCollider)n) != creature.Collider && ((CreatureCollider)n).MyCreatureAlive){
 					Creature detectedCreature = ((CreatureCollider)n).MyCreature;
 					if (scanForReproduction){
 						if (!detectedCreature.Growing && detectedCreature.MyGender != creature.MyGender && detectedCreature.SpeciesName == SpeciesName && !creature.RejectList.Contains(detectedCreature)){
@@ -466,7 +466,7 @@ public class Species : MultiMeshInstance
 			gt.EatersCount--;
 		}
 		DeadArray.Add(index);
-		creature.Collider.QueueFree();
+		GetParent().GetParent().GetNode<MultiMeshMeat>("MultiMeshMeat").AddMeat(creature.MySpatial, creature.Collider);
 		AddDead(cause, creature.MySpatial.Translation);
 
 	}
