@@ -46,10 +46,10 @@ __meta__ = {
 }
 
 [node name="ColorRect" type="ColorRect" parent="."]
-margin_left = -2.98248
-margin_top = -5.98746
-margin_right = 1922.32
-margin_bottom = 1079.01
+margin_left = 3.77777
+margin_top = -5.86911
+margin_right = 1929.08
+margin_bottom = 1079.13
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -86,9 +86,9 @@ __meta__ = {
 }
 
 [node name="BackToMainMenu" type="Button" parent="."]
-margin_left = 776.768
+margin_left = 778.355
 margin_top = 884.94
-margin_right = 1176.76
+margin_right = 1178.35
 margin_bottom = 944.94
 focus_mode = 0
 custom_fonts/font = SubResource( 3 )
@@ -104,10 +104,10 @@ __meta__ = {
 }
 
 [node name="Label2" type="Label" parent="."]
-margin_left = 427.71
-margin_top = 482.886
-margin_right = 627.71
-margin_bottom = 542.886
+margin_left = 586.52
+margin_top = 493.369
+margin_right = 786.52
+margin_bottom = 553.369
 custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "World Size"
@@ -116,10 +116,10 @@ __meta__ = {
 }
 
 [node name="Label7" type="Label" parent="."]
-margin_left = 1354.68
-margin_top = 486.709
-margin_right = 1554.68
-margin_bottom = 546.709
+margin_left = 1158.4
+margin_top = 488.207
+margin_right = 1358.4
+margin_bottom = 548.207
 custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Biome Type"
@@ -128,39 +128,26 @@ __meta__ = {
 }
 
 [node name="Label9" type="Label" parent="."]
-margin_left = 798.069
-margin_top = 629.541
-margin_right = 819.069
-margin_bottom = 740.541
+margin_left = 933.68
+margin_top = 826.905
+margin_right = 995.68
+margin_bottom = 937.905
 custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "3
-"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label10" type="Label" parent="."]
-margin_left = 954.394
-margin_top = 630.231
-margin_right = 975.394
-margin_bottom = 741.231
-custom_fonts/font = SubResource( 4 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "4
+text = "Low
 "
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Label11" type="Label" parent="."]
-margin_left = 1120.23
-margin_top = 631.698
-margin_right = 1141.23
-margin_bottom = 742.698
+margin_left = 925.578
+margin_top = 527.115
+margin_right = 999.578
+margin_bottom = 638.115
 custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "5
+text = "High
 "
 __meta__ = {
 "_edit_use_anchors_": false
@@ -179,10 +166,10 @@ __meta__ = {
 }
 
 [node name="WorldSizePicker" type="ItemList" parent="."]
-margin_left = 453.385
-margin_top = 558.037
-margin_right = 565.385
-margin_bottom = 915.037
+margin_left = 616.315
+margin_top = 555.406
+margin_right = 728.315
+margin_bottom = 912.406
 custom_styles/selected_focus = SubResource( 5 )
 custom_styles/bg_focus = SubResource( 6 )
 custom_styles/selected = SubResource( 7 )
@@ -199,10 +186,10 @@ __meta__ = {
 }
 
 [node name="BiomeType" type="ItemList" parent="."]
-margin_left = 1388.46
-margin_top = 554.679
-margin_right = 1496.46
-margin_bottom = 865.679
+margin_left = 1199.67
+margin_top = 550.184
+margin_right = 1307.67
+margin_bottom = 861.184
 custom_styles/selected_focus = SubResource( 5 )
 custom_styles/bg_focus = SubResource( 6 )
 custom_styles/selected = SubResource( 7 )
@@ -228,17 +215,16 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HSlider" type="HSlider" parent="."]
-margin_left = 801.378
-margin_top = 677.933
-margin_right = 1138.38
-margin_bottom = 698.933
+[node name="VSlider" type="VSlider" parent="."]
+margin_left = 954.0
+margin_top = 581.773
+margin_right = 970.0
+margin_bottom = 842.773
 min_value = 3.0
 max_value = 5.0
-step = 0.1
+step = 0.001
 value = 3.0
-tick_count = 20
-ticks_on_borders = true
+tick_count = 5
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -246,4 +232,4 @@ __meta__ = {
 [connection signal="pressed" from="BackToMainMenu" to="BackToMainMenu" method="_on_BackToMainMenu_pressed"]
 [connection signal="item_selected" from="WorldSizePicker" to="LaunchSim" method="_on_WorldSizePicker_item_selected"]
 [connection signal="item_selected" from="BiomeType" to="LaunchSim" method="_on_BiomeType_item_selected"]
-[connection signal="value_changed" from="HSlider" to="LaunchSim" method="_on_HSlider_value_changed"]
+[connection signal="value_changed" from="VSlider" to="LaunchSim" method="_on_VSlider_value_changed"]

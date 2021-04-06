@@ -49,7 +49,7 @@ public class LaunchSim : Button
 			Global.biomeType= (int)BiomeTypeSet.Tundra;
 		}
 	}
-	private void _on_HSlider_value_changed(float value)
+	private void _on_VSlider_value_changed(float value)
 	{
 		Global.biomeGrowthRate = value;
 		GD.Print(Global.biomeGrowthRate);
@@ -59,9 +59,3 @@ public class LaunchSim : Button
 		GetTree().ChangeScene("res://assets/Simulation.tscn");
 	}
 }
-
-
-
-
-
-
