@@ -11,6 +11,7 @@ public class MultiMeshMeat : MultiMeshInstance
 		public int EatersCount = 0;
 		public CreatureCollider Collider;
 		public int decay = 0;
+		public bool meatGone = false;
 	}
 	private Godot.Collections.Array<Meat> MeatArray = (Godot.Collections.Array<Meat>) new Godot.Collections.Array<Meat>();
 	private Godot.Collections.Array<Meat> MeatToAdd = (Godot.Collections.Array<Meat>) new Godot.Collections.Array<Meat>();
@@ -49,6 +50,7 @@ public class MultiMeshMeat : MultiMeshInstance
 				eatRate *= (MeatArray[i].EatersCount + MeatArray[i].decay) * 0.5f * delta;
 				MeatArray[i].meatSpatial.Scale -= eatRate;
 				if (MeatArray[i].meatSpatial.Scale.x < 0.05f){
+					MeatArray[i].meatGone = true;
 					MeatArray[i].Collider.QueueFree();
 					MeatToRemove.Add(i);
 				}
@@ -59,9 +61,12 @@ public class MultiMeshMeat : MultiMeshInstance
 
 	public void AddMeat(Spatial meatSpatial, CreatureCollider collider){
 		Meat newMeat = (Meat) new Meat();
+		collider.MyMeat = newMeat;
 		collider.MyCreatureAlive = false;
 		newMeat.meatSpatial = meatSpatial;
 		newMeat.Collider = collider;
 		MeatToAdd.Add(newMeat);
+		GD.Print("new meat collider poisition: " + newMeat.Collider.Translation);
+		GD.Print("new meat mesh poisition: " + newMeat.meatSpatial.Translation);
 	}
 }

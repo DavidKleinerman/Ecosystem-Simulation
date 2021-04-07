@@ -65,6 +65,7 @@ public class Species : MultiMeshInstance
 		public State MyState = State.ExploringTheEnvironment;
 		public Vector3 CurrentTarget = new Vector3();
 		public Creature TargetCreature;
+		public MultiMeshMeat.Meat TargetMeat;
 		public float TimeSinceLastScan = 0;
 		//Reject list
 		public Godot.Collections.Array RejectList = (Godot.Collections.Array) new Godot.Collections.Array();
@@ -277,19 +278,34 @@ public class Species : MultiMeshInstance
 				Creatures[i].FrontVector = Creatures[i].FrontVector.Rotated(Vector3.Up, Mathf.Deg2Rad(Creatures[i].RotationRate * Creatures[i].RotationDirection * delta));
 			}
 			else if (Creatures[i].MyState == State.Eating){
-				gridIndex = TileGrid.WorldToMap(new Vector3(Creatures[i].CurrentTarget.x, 1, Creatures[i].CurrentTarget.z));
-				gt = TileGrid.GetGroundTiles()[gridIndex];
-				if (gt.hasPlant){
-					Creatures[i].Energy += 25 * delta;
-				}
-				else {
-					gt.EatersCount--;
-					SetState(Creatures[i], State.ExploringTheEnvironment);
-				}
-				if (Creatures[i].Energy > 100){ 
-					Creatures[i].Energy = 100;
-					gt.EatersCount--;
-					SetState(Creatures[i], State.ExploringTheEnvironment);
+				if (SpeciesDiet == Diet.Herbivore){
+					gridIndex = TileGrid.WorldToMap(new Vector3(Creatures[i].CurrentTarget.x, 1, Creatures[i].CurrentTarget.z));
+					gt = TileGrid.GetGroundTiles()[gridIndex];
+					if (gt.hasPlant){
+						Creatures[i].Energy += 25 * delta;
+					}
+					else {
+						gt.EatersCount--;
+						SetState(Creatures[i], State.ExploringTheEnvironment);
+					}
+					if (Creatures[i].Energy > 100){ 
+						Creatures[i].Energy = 100;
+						gt.EatersCount--;
+						SetState(Creatures[i], State.ExploringTheEnvironment);
+					}
+				} else {
+					if (!Creatures[i].TargetMeat.meatGone){
+						Creatures[i].Energy += 25 * delta;
+					}
+					else {
+						Creatures[i].TargetMeat = null;
+						SetState(Creatures[i], State.ExploringTheEnvironment);
+					}
+					if (Creatures[i].Energy > 100){ 
+						Creatures[i].Energy = 100;
+						Creatures[i].TargetMeat.EatersCount--;
+						SetState(Creatures[i], State.ExploringTheEnvironment);
+					}
 				}
 				
 			} else if (Creatures[i].MyState == State.Drinking){
@@ -427,7 +443,9 @@ public class Species : MultiMeshInstance
 				}
 				else if (!((CreatureCollider)n).MyCreatureAlive){
 					if (scanForFood && SpeciesDiet == Diet.Carnivore){
-						GD.Print("found meat!");
+						creature.MyState = State.GoingToFood;
+						creature.TargetMeat = ((CreatureCollider)n).MyMeat;
+						creature.CurrentTarget = creature.TargetMeat.meatSpatial.Translation;
 					}
 				}
 			} 
@@ -442,7 +460,7 @@ public class Species : MultiMeshInstance
 			creature.MyState = State.GoingToWater;
 			creature.CurrentTarget = TileGrid.MapToWorld(x, 0, z);
 		} 
-		else if (scanForFood && cellType <= 3 && cellType >= 0){
+		else if (scanForFood && SpeciesDiet == Diet.Herbivore && cellType <= 3 && cellType >= 0){
 			gt = TileGrid.GetGroundTiles()[new Vector3(x, 0, z)];
 			if (gt.hasPlant){
 				creature.MyState = State.GoingToFood;
@@ -463,7 +481,7 @@ public class Species : MultiMeshInstance
 		return false;
 	}
 
-	private void Die(Creature creature,int index, CauseOfDeath cause){
+	private void Die(Creature creature, int index, CauseOfDeath cause){
 		if(creature.MyState == State.GoingToPotentialPartner || creature.MyState == State.Reproducing){
 			try {
 				SetState(creature.TargetCreature, State.ExploringTheEnvironment);
@@ -472,9 +490,13 @@ public class Species : MultiMeshInstance
 				GD.Print("handeled: \n", e);
 			}
 		} else if (creature.MyState == State.Eating){
+			if (SpeciesDiet == Diet.Herbivore){
 			Vector3 gridIndex = TileGrid.WorldToMap(new Vector3(creature.CurrentTarget.x, 1, creature.CurrentTarget.z));
 			BiomeGrid.GroundTile gt = TileGrid.GetGroundTiles()[gridIndex];
 			gt.EatersCount--;
+			} else {
+				creature.TargetMeat.EatersCount--;
+			}
 		}
 		DeadArray.Add(index);
 		GetParent().GetParent().GetNode<MultiMeshMeat>("MultiMeshMeat").AddMeat(creature.MySpatial, creature.Collider);
@@ -486,16 +508,28 @@ public class Species : MultiMeshInstance
 		creature.GoingToTime += delta;
 		if (creature.GoingToTime < MaxGoingToTime){
 			if (creature.MyState == State.GoingToFood){
-				Vector3 gridIndex = TileGrid.WorldToMap(new Vector3(creature.CurrentTarget.x, 1, creature.CurrentTarget.z));
-				BiomeGrid.GroundTile gt = TileGrid.GetGroundTiles()[gridIndex];
-				if (!gt.hasPlant){
-					SetState(creature, State.ExploringTheEnvironment);
-					creature.GoingToTime = 0;
+				if (SpeciesDiet == Diet.Herbivore){
+					Vector3 gridIndex = TileGrid.WorldToMap(new Vector3(creature.CurrentTarget.x, 1, creature.CurrentTarget.z));
+					BiomeGrid.GroundTile gt = TileGrid.GetGroundTiles()[gridIndex];
+					if (!gt.hasPlant){
+						SetState(creature, State.ExploringTheEnvironment);
+						creature.GoingToTime = 0;
+					}
+					else if (creature.MySpatial.Translation.DistanceTo(creature.CurrentTarget) <= 1.8f){
+						StopGoingTo(creature, State.Eating);
+						gt.EatersCount++;
+					} else RotateToTarget(creature, creature.CurrentTarget);
+				} else {
+					if (creature.TargetMeat.meatGone){
+						SetState(creature, State.ExploringTheEnvironment);
+						creature.TargetMeat = null;
+						creature.GoingToTime = 0;
+					}
+					else if (creature.MySpatial.Translation.DistanceTo(creature.TargetMeat.meatSpatial.Translation) <= 1.8f){
+						StopGoingTo(creature, State.Eating);
+						creature.TargetMeat.EatersCount++;
+					} else RotateToTarget(creature, creature.TargetMeat.meatSpatial.Translation);
 				}
-				else if (creature.MySpatial.Translation.DistanceTo(creature.CurrentTarget) <= 1.8f){
-					StopGoingTo(creature, State.Eating);
-					gt.EatersCount++;
-				} else RotateToTarget(creature, creature.CurrentTarget);
 			}
 			else if (creature.MyState == State.GoingToWater){
 				RotateToTarget(creature, creature.CurrentTarget);
