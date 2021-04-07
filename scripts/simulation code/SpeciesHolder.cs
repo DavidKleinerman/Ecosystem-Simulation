@@ -14,10 +14,11 @@ public class SpeciesHolder : Spatial
 	public override void _Ready(){
 		GlobalTime = GetNode<Timer>("GlobalTimeTicks");
 	}
-	public void AddSpecies(String speciesName, int popSize, Color color, Godot.Collections.Array initialValues, float geneticVariation){
+	public void AddSpecies(String speciesName, int popSize, Color color, Godot.Collections.Array initialValues, float geneticVariation, int diet){
+		GD.Print("called add species in holder");
 		Node newSpeciesInst = Species.Instance();
 		AddChild(newSpeciesInst);
-		((Species)newSpeciesInst).InitSpecies(speciesName, GlobalTimeArray);
+		((Species)newSpeciesInst).InitSpecies(speciesName, GlobalTimeArray, diet);
 		((Species)newSpeciesInst).AddNewCreatures(popSize, color, initialValues, geneticVariation);
 		GetParent().GetNode<ItemList2>("DisplayChartsMenu/ItemList2").AddNewSpecies(speciesName);
 	}

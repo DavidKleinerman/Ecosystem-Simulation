@@ -10,6 +10,8 @@ public class Species : MultiMeshInstance
 	private BiomeGrid TileGrid;
 	private PackedScene Collider = (PackedScene)GD.Load("res://assets/CreatureCollider.tscn");
 	private Area PerceptionCollider;
+	private Diet SpeciesDiet;
+	
 
 	//consts
 	private const float BaseEnergyDecay = 3.5f;
@@ -18,6 +20,10 @@ public class Species : MultiMeshInstance
 	private const float MaxGoingToTime = 4;
 	private const int TimeToBirth = 3;
 	//enums
+	public enum Diet {
+		Herbivore,
+		Carnivore
+	}
 	public enum State{
 		ExploringTheEnvironment,
 		GoingToWater,
@@ -420,7 +426,7 @@ public class Species : MultiMeshInstance
 					}
 				}
 				else if (!((CreatureCollider)n).MyCreatureAlive){
-					if (scanForFood){
+					if (scanForFood && SpeciesDiet == Diet.Carnivore){
 						GD.Print("found meat!");
 					}
 				}
@@ -563,9 +569,10 @@ public class Species : MultiMeshInstance
 	}
 
 	
-	public void InitSpecies (String speciesName, Godot.Collections.Array initArray){
+	public void InitSpecies (String speciesName, Godot.Collections.Array initArray, int diet){
 		this.SpeciesName = speciesName;
 		SpeciesDataCollector = (DataCollector) new DataCollector(initArray);
+		SpeciesDiet = (Diet)diet;
 	}
 
 	public void AddNewCreatures(int popSize, Color color, Godot.Collections.Array initialValues, float geneticVariation){
