@@ -419,6 +419,11 @@ public class Species : MultiMeshInstance
 						}
 					}
 				}
+				else if (!((CreatureCollider)n).MyCreatureAlive){
+					if (scanForFood){
+						GD.Print("found meat!");
+					}
+				}
 			} 
 		}
 		creature.TimeSinceLastScan = 0;
