@@ -69,7 +69,7 @@ public class Species : MultiMeshInstance
 		public Vector3 CurrentTarget = new Vector3();
 		public Creature TargetCreature;
 		public MultiMeshMeat.Meat TargetMeat;
-		public CreatureCollider TargetCollider;
+		public Diet CreatureDiet;
 		public float TimeSinceLastScan = 0;
 		public bool HuntedDown = false;
 		//Reject list
@@ -202,7 +202,7 @@ public class Species : MultiMeshInstance
 		for (int i = 0; i < Creatures.Count; i++){
 			// scan environment within perception radius
 			Creatures[i].TimeSinceLastScan += delta;
-			if (Creatures[i].TimeSinceLastScan > Creatures[i].Intelligence && Creatures[i].MyState == State.ExploringTheEnvironment){
+			if (Creatures[i].TimeSinceLastScan > 1.8f + ((100 - Creatures[i].Intelligence)/100) && Creatures[i].MyState == State.ExploringTheEnvironment){
 				ScanEnvironment(Creatures[i]);
 			}
 			Creatures[i].Age += delta;
@@ -455,7 +455,11 @@ public class Species : MultiMeshInstance
 			if (n is CreatureCollider){
 				if (((CreatureCollider)n) != creature.Collider && ((CreatureCollider)n).MyCreatureAlive){
 					Creature detectedCreature = ((CreatureCollider)n).MyCreature;
-					if (scanForReproduction){
+					if (detectedCreature.SpeciesName != SpeciesName && detectedCreature.CreatureDiet == Diet.CarnivorePredator && detectedCreature.Strength > creature.Strength && creature.MySpatial.Translation.DistanceTo(detectedCreature.MySpatial.Translation) < 5f){
+						GD.Print("detected a predator!");
+						break;
+					}
+					else if (scanForReproduction){
 						if (!detectedCreature.Growing && detectedCreature.MyGender != creature.MyGender && !detectedCreature.Pregnant && detectedCreature.SpeciesName == SpeciesName && !creature.RejectList.Contains(detectedCreature)){
 							if (CheckPotentialPartner(creature, detectedCreature)){
 								creature.MyState = State.GoingToPotentialPartner;
@@ -682,7 +686,7 @@ public class Species : MultiMeshInstance
 
 		creature.Longevity = 20 + creature.MyGenome.GetTrait(Genome.GeneticTrait.Longevity) / 1.25f;
 
-		creature.MaxIntelligence = 1.8f + ((100 - creature.MyGenome.GetTrait(Genome.GeneticTrait.Intelligence))/100);
+		creature.MaxIntelligence = creature.MyGenome.GetTrait(Genome.GeneticTrait.Intelligence);
 		creature.MaxMemory = (int)(3 + creature.MyGenome.GetTrait(Genome.GeneticTrait.Memory)/20);
 		creature.MaxStrength = creature.MyGenome.GetTrait(Genome.GeneticTrait.Strength);
 		if (isBaby){
@@ -726,6 +730,7 @@ public class Species : MultiMeshInstance
 		creature.SpeciesName = SpeciesName;
 		creature.MyGenome = genome;
 		creature.FrontVector = Vector3.Forward;
+		creature.CreatureDiet = SpeciesDiet;
 		creature.Collider = (CreatureCollider)(Collider.Instance());
 		creature.Collider.Translation = creature.MySpatial.Translation;
 		creature.Collider.MyCreature = creature;
