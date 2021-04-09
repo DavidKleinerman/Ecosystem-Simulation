@@ -379,7 +379,7 @@ public class Species : MultiMeshInstance
 							SetState(Creatures[i].TargetCreature, State.ExploringTheEnvironment);
 					}
 				}
-				Creatures[i].MySpatial.Translation = new Vector3(Creatures[i].MySpatial.Translation.x + Creatures[i].Velocity.x, 2.4f, Creatures[i].MySpatial.Translation.z + Creatures[i].Velocity.z);
+				Creatures[i].MySpatial.Translation = new Vector3(Creatures[i].MySpatial.Translation.x + Creatures[i].Velocity.x, 2.2f, Creatures[i].MySpatial.Translation.z + Creatures[i].Velocity.z);
 				Multimesh.SetInstanceTransform(i, Creatures[i].MySpatial.Transform);
 				Multimesh.SetInstanceColor(i, SpeciesColor);
 				Creatures[i].Collider.Translation = Creatures[i].MySpatial.Translation;
@@ -424,7 +424,7 @@ public class Species : MultiMeshInstance
 		int scanMethod = rng.RandiRange(0,1);
 		bool scanForWater = Weight() < creature.Thirst * 1.3f;
 		bool scanForFood = Weight() < (100 - creature.Energy) * 1.3f;
-		bool scanForReproduction = Weight() < creature.ReproductiveUrge && !creature.Growing;
+		bool scanForReproduction = !creature.Pregnant && !creature.Growing && Weight() < creature.ReproductiveUrge;
 		if (scanForFood || scanForWater){
 			switch(scanMethod){
 				case 0:
@@ -450,13 +450,13 @@ public class Species : MultiMeshInstance
 		}
 
 		PerceptionCollider.Translation = creature.MySpatial.Translation;
-		PerceptionCollider.Scale = new Vector3(2 + (creature.Perception * 4), 0.2f, 2 + (creature.Perception * 4));
+		PerceptionCollider.Scale = new Vector3(3 + (creature.Perception * 2), 0.2f, 3 + (creature.Perception * 2));
 		foreach(Node n in PerceptionCollider.GetOverlappingAreas()){
 			if (n is CreatureCollider){
 				if (((CreatureCollider)n) != creature.Collider && ((CreatureCollider)n).MyCreatureAlive){
 					Creature detectedCreature = ((CreatureCollider)n).MyCreature;
 					if (scanForReproduction){
-						if (!detectedCreature.Growing && detectedCreature.MyGender != creature.MyGender && detectedCreature.SpeciesName == SpeciesName && !creature.RejectList.Contains(detectedCreature)){
+						if (!detectedCreature.Growing && detectedCreature.MyGender != creature.MyGender && !detectedCreature.Pregnant && detectedCreature.SpeciesName == SpeciesName && !creature.RejectList.Contains(detectedCreature)){
 							if (CheckPotentialPartner(creature, detectedCreature)){
 								creature.MyState = State.GoingToPotentialPartner;
 								creature.TargetCreature = detectedCreature;
@@ -657,7 +657,7 @@ public class Species : MultiMeshInstance
 		SpeciesColor = color;
 		foreach (BiomeGrid.GroundTile gt in ReshuffledGroundTiles()){
 			Vector3 position = TileGrid.MapToWorld((int)gt.gridIndex.x, (int)gt.gridIndex.y, (int)gt.gridIndex.z);
-			position.y = 2.4f;
+			position.y = 2.2f;
 			Genome genome = new Genome();
 			genome.ArtificialCombine(initialValues, geneticVariation);
 			AddCreature(genome, position, Creatures, false, 0f);
