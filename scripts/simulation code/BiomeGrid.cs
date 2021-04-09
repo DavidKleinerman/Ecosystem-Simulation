@@ -124,7 +124,7 @@ public class BiomeGrid : GridMap
 				if (GroundTiles[key].isPlantGrowing){
 					Vector3 currentScale = GroundTiles[key].plantSpatial.Scale;
 					Vector3 currentTranslation = GroundTiles[key].plantSpatial.Translation;
-					if(currentScale.x < 1 && GroundTiles[key].plantGrowthTime < 2.5){
+					if(currentScale.x < 1 && GroundTiles[key].plantGrowthTime < 2.5f){
 						GroundTiles[key].plantGrowthTime += delta;
 						currentScale.x += 0.5f * delta;
 						currentScale.y += 0.5f * delta;
@@ -150,6 +150,8 @@ public class BiomeGrid : GridMap
 						GroundTiles[key].plantSpatial.Scale = (Vector3) new Vector3(0.05f, 0.05f, 0.05f);
 						GroundTiles[key].plantSpatial.Translation = oldTranslation;
 						GroundTiles[key].hasPlant = false;
+						GroundTiles[key].plantGrowthTime = 0;
+						GroundTiles[key].isPlantGrowing = false;
 					}
 					MultiMeshPlants.Multimesh.SetInstanceTransform(i, GroundTiles[key].plantSpatial.Transform);
 				}
