@@ -151,12 +151,12 @@ public class SettingsMenu : Control
 		File f = new File();
 		f.Open(path,File.ModeFlags.Write);
 		//f.SeekEnd();
-		f.StoreLine(this.enableShadows.ToString());
-		f.StoreLine(this.Aliasing.ToString());
-		f.StoreLine(this.Multiplier.ToString());
-		f.StoreLine(this.flag.ToString());
-		f.StoreLine(this.Resolution.ToString());
-		f.StoreLine(this.enableVSync.ToString());
+		f.StoreLine(Global.enableShadows.ToString());
+		f.StoreLine(Global.antiAliasing.ToString());
+		f.StoreLine(Global.Multiplier.ToString());
+		f.StoreLine(Global.borderlessWindow.ToString());
+		f.StoreLine(Global.Resolution.ToString());
+		f.StoreLine(Global.enableVSync.ToString());
 		f.Close();
 	}
 	
