@@ -46,9 +46,9 @@ __meta__ = {
 }
 
 [node name="ColorRect" type="ColorRect" parent="."]
-margin_left = 3.77777
+margin_left = -0.464784
 margin_top = -5.86911
-margin_right = 1929.08
+margin_right = 1924.84
 margin_bottom = 1079.13
 __meta__ = {
 "_edit_use_anchors_": false
@@ -105,7 +105,7 @@ __meta__ = {
 
 [node name="Label2" type="Label" parent="."]
 margin_left = 586.52
-margin_top = 493.369
+margin_top = 470.0
 margin_right = 786.52
 margin_bottom = 553.369
 custom_fonts/font = SubResource( 4 )
@@ -116,9 +116,9 @@ __meta__ = {
 }
 
 [node name="Label7" type="Label" parent="."]
-margin_left = 1158.4
-margin_top = 488.207
-margin_right = 1358.4
+margin_left = 1156.99
+margin_top = 470.0
+margin_right = 1356.99
 margin_bottom = 548.207
 custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
@@ -128,8 +128,8 @@ __meta__ = {
 }
 
 [node name="Label9" type="Label" parent="."]
-margin_left = 933.68
-margin_top = 826.905
+margin_left = 930.0
+margin_top = 815.0
 margin_right = 995.68
 margin_bottom = 937.905
 custom_fonts/font = SubResource( 4 )
@@ -141,9 +141,9 @@ __meta__ = {
 }
 
 [node name="Label11" type="Label" parent="."]
-margin_left = 925.578
-margin_top = 527.115
-margin_right = 999.578
+margin_left = 925.0
+margin_top = 515.0
+margin_right = 998.164
 margin_bottom = 638.115
 custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
@@ -155,7 +155,7 @@ __meta__ = {
 
 [node name="Label8" type="Label" parent="."]
 margin_left = 861.41
-margin_top = 486.212
+margin_top = 470.0
 margin_right = 1072.41
 margin_bottom = 546.212
 custom_fonts/font = SubResource( 4 )
@@ -167,7 +167,7 @@ __meta__ = {
 
 [node name="WorldSizePicker" type="ItemList" parent="."]
 margin_left = 616.315
-margin_top = 555.406
+margin_top = 550.0
 margin_right = 728.315
 margin_bottom = 912.406
 custom_styles/selected_focus = SubResource( 5 )
@@ -187,7 +187,7 @@ __meta__ = {
 
 [node name="BiomeType" type="ItemList" parent="."]
 margin_left = 1199.67
-margin_top = 550.184
+margin_top = 550.0
 margin_right = 1307.67
 margin_bottom = 861.184
 custom_styles/selected_focus = SubResource( 5 )
@@ -217,14 +217,14 @@ __meta__ = {
 
 [node name="VSlider" type="VSlider" parent="."]
 margin_left = 954.0
-margin_top = 581.773
+margin_top = 569.0
 margin_right = 970.0
-margin_bottom = 842.773
+margin_bottom = 825.0
 min_value = 3.0
 max_value = 5.0
-step = 0.001
+step = 0.1
 value = 3.0
-tick_count = 5
+tick_count = 20
 __meta__ = {
 "_edit_use_anchors_": false
 }
