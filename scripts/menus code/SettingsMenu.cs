@@ -3,21 +3,24 @@ using System;
 
 public class SettingsMenu : Control
 {
-	public bool enableVSync;
+	public bool enableVSync=false;
 	public int Multiplier=1;
 	public bool flag = false;
 	Vector2 Resolution = (Vector2) new Vector2(1920,1080);
 	//public MSAA DispFix;
 	public int Aliasing = 0;
-	public bool enableShadows;
+	public bool enableShadows=false;
+	string path = "res://scripts/menus code/SettingsData/SettingsMenu";
 	
 	public override void _Ready()
 	{
 		//screenBorder = GetParent().GetNode<Global>("Global");
 		this.Visible = true;
+		GetNode<Godot.ItemList>("ShadowQuality").Select(1);
 	}
 	
 	private void _on_ItemList_item_selected(int index){
+		
 		GD.Print(index, "\n");
 		if(index == 1){
 			this.flag=true;
@@ -65,8 +68,10 @@ public class SettingsMenu : Control
 	{
 		if(this.flag == false){
 			OS.SetBorderlessWindow(false);
+			Global.borderlessWindow = this.flag;
 		}
 		else if(this.flag == true){
+			Global.borderlessWindow = this.flag;
 			OS.SetBorderlessWindow(true);
 			OS.SetWindowSize(OS.GetScreenSize());
 		}
@@ -77,16 +82,23 @@ public class SettingsMenu : Control
 		//OS.Alert("This is your message", "Message Title");
 		if(this.Aliasing == 0){
 			GetViewport().SetMsaa(0);
+			Global.antiAliasing = this.Aliasing;
 		}
 		else if(this.Aliasing == 2){
 			GetViewport().SetMsaa(Viewport.MSAA.Msaa2x);
+			Global.antiAliasing = this.Aliasing;
 		}
 		else if(this.Aliasing == 4){
 			GetViewport().SetMsaa(Viewport.MSAA.Msaa4x);
+			Global.antiAliasing = this.Aliasing;
 		}
 		Global.enableShadows = this.enableShadows;
+		writeFile(path);
+		
+		
 		
 	}
+	
 	
 	private void _on_ItemList3_item_selected(int index)
 	{
@@ -121,4 +133,25 @@ public class SettingsMenu : Control
 			this.enableShadows = false;
 		}
 	}
+	/*private void readFile()
+	{
+		File f = new File();
+		f.Open(path,File.ModeFlags.Read);
+
+		
+	}*/
+	private void writeFile(string path)
+	{
+		File f = new File();
+		f.Open(path,File.ModeFlags.Write);
+		//f.SeekEnd();
+		f.StoreLine(this.enableShadows.ToString());
+		f.StoreLine(this.Aliasing.ToString());
+		f.StoreLine(this.Multiplier.ToString());
+		f.StoreLine(this.flag.ToString());
+		f.StoreLine(this.Resolution.ToString());
+		f.StoreLine(this.enableVSync.ToString());
+		f.Close();
+	}
+	
 }
