@@ -75,7 +75,10 @@ public class Species : MultiMeshInstance
 		//Reject list
 		public Godot.Collections.Array RejectList = (Godot.Collections.Array) new Godot.Collections.Array();
 		public int TopOfRejectList = 0;
-		//public int RejectListMaxSize = 5;
+		//Predators Around Me list
+		public Godot.Collections.Array PredatorsAroundMe = (Godot.Collections.Array) new Godot.Collections.Array();
+		//Failed Hunts list
+		// to do
 
 		//*****Traits*****
 		public float Speed;
@@ -202,8 +205,16 @@ public class Species : MultiMeshInstance
 		for (int i = 0; i < Creatures.Count; i++){
 			// scan environment within perception radius
 			Creatures[i].TimeSinceLastScan += delta;
-			if (Creatures[i].TimeSinceLastScan > 1.8f + ((100 - Creatures[i].Intelligence)/100) && Creatures[i].MyState == State.ExploringTheEnvironment){
-				ScanEnvironment(Creatures[i]);
+			if (Creatures[i].TimeSinceLastScan > 1.8f + ((100 - Creatures[i].Intelligence)/100)){
+				bool foundPredator = false;
+				if (Creatures[i].MyState != State.GivingBirth){
+					PerceptionCollider.Translation = Creatures[i].MySpatial.Translation;
+					PerceptionCollider.Scale = new Vector3(3 + (Creatures[i].Perception * 2), 0.2f, 3 + (Creatures[i].Perception * 2));
+					foundPredator = ScanForPredators(Creatures[i]);
+				}
+				if (!foundPredator && Creatures[i].MyState == State.ExploringTheEnvironment){
+					ScanEnvironment(Creatures[i]);
+				}
 			}
 			Creatures[i].Age += delta;
 			Creatures[i].CurrentRotationTime += delta;
@@ -413,9 +424,34 @@ public class Species : MultiMeshInstance
 	}
 
 	private void StartBirthingProcess(Creature mother){
+		UnbindFood(mother);
 		mother.Pregnant = false;
 		SetState(mother, State.GivingBirth);
 		mother.Velocity = new Vector3();
+	}
+
+	private bool ScanForPredators(Creature creature){
+		bool foundPredator = false;
+		creature.PredatorsAroundMe.Clear();
+		foreach(Node n in PerceptionCollider.GetOverlappingAreas()){
+			if (n is CreatureCollider){
+				if (((CreatureCollider)n) != creature.Collider && ((CreatureCollider)n).MyCreatureAlive){
+					Creature detectedCreature = ((CreatureCollider)n).MyCreature;
+					if (detectedCreature.SpeciesName != SpeciesName && detectedCreature.CreatureDiet == Diet.CarnivorePredator && detectedCreature.Strength > creature.Strength && creature.MySpatial.Translation.DistanceTo(detectedCreature.MySpatial.Translation) < 5f){
+						foundPredator = true;
+						creature.PredatorsAroundMe.Add(detectedCreature);
+						break;
+					}
+				}
+			} 
+		}
+		if (foundPredator) {
+			UnbindTargets(creature);
+			SetState(creature, State.RunningFromPredators);
+		} else if (creature.MyState == State.RunningFromPredators){
+			SetState(creature, State.ExploringTheEnvironment);
+		}
+		return foundPredator;
 	}
 
 	private void ScanEnvironment(Creature creature){
@@ -449,17 +485,11 @@ public class Species : MultiMeshInstance
 			}
 		}
 
-		PerceptionCollider.Translation = creature.MySpatial.Translation;
-		PerceptionCollider.Scale = new Vector3(3 + (creature.Perception * 2), 0.2f, 3 + (creature.Perception * 2));
 		foreach(Node n in PerceptionCollider.GetOverlappingAreas()){
 			if (n is CreatureCollider){
 				if (((CreatureCollider)n) != creature.Collider && ((CreatureCollider)n).MyCreatureAlive){
 					Creature detectedCreature = ((CreatureCollider)n).MyCreature;
-					if (detectedCreature.SpeciesName != SpeciesName && detectedCreature.CreatureDiet == Diet.CarnivorePredator && detectedCreature.Strength > creature.Strength && creature.MySpatial.Translation.DistanceTo(detectedCreature.MySpatial.Translation) < 5f){
-						GD.Print("detected a predator!");
-						break;
-					}
-					else if (scanForReproduction){
+					if (scanForReproduction){
 						if (!detectedCreature.Growing && detectedCreature.MyGender != creature.MyGender && !detectedCreature.Pregnant && detectedCreature.SpeciesName == SpeciesName && !creature.RejectList.Contains(detectedCreature)){
 							if (CheckPotentialPartner(creature, detectedCreature)){
 								creature.MyState = State.GoingToPotentialPartner;
@@ -517,7 +547,7 @@ public class Species : MultiMeshInstance
 		return false;
 	}
 
-	private void Die(Creature creature, int index, CauseOfDeath cause){
+	private void UnbindTargets(Creature creature){
 		if(creature.MyState == State.GoingToPotentialPartner || creature.MyState == State.Reproducing){
 			try {
 				SetState(creature.TargetCreature, State.ExploringTheEnvironment);
@@ -525,17 +555,26 @@ public class Species : MultiMeshInstance
 			catch (Exception e) {
 				GD.Print("handeled: \n", e);
 			}
-		} else if (creature.MyState == State.Eating){
+		}
+		UnbindFood(creature);
+	}
+
+	private void UnbindFood(Creature creature){
+		if (creature.MyState == State.Eating){
 			if (SpeciesDiet == Diet.Herbivore){
-			Vector3 gridIndex = TileGrid.WorldToMap(new Vector3(creature.CurrentTarget.x, 1, creature.CurrentTarget.z));
-			BiomeGrid.GroundTile gt = TileGrid.GetGroundTiles()[gridIndex];
-			gt.EatersCount--;
+				Vector3 gridIndex = TileGrid.WorldToMap(new Vector3(creature.CurrentTarget.x, 1, creature.CurrentTarget.z));
+				BiomeGrid.GroundTile gt = TileGrid.GetGroundTiles()[gridIndex];
+				gt.EatersCount--;
 			} else if (SpeciesDiet == Diet.CarnivoreScavenger) {
 				creature.TargetMeat.EatersCount--;
 			} else if (SpeciesDiet == Diet.CarnivorePredator && creature.TargetMeat != null){
 				creature.TargetMeat.EatersCount--;
 			}
 		}
+	}
+
+	private void Die(Creature creature, int index, CauseOfDeath cause){
+		UnbindTargets(creature);
 		DeadArray.Add(index);
 		GetParent().GetParent().GetNode<MultiMeshMeat>("MultiMeshMeat").AddMeat(creature.MySpatial, creature.Collider);
 		AddDead(cause, creature.MySpatial.Translation);
