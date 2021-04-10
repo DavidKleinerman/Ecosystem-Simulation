@@ -215,6 +215,7 @@ public class Species : MultiMeshInstance
 				if (!foundPredator && Creatures[i].MyState == State.ExploringTheEnvironment){
 					ScanEnvironment(Creatures[i]);
 				}
+				Creatures[i].TimeSinceLastScan = 0;
 			}
 			Creatures[i].Age += delta;
 			Creatures[i].CurrentRotationTime += delta;
@@ -371,7 +372,7 @@ public class Species : MultiMeshInstance
 					Creatures[i].Velocity = Creatures[i].FrontVector;
 				// if (Creatures[i].MyState == State.Eating || Creatures[i].MyState == State.Drinking)
 				// 	Creatures[i].Velocity = new Vector3();
-				if (Creatures[i].MyState == State.GoingToWater || Creatures[i].MyState == State.GoingToFood || Creatures[i].MyState == State.GoingToPotentialPartner || Creatures[i].MyState == State.Hunting)
+				if (Creatures[i].MyState == State.GoingToWater || Creatures[i].MyState == State.GoingToFood || Creatures[i].MyState == State.GoingToPotentialPartner || Creatures[i].MyState == State.Hunting || Creatures[i].MyState == State.RunningFromPredators)
 					GoToTarget(Creatures[i], delta);
 				Creatures[i].Velocity *= Creatures[i].Speed * delta;
 				// Creatures[i].MySpatial.Translation = new Vector3(Creatures[i].MySpatial.Translation.x + Creatures[i].Velocity.x, 2.4f, Creatures[i].MySpatial.Translation.z + Creatures[i].Velocity.z);
@@ -386,8 +387,11 @@ public class Species : MultiMeshInstance
 						Creatures[i].MySpatial.RotateY(Mathf.Deg2Rad(180));
 						Creatures[i].FrontVector = Creatures[i].FrontVector.Rotated(Vector3.Up, Mathf.Deg2Rad(180));
 						SetState(Creatures[i], State.ExploringTheEnvironment);
-						if (Creatures[i].MyState == State.GoingToPotentialPartner)
+						Creatures[i].GoingToTime = 0;
+						if (Creatures[i].MyState == State.GoingToPotentialPartner){
 							SetState(Creatures[i].TargetCreature, State.ExploringTheEnvironment);
+							Creatures[i].TargetCreature.GoingToTime = 0;
+						}
 					}
 				}
 				Creatures[i].MySpatial.Translation = new Vector3(Creatures[i].MySpatial.Translation.x + Creatures[i].Velocity.x, 2.2f, Creatures[i].MySpatial.Translation.z + Creatures[i].Velocity.z);
@@ -437,7 +441,7 @@ public class Species : MultiMeshInstance
 			if (n is CreatureCollider){
 				if (((CreatureCollider)n) != creature.Collider && ((CreatureCollider)n).MyCreatureAlive){
 					Creature detectedCreature = ((CreatureCollider)n).MyCreature;
-					if (detectedCreature.SpeciesName != SpeciesName && detectedCreature.CreatureDiet == Diet.CarnivorePredator && detectedCreature.Strength > creature.Strength && creature.MySpatial.Translation.DistanceTo(detectedCreature.MySpatial.Translation) < 5f){
+					if (detectedCreature.SpeciesName != SpeciesName && detectedCreature.CreatureDiet == Diet.CarnivorePredator && detectedCreature.Strength > creature.Strength && creature.MySpatial.Translation.DistanceTo(detectedCreature.MySpatial.Translation) < 20f){
 						foundPredator = true;
 						creature.PredatorsAroundMe.Add(detectedCreature);
 						break;
@@ -516,7 +520,6 @@ public class Species : MultiMeshInstance
 				}
 			} 
 		}
-		creature.TimeSinceLastScan = 0;
 	}
 
 	private void CheckTile(Creature creature, int x, int z, bool scanForFood, bool scanForWater){
@@ -550,6 +553,7 @@ public class Species : MultiMeshInstance
 	private void UnbindTargets(Creature creature){
 		if(creature.MyState == State.GoingToPotentialPartner || creature.MyState == State.Reproducing){
 			try {
+				creature.TargetCreature.GoingToTime = 0;
 				SetState(creature.TargetCreature, State.ExploringTheEnvironment);
 			}
 			catch (Exception e) {
@@ -583,7 +587,7 @@ public class Species : MultiMeshInstance
 
 	private void GoToTarget(Creature creature, float delta){
 		creature.GoingToTime += delta;
-		if (creature.GoingToTime < MaxGoingToTime){
+		if (creature.GoingToTime < MaxGoingToTime || creature.MyState == State.Hunting){
 			if (creature.MyState == State.GoingToFood){
 				if (SpeciesDiet == Diet.Herbivore){
 					Vector3 gridIndex = TileGrid.WorldToMap(new Vector3(creature.CurrentTarget.x, 1, creature.CurrentTarget.z));
@@ -633,12 +637,30 @@ public class Species : MultiMeshInstance
 					StopGoingTo(creature, State.ExploringTheEnvironment);
 				}
 			} else if (creature.MyState == State.Hunting){
-				if(creature.MySpatial.Translation.DistanceTo(creature.TargetCreature.MySpatial.Translation) <= 1.8f){
+				if (creature.GoingToTime > 8){ //failed hunting attempt
+					StopGoingTo(creature, State.ExploringTheEnvironment);
+				}
+				else if(creature.MySpatial.Translation.DistanceTo(creature.TargetCreature.MySpatial.Translation) <= 1.8f){ // successful hunting attampt
 					creature.TargetCreature.HuntedDown = true;
 					StopGoingTo(creature, State.Eating);
 				} else {
 					creature.CurrentTarget = creature.TargetCreature.MySpatial.Translation;
 					RotateToTarget(creature, creature.TargetCreature.MySpatial.Translation);
+				}
+			} else if (creature.MyState == State.RunningFromPredators){
+				Vector3 allPredators = new Vector3();
+				int numOfPredators = 0;
+				foreach (Creature c in creature.PredatorsAroundMe){
+					allPredators += c.MySpatial.Translation;
+					numOfPredators++;
+				}
+				if (numOfPredators > 0){ 
+					RotateToTarget(creature, allPredators / numOfPredators);
+					creature.MySpatial.RotateY(Mathf.Deg2Rad(180));
+					creature.FrontVector = creature.FrontVector.Rotated(Vector3.Up, Mathf.Deg2Rad(180));
+					creature.CurrentTarget = new Vector3(creature.MySpatial.Translation.x + creature.FrontVector.x, 2.2f, creature.MySpatial.Translation.z + creature.FrontVector.z);
+				} else {
+					StopGoingTo(creature, State.ExploringTheEnvironment);
 				}
 			}
 			creature.Velocity = (creature.CurrentTarget - creature.MySpatial.Translation).Normalized();
