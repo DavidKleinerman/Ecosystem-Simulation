@@ -17,6 +17,12 @@ public class SettingsMenu : Control
 		//screenBorder = GetParent().GetNode<Global>("Global");
 		this.Visible = true;
 		GetNode<Godot.ItemList>("ShadowQuality").Select(1);
+		GetNode<Godot.ItemList>("ItemList").Select(0);
+		GetNode<Godot.ItemList>("ItemList2").Select(1);
+		GetNode<Godot.ItemList>("ItemList3").Select(0);
+		GetNode<Godot.ItemList>("ItemList4").Select(0);
+		GetNode<Godot.ItemList>("ItemList5").Select(0);
+		
 	}
 	
 	private void _on_ItemList_item_selected(int index){
