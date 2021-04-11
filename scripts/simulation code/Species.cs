@@ -78,7 +78,8 @@ public class Species : MultiMeshInstance
 		//Predators Around Me list
 		public Godot.Collections.Array PredatorsAroundMe = (Godot.Collections.Array) new Godot.Collections.Array();
 		//Failed Hunts list
-		// to do
+		public Godot.Collections.Array FailedHunts = (Godot.Collections.Array) new Godot.Collections.Array();
+		public int TopOfFailedHunts = 0;
 
 		//*****Traits*****
 		public float Speed;
@@ -623,8 +624,8 @@ public class Species : MultiMeshInstance
 									StopGoingTo(creature, State.Reproducing);
 									StopGoingTo(creature.TargetCreature, State.Reproducing);
 								} else {
-									UpdateRejectList(creature, creature.TargetCreature);
-									UpdateRejectList(creature.TargetCreature, creature);
+									UpdateMemoryList(creature, creature.RejectList, creature.TargetCreature, true);
+									UpdateMemoryList(creature.TargetCreature, creature.TargetCreature.RejectList, creature, true);
 									StopGoingTo(creature, State.ExploringTheEnvironment);
 									StopGoingTo(creature.TargetCreature, State.ExploringTheEnvironment);
 								}
@@ -637,7 +638,8 @@ public class Species : MultiMeshInstance
 					StopGoingTo(creature, State.ExploringTheEnvironment);
 				}
 			} else if (creature.MyState == State.Hunting){
-				if (creature.GoingToTime > 8){ //failed hunting attempt
+				if (creature.GoingToTime > 5){ //failed hunting attempt
+					UpdateMemoryList(creature, creature.FailedHunts, creature.TargetCreature, false);
 					StopGoingTo(creature, State.ExploringTheEnvironment);
 				}
 				else if(creature.MySpatial.Translation.DistanceTo(creature.TargetCreature.MySpatial.Translation) <= 1.8f){ // successful hunting attampt
@@ -670,13 +672,24 @@ public class Species : MultiMeshInstance
 		}
 	}
 
-	public void UpdateRejectList(Creature listOwner, Creature creature){
-		if (listOwner.RejectList.Count < listOwner.Memory)
-			listOwner.RejectList.Add(creature);
-		else listOwner.RejectList.Insert(listOwner.TopOfRejectList, creature);
-		listOwner.TopOfRejectList++;
-		if (listOwner.TopOfRejectList >= listOwner.Memory)
-			listOwner.TopOfRejectList = 0;
+	public void UpdateMemoryList(Creature listOwner, Godot.Collections.Array list, Creature creature, bool isRejectList){
+		if (list.Count < listOwner.Memory)
+			list.Add(creature);
+		else if (isRejectList){
+			list[listOwner.TopOfRejectList] =  creature;
+		} else {
+			list[listOwner.TopOfFailedHunts] = creature;
+		}
+		if (isRejectList){
+			listOwner.TopOfRejectList++;
+			if (listOwner.TopOfRejectList >= listOwner.Memory)
+				listOwner.TopOfRejectList = 0;
+		} else {
+			listOwner.TopOfFailedHunts++;
+			if (listOwner.TopOfFailedHunts >= listOwner.Memory)
+				listOwner.TopOfFailedHunts = 0;
+		}
+		
 	}
 
 	//female only
