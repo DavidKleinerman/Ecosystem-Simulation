@@ -101,9 +101,7 @@ public class Species : MultiMeshInstance
 		public float MaxThirstResistance;
 		public float MaxGestation;
 		public int MaxLitterSize;
-		public float MaxLongevity;
 		public float MaxIntelligence;
-		public int MaxMemory;
 		public float MaxStrength;
 		//Resources
 		public float Energy = 100;
@@ -206,11 +204,11 @@ public class Species : MultiMeshInstance
 		for (int i = 0; i < Creatures.Count; i++){
 			// scan environment within perception radius
 			Creatures[i].TimeSinceLastScan += delta;
-			if (Creatures[i].TimeSinceLastScan > 1.8f + ((100 - Creatures[i].Intelligence)/100)){
+			if (Creatures[i].TimeSinceLastScan > 1.25f + ((100 - Creatures[i].Intelligence)/100)){
 				bool foundPredator = false;
 				if (Creatures[i].MyState != State.GivingBirth){
 					PerceptionCollider.Translation = Creatures[i].MySpatial.Translation;
-					PerceptionCollider.Scale = new Vector3(3 + (Creatures[i].Perception * 2), 0.2f, 3 + (Creatures[i].Perception * 2));
+					PerceptionCollider.Scale = new Vector3(3 + (Creatures[i].Perception * 3), 0.2f, 3 + (Creatures[i].Perception * 3));
 					foundPredator = ScanForPredators(Creatures[i]);
 				}
 				if (!foundPredator && Creatures[i].MyState == State.ExploringTheEnvironment){
@@ -260,7 +258,6 @@ public class Species : MultiMeshInstance
 					Creatures[i].Gestation = (Creatures[i].MaxGestation/15) * delta;
 					Creatures[i].LitterSize = (int)(((float)Creatures[i].MaxLitterSize/15) * delta);
 					Creatures[i].Intelligence = (Creatures[i].MaxIntelligence/15) * delta;
-					Creatures[i].Memory = (int)(((float)Creatures[i].MaxMemory/15) * delta);
 					Creatures[i].Strength += (Creatures[i].MaxStrength/15) * delta;
 
 					if (Creatures[i].Speed >= Creatures[i].MaxSpeed){
@@ -272,7 +269,6 @@ public class Species : MultiMeshInstance
 						Creatures[i].Gestation = Creatures[i].MaxGestation;
 						Creatures[i].LitterSize = Creatures[i].MaxLitterSize;
 						Creatures[i].Intelligence = Creatures[i].MaxIntelligence;
-						Creatures[i].Memory = Creatures[i].MaxMemory;
 						Creatures[i].Strength = Creatures[i].MaxStrength;
 						Creatures[i].MySpatial.Scale = new Vector3(1,1,1);
 						Creatures[i].Growing = false;
@@ -442,7 +438,7 @@ public class Species : MultiMeshInstance
 			if (n is CreatureCollider){
 				if (((CreatureCollider)n) != creature.Collider && ((CreatureCollider)n).MyCreatureAlive){
 					Creature detectedCreature = ((CreatureCollider)n).MyCreature;
-					if (detectedCreature.SpeciesName != SpeciesName && detectedCreature.CreatureDiet == Diet.CarnivorePredator && detectedCreature.Strength > creature.Strength && creature.MySpatial.Translation.DistanceTo(detectedCreature.MySpatial.Translation) < 20f){
+					if (detectedCreature.SpeciesName != SpeciesName && detectedCreature.CreatureDiet == Diet.CarnivorePredator && detectedCreature.Strength > creature.Strength && creature.MySpatial.Translation.DistanceTo(detectedCreature.MySpatial.Translation) < 4 + creature.Perception){
 						foundPredator = true;
 						creature.PredatorsAroundMe.Add(detectedCreature);
 						break;
@@ -503,7 +499,7 @@ public class Species : MultiMeshInstance
 							}
 						}
 					} else if (scanForFood  && SpeciesDiet == Diet.CarnivorePredator){
-						if(detectedCreature.SpeciesName != SpeciesName && creature.Strength > detectedCreature.Strength){
+						if(detectedCreature.SpeciesName != SpeciesName && creature.Strength > detectedCreature.Strength && !creature.FailedHunts.Contains(detectedCreature)){
 							creature.MyState = State.Hunting;
 							//creature.TargetCollider = detectedCreature.Collider;
 							creature.TargetCreature = detectedCreature;
@@ -641,10 +637,12 @@ public class Species : MultiMeshInstance
 				if (creature.GoingToTime > 5){ //failed hunting attempt
 					UpdateMemoryList(creature, creature.FailedHunts, creature.TargetCreature, false);
 					StopGoingTo(creature, State.ExploringTheEnvironment);
+					GD.Print("failed hunt!");
 				}
 				else if(creature.MySpatial.Translation.DistanceTo(creature.TargetCreature.MySpatial.Translation) <= 1.8f){ // successful hunting attampt
 					creature.TargetCreature.HuntedDown = true;
 					StopGoingTo(creature, State.Eating);
+					GD.Print("successful hunt!");
 				} else {
 					creature.CurrentTarget = creature.TargetCreature.MySpatial.Translation;
 					RotateToTarget(creature, creature.TargetCreature.MySpatial.Translation);
@@ -676,7 +674,7 @@ public class Species : MultiMeshInstance
 		if (list.Count < listOwner.Memory)
 			list.Add(creature);
 		else if (isRejectList){
-			list[listOwner.TopOfRejectList] =  creature;
+			list[listOwner.TopOfRejectList] = creature;
 		} else {
 			list[listOwner.TopOfFailedHunts] = creature;
 		}
@@ -761,7 +759,9 @@ public class Species : MultiMeshInstance
 		creature.Longevity = 20 + creature.MyGenome.GetTrait(Genome.GeneticTrait.Longevity) / 1.25f;
 
 		creature.MaxIntelligence = creature.MyGenome.GetTrait(Genome.GeneticTrait.Intelligence);
-		creature.MaxMemory = (int)(3 + creature.MyGenome.GetTrait(Genome.GeneticTrait.Memory)/20);
+
+		creature.Memory = (int)(3 + creature.MyGenome.GetTrait(Genome.GeneticTrait.Memory)/20);
+
 		creature.MaxStrength = creature.MyGenome.GetTrait(Genome.GeneticTrait.Strength);
 		if (isBaby){
 			multiplier = (pregnancyTime/26) * 0.8f;
@@ -778,7 +778,7 @@ public class Species : MultiMeshInstance
 		creature.Gestation = creature.MaxGestation * multiplier;
 		creature.LitterSize = (int)((float)creature.MaxLitterSize * multiplier);
 		creature.Intelligence = creature.MaxIntelligence * multiplier;
-		creature.Memory = (int)((float)creature.MaxMemory * multiplier);
+		//creature.Memory = (int)((float)creature.MaxMemory * multiplier);
 		creature.Strength = creature.MaxStrength * multiplier;
 		CalcFitness(creature);
 	}
