@@ -23,9 +23,11 @@ public class DataCollector
 	private Godot.Collections.Array StarvationArray = (Godot.Collections.Array)new Godot.Collections.Array();
 	private Godot.Collections.Array DehydrationArray = (Godot.Collections.Array)new Godot.Collections.Array();
 	private Godot.Collections.Array OldAgeArray = (Godot.Collections.Array)new Godot.Collections.Array();
+	private Godot.Collections.Array BeingHuntedArray = (Godot.Collections.Array)new Godot.Collections.Array();
 	private int CurrentStarvationAmount = 0;
 	private int CurrentDehydrationAmount = 0;
 	private int CurrentOldAgeAmount = 0;
+	private int CurrentBeingHuntedAmount = 0;
 
 	public DataCollector(Godot.Collections.Array initArray)
 	{
@@ -47,6 +49,7 @@ public class DataCollector
 			StarvationArray.Add(0.0f);
 			DehydrationArray.Add(0.0f);
 			OldAgeArray.Add(0.0f);
+			BeingHuntedArray.Add(0.0f);
 		}
 		CurrentTimeTick = initArray.Count - 1;
 		SpeciesCreationTime = CurrentTimeTick;
@@ -73,9 +76,11 @@ public class DataCollector
 		CollectCauseOfDeathData(StarvationArray, CurrentStarvationAmount);
 		CollectCauseOfDeathData(DehydrationArray, CurrentDehydrationAmount);
 		CollectCauseOfDeathData(OldAgeArray, CurrentOldAgeAmount);
+		CollectCauseOfDeathData(BeingHuntedArray, CurrentBeingHuntedAmount);
 		CurrentStarvationAmount = 0;
 		CurrentDehydrationAmount = 0;
 		CurrentOldAgeAmount = 0;
+		CurrentBeingHuntedAmount = 0;
 		//update the current time tick
 		CurrentTimeTick++;
 	}
@@ -126,6 +131,10 @@ public class DataCollector
 	}
 	public void updateOldAge(){
 		CurrentOldAgeAmount++;
+	}
+
+	public void updateBeingHunted(){
+		CurrentBeingHuntedAmount++;
 	}
 
 	public float GetCurrentMaleFitness()
@@ -194,6 +203,10 @@ public class DataCollector
 
 	public Godot.Collections.Array GetOldAgeData(){
 		return OldAgeArray;
+	}
+
+	public Godot.Collections.Array GetBeingHuntedData(){
+		return BeingHuntedArray;
 	}
 
 	public int GetSpeciesCreationTime()

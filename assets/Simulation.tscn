@@ -1,4 +1,4 @@
-[gd_scene load_steps=91 format=2]
+[gd_scene load_steps=92 format=2]
 
 [ext_resource path="res://scripts/simulation code/Simulation.cs" type="Script" id=1]
 [ext_resource path="res://scripts/simulation code/CameraHolder.cs" type="Script" id=2]
@@ -37,6 +37,7 @@
 [ext_resource path="res://scripts/gradients code/PopulationSizeGraph.cs" type="Script" id=35]
 [ext_resource path="res://scripts/gradients code/StrengthGraph.cs" type="Script" id=36]
 [ext_resource path="res://scripts/simulation code/MultiMeshMeat.cs" type="Script" id=37]
+[ext_resource path="res://scripts/gradients code/BeingHuntedGraph.cs" type="Script" id=38]
 
 [sub_resource type="SphereShape" id=1]
 
@@ -568,10 +569,10 @@ margin_bottom = 1260.0
 rect_min_size = Vector2( 0, 420 )
 
 [node name="ColorPicker" type="ColorPicker" parent="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent/RepresentationsPicker"]
-margin_left = 50.0
-margin_top = 20.0
-margin_right = 550.0
-margin_bottom = 440.0
+margin_left = 54.0
+margin_top = 24.0
+margin_right = 554.0
+margin_bottom = 444.0
 rect_min_size = Vector2( 500, 420 )
 edit_alpha = false
 presets_enabled = false
@@ -1337,6 +1338,12 @@ default_color = Color( 1, 0.596078, 0.596078, 1 )
 antialiased = true
 script = ExtResource( 36 )
 
+[node name="BeingHuntedGraph" type="Line2D" parent="DisplayChartsMenu/GradientControl"]
+width = 3.0
+default_color = Color( 1, 0.976471, 0, 1 )
+antialiased = true
+script = ExtResource( 38 )
+
 [node name="MultiMeshPlants" type="MultiMeshInstance" parent="."]
 multimesh = SubResource( 50 )
 
@@ -1427,46 +1434,47 @@ __meta__ = {
 [connection signal="item_selected" from="Control/ItemList" to="BiomeGrid" method="_on_ItemList_item_selected"]
 [connection signal="mouse_entered" from="Control/ItemList" to="BiomeGrid" method="_on_ItemList_mouse_entered"]
 [connection signal="mouse_exited" from="Control/ItemList" to="BiomeGrid" method="_on_ItemList_mouse_exited"]
-[connection signal="mouse_entered" from="Control/StartSimulation" to="BiomeGrid" method="_on_StartSimulation_mouse_entered"]
 [connection signal="mouse_entered" from="Control/StartSimulation" to="." method="_on_StartSimulation_mouse_entered"]
-[connection signal="mouse_exited" from="Control/StartSimulation" to="BiomeGrid" method="_on_StartSimulation_mouse_exited"]
+[connection signal="mouse_entered" from="Control/StartSimulation" to="BiomeGrid" method="_on_StartSimulation_mouse_entered"]
 [connection signal="mouse_exited" from="Control/StartSimulation" to="." method="_on_StartSimulation_mouse_exited"]
+[connection signal="mouse_exited" from="Control/StartSimulation" to="BiomeGrid" method="_on_StartSimulation_mouse_exited"]
+[connection signal="pressed" from="Control/StartSimulation" to="SpeciesHolder" method="_on_StartSimulation_pressed"]
 [connection signal="pressed" from="Control/StartSimulation" to="BiomeGrid" method="_on_StartSimulation_pressed"]
 [connection signal="pressed" from="Control/StartSimulation" to="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent" method="_on_StartSimulation_pressed"]
-[connection signal="pressed" from="Control/StartSimulation" to="Control/StartSimulation" method="_on_StartSimulation_pressed"]
 [connection signal="pressed" from="Control/StartSimulation" to="Control/AddNewSpecies" method="_on_StartSimulation_pressed"]
-[connection signal="pressed" from="Control/StartSimulation" to="Control/Pause" method="_on_StartSimulation_pressed"]
-[connection signal="pressed" from="Control/StartSimulation" to="Control/ItemList" method="_on_StartSimulation_pressed"]
 [connection signal="pressed" from="Control/StartSimulation" to="Control/DisplayCharts" method="_on_StartSimulation_pressed"]
-[connection signal="pressed" from="Control/StartSimulation" to="SpeciesHolder" method="_on_StartSimulation_pressed"]
+[connection signal="pressed" from="Control/StartSimulation" to="Control/StartSimulation" method="_on_StartSimulation_pressed"]
+[connection signal="pressed" from="Control/StartSimulation" to="Control/ItemList" method="_on_StartSimulation_pressed"]
+[connection signal="pressed" from="Control/StartSimulation" to="Control/Pause" method="_on_StartSimulation_pressed"]
+[connection signal="pressed" from="Control/AddNewSpecies" to="CameraHolder" method="_on_AddNewSpecies_pressed"]
 [connection signal="pressed" from="Control/AddNewSpecies" to="NewSpeciesMenu" method="_on_AddNewSpecies_pressed"]
 [connection signal="pressed" from="Control/AddNewSpecies" to="Control/AddNewSpecies" method="_on_AddNewSpecies_pressed"]
-[connection signal="pressed" from="Control/AddNewSpecies" to="Control/Pause" method="_on_AddNewSpecies_pressed"]
 [connection signal="pressed" from="Control/AddNewSpecies" to="Control/DisplayCharts" method="_on_AddNewSpecies_pressed"]
-[connection signal="pressed" from="Control/AddNewSpecies" to="CameraHolder" method="_on_AddNewSpecies_pressed"]
-[connection signal="pressed" from="Control/DisplayCharts" to="DisplayChartsMenu" method="_on_DisplayCharts_pressed"]
+[connection signal="pressed" from="Control/AddNewSpecies" to="Control/Pause" method="_on_AddNewSpecies_pressed"]
 [connection signal="pressed" from="Control/DisplayCharts" to="DisplayChartsMenu/GradientControl" method="_on_DisplayCharts_pressed"]
-[connection signal="pressed" from="Control/DisplayCharts" to="DisplayChartsMenu/ItemList2" method="_on_DisplayCharts_pressed"]
+[connection signal="pressed" from="Control/DisplayCharts" to="DisplayChartsMenu" method="_on_DisplayCharts_pressed"]
 [connection signal="pressed" from="Control/DisplayCharts" to="Control/AddNewSpecies" method="_on_DisplayCharts_pressed"]
-[connection signal="pressed" from="Control/DisplayCharts" to="Control/Pause" method="_on_DisplayCharts_pressed"]
 [connection signal="pressed" from="Control/DisplayCharts" to="Control/DisplayCharts" method="_on_DisplayCharts_pressed"]
+[connection signal="pressed" from="Control/DisplayCharts" to="Control/Pause" method="_on_DisplayCharts_pressed"]
+[connection signal="pressed" from="Control/DisplayCharts" to="DisplayChartsMenu/ItemList2" method="_on_DisplayCharts_pressed"]
 [connection signal="pressed" from="Control/Pause" to="PauseMenu" method="_on_Pause_pressed"]
 [connection signal="pressed" from="Control/Pause" to="Control/AddNewSpecies" method="_on_Pause_pressed"]
-[connection signal="pressed" from="Control/Pause" to="Control/Pause" method="_on_Pause_pressed"]
 [connection signal="pressed" from="Control/Pause" to="Control/DisplayCharts" method="_on_Pause_pressed"]
+[connection signal="pressed" from="Control/Pause" to="Control/Pause" method="_on_Pause_pressed"]
+[connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="CameraHolder" method="_on_CloseNewSpecies_pressed"]
 [connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="NewSpeciesMenu" method="_on_CloseNewSpecies_pressed"]
 [connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="Control/AddNewSpecies" method="_on_CloseNewSpecies_pressed"]
-[connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="Control/Pause" method="_on_CloseNewSpecies_pressed"]
 [connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="Control/DisplayCharts" method="_on_CloseNewSpecies_pressed"]
-[connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="CameraHolder" method="_on_CloseNewSpecies_pressed"]
+[connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="Control/Pause" method="_on_CloseNewSpecies_pressed"]
 [connection signal="gui_input" from="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent/SpeciesName/LineEdit" to="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent" method="_on_LineEdit_gui_input"]
 [connection signal="pressed" from="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent/CreateNewSpecies/NewSpeciesButton" to="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent" method="_on_NewSpeciesButton_pressed"]
-[connection signal="pressed" from="DisplayChartsMenu/CloseChartMenu" to="DisplayChartsMenu" method="_on_CloseChartMenu_pressed"]
 [connection signal="pressed" from="DisplayChartsMenu/CloseChartMenu" to="DisplayChartsMenu/GradientControl" method="_on_CloseChartMenu_pressed"]
+[connection signal="pressed" from="DisplayChartsMenu/CloseChartMenu" to="DisplayChartsMenu" method="_on_CloseChartMenu_pressed"]
 [connection signal="pressed" from="DisplayChartsMenu/CloseChartMenu" to="Control/AddNewSpecies" method="_on_CloseChartMenu_pressed"]
-[connection signal="pressed" from="DisplayChartsMenu/CloseChartMenu" to="Control/Pause" method="_on_CloseChartMenu_pressed"]
 [connection signal="pressed" from="DisplayChartsMenu/CloseChartMenu" to="Control/DisplayCharts" method="_on_CloseChartMenu_pressed"]
+[connection signal="pressed" from="DisplayChartsMenu/CloseChartMenu" to="Control/Pause" method="_on_CloseChartMenu_pressed"]
 [connection signal="item_selected" from="DisplayChartsMenu/ItemList2" to="DisplayChartsMenu/GradientControl" method="_on_ItemList2_item_selected"]
+[connection signal="toggled" from="DisplayChartsMenu/DeathsGridContainer/DeathsFromBeingHuntedCheckButton" to="DisplayChartsMenu/GradientControl/BeingHuntedGraph" method="_on_DeathsFromBeingHuntedCheckButton_toggled"]
 [connection signal="toggled" from="DisplayChartsMenu/DeathsGridContainer/DeathsFromDehydrationCheckButton" to="DisplayChartsMenu/GradientControl/DehydrationGraph" method="_on_DeathsFromDehydrationCheckButton_toggled"]
 [connection signal="toggled" from="DisplayChartsMenu/DeathsGridContainer/DeathsFromStarvationCheckButton" to="DisplayChartsMenu/GradientControl/StarvationGraph" method="_on_DeathsFromStarvationCheckButton_toggled"]
 [connection signal="toggled" from="DisplayChartsMenu/DeathsGridContainer/DeathsFromOldAgeCheckButton" to="DisplayChartsMenu/GradientControl/OldAgeGraph" method="_on_DeathsFromOldAgeCheckButton_toggled"]
@@ -1486,7 +1494,7 @@ __meta__ = {
 [connection signal="timeout" from="PlantGrowthTimer" to="BiomeGrid" method="_on_PlantGrowthTimer_timeout"]
 [connection signal="pressed" from="PauseMenu/Resume" to="PauseMenu" method="_on_Resume_pressed"]
 [connection signal="pressed" from="PauseMenu/Resume" to="Control/AddNewSpecies" method="_on_Resume_pressed"]
-[connection signal="pressed" from="PauseMenu/Resume" to="Control/Pause" method="_on_Resume_pressed"]
 [connection signal="pressed" from="PauseMenu/Resume" to="Control/DisplayCharts" method="_on_Resume_pressed"]
+[connection signal="pressed" from="PauseMenu/Resume" to="Control/Pause" method="_on_Resume_pressed"]
 [connection signal="pressed" from="PauseMenu/BackToMainMenu" to="PauseMenu" method="_on_BackToMainMenu_pressed"]
 [connection signal="pressed" from="PauseMenu/Exit" to="PauseMenu" method="_on_Exit_pressed"]

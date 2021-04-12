@@ -22,6 +22,7 @@ public class GradientControl : Control
 	private Line2D lineStarvation;
 	private Line2D lineDehydration;
 	private Line2D lineOldAge;
+	private Line2D lineBeingHunted;
 	//*****************
 	private float MaxYvalue = 100;
 	//pop size arrays
@@ -43,6 +44,7 @@ public class GradientControl : Control
 	public Godot.Collections.Array StarvationArray;
 	public Godot.Collections.Array DehydrationArray;
 	public Godot.Collections.Array OldAgeArray;
+	public Godot.Collections.Array BeingHuntedArray;
 	//**********
 	private bool OpenedUp = false;
 	private int selectedSpecies;
@@ -67,6 +69,7 @@ public class GradientControl : Control
 		lineStarvation = GetNode<Line2D>("StarvationGraph");
 		lineDehydration = GetNode<Line2D>("DehydrationGraph");
 		lineOldAge = GetNode<Line2D>("OldAgeGraph");
+		lineBeingHunted = GetNode<Line2D>("BeingHuntedGraph");
 	}
 	public void RefreshGraphs(){
 		
@@ -90,6 +93,7 @@ public class GradientControl : Control
 			StarvationArray = speciesData.GetStarvationData();
 			DehydrationArray = speciesData.GetDehydrationData();
 			OldAgeArray = speciesData.GetOldAgeData();
+			BeingHuntedArray = speciesData.GetBeingHuntedData();
 			CalculateMax();
 			GetNode<Label>("MidLabel").Text = "" + MaxYvalue/2;
 			GetNode<Label>("MaxLabel").Text = "" + MaxYvalue;
@@ -108,6 +112,7 @@ public class GradientControl : Control
 			DrawGraph(StarvationArray, lineStarvation, speciesCreationTime);
 			DrawGraph(DehydrationArray, lineDehydration, speciesCreationTime);
 			DrawGraph(OldAgeArray, lineOldAge, speciesCreationTime);
+			DrawGraph(BeingHuntedArray, lineBeingHunted, speciesCreationTime);
 		}
 	}
 
@@ -123,6 +128,8 @@ public class GradientControl : Control
 			arrayOfMaxes.Add(FindMaxInArray(DehydrationArray));
 		if(lineOldAge.Visible)
 			arrayOfMaxes.Add(FindMaxInArray(OldAgeArray));
+		if(lineBeingHunted.Visible)
+			arrayOfMaxes.Add(FindMaxInArray(BeingHuntedArray));
 		if(arrayOfMaxes.Count > 0)
 			MaxYvalue = FindMaxInArray(arrayOfMaxes);
 		// if (linePopSize.Visible){

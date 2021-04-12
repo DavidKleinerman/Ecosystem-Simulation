@@ -41,7 +41,8 @@ public class Species : MultiMeshInstance
 	public enum CauseOfDeath {
 		Starvation,
 		Dehydration,
-		OldAge
+		OldAge,
+		BeingHunted
 	}
 	public enum Gender{
 		Female,
@@ -235,7 +236,7 @@ public class Species : MultiMeshInstance
 				Die(Creatures[i], i, CauseOfDeath.Starvation);
 			}
 			else if (Creatures[i].HuntedDown){
-				Die(Creatures[i], i, CauseOfDeath.Starvation);
+				Die(Creatures[i], i, CauseOfDeath.BeingHunted);
 			}
 			else if (Creatures[i].Thirst > 100){
 				Die(Creatures[i], i, CauseOfDeath.Dehydration);
@@ -856,6 +857,9 @@ public class Species : MultiMeshInstance
 				break;
 			case CauseOfDeath.OldAge:
 				SpeciesDataCollector.updateOldAge();
+				break;
+			case CauseOfDeath.BeingHunted:
+				SpeciesDataCollector.updateBeingHunted();
 				break;
 		}
 	}
