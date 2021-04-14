@@ -101,7 +101,11 @@ public class MainMenu : Control
 			Global.enableVSync = true;
 			this.enableVSync = true;
 		}
-		OS.SetBorderlessWindow(this.borderlessWindow);
+		//OS.SetBorderlessWindow(this.borderlessWindow);
+		OS.WindowFullscreen = this.borderlessWindow;
+		
+		// if(borderlessWindow)
+		// 	OS.SetWindowSize(OS.GetScreenSize());
 		f.Close();
 	}
 	/*private void readFile2(string path)

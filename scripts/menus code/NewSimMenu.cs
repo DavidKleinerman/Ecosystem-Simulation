@@ -13,6 +13,7 @@ public class NewSimMenu : Control
 		this.Visible = true;
 		GetNode<Godot.ItemList>("WorldSizePicker").Select(2);
 		GetNode<Godot.ItemList>("BiomeType").Select(0);
+		GetViewport().Size = Global.Resolution;
 	}
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.

@@ -16,7 +16,7 @@ public class SettingsMenu : Control
 		//screenBorder = GetParent().GetNode<Global>("Global");
 		this.Visible = true;
 		SelectSettingsMenuItems();
-		
+		GetViewport().Size = Global.Resolution;
 		
 	}
 	private void SelectSettingsMenuItems(){
@@ -156,7 +156,10 @@ public class SettingsMenu : Control
 			Global.antiAliasing = this.Aliasing;
 		}
 		Global.enableShadows = this.enableShadows;
-		OS.SetBorderlessWindow(this.flag);
+		OS.WindowFullscreen = this.flag;
+		// OS.SetBorderlessWindow(this.flag);
+		// if (flag)
+		// 	OS.SetWindowSize(OS.GetScreenSize());
 		writeFile(path);
 		
 		
