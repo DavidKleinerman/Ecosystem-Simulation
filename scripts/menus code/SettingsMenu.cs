@@ -11,20 +11,77 @@ public class SettingsMenu : Control
 	public int Aliasing = 0;
 	public bool enableShadows=false;
 	string path = "res://scripts/menus code/SettingsData/SettingsMenu";
-	
 	public override void _Ready()
 	{
 		//screenBorder = GetParent().GetNode<Global>("Global");
 		this.Visible = true;
-		GetNode<Godot.ItemList>("ShadowQuality").Select(1);
-		GetNode<Godot.ItemList>("ItemList").Select(0);
-		GetNode<Godot.ItemList>("ItemList2").Select(1);
-		GetNode<Godot.ItemList>("ItemList3").Select(0);
-		GetNode<Godot.ItemList>("ItemList4").Select(0);
-		GetNode<Godot.ItemList>("ItemList5").Select(0);
+		SelectSettingsMenuItems();
+		
 		
 	}
-	
+	private void SelectSettingsMenuItems(){
+		if(Global.enableShadows == true){
+			this.enableShadows = true;
+			GetNode<Godot.ItemList>("ShadowQuality").Select(0);
+		}
+		else if(Global.enableShadows == false){
+			this.enableShadows = false;
+			GetNode<Godot.ItemList>("ShadowQuality").Select(1);
+		}
+		if(Global.antiAliasing == 0){
+			this.Aliasing = 0;
+			GetNode<Godot.ItemList>("ItemList5").Select(0);
+		}
+		else if(Global.antiAliasing == 2){
+			this.Aliasing = 2;
+			GetNode<Godot.ItemList>("ItemList5").Select(1);
+		}
+		else if(Global.antiAliasing == 4){
+			this.Aliasing = 4;
+			GetNode<Godot.ItemList>("ItemList5").Select(2);
+		}
+		if(Global.Multiplier == 1){
+			this.Multiplier = 1;
+			GetNode<Godot.ItemList>("ItemList2").Select(0);
+		}
+		else if(Global.Multiplier == 2){
+			this.Multiplier = 2;
+			GetNode<Godot.ItemList>("ItemList2").Select(1);
+		}
+		else if(Global.Multiplier == 4){
+			this.Multiplier = 4;
+			GetNode<Godot.ItemList>("ItemList2").Select(2);
+		}
+		if(Global.borderlessWindow == false){
+			this.flag = false;
+			GetNode<Godot.ItemList>("ItemList").Select(0);
+		}
+		else if(Global.borderlessWindow == true){
+			this.flag = true;
+			GetNode<Godot.ItemList>("ItemList").Select(1);
+		}
+		if(Global.Resolution.ToString() == "(640, 480)"){
+			this.Resolution = Global.Resolution;
+			GetNode<Godot.ItemList>("ItemList3").Select(2);
+		}
+		else if(Global.Resolution.ToString() == "(1280, 720)"){
+			this.Resolution = Global.Resolution;
+			GetNode<Godot.ItemList>("ItemList3").Select(1);
+		}
+		else if(Global.Resolution.ToString() == "(1920, 1080)"){
+			this.Resolution = Global.Resolution;
+			GetNode<Godot.ItemList>("ItemList3").Select(0);
+		}
+		if(Global.enableVSync == true){
+			this.enableVSync = true;
+			GetNode<Godot.ItemList>("ItemList4").Select(0);
+		}
+		else if(Global.enableVSync == false){
+			this.enableVSync = false;
+			GetNode<Godot.ItemList>("ItemList4").Select(1);
+		}
+		
+	}
 	private void _on_ItemList_item_selected(int index){
 		
 		GD.Print(index, "\n");
@@ -139,13 +196,7 @@ public class SettingsMenu : Control
 			this.enableShadows = false;
 		}
 	}
-	/*private void readFile()
-	{
-		File f = new File();
-		f.Open(path,File.ModeFlags.Read);
 
-		
-	}*/
 	private void writeFile(string path)
 	{
 		File f = new File();
