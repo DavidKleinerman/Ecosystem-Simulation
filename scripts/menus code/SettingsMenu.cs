@@ -130,13 +130,13 @@ public class SettingsMenu : Control
 	private void _on_SaveChanges_pressed()
 	{
 		if(this.flag == false){
-			OS.SetBorderlessWindow(false);
+			//OS.SetBorderlessWindow(false);
 			Global.borderlessWindow = this.flag;
 		}
 		else if(this.flag == true){
 			Global.borderlessWindow = this.flag;
-			OS.SetBorderlessWindow(true);
-			OS.SetWindowSize(OS.GetScreenSize());
+			//OS.SetBorderlessWindow(true);
+			//OS.SetWindowSize(OS.GetScreenSize());
 		}
 		Global.Multiplier = this.Multiplier;
 		Global.enableVSync = this.enableVSync;
@@ -156,6 +156,7 @@ public class SettingsMenu : Control
 			Global.antiAliasing = this.Aliasing;
 		}
 		Global.enableShadows = this.enableShadows;
+		OS.SetBorderlessWindow(this.flag);
 		writeFile(path);
 		
 		

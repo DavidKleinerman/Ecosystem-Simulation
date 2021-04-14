@@ -67,13 +67,13 @@ public class MainMenu : Control
 		if(getLine == "True"){
 			Global.borderlessWindow = true;
 			this.borderlessWindow = true;
-			OS.SetBorderlessWindow(this.borderlessWindow);
-			OS.SetWindowSize(OS.GetScreenSize());
+			//OS.SetBorderlessWindow(this.borderlessWindow);
+			//OS.SetWindowSize(OS.GetScreenSize());
 		}
 		else if(getLine == "False"){
 			Global.borderlessWindow = false;
 			this.borderlessWindow = false;
-			OS.SetBorderlessWindow(this.borderlessWindow);
+			//OS.SetBorderlessWindow(this.borderlessWindow);
 		}
 		getLine = f.GetLine();
 		GD.Print(getLine);
@@ -101,6 +101,7 @@ public class MainMenu : Control
 			Global.enableVSync = true;
 			this.enableVSync = true;
 		}
+		OS.SetBorderlessWindow(this.borderlessWindow);
 		f.Close();
 	}
 	/*private void readFile2(string path)
