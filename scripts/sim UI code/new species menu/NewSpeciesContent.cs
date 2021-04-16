@@ -9,7 +9,7 @@ public class NewSpeciesContent : VBoxContainer
 		GetNode<Label>("Speed/Label").Text = "Speed";
 		GetNode<Label>("Speed/Label").HintTooltip = "The creature's movement speed.\nThe faster the creature moves the higher is the energy cost.\nLarger number = higher speed.";
 		GetNode<Label>("Perception/Label").Text = "Perception";
-		GetNode<Label>("Perception/Label").HintTooltip = "How far the creature can detect objects (water, food, and other creatures).\nMore advanced sensory system requires more energy upkeep.\nLarger number = larger detection radius.";
+		GetNode<Label>("Perception/Label").HintTooltip = "How far the creature can detect objects (water, food, and other creatures).\nMore advanced sensory system requires a higher energy upkeep.\nLarger number = larger detection radius.";
 		GetNode<Label>("MatingCycle/Label").Text = "Mating Cycle";
 		GetNode<Label>("MatingCycle/Label").HintTooltip = "How often the creature will want to reproduce.\nLarger number = more frequent reproduction.";
 		GetNode<Label>("HungerResistance/Label").Text = "Hunger Resistance";

@@ -14,9 +14,9 @@ public class Species : MultiMeshInstance
 	
 
 	//consts
-	private const float BaseEnergyDecay = 3.5f;
-	private const float BaseThirstDecay = 4f;
-	private const float BaseReproductiveUrgeGrowth = 0.5f;
+	private const float BaseEnergyDecay = 4f;
+	private const float BaseThirstDecay = 5f;
+	private const float BaseReproductiveUrgeGrowth = 1f;
 	private const float MaxGoingToTime = 4;
 	private const int TimeToBirth = 3;
 	//enums
@@ -220,7 +220,23 @@ public class Species : MultiMeshInstance
 			Creatures[i].Age += delta;
 			Creatures[i].CurrentRotationTime += delta;
 			if (Creatures[i].ReproductiveUrge < 100 && !Creatures[i].Pregnant && !Creatures[i].Growing) Creatures[i].ReproductiveUrge += ((BaseReproductiveUrgeGrowth + Creatures[i].MatingCycle) * delta);
-			if (Creatures[i].MyState != State.Eating) Creatures[i].Energy -= ((BaseEnergyDecay - Creatures[i].HungerResistance) * delta);
+			if (Creatures[i].MyState != State.Eating){
+				float additionalDecay = 0;
+				additionalDecay += Creatures[i].Speed/20f;
+				additionalDecay += Creatures[i].Intelligence/500f;
+				additionalDecay += Creatures[i].Memory/50f;
+				additionalDecay += Creatures[i].Perception/20f;
+				additionalDecay += Creatures[i].Strength/400f;
+				if(Creatures[i].MyState == State.GivingBirth)
+					additionalDecay += 0.2f;
+				if(Creatures[i].MyState == State.Hunting)
+					additionalDecay += Creatures[i].Speed/40f;
+				if(Creatures[i].MyState == State.RunningFromPredators)
+					additionalDecay += Creatures[i].Speed/40f;
+				if(Creatures[i].MyState == State.Reproducing)
+					additionalDecay += 0.2f;
+				Creatures[i].Energy -= ((BaseEnergyDecay + additionalDecay - Creatures[i].HungerResistance) * delta);
+			} 
 			if (Creatures[i].MyState != State.Drinking) Creatures[i].Thirst += ((BaseThirstDecay - Creatures[i].ThirstResistance) * delta);
 			if (Creatures[i].CurrentRotationTime >= Creatures[i].NextRotationTime){
 				rng.Randomize();
@@ -305,7 +321,7 @@ public class Species : MultiMeshInstance
 						gridIndex = TileGrid.WorldToMap(new Vector3(Creatures[i].CurrentTarget.x, 1, Creatures[i].CurrentTarget.z));
 						gt = TileGrid.GetGroundTiles()[gridIndex];
 						if (gt.hasPlant){
-							Creatures[i].Energy += 25 * delta;
+							Creatures[i].Energy += 100 * delta;
 						}
 						else {
 							gt.EatersCount--;
@@ -325,7 +341,7 @@ public class Species : MultiMeshInstance
 						}
 						if (Creatures[i].TargetMeat != null){
 							if (!Creatures[i].TargetMeat.meatGone){
-								Creatures[i].Energy += 25 * delta;
+								Creatures[i].Energy += 50 * delta;
 							}
 							else {
 								Creatures[i].TargetMeat = null;
@@ -757,7 +773,7 @@ public class Species : MultiMeshInstance
 		creature.MaxGestation = 6 + creature.MyGenome.GetTrait(Genome.GeneticTrait.Gestation) / 5;
 		creature.MaxLitterSize = 1 + Mathf.RoundToInt(creature.MyGenome.GetTrait(Genome.GeneticTrait.LitterSize) / 25);
 
-		creature.Longevity = 20 + creature.MyGenome.GetTrait(Genome.GeneticTrait.Longevity) / 1.25f;
+		creature.Longevity = 40 + creature.MyGenome.GetTrait(Genome.GeneticTrait.Longevity) / 2f;
 
 		creature.MaxIntelligence = creature.MyGenome.GetTrait(Genome.GeneticTrait.Intelligence);
 
