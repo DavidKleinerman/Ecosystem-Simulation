@@ -127,7 +127,7 @@ public class Species : MultiMeshInstance
 	private Godot.Collections.Array<Creature> Creatures = (Godot.Collections.Array<Creature>) new Godot.Collections.Array<Creature>();
 	private Godot.Collections.Array<Creature> NewBorn = (Godot.Collections.Array<Creature>) new Godot.Collections.Array<Creature>();
 	private Godot.Collections.Array DeadArray = (Godot.Collections.Array) new Godot.Collections.Array();
-
+	private Godot.Collections.Array<Creature> temp = (Godot.Collections.Array<Creature>) new Godot.Collections.Array<Creature>();
 	public override void _Ready()
 	{
 		PerceptionCollider = GetNode<Area>("PerceptionRadius");
@@ -183,7 +183,7 @@ public class Species : MultiMeshInstance
 		BiomeGrid.GroundTile gt;
 		Vector3 collisionDetector;
 		Vector3 posInGrid;
-		Godot.Collections.Array<Creature> temp = (Godot.Collections.Array<Creature>) new Godot.Collections.Array<Creature>();
+		//temp.Clear();
 		for (int i = 0; i < Creatures.Count; i++){
 			if (!DeadArray.Contains(i))
 				temp.Add(Creatures[i]);

@@ -16,6 +16,7 @@ public class MultiMeshMeat : MultiMeshInstance
 	private Godot.Collections.Array<Meat> MeatArray = (Godot.Collections.Array<Meat>) new Godot.Collections.Array<Meat>();
 	private Godot.Collections.Array<Meat> MeatToAdd = (Godot.Collections.Array<Meat>) new Godot.Collections.Array<Meat>();
 	private Godot.Collections.Array MeatToRemove = new Godot.Collections.Array();
+	private Godot.Collections.Array<Meat> temp = (Godot.Collections.Array<Meat>) new Godot.Collections.Array<Meat>();
 
 	public override void _Ready()
 	{
@@ -24,7 +25,7 @@ public class MultiMeshMeat : MultiMeshInstance
 	
 	public override void _Process(float delta)
 	{
-		Godot.Collections.Array<Meat> temp = (Godot.Collections.Array<Meat>) new Godot.Collections.Array<Meat>();
+		
 		for (int i = 0; i < MeatArray.Count; i++){
 			if (!MeatToRemove.Contains(i))
 				temp.Add(MeatArray[i]);
@@ -66,7 +67,5 @@ public class MultiMeshMeat : MultiMeshInstance
 		newMeat.meatSpatial = meatSpatial;
 		newMeat.Collider = collider;
 		MeatToAdd.Add(newMeat);
-		GD.Print("new meat collider poisition: " + newMeat.Collider.Translation);
-		GD.Print("new meat mesh poisition: " + newMeat.meatSpatial.Translation);
 	}
 }
