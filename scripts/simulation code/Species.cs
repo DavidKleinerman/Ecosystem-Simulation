@@ -19,7 +19,7 @@ public class Species : MultiMeshInstance
 	private const float BaseReproductiveUrgeGrowth = 1f;
 	private const float MaxGoingToTime = 4;
 	private const int TimeToBirth = 3;
-	private const float BaseTempChange = 4f;
+	private const float BaseTempChange = 2f;
 	//enums
 	public enum Diet {
 		Herbivore,
@@ -246,6 +246,12 @@ public class Species : MultiMeshInstance
 				Creatures[i].Energy -= ((BaseEnergyDecay + additionalDecay - Creatures[i].HungerResistance) * delta);
 			} 
 			if (Creatures[i].MyState != State.Drinking) Creatures[i].Thirst += ((BaseThirstDecay - Creatures[i].ThirstResistance) * delta);
+
+			posInGrid = TileGrid.WorldToMap(new Vector3(Creatures[i].MySpatial.Translation.x, 1, Creatures[i].MySpatial.Translation.z));
+			if (TileGrid.GetCellItem((int)posInGrid.x, (int)posInGrid.y, (int)posInGrid.z) == 1) //desert
+				Creatures[i].Temperature += (BaseTempChange - Creatures[i].HeatResistance) * delta;
+			else if (TileGrid.GetCellItem((int)posInGrid.x, (int)posInGrid.y, (int)posInGrid.z) == 3) //tundra
+				Creatures[i].Temperature -= (BaseTempChange - Creatures[i].ColdResistance) * delta;
 
 			if (Creatures[i].CurrentRotationTime >= Creatures[i].NextRotationTime){
 				rng.Randomize();
@@ -795,8 +801,8 @@ public class Species : MultiMeshInstance
 		creature.Memory = (int)(3 + creature.MyGenome.GetTrait(Genome.GeneticTrait.Memory)/20);
 
 		creature.MaxStrength = creature.MyGenome.GetTrait(Genome.GeneticTrait.Strength);
-		creature.MaxHeatResistance = creature.MyGenome.GetTrait(Genome.GeneticTrait.HeatResistance)/25;
-		creature.MaxColdResistance = creature.MyGenome.GetTrait(Genome.GeneticTrait.ColdResistance)/25;
+		creature.MaxHeatResistance = creature.MyGenome.GetTrait(Genome.GeneticTrait.HeatResistance)/50;
+		creature.MaxColdResistance = creature.MyGenome.GetTrait(Genome.GeneticTrait.ColdResistance)/50;
 		creature.MaxStamina = creature.MyGenome.GetTrait(Genome.GeneticTrait.Stamina)/100;
 		if (isBaby){
 			multiplier = (pregnancyTime/26) * 0.8f;
