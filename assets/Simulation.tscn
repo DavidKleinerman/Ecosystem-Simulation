@@ -1,4 +1,4 @@
-[gd_scene load_steps=92 format=2]
+[gd_scene load_steps=91 format=2]
 
 [ext_resource path="res://scripts/simulation code/Simulation.cs" type="Script" id=1]
 [ext_resource path="res://scripts/simulation code/CameraHolder.cs" type="Script" id=2]
@@ -25,7 +25,7 @@
 [ext_resource path="res://scripts/sim UI code/DisplayChartsMenu.cs" type="Script" id=23]
 [ext_resource path="res://fonts/Now FL/Now-ExtraLight.otf" type="DynamicFontData" id=24]
 [ext_resource path="res://scripts/gradients code/GradientControl.cs" type="Script" id=25]
-[ext_resource path="res://scripts/gradients code/StaminaGradient.cs" type="Script" id=26]
+[ext_resource path="res://scripts/gradients code/StaminaGraph.cs" type="Script" id=26]
 [ext_resource path="res://scripts/gradients code/ThirstResistanceGradient.cs" type="Script" id=27]
 [ext_resource path="res://scripts/gradients code/PerceptionGradient.cs" type="Script" id=28]
 [ext_resource path="res://scripts/gradients code/MatingCycleGradient.cs" type="Script" id=29]
@@ -38,6 +38,8 @@
 [ext_resource path="res://scripts/gradients code/StrengthGraph.cs" type="Script" id=36]
 [ext_resource path="res://scripts/simulation code/MultiMeshMeat.cs" type="Script" id=37]
 [ext_resource path="res://scripts/gradients code/BeingHuntedGraph.cs" type="Script" id=38]
+[ext_resource path="res://scripts/gradients code/ColdResistanceGraph.cs" type="Script" id=39]
+[ext_resource path="res://scripts/gradients code/HeatResistanceGraph.cs" type="Script" id=40]
 
 [sub_resource type="SphereShape" id=1]
 
@@ -157,11 +159,6 @@ size = 25
 outline_color = Color( 0.823529, 0.835294, 0.584314, 1 )
 font_data = ExtResource( 3 )
 
-[sub_resource type="DynamicFont" id=30]
-size = 25
-outline_color = Color( 0.329412, 0.321569, 0.0745098, 1 )
-font_data = ExtResource( 3 )
-
 [sub_resource type="DynamicFont" id=31]
 size = 25
 outline_color = Color( 0.4, 0.203922, 0.203922, 1 )
@@ -172,19 +169,9 @@ size = 25
 outline_color = Color( 0.52549, 0.713726, 0.501961, 1 )
 font_data = ExtResource( 3 )
 
-[sub_resource type="DynamicFont" id=33]
-size = 25
-outline_color = Color( 0.207843, 0.207843, 0.207843, 1 )
-font_data = ExtResource( 3 )
-
 [sub_resource type="DynamicFont" id=34]
 size = 25
 outline_color = Color( 1, 0.623529, 0.623529, 1 )
-font_data = ExtResource( 3 )
-
-[sub_resource type="DynamicFont" id=35]
-size = 25
-outline_color = Color( 0.509804, 0.509804, 0.509804, 1 )
 font_data = ExtResource( 3 )
 
 [sub_resource type="DynamicFont" id=36]
@@ -584,10 +571,10 @@ margin_bottom = 1440.0
 rect_min_size = Vector2( 0, 420 )
 
 [node name="ColorPicker" type="ColorPicker" parent="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent/RepresentationsPicker"]
-margin_left = 58.0
-margin_top = 28.0
-margin_right = 558.0
-margin_bottom = 448.0
+margin_left = 50.0
+margin_top = 20.0
+margin_right = 550.0
+margin_bottom = 440.0
 rect_min_size = Vector2( 500, 420 )
 edit_alpha = false
 presets_enabled = false
@@ -937,22 +924,8 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="MutationRateCheckButton" type="CheckButton" parent="DisplayChartsMenu/GeneValuesGridContainer"]
-margin_right = 300.0
-margin_bottom = 42.0
-rect_min_size = Vector2( 300, 0 )
-custom_fonts/font = SubResource( 30 )
-custom_colors/font_color = Color( 0.329412, 0.321569, 0.0745098, 1 )
-custom_colors/font_color_pressed = Color( 0.329412, 0.321569, 0.0745098, 1 )
-text = "Mutation Rate"
-flat = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="SleepCycleCheckButton" type="CheckButton" parent="DisplayChartsMenu/GeneValuesGridContainer"]
-margin_left = 304.0
-margin_right = 604.0
+margin_right = 300.0
 margin_bottom = 42.0
 rect_min_size = Vector2( 300, 0 )
 custom_fonts/font = SubResource( 31 )
@@ -965,9 +938,9 @@ __meta__ = {
 }
 
 [node name="StaminaCheckButton" type="CheckButton" parent="DisplayChartsMenu/GeneValuesGridContainer"]
-margin_top = 46.0
-margin_right = 300.0
-margin_bottom = 88.0
+margin_left = 304.0
+margin_right = 604.0
+margin_bottom = 42.0
 rect_min_size = Vector2( 300, 0 )
 custom_fonts/font = SubResource( 32 )
 custom_colors/font_color = Color( 0.52549, 0.713726, 0.501961, 1 )
@@ -978,24 +951,10 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="DigestionCheckButton" type="CheckButton" parent="DisplayChartsMenu/GeneValuesGridContainer"]
-margin_left = 304.0
-margin_top = 46.0
-margin_right = 604.0
-margin_bottom = 88.0
-custom_fonts/font = SubResource( 33 )
-custom_colors/font_color = Color( 0, 0.8, 0.56, 1 )
-custom_colors/font_color_pressed = Color( 0.211765, 0.8, 0.560784, 1 )
-text = "Digestion"
-flat = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="StrengthCheckButton" type="CheckButton" parent="DisplayChartsMenu/GeneValuesGridContainer"]
-margin_top = 92.0
+margin_top = 46.0
 margin_right = 300.0
-margin_bottom = 134.0
+margin_bottom = 88.0
 custom_fonts/font = SubResource( 34 )
 custom_colors/font_color = Color( 1, 0.596078, 0.596078, 1 )
 custom_colors/font_color_pressed = Color( 1, 0.596078, 0.596078, 1 )
@@ -1005,24 +964,11 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HealingCheckButton" type="CheckButton" parent="DisplayChartsMenu/GeneValuesGridContainer"]
-margin_left = 304.0
-margin_top = 92.0
-margin_right = 604.0
-margin_bottom = 134.0
-custom_fonts/font = SubResource( 35 )
-custom_colors/font_color = Color( 0.419608, 0.419608, 0.419608, 1 )
-custom_colors/font_color_pressed = Color( 0.419608, 0.419608, 0.419608, 1 )
-text = "Healing"
-flat = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="LongevityCheckButton" type="CheckButton" parent="DisplayChartsMenu/GeneValuesGridContainer"]
-margin_top = 138.0
-margin_right = 300.0
-margin_bottom = 180.0
+margin_left = 304.0
+margin_top = 46.0
+margin_right = 604.0
+margin_bottom = 88.0
 custom_fonts/font = SubResource( 36 )
 custom_colors/font_color = Color( 0.937255, 0, 1, 1 )
 custom_colors/font_color_pressed = Color( 0.937255, 0, 1, 1 )
@@ -1033,10 +979,9 @@ __meta__ = {
 }
 
 [node name="HeatResistanceCheckButton" type="CheckButton" parent="DisplayChartsMenu/GeneValuesGridContainer"]
-margin_left = 304.0
-margin_top = 138.0
-margin_right = 604.0
-margin_bottom = 180.0
+margin_top = 92.0
+margin_right = 300.0
+margin_bottom = 134.0
 custom_fonts/font = SubResource( 37 )
 custom_colors/font_color = Color( 0.552941, 0, 0.247059, 1 )
 custom_colors/font_color_pressed = Color( 0.552941, 0, 0.247059, 1 )
@@ -1047,9 +992,10 @@ __meta__ = {
 }
 
 [node name="ColdResistanceCheckButton" type="CheckButton" parent="DisplayChartsMenu/GeneValuesGridContainer"]
-margin_top = 184.0
-margin_right = 300.0
-margin_bottom = 226.0
+margin_left = 304.0
+margin_top = 92.0
+margin_right = 604.0
+margin_bottom = 134.0
 custom_fonts/font = SubResource( 38 )
 custom_colors/font_color = Color( 0, 1, 0.882353, 1 )
 custom_colors/font_color_pressed = Color( 0, 1, 0.882353, 1 )
@@ -1060,10 +1006,9 @@ __meta__ = {
 }
 
 [node name="MemoryCheckButton" type="CheckButton" parent="DisplayChartsMenu/GeneValuesGridContainer"]
-margin_left = 304.0
-margin_top = 184.0
-margin_right = 604.0
-margin_bottom = 226.0
+margin_top = 138.0
+margin_right = 300.0
+margin_bottom = 180.0
 custom_fonts/font = SubResource( 39 )
 custom_colors/font_color = Color( 0.458824, 0.0509804, 0.533333, 1 )
 custom_colors/font_color_pressed = Color( 0.458824, 0.0509804, 0.690196, 1 )
@@ -1074,9 +1019,10 @@ __meta__ = {
 }
 
 [node name="LitterSizeCheckButton" type="CheckButton" parent="DisplayChartsMenu/GeneValuesGridContainer"]
-margin_top = 230.0
-margin_right = 300.0
-margin_bottom = 272.0
+margin_left = 304.0
+margin_top = 138.0
+margin_right = 604.0
+margin_bottom = 180.0
 custom_fonts/font = SubResource( 40 )
 custom_colors/font_color = Color( 0.623529, 0, 0.0784314, 1 )
 custom_colors/font_color_pressed = Color( 0.623529, 0, 0.0784314, 1 )
@@ -1087,10 +1033,9 @@ __meta__ = {
 }
 
 [node name="IntelligenceCheckButton" type="CheckButton" parent="DisplayChartsMenu/GeneValuesGridContainer"]
-margin_left = 304.0
-margin_top = 230.0
-margin_right = 604.0
-margin_bottom = 272.0
+margin_top = 184.0
+margin_right = 300.0
+margin_bottom = 226.0
 custom_fonts/font = SubResource( 41 )
 custom_colors/font_color = Color( 0, 0.141176, 1, 1 )
 custom_colors/font_color_pressed = Color( 0, 0.141176, 1, 1 )
@@ -1098,9 +1043,10 @@ text = "Intelligence"
 flat = true
 
 [node name="HungerResistanceCheckButton" type="CheckButton" parent="DisplayChartsMenu/GeneValuesGridContainer"]
-margin_top = 276.0
-margin_right = 300.0
-margin_bottom = 318.0
+margin_left = 304.0
+margin_top = 184.0
+margin_right = 604.0
+margin_bottom = 226.0
 custom_fonts/font = SubResource( 42 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "Hunger Resistance"
@@ -1110,10 +1056,9 @@ __meta__ = {
 }
 
 [node name="ThirstResistanceCheckButton" type="CheckButton" parent="DisplayChartsMenu/GeneValuesGridContainer"]
-margin_left = 304.0
-margin_top = 276.0
-margin_right = 604.0
-margin_bottom = 318.0
+margin_top = 230.0
+margin_right = 300.0
+margin_bottom = 272.0
 custom_fonts/font = SubResource( 43 )
 custom_colors/font_color = Color( 0.996078, 0, 0.945098, 1 )
 custom_colors/font_color_pressed = Color( 0.996078, 0, 0.945098, 1 )
@@ -1124,9 +1069,10 @@ __meta__ = {
 }
 
 [node name="GestationCheckButton" type="CheckButton" parent="DisplayChartsMenu/GeneValuesGridContainer"]
-margin_top = 322.0
-margin_right = 300.0
-margin_bottom = 364.0
+margin_left = 304.0
+margin_top = 230.0
+margin_right = 604.0
+margin_bottom = 272.0
 custom_fonts/font = SubResource( 44 )
 custom_colors/font_color = Color( 1, 0.670588, 0, 1 )
 custom_colors/font_color_pressed = Color( 1, 0.670588, 0, 1 )
@@ -1137,10 +1083,9 @@ __meta__ = {
 }
 
 [node name="MatingCycleCheckButton" type="CheckButton" parent="DisplayChartsMenu/GeneValuesGridContainer"]
-margin_left = 304.0
-margin_top = 322.0
-margin_right = 604.0
-margin_bottom = 364.0
+margin_top = 276.0
+margin_right = 300.0
+margin_bottom = 318.0
 custom_fonts/font = SubResource( 45 )
 custom_colors/font_color = Color( 0.360784, 1, 0, 1 )
 custom_colors/font_color_pressed = Color( 0.360784, 1, 0, 1 )
@@ -1151,9 +1096,10 @@ __meta__ = {
 }
 
 [node name="PerceptionCheckButton" type="CheckButton" parent="DisplayChartsMenu/GeneValuesGridContainer"]
-margin_top = 368.0
-margin_right = 300.0
-margin_bottom = 410.0
+margin_left = 304.0
+margin_top = 276.0
+margin_right = 604.0
+margin_bottom = 318.0
 custom_fonts/font = SubResource( 46 )
 custom_colors/font_color_hover_pressed = Color( 0, 0, 0, 1 )
 custom_colors/font_color = Color( 0, 0.964706, 1, 1 )
@@ -1165,10 +1111,9 @@ __meta__ = {
 }
 
 [node name="SpeedCheckButton" type="CheckButton" parent="DisplayChartsMenu/GeneValuesGridContainer"]
-margin_left = 304.0
-margin_top = 368.0
-margin_right = 604.0
-margin_bottom = 410.0
+margin_top = 322.0
+margin_right = 300.0
+margin_bottom = 364.0
 custom_fonts/font = SubResource( 47 )
 custom_colors/font_color_hover_pressed = Color( 0, 0, 0, 1 )
 custom_colors/font_color = Color( 0.8, 0.129412, 0.129412, 1 )
@@ -1189,11 +1134,6 @@ script = ExtResource( 25 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="StaminaGradient" type="Line2D" parent="DisplayChartsMenu/GradientControl"]
-width = 3.0
-default_color = Color( 0.52549, 0.713726, 0.501961, 1 )
-script = ExtResource( 26 )
 
 [node name="ColorRect" type="ColorRect" parent="DisplayChartsMenu/GradientControl"]
 anchor_right = 1.0
@@ -1353,6 +1293,24 @@ default_color = Color( 1, 0.596078, 0.596078, 1 )
 antialiased = true
 script = ExtResource( 36 )
 
+[node name="HeatResistanceGraph" type="Line2D" parent="DisplayChartsMenu/GradientControl"]
+width = 3.0
+default_color = Color( 0.552941, 0, 0.247059, 1 )
+antialiased = true
+script = ExtResource( 40 )
+
+[node name="ColdResistanceGraph" type="Line2D" parent="DisplayChartsMenu/GradientControl"]
+width = 3.0
+default_color = Color( 0, 1, 0.882353, 1 )
+antialiased = true
+script = ExtResource( 39 )
+
+[node name="StaminaGraph" type="Line2D" parent="DisplayChartsMenu/GradientControl"]
+width = 3.0
+default_color = Color( 0.52549, 0.713726, 0.501961, 1 )
+antialiased = true
+script = ExtResource( 26 )
+
 [node name="BeingHuntedGraph" type="Line2D" parent="DisplayChartsMenu/GradientControl"]
 width = 3.0
 default_color = Color( 1, 0.976471, 0, 1 )
@@ -1494,9 +1452,11 @@ __meta__ = {
 [connection signal="toggled" from="DisplayChartsMenu/DeathsGridContainer/DeathsFromStarvationCheckButton" to="DisplayChartsMenu/GradientControl/StarvationGraph" method="_on_DeathsFromStarvationCheckButton_toggled"]
 [connection signal="toggled" from="DisplayChartsMenu/DeathsGridContainer/DeathsFromOldAgeCheckButton" to="DisplayChartsMenu/GradientControl/OldAgeGraph" method="_on_DeathsFromOldAgeCheckButton_toggled"]
 [connection signal="toggled" from="DisplayChartsMenu/RunningSimGridContainer/PopulationSizeCheckButton" to="DisplayChartsMenu/GradientControl/PopulationSizeGraph" method="_on_PopulationSizeCheckButton_toggled"]
-[connection signal="toggled" from="DisplayChartsMenu/GeneValuesGridContainer/StaminaCheckButton" to="DisplayChartsMenu/GradientControl/StaminaGradient" method="_on_StaminaCheckButton_toggled"]
+[connection signal="toggled" from="DisplayChartsMenu/GeneValuesGridContainer/StaminaCheckButton" to="DisplayChartsMenu/GradientControl/StaminaGraph" method="_on_StaminaCheckButton_toggled"]
 [connection signal="toggled" from="DisplayChartsMenu/GeneValuesGridContainer/StrengthCheckButton" to="DisplayChartsMenu/GradientControl/StrengthGraph" method="_on_StrengthCheckButton_toggled"]
 [connection signal="toggled" from="DisplayChartsMenu/GeneValuesGridContainer/LongevityCheckButton" to="DisplayChartsMenu/GradientControl/LongevityGradient" method="_on_LongevityCheckButton_toggled"]
+[connection signal="toggled" from="DisplayChartsMenu/GeneValuesGridContainer/HeatResistanceCheckButton" to="DisplayChartsMenu/GradientControl/HeatResistanceGraph" method="_on_HeatResistanceCheckButton_toggled"]
+[connection signal="toggled" from="DisplayChartsMenu/GeneValuesGridContainer/ColdResistanceCheckButton" to="DisplayChartsMenu/GradientControl/ColdResistanceGraph" method="_on_ColdResistanceCheckButton_toggled"]
 [connection signal="toggled" from="DisplayChartsMenu/GeneValuesGridContainer/MemoryCheckButton" to="DisplayChartsMenu/GradientControl/MemoryGraph" method="_on_MemoryCheckButton_toggled"]
 [connection signal="toggled" from="DisplayChartsMenu/GeneValuesGridContainer/LitterSizeCheckButton" to="DisplayChartsMenu/GradientControl/LitterSizeGradient" method="_on_LitterSizeCheckButton_toggled"]
 [connection signal="toggled" from="DisplayChartsMenu/GeneValuesGridContainer/IntelligenceCheckButton" to="DisplayChartsMenu/GradientControl/IntelligenceGraph" method="_on_IntelligenceCheckButton_toggled"]

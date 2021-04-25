@@ -7,7 +7,6 @@ public class GradientControl : Control
 	private Line2D linePopSize;
 	//genetic traits
    	private Line2D lineSpeed;
-	//private Line2D lineStamina;
 	private Line2D linePerception;
 	private Line2D lineMatingCycle;
 	private Line2D lineHungerResistance;
@@ -18,6 +17,9 @@ public class GradientControl : Control
 	private Line2D lineIntelligence;
 	private Line2D lineMemory;
 	private Line2D lineStrength;
+	private Line2D lineHeatResistance;
+	private Line2D lineColdResistance;
+	private Line2D lineStamina;
 	//causes of death
 	private Line2D lineStarvation;
 	private Line2D lineDehydration;
@@ -34,12 +36,14 @@ public class GradientControl : Control
 	public Godot.Collections.Array GestationArray;
 	public Godot.Collections.Array HungerResistanceArray;
 	public Godot.Collections.Array ThirstResistanceArray;
-	//public Godot.Collections.Array StaminaArray;
 	public Godot.Collections.Array LongevityArray;
 	public Godot.Collections.Array LitterSizeArray;
 	public Godot.Collections.Array IntelligenceArray;
 	public Godot.Collections.Array MemoryArray;
 	public Godot.Collections.Array StrengthArray;
+	public Godot.Collections.Array HeatResistanceArray;
+	public Godot.Collections.Array ColdResistanceArray;
+	public Godot.Collections.Array StaminaArray;
 	//causes of death arrays
 	public Godot.Collections.Array StarvationArray;
 	public Godot.Collections.Array DehydrationArray;
@@ -65,6 +69,9 @@ public class GradientControl : Control
 		lineIntelligence = GetNode<Line2D>("IntelligenceGraph");
 		lineMemory = GetNode<Line2D>("MemoryGraph");
 		lineStrength = GetNode<Line2D>("StrengthGraph");
+		lineHeatResistance = GetNode<Line2D>("HeatResistanceGraph");
+		lineColdResistance = GetNode<Line2D>("ColdResistanceGraph");
+		lineStamina = GetNode<Line2D>("StaminaGraph");
 		//causes of death
 		lineStarvation = GetNode<Line2D>("StarvationGraph");
 		lineDehydration = GetNode<Line2D>("DehydrationGraph");
@@ -90,6 +97,10 @@ public class GradientControl : Control
 			IntelligenceArray = speciesData.GetIntelligenceData();
 			MemoryArray = speciesData.GetMemoryData();
 			StrengthArray = speciesData.GetStrengthData();
+			HeatResistanceArray = speciesData.GetHeatResistanceData();
+			ColdResistanceArray = speciesData.GetColdResistancehData();
+			StaminaArray = speciesData.GetStaminaData();
+
 			StarvationArray = speciesData.GetStarvationData();
 			DehydrationArray = speciesData.GetDehydrationData();
 			OldAgeArray = speciesData.GetOldAgeData();
@@ -109,6 +120,10 @@ public class GradientControl : Control
 			DrawGraph(IntelligenceArray, lineIntelligence, speciesCreationTime);
 			DrawGraph(MemoryArray, lineMemory, speciesCreationTime);
 			DrawGraph(StrengthArray, lineStrength, speciesCreationTime);
+			DrawGraph(HeatResistanceArray, lineHeatResistance, speciesCreationTime);
+			DrawGraph(ColdResistanceArray, lineColdResistance, speciesCreationTime);
+			DrawGraph(StaminaArray, lineStamina, speciesCreationTime);
+
 			DrawGraph(StarvationArray, lineStarvation, speciesCreationTime);
 			DrawGraph(DehydrationArray, lineDehydration, speciesCreationTime);
 			DrawGraph(OldAgeArray, lineOldAge, speciesCreationTime);
@@ -164,7 +179,8 @@ public class GradientControl : Control
 				lineThirstResistance.Visible || lineGestation.Visible ||
 				lineLongevity.Visible || lineLitterSize.Visible ||
 				lineIntelligence.Visible || lineMemory.Visible ||
-				lineStrength.Visible);
+				lineStrength.Visible || lineHeatResistance.Visible ||
+				lineColdResistance.Visible || lineStamina.Visible);
 	}
 
 	private void DrawGraph(Godot.Collections.Array dataArray, Line2D line, int speciesCreationTime){
