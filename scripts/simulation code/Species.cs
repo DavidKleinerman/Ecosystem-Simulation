@@ -116,6 +116,7 @@ public class Species : MultiMeshInstance
 		public float Thirst = 0;
 		public float ReproductiveUrge = 0;
 		public float Age = 0;
+		public float Temperature = 50;
 
 		// Passive states
 		public bool Pregnant = false;
@@ -245,6 +246,7 @@ public class Species : MultiMeshInstance
 				Creatures[i].Energy -= ((BaseEnergyDecay + additionalDecay - Creatures[i].HungerResistance) * delta);
 			} 
 			if (Creatures[i].MyState != State.Drinking) Creatures[i].Thirst += ((BaseThirstDecay - Creatures[i].ThirstResistance) * delta);
+
 			if (Creatures[i].CurrentRotationTime >= Creatures[i].NextRotationTime){
 				rng.Randomize();
 				Creatures[i].RotationRate = rng.RandfRange(20, 200);
@@ -283,6 +285,9 @@ public class Species : MultiMeshInstance
 					Creatures[i].LitterSize = (int)(((float)Creatures[i].MaxLitterSize/15) * delta);
 					Creatures[i].Intelligence = (Creatures[i].MaxIntelligence/15) * delta;
 					Creatures[i].Strength += (Creatures[i].MaxStrength/15) * delta;
+					Creatures[i].HeatResistance += (Creatures[i].MaxHeatResistance/15) * delta;
+					Creatures[i].ColdResistance += (Creatures[i].MaxColdResistance/15) * delta;
+					Creatures[i].Stamina += (Creatures[i].MaxStamina/15) * delta;
 
 					if (Creatures[i].Speed >= Creatures[i].MaxSpeed){
 						Creatures[i].Speed = Creatures[i].MaxSpeed;
@@ -294,6 +299,9 @@ public class Species : MultiMeshInstance
 						Creatures[i].LitterSize = Creatures[i].MaxLitterSize;
 						Creatures[i].Intelligence = Creatures[i].MaxIntelligence;
 						Creatures[i].Strength = Creatures[i].MaxStrength;
+						Creatures[i].HeatResistance = Creatures[i].MaxHeatResistance;
+						Creatures[i].ColdResistance = Creatures[i].MaxColdResistance;
+						Creatures[i].Stamina = Creatures[i].MaxStamina;
 						Creatures[i].MySpatial.Scale = new Vector3(1,1,1);
 						Creatures[i].Growing = false;
 
