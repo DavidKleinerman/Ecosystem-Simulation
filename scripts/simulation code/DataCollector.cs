@@ -19,6 +19,9 @@ public class DataCollector
 	private Godot.Collections.Array IntelligenceArray = (Godot.Collections.Array)new Godot.Collections.Array();
 	private Godot.Collections.Array MemoryArray = (Godot.Collections.Array)new Godot.Collections.Array();
 	private Godot.Collections.Array StrengthArray = (Godot.Collections.Array)new Godot.Collections.Array();
+	private Godot.Collections.Array HeatResistanceArray = (Godot.Collections.Array)new Godot.Collections.Array();
+	private Godot.Collections.Array ColdResistanceArray = (Godot.Collections.Array)new Godot.Collections.Array();
+	private Godot.Collections.Array StaminaArray = (Godot.Collections.Array)new Godot.Collections.Array();
 	//causes of death
 	private Godot.Collections.Array StarvationArray = (Godot.Collections.Array)new Godot.Collections.Array();
 	private Godot.Collections.Array DehydrationArray = (Godot.Collections.Array)new Godot.Collections.Array();
@@ -46,6 +49,9 @@ public class DataCollector
 			IntelligenceArray.Add(0.0f);
 			MemoryArray.Add(0.0f);
 			StrengthArray.Add(0.0f);
+			HeatResistanceArray.Add(0.0f);
+			ColdResistanceArray.Add(0.0f);
+			StaminaArray.Add(0.0f);
 			StarvationArray.Add(0.0f);
 			DehydrationArray.Add(0.0f);
 			OldAgeArray.Add(0.0f);
@@ -72,6 +78,9 @@ public class DataCollector
 		CollectTraitData(IntelligenceArray, Genome.GeneticTrait.Intelligence, creaturesInSpecies);
 		CollectTraitData(MemoryArray, Genome.GeneticTrait.Memory, creaturesInSpecies);
 		CollectTraitData(StrengthArray, Genome.GeneticTrait.Strength, creaturesInSpecies);
+		CollectTraitData(HeatResistanceArray, Genome.GeneticTrait.HeatResistance, creaturesInSpecies);
+		CollectTraitData(ColdResistanceArray, Genome.GeneticTrait.ColdResistance, creaturesInSpecies);
+		CollectTraitData(StaminaArray, Genome.GeneticTrait.Stamina, creaturesInSpecies);
 		//update causes of death data
 		CollectCauseOfDeathData(StarvationArray, CurrentStarvationAmount);
 		CollectCauseOfDeathData(DehydrationArray, CurrentDehydrationAmount);
@@ -187,6 +196,21 @@ public class DataCollector
 	public Godot.Collections.Array GetStrengthData()
 	{
 		return StrengthArray;
+	}
+
+	public Godot.Collections.Array GetHeatResistanceData()
+	{
+		return HeatResistanceArray;
+	}
+
+	public Godot.Collections.Array GetColdResistancehData()
+	{
+		return ColdResistanceArray;
+	}
+
+	public Godot.Collections.Array GetStaminaData()
+	{
+		return StaminaArray;
 	}
 
 	public Godot.Collections.Array GetPopulationSizeData(){
