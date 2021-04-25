@@ -14,7 +14,10 @@ public class Genome
 		Longevity,
 		Intelligence,
 		Memory,
-		Strength
+		Strength,
+		HeatResistance,
+		ColdResistance,
+		Stamina
 	}
 
 	public enum ChromosomeSet {
@@ -51,7 +54,7 @@ public class Genome
 	}
 
 	public void ArtificialCombine(Godot.Collections.Array initialValues, float geneticVariation){
-		if (initialValues.Count == 11){
+		if (initialValues.Count == 14){
 			MaternalChromosomeSet.Clear();
 			PaternalChromosomeSet.Clear();
 		} else return;

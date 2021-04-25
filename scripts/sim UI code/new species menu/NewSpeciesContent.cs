@@ -28,6 +28,12 @@ public class NewSpeciesContent : VBoxContainer
 		GetNode<Label>("Memory/Label").HintTooltip = "If male: how many females that rejected him he can remember.\nIf female: how many rejected males she can remember.\nIf predator: how many unsuccessful hunting attapts the predastor can remember.\nA bigger brain with better memory requires a higher energy upkeep.\nLarger number = better memory.";
 		GetNode<Label>("Strength/Label").Text = "Strength";
 		GetNode<Label>("Strength/Label").HintTooltip = "Influences the foodchain since creature would not hunt other creature that are stronger than them.\nRepresents the muscular strength and the mass of the creature.\nBigger muscles and mass require a higher energy upkeep.\nLarger number = higher strength.";
+		GetNode<Label>("HeatResistance/Label").Text = "Heat Resistance";
+		GetNode<Label>("HeatResistance/Label").HintTooltip = "How fast the creature's temperature rises up in hot environments.\nLarger number = slower temperature increase.";
+		GetNode<Label>("ColdResistance/Label").Text = "Cold Resistance";
+		GetNode<Label>("ColdResistance/Label").HintTooltip = "How fast the creature's temperature decreases in cold environments.\nLarger number = slower temperature decrease.";
+		GetNode<Label>("Stamina/Label").Text = "Stamina";
+		GetNode<Label>("Stamina/Label").HintTooltip = "Influences the energy decay when the creature is doing tiring actions.\nLarger number = slower energy decay.";
 		GetNode<Label>("GeneticVariation/Label").Text = "Genetic Variation";
 		GetNode<Label>("GeneticVariation/Label").HintTooltip = "The difference of each indvidual's trait value, in the initial population, form the values set by the user.";
 		GetNode<Label>("PopulationSize/Label").Text = "Population Size";
@@ -82,6 +88,9 @@ public class NewSpeciesContent : VBoxContainer
 			InitialValues.Add((float)GetNode<HSlider>("Intelligence/HSlider").Value);
 			InitialValues.Add((float)GetNode<HSlider>("Memory/HSlider").Value);
 			InitialValues.Add((float)GetNode<HSlider>("Strength/HSlider").Value);
+			InitialValues.Add((float)GetNode<HSlider>("HeatResistance/HSlider").Value);
+			InitialValues.Add((float)GetNode<HSlider>("ColdResistance/HSlider").Value);
+			InitialValues.Add((float)GetNode<HSlider>("Stamina/HSlider").Value);
 			float geneticVariation = (float)GetNode<HSlider>("GeneticVariation/HSlider").Value;
 			int diet = (int)GetNode<OptionButton>("Diet/OptionButton").Selected;
 			String speciesName = GetNode<LineEdit>("SpeciesName/LineEdit").Text;

@@ -19,6 +19,7 @@ public class Species : MultiMeshInstance
 	private const float BaseReproductiveUrgeGrowth = 1f;
 	private const float MaxGoingToTime = 4;
 	private const int TimeToBirth = 3;
+	private const float BaseTempChange = 4f;
 	//enums
 	public enum Diet {
 		Herbivore,
@@ -94,6 +95,9 @@ public class Species : MultiMeshInstance
 		public float Intelligence;
 		public int Memory;
 		public float Strength;
+		public float HeatResistance;
+		public float ColdResistance;
+		public float Stamina;
 
 		public float MaxSpeed;
 		public float MaxPerception;
@@ -104,6 +108,9 @@ public class Species : MultiMeshInstance
 		public int MaxLitterSize;
 		public float MaxIntelligence;
 		public float MaxStrength;
+		public float MaxHeatResistance;
+		public float MaxColdResistance;
+		public float MaxStamina;
 		//Resources
 		public float Energy = 100;
 		public float Thirst = 0;
@@ -780,6 +787,9 @@ public class Species : MultiMeshInstance
 		creature.Memory = (int)(3 + creature.MyGenome.GetTrait(Genome.GeneticTrait.Memory)/20);
 
 		creature.MaxStrength = creature.MyGenome.GetTrait(Genome.GeneticTrait.Strength);
+		creature.MaxHeatResistance = creature.MyGenome.GetTrait(Genome.GeneticTrait.HeatResistance)/25;
+		creature.MaxColdResistance = creature.MyGenome.GetTrait(Genome.GeneticTrait.ColdResistance)/25;
+		creature.MaxStamina = creature.MyGenome.GetTrait(Genome.GeneticTrait.Stamina)/100;
 		if (isBaby){
 			multiplier = (pregnancyTime/26) * 0.8f;
 			creature.MySpatial.Scale = new Vector3(multiplier, multiplier, multiplier);
@@ -795,8 +805,10 @@ public class Species : MultiMeshInstance
 		creature.Gestation = creature.MaxGestation * multiplier;
 		creature.LitterSize = (int)((float)creature.MaxLitterSize * multiplier);
 		creature.Intelligence = creature.MaxIntelligence * multiplier;
-		//creature.Memory = (int)((float)creature.MaxMemory * multiplier);
 		creature.Strength = creature.MaxStrength * multiplier;
+		creature.HeatResistance = creature.MaxHeatResistance * multiplier;
+		creature.ColdResistance = creature.MaxColdResistance * multiplier;
+		creature.Stamina = creature.MaxStamina * multiplier;
 		CalcFitness(creature);
 	}
 
@@ -811,6 +823,10 @@ public class Species : MultiMeshInstance
 		creature.Fitness += creature.MyGenome.GetTrait(Genome.GeneticTrait.Longevity);
 		creature.Fitness += creature.MyGenome.GetTrait(Genome.GeneticTrait.Intelligence);
 		creature.Fitness += creature.MyGenome.GetTrait(Genome.GeneticTrait.Memory);
+		creature.Fitness += creature.MyGenome.GetTrait(Genome.GeneticTrait.Strength);
+		creature.Fitness += creature.MyGenome.GetTrait(Genome.GeneticTrait.HeatResistance);
+		creature.Fitness += creature.MyGenome.GetTrait(Genome.GeneticTrait.ColdResistance);
+		creature.Fitness += creature.MyGenome.GetTrait(Genome.GeneticTrait.Stamina);
 	}
 
 	public void AddCreature(Genome genome, Vector3 position, Godot.Collections.Array<Creature> list, bool isBaby, float pregnancyTime){
