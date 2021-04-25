@@ -236,13 +236,13 @@ public class Species : MultiMeshInstance
 				additionalDecay += Creatures[i].Perception/20f;
 				additionalDecay += Creatures[i].Strength/400f;
 				if(Creatures[i].MyState == State.GivingBirth)
-					additionalDecay += 0.2f;
+					additionalDecay += 0.2f * (1.5f - Creatures[i].Stamina);
 				if(Creatures[i].MyState == State.Hunting)
-					additionalDecay += Creatures[i].Speed/40f;
+					additionalDecay += (Creatures[i].Speed/40f) * (1.5f - Creatures[i].Stamina);
 				if(Creatures[i].MyState == State.RunningFromPredators)
-					additionalDecay += Creatures[i].Speed/40f;
+					additionalDecay += (Creatures[i].Speed/40f) * (1.5f - Creatures[i].Stamina);
 				if(Creatures[i].MyState == State.Reproducing)
-					additionalDecay += 0.2f;
+					additionalDecay += 0.2f * (1.5f - Creatures[i].Stamina);
 				Creatures[i].Energy -= ((BaseEnergyDecay + additionalDecay - Creatures[i].HungerResistance) * delta);
 			} 
 			if (Creatures[i].MyState != State.Drinking) Creatures[i].Thirst += ((BaseThirstDecay - Creatures[i].ThirstResistance) * delta);
