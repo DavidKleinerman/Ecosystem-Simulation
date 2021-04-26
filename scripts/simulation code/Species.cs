@@ -382,6 +382,8 @@ public class Species : MultiMeshInstance
 							}
 						}
 					}
+					if (Creatures[i].Temperature <= 50)
+						Creatures[i].Temperature += (BaseTempChange * 4 * delta);
 					
 				} else if (Creatures[i].MyState == State.Drinking){
 					Creatures[i].Thirst -= 25 * delta;
@@ -389,6 +391,8 @@ public class Species : MultiMeshInstance
 						Creatures[i].Thirst = 0;
 						SetState(Creatures[i], State.ExploringTheEnvironment);
 					} 
+					if (Creatures[i].Temperature > 50)
+						Creatures[i].Temperature -= (BaseTempChange * 4 * delta);
 				}
 				else if (Creatures[i].MyState == State.Reproducing){
 					Creatures[i].ReproTime += delta;
