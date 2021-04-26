@@ -25,6 +25,8 @@ public class GradientControl : Control
 	private Line2D lineDehydration;
 	private Line2D lineOldAge;
 	private Line2D lineBeingHunted;
+	private Line2D lineHeatStroke;
+	private Line2D lineFreezing;
 	//*****************
 	private float MaxYvalue = 100;
 	//pop size arrays
@@ -49,6 +51,8 @@ public class GradientControl : Control
 	public Godot.Collections.Array DehydrationArray;
 	public Godot.Collections.Array OldAgeArray;
 	public Godot.Collections.Array BeingHuntedArray;
+	public Godot.Collections.Array HeatStrokeArray;
+	public Godot.Collections.Array FreezingArray;
 	//**********
 	private bool OpenedUp = false;
 	private int selectedSpecies;
@@ -77,6 +81,8 @@ public class GradientControl : Control
 		lineDehydration = GetNode<Line2D>("DehydrationGraph");
 		lineOldAge = GetNode<Line2D>("OldAgeGraph");
 		lineBeingHunted = GetNode<Line2D>("BeingHuntedGraph");
+		lineHeatStroke = GetNode<Line2D>("HeatStrokeGraph");
+		lineFreezing = GetNode<Line2D>("FreezingGraph");
 	}
 	public void RefreshGraphs(){
 		
@@ -105,6 +111,8 @@ public class GradientControl : Control
 			DehydrationArray = speciesData.GetDehydrationData();
 			OldAgeArray = speciesData.GetOldAgeData();
 			BeingHuntedArray = speciesData.GetBeingHuntedData();
+			HeatStrokeArray = speciesData.GetHeatStrokeData();
+			FreezingArray = speciesData.GetFreezingData();
 			CalculateMax();
 			GetNode<Label>("MidLabel").Text = "" + MaxYvalue/2;
 			GetNode<Label>("MaxLabel").Text = "" + MaxYvalue;
@@ -128,6 +136,8 @@ public class GradientControl : Control
 			DrawGraph(DehydrationArray, lineDehydration, speciesCreationTime);
 			DrawGraph(OldAgeArray, lineOldAge, speciesCreationTime);
 			DrawGraph(BeingHuntedArray, lineBeingHunted, speciesCreationTime);
+			DrawGraph(HeatStrokeArray,lineHeatStroke, speciesCreationTime);
+			DrawGraph(FreezingArray, lineFreezing, speciesCreationTime);
 		}
 	}
 
@@ -145,6 +155,10 @@ public class GradientControl : Control
 			arrayOfMaxes.Add(FindMaxInArray(OldAgeArray));
 		if(lineBeingHunted.Visible)
 			arrayOfMaxes.Add(FindMaxInArray(BeingHuntedArray));
+		if(lineHeatStroke.Visible)
+			arrayOfMaxes.Add(FindMaxInArray(HeatStrokeArray));
+		if(lineFreezing.Visible)
+			arrayOfMaxes.Add(FindMaxInArray(FreezingArray));
 		if(arrayOfMaxes.Count > 0)
 			MaxYvalue = FindMaxInArray(arrayOfMaxes);
 		// if (linePopSize.Visible){

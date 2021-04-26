@@ -27,10 +27,14 @@ public class DataCollector
 	private Godot.Collections.Array DehydrationArray = (Godot.Collections.Array)new Godot.Collections.Array();
 	private Godot.Collections.Array OldAgeArray = (Godot.Collections.Array)new Godot.Collections.Array();
 	private Godot.Collections.Array BeingHuntedArray = (Godot.Collections.Array)new Godot.Collections.Array();
+	private Godot.Collections.Array HeatStrokeArray = (Godot.Collections.Array)new Godot.Collections.Array();
+	private Godot.Collections.Array FreezingArray = (Godot.Collections.Array)new Godot.Collections.Array();
 	private int CurrentStarvationAmount = 0;
 	private int CurrentDehydrationAmount = 0;
 	private int CurrentOldAgeAmount = 0;
 	private int CurrentBeingHuntedAmount = 0;
+	private int CurrentHeatStrokeAmount = 0;
+	private int CurrentFreezingAmount = 0;
 
 	public DataCollector(Godot.Collections.Array initArray)
 	{
@@ -56,6 +60,8 @@ public class DataCollector
 			DehydrationArray.Add(0.0f);
 			OldAgeArray.Add(0.0f);
 			BeingHuntedArray.Add(0.0f);
+			HeatStrokeArray.Add(0.0f);
+			FreezingArray.Add(0.0f);
 		}
 		CurrentTimeTick = initArray.Count - 1;
 		SpeciesCreationTime = CurrentTimeTick;
@@ -86,10 +92,14 @@ public class DataCollector
 		CollectCauseOfDeathData(DehydrationArray, CurrentDehydrationAmount);
 		CollectCauseOfDeathData(OldAgeArray, CurrentOldAgeAmount);
 		CollectCauseOfDeathData(BeingHuntedArray, CurrentBeingHuntedAmount);
+		CollectCauseOfDeathData(HeatStrokeArray, CurrentHeatStrokeAmount);
+		CollectCauseOfDeathData(FreezingArray, CurrentFreezingAmount);
 		CurrentStarvationAmount = 0;
 		CurrentDehydrationAmount = 0;
 		CurrentOldAgeAmount = 0;
 		CurrentBeingHuntedAmount = 0;
+		CurrentHeatStrokeAmount = 0;
+		CurrentFreezingAmount = 0;
 		//update the current time tick
 		CurrentTimeTick++;
 	}
@@ -144,6 +154,14 @@ public class DataCollector
 
 	public void updateBeingHunted(){
 		CurrentBeingHuntedAmount++;
+	}
+
+	public void updateHeatStroke(){
+		CurrentHeatStrokeAmount++;
+	}
+
+	public void updateFreezing(){
+		CurrentFreezingAmount++;
 	}
 
 	public float GetCurrentMaleFitness()
@@ -232,6 +250,15 @@ public class DataCollector
 	public Godot.Collections.Array GetBeingHuntedData(){
 		return BeingHuntedArray;
 	}
+
+	public Godot.Collections.Array GetHeatStrokeData(){
+		return HeatStrokeArray;
+	}
+
+	public Godot.Collections.Array GetFreezingData(){
+		return FreezingArray;
+	}
+
 
 	public int GetSpeciesCreationTime()
 	{

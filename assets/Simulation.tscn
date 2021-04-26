@@ -1,4 +1,4 @@
-[gd_scene load_steps=91 format=2]
+[gd_scene load_steps=93 format=2]
 
 [ext_resource path="res://scripts/simulation code/Simulation.cs" type="Script" id=1]
 [ext_resource path="res://scripts/simulation code/CameraHolder.cs" type="Script" id=2]
@@ -40,6 +40,8 @@
 [ext_resource path="res://scripts/gradients code/BeingHuntedGraph.cs" type="Script" id=38]
 [ext_resource path="res://scripts/gradients code/ColdResistanceGraph.cs" type="Script" id=39]
 [ext_resource path="res://scripts/gradients code/HeatResistanceGraph.cs" type="Script" id=40]
+[ext_resource path="res://scripts/gradients code/HeatStrokeGraph.cs" type="Script" id=41]
+[ext_resource path="res://scripts/gradients code/FeezingGraph.cs" type="Script" id=42]
 
 [sub_resource type="SphereShape" id=1]
 
@@ -159,109 +161,109 @@ size = 25
 outline_color = Color( 0.823529, 0.835294, 0.584314, 1 )
 font_data = ExtResource( 3 )
 
-[sub_resource type="DynamicFont" id=31]
+[sub_resource type="DynamicFont" id=30]
 size = 25
 outline_color = Color( 0.4, 0.203922, 0.203922, 1 )
 font_data = ExtResource( 3 )
 
-[sub_resource type="DynamicFont" id=32]
+[sub_resource type="DynamicFont" id=31]
 size = 25
 outline_color = Color( 0.52549, 0.713726, 0.501961, 1 )
 font_data = ExtResource( 3 )
 
-[sub_resource type="DynamicFont" id=34]
+[sub_resource type="DynamicFont" id=32]
 size = 25
 outline_color = Color( 1, 0.623529, 0.623529, 1 )
 font_data = ExtResource( 3 )
 
-[sub_resource type="DynamicFont" id=36]
+[sub_resource type="DynamicFont" id=33]
 size = 25
 outline_color = Color( 0.513726, 0, 1, 1 )
 font_data = ExtResource( 3 )
 
-[sub_resource type="DynamicFont" id=37]
+[sub_resource type="DynamicFont" id=34]
 size = 25
 outline_color = Color( 0.458824, 0, 0.215686, 1 )
 font_data = ExtResource( 3 )
 
-[sub_resource type="DynamicFont" id=38]
+[sub_resource type="DynamicFont" id=35]
 size = 25
 outline_color = Color( 0, 0.533333, 0.509804, 1 )
 font_data = ExtResource( 3 )
 
-[sub_resource type="DynamicFont" id=39]
+[sub_resource type="DynamicFont" id=36]
 size = 25
 outline_color = Color( 0.329412, 0, 0.156863, 1 )
 font_data = ExtResource( 3 )
 
-[sub_resource type="DynamicFont" id=40]
+[sub_resource type="DynamicFont" id=37]
 size = 25
 outline_color = Color( 0.470588, 0, 0.14902, 1 )
 font_data = ExtResource( 3 )
 
-[sub_resource type="DynamicFont" id=41]
+[sub_resource type="DynamicFont" id=38]
 size = 25
 outline_color = Color( 0.0352941, 0, 0.517647, 1 )
 font_data = ExtResource( 3 )
 
-[sub_resource type="DynamicFont" id=42]
+[sub_resource type="DynamicFont" id=39]
 size = 25
 font_data = ExtResource( 3 )
 
-[sub_resource type="DynamicFont" id=43]
+[sub_resource type="DynamicFont" id=40]
 size = 25
 outline_color = Color( 1, 0, 0.945098, 1 )
 font_data = ExtResource( 3 )
 
-[sub_resource type="DynamicFont" id=44]
+[sub_resource type="DynamicFont" id=41]
 size = 25
 outline_color = Color( 1, 0.8, 0.00784314, 1 )
 font_data = ExtResource( 3 )
 
-[sub_resource type="DynamicFont" id=45]
+[sub_resource type="DynamicFont" id=42]
 size = 25
 outline_color = Color( 0, 1, 0.105882, 1 )
 font_data = ExtResource( 3 )
 
-[sub_resource type="DynamicFont" id=46]
+[sub_resource type="DynamicFont" id=43]
 size = 25
 outline_color = Color( 0.262745, 0.878431, 1, 1 )
 font_data = ExtResource( 3 )
 
-[sub_resource type="DynamicFont" id=47]
+[sub_resource type="DynamicFont" id=44]
 size = 25
 font_data = ExtResource( 3 )
 
-[sub_resource type="SpatialMaterial" id=48]
+[sub_resource type="SpatialMaterial" id=45]
 vertex_color_use_as_albedo = true
 vertex_color_is_srgb = true
 
-[sub_resource type="CubeMesh" id=49]
-material = SubResource( 48 )
+[sub_resource type="CubeMesh" id=46]
+material = SubResource( 45 )
 size = Vector3( 0.3, 0.8, 0.3 )
 
-[sub_resource type="MultiMesh" id=50]
+[sub_resource type="MultiMesh" id=47]
 color_format = 2
 transform_format = 1
-mesh = SubResource( 49 )
+mesh = SubResource( 46 )
 
-[sub_resource type="SpatialMaterial" id=51]
+[sub_resource type="SpatialMaterial" id=48]
 vertex_color_use_as_albedo = true
 vertex_color_is_srgb = true
 albedo_color = Color( 0.623529, 0.0862745, 0.0862745, 1 )
 roughness = 0.66
 
-[sub_resource type="SphereMesh" id=52]
-material = SubResource( 51 )
+[sub_resource type="SphereMesh" id=49]
+material = SubResource( 48 )
 radius = 0.3
 height = 0.6
 radial_segments = 16
 rings = 16
 
-[sub_resource type="MultiMesh" id=53]
+[sub_resource type="MultiMesh" id=50]
 color_format = 2
 transform_format = 1
-mesh = SubResource( 52 )
+mesh = SubResource( 49 )
 
 [node name="Simulation" type="Spatial"]
 pause_mode = 1
@@ -571,10 +573,10 @@ margin_bottom = 1440.0
 rect_min_size = Vector2( 0, 420 )
 
 [node name="ColorPicker" type="ColorPicker" parent="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent/RepresentationsPicker"]
-margin_left = 50.0
-margin_top = 20.0
-margin_right = 550.0
-margin_bottom = 440.0
+margin_left = 54.0
+margin_top = 24.0
+margin_right = 554.0
+margin_bottom = 444.0
 rect_min_size = Vector2( 500, 420 )
 edit_alpha = false
 presets_enabled = false
@@ -928,7 +930,7 @@ __meta__ = {
 margin_right = 300.0
 margin_bottom = 42.0
 rect_min_size = Vector2( 300, 0 )
-custom_fonts/font = SubResource( 31 )
+custom_fonts/font = SubResource( 30 )
 custom_colors/font_color = Color( 0.4, 0.203922, 0.203922, 1 )
 custom_colors/font_color_pressed = Color( 0.4, 0.203922, 0.203922, 1 )
 text = "Sleep Cycle"
@@ -942,7 +944,7 @@ margin_left = 304.0
 margin_right = 604.0
 margin_bottom = 42.0
 rect_min_size = Vector2( 300, 0 )
-custom_fonts/font = SubResource( 32 )
+custom_fonts/font = SubResource( 31 )
 custom_colors/font_color = Color( 0.52549, 0.713726, 0.501961, 1 )
 custom_colors/font_color_pressed = Color( 0.52549, 0.713726, 0.501961, 1 )
 text = "Stamina"
@@ -955,7 +957,7 @@ __meta__ = {
 margin_top = 46.0
 margin_right = 300.0
 margin_bottom = 88.0
-custom_fonts/font = SubResource( 34 )
+custom_fonts/font = SubResource( 32 )
 custom_colors/font_color = Color( 1, 0.596078, 0.596078, 1 )
 custom_colors/font_color_pressed = Color( 1, 0.596078, 0.596078, 1 )
 text = "Strength"
@@ -969,7 +971,7 @@ margin_left = 304.0
 margin_top = 46.0
 margin_right = 604.0
 margin_bottom = 88.0
-custom_fonts/font = SubResource( 36 )
+custom_fonts/font = SubResource( 33 )
 custom_colors/font_color = Color( 0.937255, 0, 1, 1 )
 custom_colors/font_color_pressed = Color( 0.937255, 0, 1, 1 )
 text = "Longevity"
@@ -982,7 +984,7 @@ __meta__ = {
 margin_top = 92.0
 margin_right = 300.0
 margin_bottom = 134.0
-custom_fonts/font = SubResource( 37 )
+custom_fonts/font = SubResource( 34 )
 custom_colors/font_color = Color( 0.552941, 0, 0.247059, 1 )
 custom_colors/font_color_pressed = Color( 0.552941, 0, 0.247059, 1 )
 text = "Heat Resistance"
@@ -996,7 +998,7 @@ margin_left = 304.0
 margin_top = 92.0
 margin_right = 604.0
 margin_bottom = 134.0
-custom_fonts/font = SubResource( 38 )
+custom_fonts/font = SubResource( 35 )
 custom_colors/font_color = Color( 0, 1, 0.882353, 1 )
 custom_colors/font_color_pressed = Color( 0, 1, 0.882353, 1 )
 text = "Cold Resistance"
@@ -1009,7 +1011,7 @@ __meta__ = {
 margin_top = 138.0
 margin_right = 300.0
 margin_bottom = 180.0
-custom_fonts/font = SubResource( 39 )
+custom_fonts/font = SubResource( 36 )
 custom_colors/font_color = Color( 0.458824, 0.0509804, 0.533333, 1 )
 custom_colors/font_color_pressed = Color( 0.458824, 0.0509804, 0.690196, 1 )
 text = "Memory"
@@ -1023,7 +1025,7 @@ margin_left = 304.0
 margin_top = 138.0
 margin_right = 604.0
 margin_bottom = 180.0
-custom_fonts/font = SubResource( 40 )
+custom_fonts/font = SubResource( 37 )
 custom_colors/font_color = Color( 0.623529, 0, 0.0784314, 1 )
 custom_colors/font_color_pressed = Color( 0.623529, 0, 0.0784314, 1 )
 text = "Litter Size"
@@ -1036,7 +1038,7 @@ __meta__ = {
 margin_top = 184.0
 margin_right = 300.0
 margin_bottom = 226.0
-custom_fonts/font = SubResource( 41 )
+custom_fonts/font = SubResource( 38 )
 custom_colors/font_color = Color( 0, 0.141176, 1, 1 )
 custom_colors/font_color_pressed = Color( 0, 0.141176, 1, 1 )
 text = "Intelligence"
@@ -1047,7 +1049,7 @@ margin_left = 304.0
 margin_top = 184.0
 margin_right = 604.0
 margin_bottom = 226.0
-custom_fonts/font = SubResource( 42 )
+custom_fonts/font = SubResource( 39 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "Hunger Resistance"
 flat = true
@@ -1059,7 +1061,7 @@ __meta__ = {
 margin_top = 230.0
 margin_right = 300.0
 margin_bottom = 272.0
-custom_fonts/font = SubResource( 43 )
+custom_fonts/font = SubResource( 40 )
 custom_colors/font_color = Color( 0.996078, 0, 0.945098, 1 )
 custom_colors/font_color_pressed = Color( 0.996078, 0, 0.945098, 1 )
 text = "Thirst Resistance"
@@ -1073,7 +1075,7 @@ margin_left = 304.0
 margin_top = 230.0
 margin_right = 604.0
 margin_bottom = 272.0
-custom_fonts/font = SubResource( 44 )
+custom_fonts/font = SubResource( 41 )
 custom_colors/font_color = Color( 1, 0.670588, 0, 1 )
 custom_colors/font_color_pressed = Color( 1, 0.670588, 0, 1 )
 text = "Gestation"
@@ -1086,7 +1088,7 @@ __meta__ = {
 margin_top = 276.0
 margin_right = 300.0
 margin_bottom = 318.0
-custom_fonts/font = SubResource( 45 )
+custom_fonts/font = SubResource( 42 )
 custom_colors/font_color = Color( 0.360784, 1, 0, 1 )
 custom_colors/font_color_pressed = Color( 0.360784, 1, 0, 1 )
 text = "Mating Cycle"
@@ -1100,7 +1102,7 @@ margin_left = 304.0
 margin_top = 276.0
 margin_right = 604.0
 margin_bottom = 318.0
-custom_fonts/font = SubResource( 46 )
+custom_fonts/font = SubResource( 43 )
 custom_colors/font_color_hover_pressed = Color( 0, 0, 0, 1 )
 custom_colors/font_color = Color( 0, 0.964706, 1, 1 )
 custom_colors/font_color_pressed = Color( 0, 0.960784, 1, 1 )
@@ -1114,7 +1116,7 @@ __meta__ = {
 margin_top = 322.0
 margin_right = 300.0
 margin_bottom = 364.0
-custom_fonts/font = SubResource( 47 )
+custom_fonts/font = SubResource( 44 )
 custom_colors/font_color_hover_pressed = Color( 0, 0, 0, 1 )
 custom_colors/font_color = Color( 0.8, 0.129412, 0.129412, 1 )
 custom_colors/font_color_pressed = Color( 0.8, 0.129412, 0.129412, 1 )
@@ -1317,14 +1319,26 @@ default_color = Color( 1, 0.976471, 0, 1 )
 antialiased = true
 script = ExtResource( 38 )
 
+[node name="HeatStrokeGraph" type="Line2D" parent="DisplayChartsMenu/GradientControl"]
+width = 3.0
+default_color = Color( 1, 0.788235, 0.960784, 1 )
+antialiased = true
+script = ExtResource( 41 )
+
+[node name="FreezingGraph" type="Line2D" parent="DisplayChartsMenu/GradientControl"]
+width = 3.0
+default_color = Color( 0.47451, 0.337255, 0.0588235, 1 )
+antialiased = true
+script = ExtResource( 42 )
+
 [node name="MultiMeshPlants" type="MultiMeshInstance" parent="."]
-multimesh = SubResource( 50 )
+multimesh = SubResource( 47 )
 
 [node name="PlantGrowthTimer" type="Timer" parent="."]
 wait_time = 5.0
 
 [node name="MultiMeshMeat" type="MultiMeshInstance" parent="."]
-multimesh = SubResource( 53 )
+multimesh = SubResource( 50 )
 script = ExtResource( 37 )
 
 [node name="PauseMenu" type="Control" parent="."]
@@ -1413,40 +1427,42 @@ __meta__ = {
 [connection signal="mouse_exited" from="Control/StartSimulation" to="." method="_on_StartSimulation_mouse_exited"]
 [connection signal="pressed" from="Control/StartSimulation" to="BiomeGrid" method="_on_StartSimulation_pressed"]
 [connection signal="pressed" from="Control/StartSimulation" to="SpeciesHolder" method="_on_StartSimulation_pressed"]
-[connection signal="pressed" from="Control/StartSimulation" to="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent" method="_on_StartSimulation_pressed"]
-[connection signal="pressed" from="Control/StartSimulation" to="Control/AddNewSpecies" method="_on_StartSimulation_pressed"]
-[connection signal="pressed" from="Control/StartSimulation" to="Control/ItemList" method="_on_StartSimulation_pressed"]
 [connection signal="pressed" from="Control/StartSimulation" to="Control/StartSimulation" method="_on_StartSimulation_pressed"]
-[connection signal="pressed" from="Control/StartSimulation" to="Control/DisplayCharts" method="_on_StartSimulation_pressed"]
+[connection signal="pressed" from="Control/StartSimulation" to="Control/ItemList" method="_on_StartSimulation_pressed"]
 [connection signal="pressed" from="Control/StartSimulation" to="Control/Pause" method="_on_StartSimulation_pressed"]
+[connection signal="pressed" from="Control/StartSimulation" to="Control/DisplayCharts" method="_on_StartSimulation_pressed"]
+[connection signal="pressed" from="Control/StartSimulation" to="Control/AddNewSpecies" method="_on_StartSimulation_pressed"]
+[connection signal="pressed" from="Control/StartSimulation" to="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent" method="_on_StartSimulation_pressed"]
 [connection signal="pressed" from="Control/AddNewSpecies" to="CameraHolder" method="_on_AddNewSpecies_pressed"]
-[connection signal="pressed" from="Control/AddNewSpecies" to="NewSpeciesMenu" method="_on_AddNewSpecies_pressed"]
-[connection signal="pressed" from="Control/AddNewSpecies" to="Control/AddNewSpecies" method="_on_AddNewSpecies_pressed"]
-[connection signal="pressed" from="Control/AddNewSpecies" to="Control/DisplayCharts" method="_on_AddNewSpecies_pressed"]
 [connection signal="pressed" from="Control/AddNewSpecies" to="Control/Pause" method="_on_AddNewSpecies_pressed"]
+[connection signal="pressed" from="Control/AddNewSpecies" to="Control/DisplayCharts" method="_on_AddNewSpecies_pressed"]
+[connection signal="pressed" from="Control/AddNewSpecies" to="Control/AddNewSpecies" method="_on_AddNewSpecies_pressed"]
+[connection signal="pressed" from="Control/AddNewSpecies" to="NewSpeciesMenu" method="_on_AddNewSpecies_pressed"]
+[connection signal="pressed" from="Control/DisplayCharts" to="Control/Pause" method="_on_DisplayCharts_pressed"]
+[connection signal="pressed" from="Control/DisplayCharts" to="Control/DisplayCharts" method="_on_DisplayCharts_pressed"]
+[connection signal="pressed" from="Control/DisplayCharts" to="Control/AddNewSpecies" method="_on_DisplayCharts_pressed"]
 [connection signal="pressed" from="Control/DisplayCharts" to="DisplayChartsMenu/ItemList2" method="_on_DisplayCharts_pressed"]
 [connection signal="pressed" from="Control/DisplayCharts" to="DisplayChartsMenu" method="_on_DisplayCharts_pressed"]
 [connection signal="pressed" from="Control/DisplayCharts" to="DisplayChartsMenu/GradientControl" method="_on_DisplayCharts_pressed"]
-[connection signal="pressed" from="Control/DisplayCharts" to="Control/AddNewSpecies" method="_on_DisplayCharts_pressed"]
-[connection signal="pressed" from="Control/DisplayCharts" to="Control/DisplayCharts" method="_on_DisplayCharts_pressed"]
-[connection signal="pressed" from="Control/DisplayCharts" to="Control/Pause" method="_on_DisplayCharts_pressed"]
-[connection signal="pressed" from="Control/Pause" to="PauseMenu" method="_on_Pause_pressed"]
-[connection signal="pressed" from="Control/Pause" to="Control/AddNewSpecies" method="_on_Pause_pressed"]
-[connection signal="pressed" from="Control/Pause" to="Control/DisplayCharts" method="_on_Pause_pressed"]
 [connection signal="pressed" from="Control/Pause" to="Control/Pause" method="_on_Pause_pressed"]
+[connection signal="pressed" from="Control/Pause" to="Control/DisplayCharts" method="_on_Pause_pressed"]
+[connection signal="pressed" from="Control/Pause" to="Control/AddNewSpecies" method="_on_Pause_pressed"]
+[connection signal="pressed" from="Control/Pause" to="PauseMenu" method="_on_Pause_pressed"]
 [connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="CameraHolder" method="_on_CloseNewSpecies_pressed"]
-[connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="NewSpeciesMenu" method="_on_CloseNewSpecies_pressed"]
-[connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="Control/AddNewSpecies" method="_on_CloseNewSpecies_pressed"]
-[connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="Control/DisplayCharts" method="_on_CloseNewSpecies_pressed"]
 [connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="Control/Pause" method="_on_CloseNewSpecies_pressed"]
+[connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="Control/DisplayCharts" method="_on_CloseNewSpecies_pressed"]
+[connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="Control/AddNewSpecies" method="_on_CloseNewSpecies_pressed"]
+[connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="NewSpeciesMenu" method="_on_CloseNewSpecies_pressed"]
 [connection signal="gui_input" from="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent/SpeciesName/LineEdit" to="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent" method="_on_LineEdit_gui_input"]
 [connection signal="pressed" from="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent/CreateNewSpecies/NewSpeciesButton" to="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent" method="_on_NewSpeciesButton_pressed"]
+[connection signal="pressed" from="DisplayChartsMenu/CloseChartMenu" to="Control/Pause" method="_on_CloseChartMenu_pressed"]
+[connection signal="pressed" from="DisplayChartsMenu/CloseChartMenu" to="Control/DisplayCharts" method="_on_CloseChartMenu_pressed"]
+[connection signal="pressed" from="DisplayChartsMenu/CloseChartMenu" to="Control/AddNewSpecies" method="_on_CloseChartMenu_pressed"]
 [connection signal="pressed" from="DisplayChartsMenu/CloseChartMenu" to="DisplayChartsMenu" method="_on_CloseChartMenu_pressed"]
 [connection signal="pressed" from="DisplayChartsMenu/CloseChartMenu" to="DisplayChartsMenu/GradientControl" method="_on_CloseChartMenu_pressed"]
-[connection signal="pressed" from="DisplayChartsMenu/CloseChartMenu" to="Control/AddNewSpecies" method="_on_CloseChartMenu_pressed"]
-[connection signal="pressed" from="DisplayChartsMenu/CloseChartMenu" to="Control/DisplayCharts" method="_on_CloseChartMenu_pressed"]
-[connection signal="pressed" from="DisplayChartsMenu/CloseChartMenu" to="Control/Pause" method="_on_CloseChartMenu_pressed"]
 [connection signal="item_selected" from="DisplayChartsMenu/ItemList2" to="DisplayChartsMenu/GradientControl" method="_on_ItemList2_item_selected"]
+[connection signal="toggled" from="DisplayChartsMenu/DeathsGridContainer/DeathsFromFreezingCheckButton" to="DisplayChartsMenu/GradientControl/FreezingGraph" method="_on_DeathsFromFreezingCheckButton_toggled"]
+[connection signal="toggled" from="DisplayChartsMenu/DeathsGridContainer/DeathsFromHeatStrokeCheckButton" to="DisplayChartsMenu/GradientControl/HeatStrokeGraph" method="_on_DeathsFromHeatStrokeCheckButton_toggled"]
 [connection signal="toggled" from="DisplayChartsMenu/DeathsGridContainer/DeathsFromBeingHuntedCheckButton" to="DisplayChartsMenu/GradientControl/BeingHuntedGraph" method="_on_DeathsFromBeingHuntedCheckButton_toggled"]
 [connection signal="toggled" from="DisplayChartsMenu/DeathsGridContainer/DeathsFromDehydrationCheckButton" to="DisplayChartsMenu/GradientControl/DehydrationGraph" method="_on_DeathsFromDehydrationCheckButton_toggled"]
 [connection signal="toggled" from="DisplayChartsMenu/DeathsGridContainer/DeathsFromStarvationCheckButton" to="DisplayChartsMenu/GradientControl/StarvationGraph" method="_on_DeathsFromStarvationCheckButton_toggled"]
@@ -1467,9 +1483,9 @@ __meta__ = {
 [connection signal="toggled" from="DisplayChartsMenu/GeneValuesGridContainer/PerceptionCheckButton" to="DisplayChartsMenu/GradientControl/PerceptionGradient" method="_on_PerceptionCheckButton_toggled"]
 [connection signal="toggled" from="DisplayChartsMenu/GeneValuesGridContainer/SpeedCheckButton" to="DisplayChartsMenu/GradientControl/SpeedGradient" method="_on_SpeedCheckButton_toggled"]
 [connection signal="timeout" from="PlantGrowthTimer" to="BiomeGrid" method="_on_PlantGrowthTimer_timeout"]
-[connection signal="pressed" from="PauseMenu/Resume" to="PauseMenu" method="_on_Resume_pressed"]
-[connection signal="pressed" from="PauseMenu/Resume" to="Control/AddNewSpecies" method="_on_Resume_pressed"]
-[connection signal="pressed" from="PauseMenu/Resume" to="Control/DisplayCharts" method="_on_Resume_pressed"]
 [connection signal="pressed" from="PauseMenu/Resume" to="Control/Pause" method="_on_Resume_pressed"]
+[connection signal="pressed" from="PauseMenu/Resume" to="Control/DisplayCharts" method="_on_Resume_pressed"]
+[connection signal="pressed" from="PauseMenu/Resume" to="Control/AddNewSpecies" method="_on_Resume_pressed"]
+[connection signal="pressed" from="PauseMenu/Resume" to="PauseMenu" method="_on_Resume_pressed"]
 [connection signal="pressed" from="PauseMenu/BackToMainMenu" to="PauseMenu" method="_on_BackToMainMenu_pressed"]
 [connection signal="pressed" from="PauseMenu/Exit" to="PauseMenu" method="_on_Exit_pressed"]
