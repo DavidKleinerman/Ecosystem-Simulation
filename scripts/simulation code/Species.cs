@@ -274,6 +274,10 @@ public class Species : MultiMeshInstance
 			}
 			else if (Creatures[i].Age > Creatures[i].Longevity){
 				Die(Creatures[i], i, CauseOfDeath.OldAge);
+			} else if (Creatures[i].Temperature > 100){
+				Die(Creatures[i], i, CauseOfDeath.Starvation);
+			} else if (Creatures[i].Temperature < 0) {
+				Die(Creatures[i], i, CauseOfDeath.Starvation);
 			}
 			else {
 				if (Creatures[i].Growing){
