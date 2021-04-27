@@ -262,7 +262,7 @@ public class Species : MultiMeshInstance
 			}
 			if (Creatures[i].MyState == State.Sleeping){
 				Creatures[i].Sleepiness -= (BaseSleepinessGrowth + 5 - (Creatures[i].SleepCycle * 2)) * delta;
-				if (Creatures[i].Sleepiness < 0 || 100 - Creatures[i].Energy > Creatures[i].Sleepiness || Creatures[i].Thirst > Creatures[i].Sleepiness){
+				if (Creatures[i].Sleepiness < 0 || ((100 - Creatures[i].Energy > Creatures[i].Sleepiness || Creatures[i].Thirst > Creatures[i].Sleepiness) && Creatures[i].Sleepiness < 75)){
 					SetState(Creatures[i], State.ExploringTheEnvironment);
 				}
 			}
