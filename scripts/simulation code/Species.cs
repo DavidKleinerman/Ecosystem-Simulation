@@ -20,6 +20,7 @@ public class Species : MultiMeshInstance
 	private const float MaxGoingToTime = 4;
 	private const int TimeToBirth = 3;
 	private const float BaseTempChange = 2f;
+	private const float BaseSleepinessGrowth = 2f;
 	//enums
 	public enum Diet {
 		Herbivore,
@@ -250,8 +251,21 @@ public class Species : MultiMeshInstance
 					additionalDecay += 0.2f * (1.5f - Creatures[i].Stamina);
 				Creatures[i].Energy -= ((BaseEnergyDecay + additionalDecay - Creatures[i].HungerResistance) * delta);
 			} 
-			if (Creatures[i].MyState != State.Drinking) Creatures[i].Thirst += ((BaseThirstDecay - Creatures[i].ThirstResistance) * delta);
-
+			if (Creatures[i].MyState != State.Drinking) 
+				Creatures[i].Thirst += ((BaseThirstDecay - Creatures[i].ThirstResistance) * delta);
+			if (Creatures[i].MyState != State.Sleeping) {
+				Creatures[i].Sleepiness += (BaseSleepinessGrowth + Creatures[i].SleepCycle) * delta;
+				if (Creatures[i].MyState == State.ExploringTheEnvironment && Creatures[i].Sleepiness > 75 && Creatures[i].Sleepiness > 100 - Creatures[i].Energy && Creatures[i].Sleepiness > Creatures[i].Thirst){
+					Creatures[i].Velocity = new Vector3();
+					SetState(Creatures[i], State.Sleeping);
+				}
+			}
+			if (Creatures[i].MyState == State.Sleeping){
+				Creatures[i].Sleepiness -= (BaseSleepinessGrowth + 5 - (Creatures[i].SleepCycle * 2)) * delta;
+				if (Creatures[i].Sleepiness < 0 || 100 - Creatures[i].Energy > Creatures[i].Sleepiness || Creatures[i].Thirst > Creatures[i].Sleepiness){
+					SetState(Creatures[i], State.ExploringTheEnvironment);
+				}
+			}
 			posInGrid = TileGrid.WorldToMap(new Vector3(Creatures[i].MySpatial.Translation.x, 1, Creatures[i].MySpatial.Translation.z));
 			if (TileGrid.GetCellItem((int)posInGrid.x, (int)posInGrid.y, (int)posInGrid.z) == 1) //desert
 				Creatures[i].Temperature += (BaseTempChange - Creatures[i].HeatResistance) * delta;
