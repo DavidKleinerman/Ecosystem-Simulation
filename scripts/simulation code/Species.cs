@@ -36,7 +36,8 @@ public class Species : MultiMeshInstance
 		Reproducing,
 		GivingBirth,
 		Hunting,
-		RunningFromPredators
+		RunningFromPredators,
+		Sleeping
 	}
 
 	public enum CauseOfDeath {
@@ -100,6 +101,7 @@ public class Species : MultiMeshInstance
 		public float HeatResistance;
 		public float ColdResistance;
 		public float Stamina;
+		public float SleepCycle;
 
 		public float MaxSpeed;
 		public float MaxPerception;
@@ -119,6 +121,7 @@ public class Species : MultiMeshInstance
 		public float ReproductiveUrge = 0;
 		public float Age = 0;
 		public float Temperature = 50;
+		public float Sleepiness = 0;
 
 		// Passive states
 		public bool Pregnant = false;
@@ -814,6 +817,7 @@ public class Species : MultiMeshInstance
 		creature.MaxHeatResistance = creature.MyGenome.GetTrait(Genome.GeneticTrait.HeatResistance)/50;
 		creature.MaxColdResistance = creature.MyGenome.GetTrait(Genome.GeneticTrait.ColdResistance)/50;
 		creature.MaxStamina = creature.MyGenome.GetTrait(Genome.GeneticTrait.Stamina)/100;
+		creature.SleepCycle = creature.MyGenome.GetTrait(Genome.GeneticTrait.SleepCycle)/50;
 		if (isBaby){
 			multiplier = (pregnancyTime/26) * 0.8f;
 			creature.MySpatial.Scale = new Vector3(multiplier, multiplier, multiplier);
@@ -851,6 +855,7 @@ public class Species : MultiMeshInstance
 		creature.Fitness += creature.MyGenome.GetTrait(Genome.GeneticTrait.HeatResistance);
 		creature.Fitness += creature.MyGenome.GetTrait(Genome.GeneticTrait.ColdResistance);
 		creature.Fitness += creature.MyGenome.GetTrait(Genome.GeneticTrait.Stamina);
+		creature.Fitness += creature.MyGenome.GetTrait(Genome.GeneticTrait.SleepCycle);
 	}
 
 	public void AddCreature(Genome genome, Vector3 position, Godot.Collections.Array<Creature> list, bool isBaby, float pregnancyTime){

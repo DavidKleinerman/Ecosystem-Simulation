@@ -93,6 +93,7 @@ public class NewSpeciesContent : VBoxContainer
 			InitialValues.Add((float)GetNode<HSlider>("HeatResistance/HSlider").Value);
 			InitialValues.Add((float)GetNode<HSlider>("ColdResistance/HSlider").Value);
 			InitialValues.Add((float)GetNode<HSlider>("Stamina/HSlider").Value);
+			InitialValues.Add((float)GetNode<HSlider>("SleepCycle/HSlider").Value);
 			float geneticVariation = (float)GetNode<HSlider>("GeneticVariation/HSlider").Value;
 			int diet = (int)GetNode<OptionButton>("Diet/OptionButton").Selected;
 			String speciesName = GetNode<LineEdit>("SpeciesName/LineEdit").Text;
