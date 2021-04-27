@@ -1,4 +1,4 @@
-[gd_scene load_steps=93 format=2]
+[gd_scene load_steps=94 format=2]
 
 [ext_resource path="res://scripts/simulation code/Simulation.cs" type="Script" id=1]
 [ext_resource path="res://scripts/simulation code/CameraHolder.cs" type="Script" id=2]
@@ -42,6 +42,7 @@
 [ext_resource path="res://scripts/gradients code/HeatResistanceGraph.cs" type="Script" id=40]
 [ext_resource path="res://scripts/gradients code/HeatStrokeGraph.cs" type="Script" id=41]
 [ext_resource path="res://scripts/gradients code/FeezingGraph.cs" type="Script" id=42]
+[ext_resource path="res://scripts/gradients code/SleepCycleGraph.cs" type="Script" id=43]
 
 [sub_resource type="SphereShape" id=1]
 
@@ -1336,6 +1337,12 @@ default_color = Color( 0.47451, 0.337255, 0.0588235, 1 )
 antialiased = true
 script = ExtResource( 42 )
 
+[node name="SleepCycleGraph" type="Line2D" parent="DisplayChartsMenu/GradientControl"]
+width = 3.0
+default_color = Color( 0.4, 0.203922, 0.203922, 1 )
+antialiased = true
+script = ExtResource( 43 )
+
 [node name="MultiMeshPlants" type="MultiMeshInstance" parent="."]
 multimesh = SubResource( 47 )
 
@@ -1473,6 +1480,7 @@ __meta__ = {
 [connection signal="toggled" from="DisplayChartsMenu/DeathsGridContainer/DeathsFromStarvationCheckButton" to="DisplayChartsMenu/GradientControl/StarvationGraph" method="_on_DeathsFromStarvationCheckButton_toggled"]
 [connection signal="toggled" from="DisplayChartsMenu/DeathsGridContainer/DeathsFromOldAgeCheckButton" to="DisplayChartsMenu/GradientControl/OldAgeGraph" method="_on_DeathsFromOldAgeCheckButton_toggled"]
 [connection signal="toggled" from="DisplayChartsMenu/RunningSimGridContainer/PopulationSizeCheckButton" to="DisplayChartsMenu/GradientControl/PopulationSizeGraph" method="_on_PopulationSizeCheckButton_toggled"]
+[connection signal="toggled" from="DisplayChartsMenu/GeneValuesGridContainer/SleepCycleCheckButton" to="DisplayChartsMenu/GradientControl/SleepCycleGraph" method="_on_SleepCycleCheckButton_toggled"]
 [connection signal="toggled" from="DisplayChartsMenu/GeneValuesGridContainer/StaminaCheckButton" to="DisplayChartsMenu/GradientControl/StaminaGraph" method="_on_StaminaCheckButton_toggled"]
 [connection signal="toggled" from="DisplayChartsMenu/GeneValuesGridContainer/StrengthCheckButton" to="DisplayChartsMenu/GradientControl/StrengthGraph" method="_on_StrengthCheckButton_toggled"]
 [connection signal="toggled" from="DisplayChartsMenu/GeneValuesGridContainer/LongevityCheckButton" to="DisplayChartsMenu/GradientControl/LongevityGradient" method="_on_LongevityCheckButton_toggled"]

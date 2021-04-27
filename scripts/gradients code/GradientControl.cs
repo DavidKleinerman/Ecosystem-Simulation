@@ -20,6 +20,7 @@ public class GradientControl : Control
 	private Line2D lineHeatResistance;
 	private Line2D lineColdResistance;
 	private Line2D lineStamina;
+	private Line2D lineSleepCycle;
 	//causes of death
 	private Line2D lineStarvation;
 	private Line2D lineDehydration;
@@ -46,6 +47,7 @@ public class GradientControl : Control
 	public Godot.Collections.Array HeatResistanceArray;
 	public Godot.Collections.Array ColdResistanceArray;
 	public Godot.Collections.Array StaminaArray;
+	public Godot.Collections.Array SleepCycleArray;
 	//causes of death arrays
 	public Godot.Collections.Array StarvationArray;
 	public Godot.Collections.Array DehydrationArray;
@@ -76,6 +78,7 @@ public class GradientControl : Control
 		lineHeatResistance = GetNode<Line2D>("HeatResistanceGraph");
 		lineColdResistance = GetNode<Line2D>("ColdResistanceGraph");
 		lineStamina = GetNode<Line2D>("StaminaGraph");
+		lineSleepCycle = GetNode<Line2D>("SleepCycleGraph");
 		//causes of death
 		lineStarvation = GetNode<Line2D>("StarvationGraph");
 		lineDehydration = GetNode<Line2D>("DehydrationGraph");
@@ -106,6 +109,7 @@ public class GradientControl : Control
 			HeatResistanceArray = speciesData.GetHeatResistanceData();
 			ColdResistanceArray = speciesData.GetColdResistancehData();
 			StaminaArray = speciesData.GetStaminaData();
+			SleepCycleArray = speciesData.GetSleepCycleData();
 
 			StarvationArray = speciesData.GetStarvationData();
 			DehydrationArray = speciesData.GetDehydrationData();
@@ -131,6 +135,7 @@ public class GradientControl : Control
 			DrawGraph(HeatResistanceArray, lineHeatResistance, speciesCreationTime);
 			DrawGraph(ColdResistanceArray, lineColdResistance, speciesCreationTime);
 			DrawGraph(StaminaArray, lineStamina, speciesCreationTime);
+			DrawGraph(SleepCycleArray, lineSleepCycle, speciesCreationTime);
 
 			DrawGraph(StarvationArray, lineStarvation, speciesCreationTime);
 			DrawGraph(DehydrationArray, lineDehydration, speciesCreationTime);
@@ -194,7 +199,8 @@ public class GradientControl : Control
 				lineLongevity.Visible || lineLitterSize.Visible ||
 				lineIntelligence.Visible || lineMemory.Visible ||
 				lineStrength.Visible || lineHeatResistance.Visible ||
-				lineColdResistance.Visible || lineStamina.Visible);
+				lineColdResistance.Visible || lineStamina.Visible ||
+				lineSleepCycle.Visible);
 	}
 
 	private void DrawGraph(Godot.Collections.Array dataArray, Line2D line, int speciesCreationTime){

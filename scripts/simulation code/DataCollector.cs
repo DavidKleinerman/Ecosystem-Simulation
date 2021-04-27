@@ -22,6 +22,7 @@ public class DataCollector
 	private Godot.Collections.Array HeatResistanceArray = (Godot.Collections.Array)new Godot.Collections.Array();
 	private Godot.Collections.Array ColdResistanceArray = (Godot.Collections.Array)new Godot.Collections.Array();
 	private Godot.Collections.Array StaminaArray = (Godot.Collections.Array)new Godot.Collections.Array();
+	private Godot.Collections.Array SleepCycleArray = (Godot.Collections.Array)new Godot.Collections.Array();
 	//causes of death
 	private Godot.Collections.Array StarvationArray = (Godot.Collections.Array)new Godot.Collections.Array();
 	private Godot.Collections.Array DehydrationArray = (Godot.Collections.Array)new Godot.Collections.Array();
@@ -56,6 +57,8 @@ public class DataCollector
 			HeatResistanceArray.Add(0.0f);
 			ColdResistanceArray.Add(0.0f);
 			StaminaArray.Add(0.0f);
+			SleepCycleArray.Add(0.0f);
+
 			StarvationArray.Add(0.0f);
 			DehydrationArray.Add(0.0f);
 			OldAgeArray.Add(0.0f);
@@ -87,6 +90,7 @@ public class DataCollector
 		CollectTraitData(HeatResistanceArray, Genome.GeneticTrait.HeatResistance, creaturesInSpecies);
 		CollectTraitData(ColdResistanceArray, Genome.GeneticTrait.ColdResistance, creaturesInSpecies);
 		CollectTraitData(StaminaArray, Genome.GeneticTrait.Stamina, creaturesInSpecies);
+		CollectTraitData(SleepCycleArray, Genome.GeneticTrait.SleepCycle, creaturesInSpecies);
 		//update causes of death data
 		CollectCauseOfDeathData(StarvationArray, CurrentStarvationAmount);
 		CollectCauseOfDeathData(DehydrationArray, CurrentDehydrationAmount);
@@ -229,6 +233,11 @@ public class DataCollector
 	public Godot.Collections.Array GetStaminaData()
 	{
 		return StaminaArray;
+	}
+
+	public Godot.Collections.Array GetSleepCycleData()
+	{
+		return SleepCycleArray;
 	}
 
 	public Godot.Collections.Array GetPopulationSizeData(){
