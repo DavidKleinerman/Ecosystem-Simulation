@@ -685,12 +685,12 @@ public class Species : MultiMeshInstance
 				if (creature.GoingToTime > 5){ //failed hunting attempt
 					UpdateMemoryList(creature, creature.FailedHunts, creature.TargetCreature, false);
 					StopGoingTo(creature, State.ExploringTheEnvironment);
-					GD.Print("failed hunt!");
+					// GD.Print("failed hunt!");
 				}
 				else if(creature.MySpatial.Translation.DistanceTo(creature.TargetCreature.MySpatial.Translation) <= 1.8f){ // successful hunting attampt
 					creature.TargetCreature.HuntedDown = true;
 					StopGoingTo(creature, State.Eating);
-					GD.Print("successful hunt!");
+					// GD.Print("successful hunt!");
 				} else {
 					creature.CurrentTarget = creature.TargetCreature.MySpatial.Translation;
 					RotateToTarget(creature, creature.TargetCreature.MySpatial.Translation);

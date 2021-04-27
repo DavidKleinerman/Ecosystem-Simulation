@@ -445,7 +445,7 @@ __meta__ = {
 
 [node name="NewSpeciesContent" type="VBoxContainer" parent="NewSpeciesMenu/NewSpeciesScroll"]
 margin_right = 600.0
-margin_bottom = 1880.0
+margin_bottom = 1940.0
 rect_min_size = Vector2( 600, 0 )
 custom_constants/separation = 60
 script = ExtResource( 9 )
@@ -551,10 +551,15 @@ margin_top = 900.0
 margin_right = 600.0
 margin_bottom = 900.0
 
-[node name="Representations" type="Control" parent="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent"]
+[node name="SleepCycle" parent="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent" instance=ExtResource( 8 )]
 margin_top = 960.0
 margin_right = 600.0
 margin_bottom = 960.0
+
+[node name="Representations" type="Control" parent="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent"]
+margin_top = 1020.0
+margin_right = 600.0
+margin_bottom = 1020.0
 
 [node name="Label" type="Label" parent="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent/Representations"]
 margin_left = 20.0
@@ -567,16 +572,16 @@ __meta__ = {
 }
 
 [node name="RepresentationsPicker" type="Control" parent="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent"]
-margin_top = 1020.0
+margin_top = 1080.0
 margin_right = 600.0
-margin_bottom = 1440.0
+margin_bottom = 1500.0
 rect_min_size = Vector2( 0, 420 )
 
 [node name="ColorPicker" type="ColorPicker" parent="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent/RepresentationsPicker"]
-margin_left = 54.0
-margin_top = 24.0
-margin_right = 554.0
-margin_bottom = 444.0
+margin_left = 58.0
+margin_top = 28.0
+margin_right = 558.0
+margin_bottom = 448.0
 rect_min_size = Vector2( 500, 420 )
 edit_alpha = false
 presets_enabled = false
@@ -586,9 +591,9 @@ __meta__ = {
 }
 
 [node name="Additional" type="Control" parent="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent"]
-margin_top = 1500.0
+margin_top = 1560.0
 margin_right = 600.0
-margin_bottom = 1500.0
+margin_bottom = 1560.0
 
 [node name="Label" type="Label" parent="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent/Additional"]
 margin_left = 20.0
@@ -601,9 +606,9 @@ __meta__ = {
 }
 
 [node name="Diet" type="Control" parent="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent"]
-margin_top = 1560.0
+margin_top = 1620.0
 margin_right = 600.0
-margin_bottom = 1560.0
+margin_bottom = 1620.0
 
 [node name="OptionButton" type="OptionButton" parent="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent/Diet"]
 margin_left = 200.0
@@ -632,14 +637,14 @@ __meta__ = {
 }
 
 [node name="GeneticVariation" parent="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent" instance=ExtResource( 8 )]
-margin_top = 1620.0
-margin_right = 600.0
-margin_bottom = 1620.0
-
-[node name="PopSizeWarning" type="Control" parent="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent"]
 margin_top = 1680.0
 margin_right = 600.0
 margin_bottom = 1680.0
+
+[node name="PopSizeWarning" type="Control" parent="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent"]
+margin_top = 1740.0
+margin_right = 600.0
+margin_bottom = 1740.0
 
 [node name="Label" type="Label" parent="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent/PopSizeWarning"]
 margin_left = 20.0
@@ -653,14 +658,14 @@ __meta__ = {
 }
 
 [node name="PopulationSize" parent="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent" instance=ExtResource( 8 )]
-margin_top = 1740.0
-margin_right = 600.0
-margin_bottom = 1740.0
-
-[node name="CreateNewSpecies" type="Control" parent="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent"]
 margin_top = 1800.0
 margin_right = 600.0
-margin_bottom = 1880.0
+margin_bottom = 1800.0
+
+[node name="CreateNewSpecies" type="Control" parent="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent"]
+margin_top = 1860.0
+margin_right = 600.0
+margin_bottom = 1940.0
 rect_min_size = Vector2( 0, 80 )
 
 [node name="NewSpeciesButton" type="Button" parent="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent/CreateNewSpecies"]
@@ -1426,40 +1431,40 @@ __meta__ = {
 [connection signal="mouse_exited" from="Control/StartSimulation" to="BiomeGrid" method="_on_StartSimulation_mouse_exited"]
 [connection signal="mouse_exited" from="Control/StartSimulation" to="." method="_on_StartSimulation_mouse_exited"]
 [connection signal="pressed" from="Control/StartSimulation" to="BiomeGrid" method="_on_StartSimulation_pressed"]
-[connection signal="pressed" from="Control/StartSimulation" to="SpeciesHolder" method="_on_StartSimulation_pressed"]
+[connection signal="pressed" from="Control/StartSimulation" to="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent" method="_on_StartSimulation_pressed"]
 [connection signal="pressed" from="Control/StartSimulation" to="Control/StartSimulation" method="_on_StartSimulation_pressed"]
-[connection signal="pressed" from="Control/StartSimulation" to="Control/ItemList" method="_on_StartSimulation_pressed"]
-[connection signal="pressed" from="Control/StartSimulation" to="Control/Pause" method="_on_StartSimulation_pressed"]
 [connection signal="pressed" from="Control/StartSimulation" to="Control/DisplayCharts" method="_on_StartSimulation_pressed"]
 [connection signal="pressed" from="Control/StartSimulation" to="Control/AddNewSpecies" method="_on_StartSimulation_pressed"]
-[connection signal="pressed" from="Control/StartSimulation" to="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent" method="_on_StartSimulation_pressed"]
+[connection signal="pressed" from="Control/StartSimulation" to="Control/ItemList" method="_on_StartSimulation_pressed"]
+[connection signal="pressed" from="Control/StartSimulation" to="Control/Pause" method="_on_StartSimulation_pressed"]
+[connection signal="pressed" from="Control/StartSimulation" to="SpeciesHolder" method="_on_StartSimulation_pressed"]
 [connection signal="pressed" from="Control/AddNewSpecies" to="CameraHolder" method="_on_AddNewSpecies_pressed"]
-[connection signal="pressed" from="Control/AddNewSpecies" to="Control/Pause" method="_on_AddNewSpecies_pressed"]
+[connection signal="pressed" from="Control/AddNewSpecies" to="NewSpeciesMenu" method="_on_AddNewSpecies_pressed"]
 [connection signal="pressed" from="Control/AddNewSpecies" to="Control/DisplayCharts" method="_on_AddNewSpecies_pressed"]
 [connection signal="pressed" from="Control/AddNewSpecies" to="Control/AddNewSpecies" method="_on_AddNewSpecies_pressed"]
-[connection signal="pressed" from="Control/AddNewSpecies" to="NewSpeciesMenu" method="_on_AddNewSpecies_pressed"]
-[connection signal="pressed" from="Control/DisplayCharts" to="Control/Pause" method="_on_DisplayCharts_pressed"]
-[connection signal="pressed" from="Control/DisplayCharts" to="Control/DisplayCharts" method="_on_DisplayCharts_pressed"]
-[connection signal="pressed" from="Control/DisplayCharts" to="Control/AddNewSpecies" method="_on_DisplayCharts_pressed"]
-[connection signal="pressed" from="Control/DisplayCharts" to="DisplayChartsMenu/ItemList2" method="_on_DisplayCharts_pressed"]
+[connection signal="pressed" from="Control/AddNewSpecies" to="Control/Pause" method="_on_AddNewSpecies_pressed"]
 [connection signal="pressed" from="Control/DisplayCharts" to="DisplayChartsMenu" method="_on_DisplayCharts_pressed"]
 [connection signal="pressed" from="Control/DisplayCharts" to="DisplayChartsMenu/GradientControl" method="_on_DisplayCharts_pressed"]
-[connection signal="pressed" from="Control/Pause" to="Control/Pause" method="_on_Pause_pressed"]
+[connection signal="pressed" from="Control/DisplayCharts" to="Control/DisplayCharts" method="_on_DisplayCharts_pressed"]
+[connection signal="pressed" from="Control/DisplayCharts" to="Control/AddNewSpecies" method="_on_DisplayCharts_pressed"]
+[connection signal="pressed" from="Control/DisplayCharts" to="Control/Pause" method="_on_DisplayCharts_pressed"]
+[connection signal="pressed" from="Control/DisplayCharts" to="DisplayChartsMenu/ItemList2" method="_on_DisplayCharts_pressed"]
+[connection signal="pressed" from="Control/Pause" to="PauseMenu" method="_on_Pause_pressed"]
 [connection signal="pressed" from="Control/Pause" to="Control/DisplayCharts" method="_on_Pause_pressed"]
 [connection signal="pressed" from="Control/Pause" to="Control/AddNewSpecies" method="_on_Pause_pressed"]
-[connection signal="pressed" from="Control/Pause" to="PauseMenu" method="_on_Pause_pressed"]
+[connection signal="pressed" from="Control/Pause" to="Control/Pause" method="_on_Pause_pressed"]
 [connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="CameraHolder" method="_on_CloseNewSpecies_pressed"]
-[connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="Control/Pause" method="_on_CloseNewSpecies_pressed"]
+[connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="NewSpeciesMenu" method="_on_CloseNewSpecies_pressed"]
 [connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="Control/DisplayCharts" method="_on_CloseNewSpecies_pressed"]
 [connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="Control/AddNewSpecies" method="_on_CloseNewSpecies_pressed"]
-[connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="NewSpeciesMenu" method="_on_CloseNewSpecies_pressed"]
+[connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="Control/Pause" method="_on_CloseNewSpecies_pressed"]
 [connection signal="gui_input" from="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent/SpeciesName/LineEdit" to="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent" method="_on_LineEdit_gui_input"]
 [connection signal="pressed" from="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent/CreateNewSpecies/NewSpeciesButton" to="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent" method="_on_NewSpeciesButton_pressed"]
-[connection signal="pressed" from="DisplayChartsMenu/CloseChartMenu" to="Control/Pause" method="_on_CloseChartMenu_pressed"]
-[connection signal="pressed" from="DisplayChartsMenu/CloseChartMenu" to="Control/DisplayCharts" method="_on_CloseChartMenu_pressed"]
-[connection signal="pressed" from="DisplayChartsMenu/CloseChartMenu" to="Control/AddNewSpecies" method="_on_CloseChartMenu_pressed"]
 [connection signal="pressed" from="DisplayChartsMenu/CloseChartMenu" to="DisplayChartsMenu" method="_on_CloseChartMenu_pressed"]
 [connection signal="pressed" from="DisplayChartsMenu/CloseChartMenu" to="DisplayChartsMenu/GradientControl" method="_on_CloseChartMenu_pressed"]
+[connection signal="pressed" from="DisplayChartsMenu/CloseChartMenu" to="Control/DisplayCharts" method="_on_CloseChartMenu_pressed"]
+[connection signal="pressed" from="DisplayChartsMenu/CloseChartMenu" to="Control/AddNewSpecies" method="_on_CloseChartMenu_pressed"]
+[connection signal="pressed" from="DisplayChartsMenu/CloseChartMenu" to="Control/Pause" method="_on_CloseChartMenu_pressed"]
 [connection signal="item_selected" from="DisplayChartsMenu/ItemList2" to="DisplayChartsMenu/GradientControl" method="_on_ItemList2_item_selected"]
 [connection signal="toggled" from="DisplayChartsMenu/DeathsGridContainer/DeathsFromFreezingCheckButton" to="DisplayChartsMenu/GradientControl/FreezingGraph" method="_on_DeathsFromFreezingCheckButton_toggled"]
 [connection signal="toggled" from="DisplayChartsMenu/DeathsGridContainer/DeathsFromHeatStrokeCheckButton" to="DisplayChartsMenu/GradientControl/HeatStrokeGraph" method="_on_DeathsFromHeatStrokeCheckButton_toggled"]
@@ -1483,9 +1488,9 @@ __meta__ = {
 [connection signal="toggled" from="DisplayChartsMenu/GeneValuesGridContainer/PerceptionCheckButton" to="DisplayChartsMenu/GradientControl/PerceptionGradient" method="_on_PerceptionCheckButton_toggled"]
 [connection signal="toggled" from="DisplayChartsMenu/GeneValuesGridContainer/SpeedCheckButton" to="DisplayChartsMenu/GradientControl/SpeedGradient" method="_on_SpeedCheckButton_toggled"]
 [connection signal="timeout" from="PlantGrowthTimer" to="BiomeGrid" method="_on_PlantGrowthTimer_timeout"]
-[connection signal="pressed" from="PauseMenu/Resume" to="Control/Pause" method="_on_Resume_pressed"]
+[connection signal="pressed" from="PauseMenu/Resume" to="PauseMenu" method="_on_Resume_pressed"]
 [connection signal="pressed" from="PauseMenu/Resume" to="Control/DisplayCharts" method="_on_Resume_pressed"]
 [connection signal="pressed" from="PauseMenu/Resume" to="Control/AddNewSpecies" method="_on_Resume_pressed"]
-[connection signal="pressed" from="PauseMenu/Resume" to="PauseMenu" method="_on_Resume_pressed"]
+[connection signal="pressed" from="PauseMenu/Resume" to="Control/Pause" method="_on_Resume_pressed"]
 [connection signal="pressed" from="PauseMenu/BackToMainMenu" to="PauseMenu" method="_on_BackToMainMenu_pressed"]
 [connection signal="pressed" from="PauseMenu/Exit" to="PauseMenu" method="_on_Exit_pressed"]

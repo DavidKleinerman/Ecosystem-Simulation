@@ -34,6 +34,8 @@ public class NewSpeciesContent : VBoxContainer
 		GetNode<Label>("ColdResistance/Label").HintTooltip = "How fast the creature's temperature decreases in cold environments.\nLarger number = slower temperature decrease.";
 		GetNode<Label>("Stamina/Label").Text = "Stamina";
 		GetNode<Label>("Stamina/Label").HintTooltip = "Influences the energy decay when the creature is doing tiring actions.\nLarger number = slower energy decay.";
+		GetNode<Label>("SleepCycle/Label").Text = "Sleep Cycle";
+		GetNode<Label>("SleepCycle/Label").HintTooltip = "Influences how much and how long and frequently the creature sleeps.\nLarger number = more frequent and longer naps.";
 		GetNode<Label>("GeneticVariation/Label").Text = "Genetic Variation";
 		GetNode<Label>("GeneticVariation/Label").HintTooltip = "The difference of each indvidual's trait value, in the initial population, form the values set by the user.";
 		GetNode<Label>("PopulationSize/Label").Text = "Population Size";
