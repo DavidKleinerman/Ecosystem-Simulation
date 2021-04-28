@@ -217,4 +217,28 @@ public class MainMenu : Control
 		}
 		f.Close();	
 	}*/
+
+	private void _on_LoadSimButton_pressed()
+	{
+		GetNode<FileDialog>("FileDialog").Popup_();
+		GetNode<Button>("NewSimButton").Visible = false;
+		GetNode<Button>("LoadSimButton").Visible = false;
+		GetNode<Button>("SettingButton").Visible = false;
+		GetNode<Button>("ExitButton").Visible = false;
+	}
+
+	private void _on_FileDialog_popup_hide()
+	{
+		GetNode<Button>("NewSimButton").Visible = true;
+		GetNode<Button>("LoadSimButton").Visible = true;
+		GetNode<Button>("SettingButton").Visible = true;
+		GetNode<Button>("ExitButton").Visible = true;
+	}
+
 }
+
+
+
+
+
+
