@@ -47,7 +47,8 @@ public class Species : MultiMeshInstance
 		OldAge,
 		BeingHunted,
 		HeatStroke,
-		Freezing
+		Freezing,
+		SleepDeprivation
 	}
 	public enum Gender{
 		Female,
@@ -297,6 +298,8 @@ public class Species : MultiMeshInstance
 				Die(Creatures[i], i, CauseOfDeath.HeatStroke);
 			} else if (Creatures[i].Temperature < 0) {
 				Die(Creatures[i], i, CauseOfDeath.Freezing);
+			} else if (Creatures[i].Sleepiness > 100) {
+				Die(Creatures[i], i, CauseOfDeath.SleepDeprivation);
 			}
 			else {
 				if (Creatures[i].Growing){
@@ -941,6 +944,9 @@ public class Species : MultiMeshInstance
 				break;
 			case CauseOfDeath.Freezing:
 				SpeciesDataCollector.updateFreezing();
+				break;
+			case CauseOfDeath.SleepDeprivation:
+				SpeciesDataCollector.updateSleepDeprivation();
 				break;
 		}
 	}

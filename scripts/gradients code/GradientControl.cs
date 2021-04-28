@@ -28,6 +28,7 @@ public class GradientControl : Control
 	private Line2D lineBeingHunted;
 	private Line2D lineHeatStroke;
 	private Line2D lineFreezing;
+	private Line2D lineSleepDeprivation;
 	//*****************
 	private float MaxYvalue = 100;
 	//pop size arrays
@@ -55,6 +56,7 @@ public class GradientControl : Control
 	public Godot.Collections.Array BeingHuntedArray;
 	public Godot.Collections.Array HeatStrokeArray;
 	public Godot.Collections.Array FreezingArray;
+	public Godot.Collections.Array SleepDeprivationArray;
 	//**********
 	private bool OpenedUp = false;
 	private int selectedSpecies;
@@ -86,6 +88,7 @@ public class GradientControl : Control
 		lineBeingHunted = GetNode<Line2D>("BeingHuntedGraph");
 		lineHeatStroke = GetNode<Line2D>("HeatStrokeGraph");
 		lineFreezing = GetNode<Line2D>("FreezingGraph");
+		lineSleepDeprivation = GetNode<Line2D>("SleepDeprivationGraph");
 	}
 	public void RefreshGraphs(){
 		
@@ -117,6 +120,8 @@ public class GradientControl : Control
 			BeingHuntedArray = speciesData.GetBeingHuntedData();
 			HeatStrokeArray = speciesData.GetHeatStrokeData();
 			FreezingArray = speciesData.GetFreezingData();
+			SleepDeprivationArray = speciesData.GetSleepDeprivationData();
+
 			CalculateMax();
 			GetNode<Label>("MidLabel").Text = "" + MaxYvalue/2;
 			GetNode<Label>("MaxLabel").Text = "" + MaxYvalue;
@@ -143,6 +148,7 @@ public class GradientControl : Control
 			DrawGraph(BeingHuntedArray, lineBeingHunted, speciesCreationTime);
 			DrawGraph(HeatStrokeArray,lineHeatStroke, speciesCreationTime);
 			DrawGraph(FreezingArray, lineFreezing, speciesCreationTime);
+			DrawGraph(SleepDeprivationArray, lineSleepDeprivation, speciesCreationTime);
 		}
 	}
 
@@ -164,6 +170,8 @@ public class GradientControl : Control
 			arrayOfMaxes.Add(FindMaxInArray(HeatStrokeArray));
 		if(lineFreezing.Visible)
 			arrayOfMaxes.Add(FindMaxInArray(FreezingArray));
+		if(lineSleepDeprivation.Visible)
+			arrayOfMaxes.Add(FindMaxInArray(SleepCycleArray));
 		if(arrayOfMaxes.Count > 0)
 			MaxYvalue = FindMaxInArray(arrayOfMaxes);
 		// if (linePopSize.Visible){

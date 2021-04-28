@@ -30,12 +30,14 @@ public class DataCollector
 	private Godot.Collections.Array BeingHuntedArray = (Godot.Collections.Array)new Godot.Collections.Array();
 	private Godot.Collections.Array HeatStrokeArray = (Godot.Collections.Array)new Godot.Collections.Array();
 	private Godot.Collections.Array FreezingArray = (Godot.Collections.Array)new Godot.Collections.Array();
+	private Godot.Collections.Array SleepDeprivationArray = (Godot.Collections.Array)new Godot.Collections.Array();
 	private int CurrentStarvationAmount = 0;
 	private int CurrentDehydrationAmount = 0;
 	private int CurrentOldAgeAmount = 0;
 	private int CurrentBeingHuntedAmount = 0;
 	private int CurrentHeatStrokeAmount = 0;
 	private int CurrentFreezingAmount = 0;
+	private int CurrentSleepDeprivationAmount = 0;
 
 	public DataCollector(Godot.Collections.Array initArray)
 	{
@@ -65,6 +67,7 @@ public class DataCollector
 			BeingHuntedArray.Add(0.0f);
 			HeatStrokeArray.Add(0.0f);
 			FreezingArray.Add(0.0f);
+			SleepDeprivationArray.Add(0.0f);
 		}
 		CurrentTimeTick = initArray.Count - 1;
 		SpeciesCreationTime = CurrentTimeTick;
@@ -98,12 +101,14 @@ public class DataCollector
 		CollectCauseOfDeathData(BeingHuntedArray, CurrentBeingHuntedAmount);
 		CollectCauseOfDeathData(HeatStrokeArray, CurrentHeatStrokeAmount);
 		CollectCauseOfDeathData(FreezingArray, CurrentFreezingAmount);
+		CollectCauseOfDeathData(SleepDeprivationArray, CurrentSleepDeprivationAmount);
 		CurrentStarvationAmount = 0;
 		CurrentDehydrationAmount = 0;
 		CurrentOldAgeAmount = 0;
 		CurrentBeingHuntedAmount = 0;
 		CurrentHeatStrokeAmount = 0;
 		CurrentFreezingAmount = 0;
+		CurrentSleepDeprivationAmount = 0;
 		//update the current time tick
 		CurrentTimeTick++;
 	}
@@ -166,6 +171,10 @@ public class DataCollector
 
 	public void updateFreezing(){
 		CurrentFreezingAmount++;
+	}
+
+	public void updateSleepDeprivation(){
+		CurrentSleepDeprivationAmount++;
 	}
 
 	public float GetCurrentMaleFitness()
@@ -266,6 +275,10 @@ public class DataCollector
 
 	public Godot.Collections.Array GetFreezingData(){
 		return FreezingArray;
+	}
+
+	public Godot.Collections.Array GetSleepDeprivationData(){
+		return SleepDeprivationArray;
 	}
 
 
