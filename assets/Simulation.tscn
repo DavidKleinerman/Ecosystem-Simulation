@@ -443,7 +443,7 @@ custom_styles/bg = SubResource( 13 )
 custom_fonts/font = SubResource( 14 )
 custom_colors/font_color_selected = Color( 0.921569, 0.937255, 0.521569, 1 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
-items = [ "    x1", null, false, "    x2", null, false, "    x4", null, false ]
+items = [ "   x1", null, false, "   x2", null, false, "   x4", null, false ]
 auto_height = true
 max_columns = 3
 same_column_width = true
@@ -1519,21 +1519,25 @@ __meta__ = {
 [connection signal="pressed" from="Control/StartSimulation" to="SpeciesHolder" method="_on_StartSimulation_pressed"]
 [connection signal="pressed" from="Control/AddNewSpecies" to="NewSpeciesMenu" method="_on_AddNewSpecies_pressed"]
 [connection signal="pressed" from="Control/AddNewSpecies" to="CameraHolder" method="_on_AddNewSpecies_pressed"]
+[connection signal="pressed" from="Control/AddNewSpecies" to="Control/SimulationRate" method="_on_AddNewSpecies_pressed"]
 [connection signal="pressed" from="Control/AddNewSpecies" to="Control/AddNewSpecies" method="_on_AddNewSpecies_pressed"]
 [connection signal="pressed" from="Control/AddNewSpecies" to="Control/Pause" method="_on_AddNewSpecies_pressed"]
 [connection signal="pressed" from="Control/AddNewSpecies" to="Control/DisplayCharts" method="_on_AddNewSpecies_pressed"]
 [connection signal="pressed" from="Control/DisplayCharts" to="DisplayChartsMenu/GradientControl" method="_on_DisplayCharts_pressed"]
 [connection signal="pressed" from="Control/DisplayCharts" to="DisplayChartsMenu" method="_on_DisplayCharts_pressed"]
+[connection signal="pressed" from="Control/DisplayCharts" to="Control/SimulationRate" method="_on_DisplayCharts_pressed"]
 [connection signal="pressed" from="Control/DisplayCharts" to="Control/AddNewSpecies" method="_on_DisplayCharts_pressed"]
 [connection signal="pressed" from="Control/DisplayCharts" to="Control/Pause" method="_on_DisplayCharts_pressed"]
 [connection signal="pressed" from="Control/DisplayCharts" to="Control/DisplayCharts" method="_on_DisplayCharts_pressed"]
 [connection signal="pressed" from="Control/DisplayCharts" to="DisplayChartsMenu/ItemList2" method="_on_DisplayCharts_pressed"]
 [connection signal="pressed" from="Control/Pause" to="PauseMenu" method="_on_Pause_pressed"]
+[connection signal="pressed" from="Control/Pause" to="Control/SimulationRate" method="_on_Pause_pressed"]
 [connection signal="pressed" from="Control/Pause" to="Control/AddNewSpecies" method="_on_Pause_pressed"]
 [connection signal="pressed" from="Control/Pause" to="Control/Pause" method="_on_Pause_pressed"]
 [connection signal="pressed" from="Control/Pause" to="Control/DisplayCharts" method="_on_Pause_pressed"]
 [connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="NewSpeciesMenu" method="_on_CloseNewSpecies_pressed"]
 [connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="CameraHolder" method="_on_CloseNewSpecies_pressed"]
+[connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="Control/SimulationRate" method="_on_CloseNewSpecies_pressed"]
 [connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="Control/AddNewSpecies" method="_on_CloseNewSpecies_pressed"]
 [connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="Control/Pause" method="_on_CloseNewSpecies_pressed"]
 [connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="Control/DisplayCharts" method="_on_CloseNewSpecies_pressed"]
@@ -1541,6 +1545,7 @@ __meta__ = {
 [connection signal="pressed" from="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent/CreateNewSpecies/NewSpeciesButton" to="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent" method="_on_NewSpeciesButton_pressed"]
 [connection signal="pressed" from="DisplayChartsMenu/CloseChartMenu" to="DisplayChartsMenu/GradientControl" method="_on_CloseChartMenu_pressed"]
 [connection signal="pressed" from="DisplayChartsMenu/CloseChartMenu" to="DisplayChartsMenu" method="_on_CloseChartMenu_pressed"]
+[connection signal="pressed" from="DisplayChartsMenu/CloseChartMenu" to="Control/SimulationRate" method="_on_CloseChartMenu_pressed"]
 [connection signal="pressed" from="DisplayChartsMenu/CloseChartMenu" to="Control/AddNewSpecies" method="_on_CloseChartMenu_pressed"]
 [connection signal="pressed" from="DisplayChartsMenu/CloseChartMenu" to="Control/Pause" method="_on_CloseChartMenu_pressed"]
 [connection signal="pressed" from="DisplayChartsMenu/CloseChartMenu" to="Control/DisplayCharts" method="_on_CloseChartMenu_pressed"]
@@ -1570,6 +1575,7 @@ __meta__ = {
 [connection signal="toggled" from="DisplayChartsMenu/GeneValuesGridContainer/SpeedCheckButton" to="DisplayChartsMenu/GradientControl/SpeedGradient" method="_on_SpeedCheckButton_toggled"]
 [connection signal="timeout" from="PlantGrowthTimer" to="BiomeGrid" method="_on_PlantGrowthTimer_timeout"]
 [connection signal="pressed" from="PauseMenu/Resume" to="PauseMenu" method="_on_Resume_pressed"]
+[connection signal="pressed" from="PauseMenu/Resume" to="Control/SimulationRate" method="_on_Resume_pressed"]
 [connection signal="pressed" from="PauseMenu/Resume" to="Control/AddNewSpecies" method="_on_Resume_pressed"]
 [connection signal="pressed" from="PauseMenu/Resume" to="Control/Pause" method="_on_Resume_pressed"]
 [connection signal="pressed" from="PauseMenu/Resume" to="Control/DisplayCharts" method="_on_Resume_pressed"]
