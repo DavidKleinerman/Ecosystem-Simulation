@@ -35,6 +35,8 @@ public class BiomeGrid : GridMap
 	private Node TileSelectInst;
 	private Godot.Collections.Dictionary<Vector3, GroundTile> GroundTiles = (Godot.Collections.Dictionary<Vector3, GroundTile>) new Godot.Collections.Dictionary<Vector3, GroundTile>();
 	MultiMeshInstance MultiMeshPlants;
+	private const float WaitTime = 5f;
+	private float CurrentWaitingTime = 0.0f;
 	public override void _Ready()
 	{
 		GlobalGrowthRate = Global.biomeGrowthRate;
@@ -119,6 +121,12 @@ public class BiomeGrid : GridMap
 		if (isWorldBuilding && !mouseOnGUI)
 			SelectBiome();
 		else if (!isWorldBuilding){
+			CurrentWaitingTime += delta;
+			if (CurrentWaitingTime >= WaitTime){
+				UpdatePlants();
+				CurrentWaitingTime = 0.0f;
+			}
+
 			int i = 0;
 			foreach (Vector3 key in GroundTiles.Keys){
 				if (GroundTiles[key].isPlantGrowing){
@@ -283,7 +291,6 @@ public class BiomeGrid : GridMap
 			position.z = -16;
 		}
 		MultiMeshPlants.Multimesh.InstanceCount = GroundTiles.Count;
-		GetParent().GetNode<Timer>("PlantGrowthTimer").Start();
 	}
 
 	private float PlantChance(){
@@ -326,7 +333,7 @@ public class BiomeGrid : GridMap
 		}
 	}
 	
-	private void _on_PlantGrowthTimer_timeout()
+	private void UpdatePlants()
 	{
 		int i = 0;
 		foreach (Vector3 key in GroundTiles.Keys){

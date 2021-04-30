@@ -4,16 +4,14 @@ using System;
 public class SpeciesHolder : Spatial
 {
 	private int numOfSpecies = 0;
-
-	private Timer GlobalTime;
+	private float CurrentWaitingTime = 0.0f;
+	private const float WaitTime = 10f;
+	private bool SimulationStarted = false;
 
 	private Godot.Collections.Array GlobalTimeArray = (Godot.Collections.Array) new Godot.Collections.Array();
 
 	private PackedScene Species = (PackedScene)GD.Load("res://assets/Species.tscn");
 
-	public override void _Ready(){
-		GlobalTime = GetNode<Timer>("GlobalTimeTicks");
-	}
 	public void AddSpecies(String speciesName, int popSize, Color color, Godot.Collections.Array initialValues, float geneticVariation, int diet){
 		GD.Print("called add species in holder");
 		Node newSpeciesInst = Species.Instance();
@@ -39,14 +37,23 @@ public class SpeciesHolder : Spatial
 		AddChild(meatInst);
 	}
 
+	public override void _Process(float delta){
+		if(SimulationStarted){
+			CurrentWaitingTime += delta;
+			if (CurrentWaitingTime >= WaitTime){
+				UpdateChartData();
+				CurrentWaitingTime = 0.0f;
+			}
+		}
+	}
+
 	private void _on_StartSimulation_pressed()
 	{
 		GlobalTimeArray.Add(0);
-		GlobalTime.WaitTime = 10;
-		GlobalTime.Start();
+		SimulationStarted = true;
 	}
 
-	private void _on_GlobalTimeTicks_timeout()
+	private void UpdateChartData()
 	{
 		GlobalTimeArray.Add(0);
 		GetTree().CallGroup("Species", "CollectData");

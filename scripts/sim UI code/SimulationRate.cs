@@ -35,7 +35,6 @@ public class SimulationRate : ItemList
 		MakeInvisible();
 	}
 
-
 	private void _on_Pause_pressed()
 	{
 		MakeInvisible();
