@@ -1531,6 +1531,7 @@ __meta__ = {
 [connection signal="pressed" from="Control/Pause" to="PauseMenu" method="_on_Pause_pressed"]
 [connection signal="item_selected" from="Control/SimulationRate" to="BiomeGrid" method="_on_SimulationRate_item_selected"]
 [connection signal="item_selected" from="Control/SimulationRate" to="SpeciesHolder" method="_on_SimulationRate_item_selected"]
+[connection signal="item_selected" from="Control/SimulationRate" to="MultiMeshMeat" method="_on_SimulationRate_item_selected"]
 [connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="Control/Pause" method="_on_CloseNewSpecies_pressed"]
 [connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="Control/AddNewSpecies" method="_on_CloseNewSpecies_pressed"]
 [connection signal="pressed" from="NewSpeciesMenu/CloseNewSpecies" to="Control/DisplayCharts" method="_on_CloseNewSpecies_pressed"]

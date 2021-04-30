@@ -3,7 +3,8 @@ using System;
 
 public class MultiMeshMeat : MultiMeshInstance
 {
-	private const float MaxTimeOnGround = 12;
+	private const float MaxTimeOnGround = 12f;
+	private float TimeMultiplier = 1;
 
 	public class Meat : Godot.Reference { //godot has major bugs when using structs. This is a work-around.
 		public Spatial meatSpatial;
@@ -42,13 +43,13 @@ public class MultiMeshMeat : MultiMeshInstance
 		temp.Clear();
 		Multimesh.InstanceCount = MeatArray.Count;
 		for (int i = 0; i < MeatArray.Count; i++){
-			MeatArray[i].timeOnGround += delta;
+			MeatArray[i].timeOnGround += TimeMultiplier * delta;
 			if (MeatArray[i].timeOnGround >= MaxTimeOnGround){
 				MeatArray[i].decay = 1;
 			}
 			if (MeatArray[i].EatersCount> 0 || MeatArray[i].decay > 0){
 				Vector3 eatRate = (Vector3) new Vector3(1,1,1);
-				eatRate *= (MeatArray[i].EatersCount + MeatArray[i].decay) * 0.5f * delta;
+				eatRate *= (MeatArray[i].EatersCount + MeatArray[i].decay) * 0.5f * TimeMultiplier * delta;
 				MeatArray[i].meatSpatial.Scale -= eatRate;
 				if (MeatArray[i].meatSpatial.Scale.x < 0.05f){
 					MeatArray[i].meatGone = true;
@@ -68,4 +69,21 @@ public class MultiMeshMeat : MultiMeshInstance
 		newMeat.Collider = collider;
 		MeatToAdd.Add(newMeat);
 	}
+	private void _on_SimulationRate_item_selected(int index)
+	{
+		switch (index){
+			case 0:
+				TimeMultiplier = 1f;
+			break;
+			case 1:
+				TimeMultiplier = 2f;
+			break;
+			case 2:
+				TimeMultiplier = 4f;
+			break;
+		}
+	}
 }
+
+
+
