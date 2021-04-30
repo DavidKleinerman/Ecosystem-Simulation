@@ -11,8 +11,7 @@ public class Species : MultiMeshInstance
 	private PackedScene Collider = (PackedScene)GD.Load("res://assets/CreatureCollider.tscn");
 	private Area PerceptionCollider;
 	private Diet SpeciesDiet;
-	
-
+	private float TimeMultiplier = 1f;
 	//consts
 	private const float BaseEnergyDecay = 4f;
 	private const float BaseThirstDecay = 5f;
@@ -154,7 +153,7 @@ public class Species : MultiMeshInstance
 		Multimesh.ColorFormat = Godot.MultiMesh.ColorFormatEnum.Float;
 		Multimesh.TransformFormat = Godot.MultiMesh.TransformFormatEnum.Transform3d;
 		Multimesh.Mesh = (Mesh)GD.Load<Mesh>("res://meshes/CreatureBody.tres");
-
+		TimeMultiplier = GetParent<SpeciesHolder>().GetTImeMultiplier();
 	}
 
 	// public override void _PhysicsProcess(float delta)
@@ -192,6 +191,10 @@ public class Species : MultiMeshInstance
 		return rng.RandfRange(0,100);
 	}
 
+	public void UpdateTimeMultiplier(float multiplier){
+		TimeMultiplier = multiplier;
+	}
+
 	public override void _Process(float delta)
 	{
 		Vector3 gridIndex;
@@ -219,7 +222,7 @@ public class Species : MultiMeshInstance
 
 		for (int i = 0; i < Creatures.Count; i++){
 			// scan environment within perception radius
-			Creatures[i].TimeSinceLastScan += delta;
+			Creatures[i].TimeSinceLastScan += TimeMultiplier * delta;
 			if (Creatures[i].TimeSinceLastScan > 1.25f + ((100 - Creatures[i].Intelligence)/100)){
 				bool foundPredator = false;
 				if (Creatures[i].MyState != State.GivingBirth){
@@ -232,9 +235,9 @@ public class Species : MultiMeshInstance
 				}
 				Creatures[i].TimeSinceLastScan = 0;
 			}
-			Creatures[i].Age += delta;
-			Creatures[i].CurrentRotationTime += delta;
-			if (Creatures[i].ReproductiveUrge < 100 && !Creatures[i].Pregnant && !Creatures[i].Growing) Creatures[i].ReproductiveUrge += ((BaseReproductiveUrgeGrowth + Creatures[i].MatingCycle) * delta);
+			Creatures[i].Age += TimeMultiplier * delta;
+			Creatures[i].CurrentRotationTime += TimeMultiplier * delta;
+			if (Creatures[i].ReproductiveUrge < 100 && !Creatures[i].Pregnant && !Creatures[i].Growing) Creatures[i].ReproductiveUrge += ((BaseReproductiveUrgeGrowth + Creatures[i].MatingCycle) * TimeMultiplier * delta);
 			if (Creatures[i].MyState != State.Eating){
 				float additionalDecay = 0;
 				additionalDecay += Creatures[i].Speed/20f;
@@ -250,28 +253,28 @@ public class Species : MultiMeshInstance
 					additionalDecay += (Creatures[i].Speed/40f) * (1.5f - Creatures[i].Stamina);
 				if(Creatures[i].MyState == State.Reproducing)
 					additionalDecay += 0.2f * (1.5f - Creatures[i].Stamina);
-				Creatures[i].Energy -= ((BaseEnergyDecay + additionalDecay - Creatures[i].HungerResistance) * delta);
+				Creatures[i].Energy -= ((BaseEnergyDecay + additionalDecay - Creatures[i].HungerResistance) * TimeMultiplier * delta);
 			} 
 			if (Creatures[i].MyState != State.Drinking) 
-				Creatures[i].Thirst += ((BaseThirstDecay - Creatures[i].ThirstResistance) * delta);
+				Creatures[i].Thirst += ((BaseThirstDecay - Creatures[i].ThirstResistance) * TimeMultiplier * delta);
 			if (Creatures[i].MyState != State.Sleeping) {
-				Creatures[i].Sleepiness += (BaseSleepinessGrowth + Creatures[i].SleepCycle) * delta;
+				Creatures[i].Sleepiness += (BaseSleepinessGrowth + Creatures[i].SleepCycle) * TimeMultiplier * delta;
 				if (Creatures[i].MyState == State.ExploringTheEnvironment && Creatures[i].Sleepiness > 75 && Creatures[i].Sleepiness > 100 - Creatures[i].Energy && Creatures[i].Sleepiness > Creatures[i].Thirst){
 					Creatures[i].Velocity = new Vector3();
 					SetState(Creatures[i], State.Sleeping);
 				}
 			}
 			if (Creatures[i].MyState == State.Sleeping){
-				Creatures[i].Sleepiness -= (BaseSleepinessGrowth + 5 - (Creatures[i].SleepCycle * 2)) * delta;
+				Creatures[i].Sleepiness -= (BaseSleepinessGrowth + 5 - (Creatures[i].SleepCycle * 2)) * TimeMultiplier * delta;
 				if (Creatures[i].Sleepiness < 0 || ((100 - Creatures[i].Energy > Creatures[i].Sleepiness || Creatures[i].Thirst > Creatures[i].Sleepiness) && Creatures[i].Sleepiness < 75)){
 					SetState(Creatures[i], State.ExploringTheEnvironment);
 				}
 			}
 			posInGrid = TileGrid.WorldToMap(new Vector3(Creatures[i].MySpatial.Translation.x, 1, Creatures[i].MySpatial.Translation.z));
 			if (TileGrid.GetCellItem((int)posInGrid.x, (int)posInGrid.y, (int)posInGrid.z) == 1) //desert
-				Creatures[i].Temperature += (BaseTempChange - Creatures[i].HeatResistance) * delta;
+				Creatures[i].Temperature += (BaseTempChange - Creatures[i].HeatResistance) * TimeMultiplier * delta;
 			else if (TileGrid.GetCellItem((int)posInGrid.x, (int)posInGrid.y, (int)posInGrid.z) == 3) //tundra
-				Creatures[i].Temperature -= (BaseTempChange - Creatures[i].ColdResistance) * delta;
+				Creatures[i].Temperature -= (BaseTempChange - Creatures[i].ColdResistance) * TimeMultiplier * delta;
 
 			if (Creatures[i].CurrentRotationTime >= Creatures[i].NextRotationTime){
 				rng.Randomize();
@@ -304,22 +307,22 @@ public class Species : MultiMeshInstance
 			else {
 				if (Creatures[i].Growing){
 					Vector3 tempScale = Creatures[i].MySpatial.Scale;
-					tempScale.x += 0.06667f * delta;
-					tempScale.y += 0.06667f * delta;
-					tempScale.z += 0.06667f * delta;
+					tempScale.x += 0.06667f * TimeMultiplier * delta;
+					tempScale.y += 0.06667f * TimeMultiplier * delta;
+					tempScale.z += 0.06667f * TimeMultiplier * delta;
 					Creatures[i].MySpatial.Scale = tempScale;
-					Creatures[i].Speed += (Creatures[i].MaxSpeed/15) * delta;
-					Creatures[i].Perception = (Creatures[i].MaxPerception/15) * delta;
-					Creatures[i].MatingCycle = (Creatures[i].MaxMatingCycle/15) * delta;
-					Creatures[i].HungerResistance = (Creatures[i].MaxHungerResistance/15) * delta;
-					Creatures[i].ThirstResistance = (Creatures[i].MaxThirstResistance/15) * delta;
+					Creatures[i].Speed += (Creatures[i].MaxSpeed/15) * TimeMultiplier * delta;
+					Creatures[i].Perception = (Creatures[i].MaxPerception/15) * TimeMultiplier * delta;
+					Creatures[i].MatingCycle = (Creatures[i].MaxMatingCycle/15) * TimeMultiplier * delta;
+					Creatures[i].HungerResistance = (Creatures[i].MaxHungerResistance/15) * TimeMultiplier * delta;
+					Creatures[i].ThirstResistance = (Creatures[i].MaxThirstResistance/15) * TimeMultiplier * delta;
 					Creatures[i].Gestation = (Creatures[i].MaxGestation/15) * delta;
-					Creatures[i].LitterSize = (int)(((float)Creatures[i].MaxLitterSize/15) * delta);
-					Creatures[i].Intelligence = (Creatures[i].MaxIntelligence/15) * delta;
+					Creatures[i].LitterSize = (int)(((float)Creatures[i].MaxLitterSize/15) * TimeMultiplier * delta);
+					Creatures[i].Intelligence = (Creatures[i].MaxIntelligence/15) * TimeMultiplier * delta;
 					Creatures[i].Strength += (Creatures[i].MaxStrength/15) * delta;
-					Creatures[i].HeatResistance += (Creatures[i].MaxHeatResistance/15) * delta;
-					Creatures[i].ColdResistance += (Creatures[i].MaxColdResistance/15) * delta;
-					Creatures[i].Stamina += (Creatures[i].MaxStamina/15) * delta;
+					Creatures[i].HeatResistance += (Creatures[i].MaxHeatResistance/15) * TimeMultiplier * delta;
+					Creatures[i].ColdResistance += (Creatures[i].MaxColdResistance/15) * TimeMultiplier * delta;
+					Creatures[i].Stamina += (Creatures[i].MaxStamina/15) * TimeMultiplier * delta;
 
 					if (Creatures[i].Speed >= Creatures[i].MaxSpeed){
 						Creatures[i].Speed = Creatures[i].MaxSpeed;
@@ -340,7 +343,7 @@ public class Species : MultiMeshInstance
 					}
 				}
 				if (Creatures[i].Pregnant){ //female only
-					Creatures[i].PregnancyTime += delta;
+					Creatures[i].PregnancyTime += TimeMultiplier * delta;
 					if (Creatures[i].PregnancyTime >= Creatures[i].Gestation){
 						StartBirthingProcess(Creatures[i]);
 					}
@@ -360,15 +363,15 @@ public class Species : MultiMeshInstance
 					BirthingProcess(Creatures[i], delta);
 				}
 				if(Creatures[i].MyState == State.ExploringTheEnvironment){
-					Creatures[i].MySpatial.RotateY(Mathf.Deg2Rad(Creatures[i].RotationRate * Creatures[i].RotationDirection * delta));
-					Creatures[i].FrontVector = Creatures[i].FrontVector.Rotated(Vector3.Up, Mathf.Deg2Rad(Creatures[i].RotationRate * Creatures[i].RotationDirection * delta));
+					Creatures[i].MySpatial.RotateY(Mathf.Deg2Rad(Creatures[i].RotationRate * Creatures[i].RotationDirection * TimeMultiplier * delta));
+					Creatures[i].FrontVector = Creatures[i].FrontVector.Rotated(Vector3.Up, Mathf.Deg2Rad(Creatures[i].RotationRate * Creatures[i].RotationDirection * TimeMultiplier * delta));
 				}
 				else if (Creatures[i].MyState == State.Eating){
 					if (SpeciesDiet == Diet.Herbivore){
 						gridIndex = TileGrid.WorldToMap(new Vector3(Creatures[i].CurrentTarget.x, 1, Creatures[i].CurrentTarget.z));
 						gt = TileGrid.GetGroundTiles()[gridIndex];
 						if (gt.hasPlant){
-							Creatures[i].Energy += 100 * delta;
+							Creatures[i].Energy += 100 * TimeMultiplier * delta;
 						}
 						else {
 							gt.EatersCount--;
@@ -388,7 +391,7 @@ public class Species : MultiMeshInstance
 						}
 						if (Creatures[i].TargetMeat != null){
 							if (!Creatures[i].TargetMeat.meatGone){
-								Creatures[i].Energy += 50 * delta;
+								Creatures[i].Energy += 50 * TimeMultiplier * delta;
 							}
 							else {
 								Creatures[i].TargetMeat = null;
@@ -403,19 +406,19 @@ public class Species : MultiMeshInstance
 						}
 					}
 					if (Creatures[i].Temperature < 40)
-						Creatures[i].Temperature += (BaseTempChange * 4 * delta);
+						Creatures[i].Temperature += (BaseTempChange * 4 * TimeMultiplier * delta);
 					
 				} else if (Creatures[i].MyState == State.Drinking){
-					Creatures[i].Thirst -= 25 * delta;
+					Creatures[i].Thirst -= 25 * TimeMultiplier * delta;
 					if (Creatures[i].Thirst < 0){
 						Creatures[i].Thirst = 0;
 						SetState(Creatures[i], State.ExploringTheEnvironment);
 					} 
 					if (Creatures[i].Temperature > 60)
-						Creatures[i].Temperature -= (BaseTempChange * 4 * delta);
+						Creatures[i].Temperature -= (BaseTempChange * 4 * TimeMultiplier * delta);
 				}
 				else if (Creatures[i].MyState == State.Reproducing){
-					Creatures[i].ReproTime += delta;
+					Creatures[i].ReproTime += TimeMultiplier * delta;
 					if (Creatures[i].ReproTime > 2){
 						Creatures[i].ReproTime = 0;
 						Creatures[i].ReproductiveUrge = 0;
@@ -439,7 +442,7 @@ public class Species : MultiMeshInstance
 				// 	Creatures[i].Velocity = new Vector3();
 				if (Creatures[i].MyState == State.GoingToWater || Creatures[i].MyState == State.GoingToFood || Creatures[i].MyState == State.GoingToPotentialPartner || Creatures[i].MyState == State.Hunting || Creatures[i].MyState == State.RunningFromPredators)
 					GoToTarget(Creatures[i], delta);
-				Creatures[i].Velocity *= Creatures[i].Speed * delta;
+				Creatures[i].Velocity *= Creatures[i].Speed * TimeMultiplier * delta;
 				// Creatures[i].MySpatial.Translation = new Vector3(Creatures[i].MySpatial.Translation.x + Creatures[i].Velocity.x, 2.4f, Creatures[i].MySpatial.Translation.z + Creatures[i].Velocity.z);
 				// Multimesh.SetInstanceTransform(i, Creatures[i].MySpatial.Transform);
 				collisionDetector = new Vector3(Creatures[i].MySpatial.Translation.x + Creatures[i].FrontVector.x, 1, Creatures[i].MySpatial.Translation.z + Creatures[i].FrontVector.z);
@@ -473,11 +476,10 @@ public class Species : MultiMeshInstance
 		Genome genome = new Genome();
 		genome.Recombination(maternal, paternal);
 		AddCreature(genome, mother.MySpatial.Translation, NewBorn, true, mother.PregnancyTime);
-		GD.Print("gave birth!");
 	}
 
 	private void BirthingProcess(Creature mother, float delta){
-		mother.BirthingTime += delta;
+		mother.BirthingTime += TimeMultiplier * delta;
 		if (mother.BirthingTime > TimeToBirth){
 			GiveBirth(mother);
 			mother.BirthingTime = 0;
@@ -651,7 +653,7 @@ public class Species : MultiMeshInstance
 	}
 
 	private void GoToTarget(Creature creature, float delta){
-		creature.GoingToTime += delta;
+		creature.GoingToTime += TimeMultiplier * delta;
 		if (creature.GoingToTime < MaxGoingToTime || creature.MyState == State.Hunting){
 			if (creature.MyState == State.GoingToFood){
 				if (SpeciesDiet == Diet.Herbivore){

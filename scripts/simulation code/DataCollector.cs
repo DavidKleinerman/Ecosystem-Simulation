@@ -132,7 +132,6 @@ public class DataCollector
 
 	private void CollectCauseOfDeathData(Godot.Collections.Array causeOfDeathArray, int deathsAmount){
 		causeOfDeathArray.Add((float)deathsAmount);
-		GD.Print(causeOfDeathArray);
 	}
 
 	private void CollectTraitData(Godot.Collections.Array traitArray, Genome.GeneticTrait trait, Godot.Collections.Array<Species.Creature> creaturesInSpecies)

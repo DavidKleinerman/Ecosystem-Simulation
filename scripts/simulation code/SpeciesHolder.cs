@@ -6,6 +6,7 @@ public class SpeciesHolder : Spatial
 	private int numOfSpecies = 0;
 	private float CurrentWaitingTime = 0.0f;
 	private const float WaitTime = 10f;
+	private float TimeMultiplier = 1f;
 	private bool SimulationStarted = false;
 
 	private Godot.Collections.Array GlobalTimeArray = (Godot.Collections.Array) new Godot.Collections.Array();
@@ -13,7 +14,6 @@ public class SpeciesHolder : Spatial
 	private PackedScene Species = (PackedScene)GD.Load("res://assets/Species.tscn");
 
 	public void AddSpecies(String speciesName, int popSize, Color color, Godot.Collections.Array initialValues, float geneticVariation, int diet){
-		GD.Print("called add species in holder");
 		Node newSpeciesInst = Species.Instance();
 		AddChild(newSpeciesInst);
 		((Species)newSpeciesInst).InitSpecies(speciesName, GlobalTimeArray, diet);
@@ -39,7 +39,7 @@ public class SpeciesHolder : Spatial
 
 	public override void _Process(float delta){
 		if(SimulationStarted){
-			CurrentWaitingTime += delta;
+			CurrentWaitingTime += TimeMultiplier * delta;
 			if (CurrentWaitingTime >= WaitTime){
 				UpdateChartData();
 				CurrentWaitingTime = 0.0f;
@@ -59,8 +59,31 @@ public class SpeciesHolder : Spatial
 		GetTree().CallGroup("Species", "CollectData");
 		GetTree().CallGroup("GraphControl", "RefreshGraphs");
 	}
+
+	private void _on_SimulationRate_item_selected(int index)
+	{
+		switch (index){
+			case 0:
+				TimeMultiplier = 1f;
+			break;
+			case 1:
+				TimeMultiplier = 2f;
+			break;
+			case 2:
+				TimeMultiplier =4f;
+			break;
+		}
+		GetTree().CallGroup("Species", "UpdateTimeMultiplier", TimeMultiplier);
+	}
+
+	public float GetTImeMultiplier(){
+		return TimeMultiplier;
+	}
 	
 
 }
+
+
+
 
 

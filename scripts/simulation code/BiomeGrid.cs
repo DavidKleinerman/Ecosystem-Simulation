@@ -37,6 +37,7 @@ public class BiomeGrid : GridMap
 	MultiMeshInstance MultiMeshPlants;
 	private const float WaitTime = 5f;
 	private float CurrentWaitingTime = 0.0f;
+	private float TimeMultiplier = 1f;
 	public override void _Ready()
 	{
 		GlobalGrowthRate = Global.biomeGrowthRate;
@@ -121,7 +122,7 @@ public class BiomeGrid : GridMap
 		if (isWorldBuilding && !mouseOnGUI)
 			SelectBiome();
 		else if (!isWorldBuilding){
-			CurrentWaitingTime += delta;
+			CurrentWaitingTime += TimeMultiplier * delta;
 			if (CurrentWaitingTime >= WaitTime){
 				UpdatePlants();
 				CurrentWaitingTime = 0.0f;
@@ -134,10 +135,10 @@ public class BiomeGrid : GridMap
 					Vector3 currentTranslation = GroundTiles[key].plantSpatial.Translation;
 					if(currentScale.x < 1 && GroundTiles[key].plantGrowthTime < 2.5f){
 						GroundTiles[key].plantGrowthTime += delta;
-						currentScale.x += 0.5f * delta;
-						currentScale.y += 0.5f * delta;
-						currentScale.z += 0.5f * delta;
-						currentTranslation.y += 0.25f * delta;
+						currentScale.x += 0.5f * TimeMultiplier * delta;
+						currentScale.y += 0.5f * TimeMultiplier * delta;
+						currentScale.z += 0.5f * TimeMultiplier * delta;
+						currentTranslation.y += 0.25f * TimeMultiplier * delta;
 						GroundTiles[key].plantSpatial.Scale = currentScale;
 						GroundTiles[key].plantSpatial.Translation = currentTranslation;
 						MultiMeshPlants.Multimesh.SetInstanceTransform(i, GroundTiles[key].plantSpatial.Transform);
@@ -150,8 +151,8 @@ public class BiomeGrid : GridMap
 					Vector3 eatRate = (Vector3) new Vector3(1,1,1);
 					Vector3 currentTranslation = GroundTiles[key].plantSpatial.Translation;
 					Vector3 oldTranslation = GroundTiles[key].plantSpatial.Translation;
-					eatRate *= GroundTiles[key].EatersCount * 0.5f * delta;
-					currentTranslation.y -= GroundTiles[key].EatersCount * 0.25f * delta;
+					eatRate *= GroundTiles[key].EatersCount * 0.5f * TimeMultiplier * delta;
+					currentTranslation.y -= GroundTiles[key].EatersCount * 0.25f * TimeMultiplier * delta;
 					GroundTiles[key].plantSpatial.Scale -= eatRate;
 					GroundTiles[key].plantSpatial.Translation = currentTranslation;
 					if (GroundTiles[key].plantSpatial.Scale.x < 0.05f){
@@ -360,7 +361,25 @@ public class BiomeGrid : GridMap
 	public Godot.Collections.Dictionary<Vector3, GroundTile> GetGroundTiles(){
 		return GroundTiles;
 	}
+
+	private void _on_SimulationRate_item_selected(int index)
+	{
+		switch (index){
+			case 0:
+				TimeMultiplier = 1f;
+			break;
+			case 1:
+				TimeMultiplier = 2f;
+			break;
+			case 2:
+				TimeMultiplier = 4f;
+			break;
+		}
+	}
 }
+
+
+
 
 
 
