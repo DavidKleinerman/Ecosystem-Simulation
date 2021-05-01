@@ -72,12 +72,11 @@ public class NewSpeciesContent : VBoxContainer
 			speciesNames.Add(((Species)n).GetSpeciesName());
 		}
 		if (speciesNames.Contains(GetNode<LineEdit>("SpeciesName/LineEdit").Text)){
-			GetParent<ScrollContainer>().ScrollVertical = 0;
-			GetNode<LineEdit>("SpeciesName/LineEdit").Clear();
-			GetNode<LineEdit>("SpeciesName/LineEdit").GrabFocus();
-			GetNode<LineEdit>("SpeciesName/LineEdit").PlaceholderText = "A Species With This Name Already Exists!";
-			GetNode<LineEdit>("SpeciesName/LineEdit").PlaceholderAlpha = 1;
-		} else {
+			ShowAlert("A Species With This Name Already Exists!");
+		} else if (GetNode<LineEdit>("SpeciesName/LineEdit").Text == "") {
+			ShowAlert("Species Name Cannot Be Empty!");
+		}
+		else {
 			Godot.Collections.Array InitialValues = (Godot.Collections.Array) new Godot.Collections.Array();
 			InitialValues.Add((float)GetNode<HSlider>("Speed/HSlider").Value);
 			InitialValues.Add((float)GetNode<HSlider>("Perception/HSlider").Value);
@@ -102,6 +101,14 @@ public class NewSpeciesContent : VBoxContainer
 			GetParent().GetParent().GetParent().GetNode<SpeciesHolder>("SpeciesHolder").AddSpecies(speciesName, popSize, speciesColor, InitialValues, geneticVariation, diet);
 			GetNode<LineEdit>("SpeciesName/LineEdit").Clear();
 		}
+	}
+
+	private void ShowAlert(String alert){
+		GetParent<ScrollContainer>().ScrollVertical = 0;
+		GetNode<LineEdit>("SpeciesName/LineEdit").Clear();
+		GetNode<LineEdit>("SpeciesName/LineEdit").GrabFocus();
+		GetNode<LineEdit>("SpeciesName/LineEdit").PlaceholderText = alert;
+		GetNode<LineEdit>("SpeciesName/LineEdit").PlaceholderAlpha = 1;
 	}
 
 	private void _on_LineEdit_gui_input(object @event)
