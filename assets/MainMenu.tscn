@@ -127,14 +127,14 @@ __meta__ = {
 }
 
 [node name="FileDialog" type="FileDialog" parent="."]
-visible = true
 margin_left = 720.0
 margin_top = 476.0
 margin_right = 1200.0
 margin_bottom = 817.0
 window_title = "Open a Directory"
 mode_overrides_title = false
-mode = 2
+mode = 0
+filters = PoolStringArray( ".simsave" )
 __meta__ = {
 "_edit_use_anchors_": false
 }
