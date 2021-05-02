@@ -4,11 +4,6 @@ using System;
 public class SaveMenu : Control
 {
 
-	public override void _Ready()
-	{
-		
-	}
-
 	private void _on_SaveSimulation_pressed()
 	{
 		GetNode<FileDialog>("FileDialog").Popup_();
@@ -18,8 +13,21 @@ public class SaveMenu : Control
 	{
 		GetParent().GetNode<Control>("PauseMenu").Visible = true;
 	}
+	
+	private void _on_FileDialog_confirmed()
+	{
+		String path = GetNode<FileDialog>("FileDialog").CurrentPath;
+		path += ".save";
+		var saveFile = new File();
+		saveFile.Open(path, File.ModeFlags.Write);
+		Godot.Collections.Array savedTiles = GetParent().GetNode<BiomeGrid>("BiomeGrid").Save();
+		saveFile.StoreLine(JSON.Print(savedTiles));
+	}
 
 }
+
+
+
 
 
 

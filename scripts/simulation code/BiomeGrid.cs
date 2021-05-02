@@ -92,6 +92,30 @@ public class BiomeGrid : GridMap
 		MultiMeshPlants.Multimesh.InstanceCount = 0;
 	}
 
+	public Godot.Collections.Array Save(){
+		Godot.Collections.Array savedTiles = (Godot.Collections.Array) new Godot.Collections.Array();
+		foreach (Vector3 key in GroundTiles.Keys){
+			Godot.Collections.Dictionary<String, object> TileDictionary = new Godot.Collections.Dictionary<String, object>() {
+				{"BiomeType", (int)(GroundTiles[key].type)},
+				{"PlantTranslationX", GroundTiles[key].plantSpatial.Translation.x},
+				{"PlantTranslationY", GroundTiles[key].plantSpatial.Translation.y},
+				{"PlantTranslationZ", GroundTiles[key].plantSpatial.Translation.z},
+				{"PlantScaleX", GroundTiles[key].plantSpatial.Scale.x},
+				{"PlantScaleY", GroundTiles[key].plantSpatial.Scale.y},
+				{"PlantScaleZ", GroundTiles[key].plantSpatial.Scale.z},
+				{"PlantGrowthTime", GroundTiles[key].plantGrowthTime},
+				{"EatersCount", GroundTiles[key].EatersCount},
+				{"IsPlantGrowing", GroundTiles[key].isPlantGrowing},
+				{"HasPlant", GroundTiles[key].hasPlant},
+				{"GridIndexX", GroundTiles[key].gridIndex.x},
+				{"GridIndexY", GroundTiles[key].gridIndex.y},
+				{"GridIndexZ", GroundTiles[key].gridIndex.z},
+			};
+			savedTiles.Add(TileDictionary);
+		}
+		return savedTiles;
+	}
+
 	// public override void _Process(float delta)
 	// {
 	// 	int i = 0;

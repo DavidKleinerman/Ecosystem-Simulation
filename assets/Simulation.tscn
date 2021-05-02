@@ -1521,7 +1521,8 @@ margin_left = -200.0
 margin_top = -200.0
 margin_right = 200.0
 margin_bottom = 200.0
-filters = PoolStringArray( "simsave" )
+resizable = true
+dialog_text = "The '.save' file type will be appended automatically."
 [connection signal="item_selected" from="Control/ItemList" to="BiomeGrid" method="_on_ItemList_item_selected"]
 [connection signal="mouse_entered" from="Control/ItemList" to="BiomeGrid" method="_on_ItemList_mouse_entered"]
 [connection signal="mouse_exited" from="Control/ItemList" to="BiomeGrid" method="_on_ItemList_mouse_exited"]
@@ -1605,4 +1606,5 @@ filters = PoolStringArray( "simsave" )
 [connection signal="pressed" from="PauseMenu/SaveSimulation" to="SaveMenu" method="_on_SaveSimulation_pressed"]
 [connection signal="pressed" from="PauseMenu/BackToMainMenu" to="PauseMenu" method="_on_BackToMainMenu_pressed"]
 [connection signal="pressed" from="PauseMenu/Exit" to="PauseMenu" method="_on_Exit_pressed"]
+[connection signal="confirmed" from="SaveMenu/FileDialog" to="SaveMenu" method="_on_FileDialog_confirmed"]
 [connection signal="popup_hide" from="SaveMenu/FileDialog" to="SaveMenu" method="_on_FileDialog_popup_hide"]
