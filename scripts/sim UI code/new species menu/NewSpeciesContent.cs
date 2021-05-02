@@ -39,11 +39,18 @@ public class NewSpeciesContent : VBoxContainer
 		GetNode<Label>("GeneticVariation/Label").Text = "Genetic Variation";
 		GetNode<Label>("GeneticVariation/Label").HintTooltip = "The difference of each indvidual's trait value, in the initial population, form the values set by the user.";
 		GetNode<Label>("PopulationSize/Label").Text = "Population Size";
+
+		if(Global.IsLoaded)
+			SetPopulationUI();
 		
 	}
 
 	private void _on_StartSimulation_pressed()
 	{
+		SetPopulationUI();
+	}
+
+	private void SetPopulationUI(){
 		int numOfGroundTiles = GetNode<BiomeGrid>("../../../BiomeGrid").GetGroundTiles().Count;
 		GD.Print("number of ground tiles is" + numOfGroundTiles);
 		GetNode<SpinBox>("PopulationSize/SpinBox").MinValue = 1;
@@ -61,7 +68,6 @@ public class NewSpeciesContent : VBoxContainer
 		GetNode<Label>("PopulationSize/Label").MouseFilter = 0;
 		GetNode<Label>("PopSizeWarning/Label").HintTooltip = "Max population is limited by the size of the habitable area (" + numOfGroundTiles + ")";
 		GetNode<Label>("PopSizeWarning/Label").MouseFilter = 0;
-
 	}
 
 	private void _on_NewSpeciesButton_pressed()

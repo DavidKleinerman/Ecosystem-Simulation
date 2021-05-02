@@ -5,7 +5,7 @@ public class DisplayCharts : Button
 {
 	public override void _Ready()
 	{
-		this.Visible = false;    
+		this.Visible = Global.IsLoaded;;    
 	}
 	private void _on_StartSimulation_pressed()
 	{

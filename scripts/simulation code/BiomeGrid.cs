@@ -40,23 +40,30 @@ public class BiomeGrid : GridMap
 	private float TimeMultiplier = 1f;
 	public override void _Ready()
 	{
+		
 		GlobalGrowthRate = Global.biomeGrowthRate;
-		switch (Global.biomeType){
-			case 0:
-				InitialBiome = 4;
-			break;
-			case 1:
-				InitialBiome = 0;
-			break;
-			case 2:
-				InitialBiome = 1;
-			break;
-			case 3:
-				InitialBiome = 2;
-			break;
-			case 4:
-				InitialBiome = 3;
-			break;
+		if (!Global.IsLoaded){
+			switch (Global.biomeType){
+				case 0:
+					InitialBiome = 4;
+				break;
+				case 1:
+					InitialBiome = 0;
+				break;
+				case 2:
+					InitialBiome = 1;
+				break;
+				case 3:
+					InitialBiome = 2;
+				break;
+				case 4:
+					InitialBiome = 3;
+				break;
+			}
+			TileSelectInst = TileSelector.Instance();
+			AddChild(TileSelectInst);
+		} else {
+			InitialBiome = 4;
 		}
 		WorldSize = Global.worldSize;
 
@@ -86,10 +93,50 @@ public class BiomeGrid : GridMap
 			position.x += 4;
 			position.z = -(WorldSize*2 - 2);
 		}
-		TileSelectInst = TileSelector.Instance();
-		AddChild(TileSelectInst);
 		MultiMeshPlants = GetParent().GetNode<MultiMeshInstance>("MultiMeshPlants");
 		MultiMeshPlants.Multimesh.InstanceCount = 0;
+		
+
+		if (Global.IsLoaded){
+			int i = 0;
+			GD.Print("type of tile: " + Global.LoadedArray[0].GetType());
+			MultiMeshPlants.Multimesh.InstanceCount = Global.LoadedArray.Count;
+			foreach (Godot.Collections.Dictionary t in Global.LoadedArray){
+				GroundTile newTile = new GroundTile();
+				GD.Print("type of first param: " + t["BiomeType"].GetType());
+				newTile.type = (BiomeType)((int)((float)t["BiomeType"]));
+				newTile.plantSpatial = (Spatial) new Spatial();
+				newTile.plantSpatial.Translation = new Vector3((float)t["PlantTranslationX"], (float)t["PlantTranslationY"], (float)t["PlantTranslationZ"]);
+				newTile.plantSpatial.Scale = new Vector3((float)t["PlantScaleX"], (float)t["PlantScaleY"], (float)t["PlantScaleZ"]);
+				newTile.plantGrowthTime = (float)t["PlantGrowthTime"];
+				newTile.EatersCount = (int)((float)t["EatersCount"]);
+				newTile.isPlantGrowing = (bool)t["IsPlantGrowing"];
+				newTile.hasPlant = (bool)t["HasPlant"];
+				newTile.gridIndex = new Vector3((float)t["GridIndexX"], (float)t["GridIndexY"], (float)t["GridIndexZ"]);
+				if(newTile.plantSpatial.Scale.x > 0.0f || newTile.hasPlant || newTile.isPlantGrowing){
+					SetPlantColor(i, newTile.type);
+					MultiMeshPlants.Multimesh.SetInstanceTransform(i, newTile.plantSpatial.Transform);
+				}
+				GroundTiles.Add(newTile.gridIndex, newTile);
+				switch (newTile.type){
+					case BiomeType.desert:
+						SetCellItem((int)newTile.gridIndex.x, (int)newTile.gridIndex.y, (int)newTile.gridIndex.z, 1);
+					break;
+					case BiomeType.forest:
+						SetCellItem((int)newTile.gridIndex.x, (int)newTile.gridIndex.y, (int)newTile.gridIndex.z, 0);
+						break;
+					case BiomeType.grassland:
+						SetCellItem((int)newTile.gridIndex.x, (int)newTile.gridIndex.y, (int)newTile.gridIndex.z, 2);
+						break;
+					case BiomeType.tundra:
+						SetCellItem((int)newTile.gridIndex.x, (int)newTile.gridIndex.y, (int)newTile.gridIndex.z, 3);
+						break;
+				}
+				i++;
+			}
+			isWorldBuilding = false;
+		}
+		
 	}
 
 	public Godot.Collections.Array Save(){

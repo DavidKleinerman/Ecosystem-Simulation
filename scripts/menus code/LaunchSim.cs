@@ -56,6 +56,7 @@ public class LaunchSim : Button
 	}
 	private void _on_LaunchSim_pressed()
 	{
+		Global.IsLoaded = false;
 		GetTree().ChangeScene("res://assets/Simulation.tscn");
 	}
 }

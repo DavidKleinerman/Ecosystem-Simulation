@@ -13,6 +13,13 @@ public class SpeciesHolder : Spatial
 
 	private PackedScene Species = (PackedScene)GD.Load("res://assets/Species.tscn");
 
+	public override void _Ready()
+	{
+		SimulationStarted = Global.IsLoaded;
+	}
+
+	
+
 	public void AddSpecies(String speciesName, int popSize, Color color, Godot.Collections.Array initialValues, float geneticVariation, int diet){
 		Node newSpeciesInst = Species.Instance();
 		AddChild(newSpeciesInst);

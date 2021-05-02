@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://fonts/Now FL/Now-Light.otf" type="DynamicFontData" id=1]
 [ext_resource path="res://fonts/hi/Hi.otf" type="DynamicFontData" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://scripts/menus code/NewSimButton.cs" type="Script" id=4]
 [ext_resource path="res://scripts/menus code/SettingButton.cs" type="Script" id=5]
 [ext_resource path="res://scripts/menus code/MainMenu.cs" type="Script" id=6]
+[ext_resource path="res://scripts/menus code/LoadSimButton.cs" type="Script" id=7]
 
 [sub_resource type="DynamicFont" id=1]
 size = 90
@@ -86,6 +87,7 @@ custom_colors/font_color_pressed = Color( 0.921569, 0.937255, 0.521569, 1 )
 enabled_focus_mode = 0
 text = "Load simulation"
 flat = true
+script = ExtResource( 7 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -131,10 +133,9 @@ margin_left = 720.0
 margin_top = 476.0
 margin_right = 1200.0
 margin_bottom = 817.0
-window_title = "Open a Directory"
-mode_overrides_title = false
+window_title = "Open a File"
 mode = 0
-filters = PoolStringArray( ".simsave" )
+filters = PoolStringArray( "*.save" )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -142,4 +143,5 @@ __meta__ = {
 [connection signal="pressed" from="LoadSimButton" to="." method="_on_LoadSimButton_pressed"]
 [connection signal="pressed" from="SettingButton" to="SettingButton" method="_on_SettingButton_pressed"]
 [connection signal="pressed" from="ExitButton" to="ExitButton" method="_on_ExitButton_pressed"]
+[connection signal="confirmed" from="FileDialog" to="LoadSimButton" method="_on_FileDialog_confirmed"]
 [connection signal="popup_hide" from="FileDialog" to="." method="_on_FileDialog_popup_hide"]

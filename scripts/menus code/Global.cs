@@ -13,4 +13,7 @@ public class Global : Node
 	public static int biomeType = 0;
 	public static int antiAliasing = 0;
 	public static bool borderlessWindow = false;
+
+	public static bool IsLoaded = false;
+	public static Godot.Collections.Array LoadedArray = null;
 }

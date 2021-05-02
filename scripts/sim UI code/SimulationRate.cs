@@ -6,8 +6,8 @@ public class SimulationRate : ItemList
 
 	public override void _Ready()
 	{
-		Visible = false;
-		GetParent().GetNode<Label>("Label").Visible = false;
+		Visible = Global.IsLoaded;
+		GetParent().GetNode<Label>("Label").Visible = Global.IsLoaded;
 	}
 
 	private void _on_StartSimulation_pressed()
