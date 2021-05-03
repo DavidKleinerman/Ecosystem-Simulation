@@ -359,7 +359,7 @@ public class BiomeGrid : GridMap
 				position.z += 1;
 			}
 			position.x += 1;
-			position.z = -16;
+			position.z = -WorldSize/2;
 		}
 		MultiMeshPlants.Multimesh.InstanceCount = GroundTiles.Count;
 	}
