@@ -33,8 +33,10 @@ public class MultiMeshMeat : MultiMeshInstance
 				newMeat.timeOnGround = (float)m["TimeOnGround"];
 				newMeat.EatersCount = (int)((float)m["EatersCount"]);
 				newMeat.Collider = (CreatureCollider) new CreatureCollider();
+				newMeat.Collider.Translation = new Vector3((float)m["ColliderTranslationX"], (float)m["ColliderTranslationY"], (float)m["ColliderTranslationZ"]);
 				newMeat.Collider.MyMeat = newMeat;
 				newMeat.Collider.MyCreatureAlive = false;
+				AddChild(newMeat.Collider);
 				newMeat.decay = (int)((float)m["Decay"]);
 				newMeat.meatGone = (bool)m["MeatGone"];
 				MeatArray.Add(newMeat);
