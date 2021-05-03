@@ -69,6 +69,39 @@ public class MultiMeshMeat : MultiMeshInstance
 		newMeat.Collider = collider;
 		MeatToAdd.Add(newMeat);
 	}
+
+	public Godot.Collections.Array Save(){
+		Godot.Collections.Array savedMeat = new Godot.Collections.Array();
+		for(int i = 0; i < MeatArray.Count; i++){
+			if (!MeatToRemove.Contains(i)){
+				savedMeat.Add(MeatToDictionary(i, MeatArray));
+			}
+		}
+		for(int i = 0; i < MeatToAdd.Count; i++){
+			savedMeat.Add(MeatToDictionary(i, MeatToAdd));
+		}
+		return savedMeat;
+	}
+
+	private Godot.Collections.Dictionary<String, object> MeatToDictionary(int i, Godot.Collections.Array<Meat> array){
+		Godot.Collections.Dictionary<String, object> meatDictionary = new Godot.Collections.Dictionary<String, object>() {
+			{"MeatTranslationX", array[i].meatSpatial.Translation.x},
+			{"MeatTranslationY", array[i].meatSpatial.Translation.y},
+			{"MeatTranslationZ", array[i].meatSpatial.Translation.z},
+			{"MeatScaleX",  array[i].meatSpatial.Scale.x},
+			{"MeatScaleY",  array[i].meatSpatial.Scale.y},
+			{"MeatScaleZ",  array[i].meatSpatial.Scale.z},
+			{"TimeOnGround",  array[i].timeOnGround},
+			{"EatersCount",  array[i].EatersCount},
+			{"ColliderTranslationX",  array[i].Collider.Translation.x},
+			{"ColliderTranslationY",  array[i].Collider.Translation.y},
+			{"ColliderTranslationZ",  array[i].Collider.Translation.z},
+			{"Decay",  array[i].decay},
+			{"MeatGone",  array[i].meatGone}
+		};
+		return meatDictionary;
+	}
+
 	private void _on_SimulationRate_item_selected(int index)
 	{
 		switch (index){

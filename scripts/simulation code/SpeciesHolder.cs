@@ -37,13 +37,6 @@ public class SpeciesHolder : Spatial
 		return null;
 	}
 
-	public void AddDead(Vector3 position){
-		PackedScene Meat = (PackedScene)GD.Load("res://assets/Meat.tscn");
-		Node meatInst = Meat.Instance();
-		((Spatial)meatInst).Translation = position;
-		AddChild(meatInst);
-	}
-
 	public override void _Process(float delta){
 		if(SimulationStarted){
 			CurrentWaitingTime += TimeMultiplier * delta;
@@ -83,8 +76,12 @@ public class SpeciesHolder : Spatial
 		GetTree().CallGroup("Species", "UpdateTimeMultiplier", TimeMultiplier);
 	}
 
-	public float GetTImeMultiplier(){
+	public float GetTimeMultiplier(){
 		return TimeMultiplier;
+	}
+
+	public Godot.Collections.Array GetGlobalTimeArray(){
+		return GlobalTimeArray;
 	}
 	
 

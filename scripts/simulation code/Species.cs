@@ -153,7 +153,7 @@ public class Species : MultiMeshInstance
 		Multimesh.ColorFormat = Godot.MultiMesh.ColorFormatEnum.Float;
 		Multimesh.TransformFormat = Godot.MultiMesh.TransformFormatEnum.Transform3d;
 		Multimesh.Mesh = (Mesh)GD.Load<Mesh>("res://meshes/CreatureBody.tres");
-		TimeMultiplier = GetParent<SpeciesHolder>().GetTImeMultiplier();
+		TimeMultiplier = GetParent<SpeciesHolder>().GetTimeMultiplier();
 	}
 
 	// public override void _PhysicsProcess(float delta)

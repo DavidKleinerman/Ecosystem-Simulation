@@ -21,7 +21,16 @@ public class SaveMenu : Control
 		var saveFile = new File();
 		saveFile.Open(path, File.ModeFlags.Write);
 		Godot.Collections.Array savedTiles = GetParent().GetNode<BiomeGrid>("BiomeGrid").Save();
-		saveFile.StoreLine(JSON.Print(savedTiles));
+		Godot.Collections.Array savedMeat = GetParent().GetNode<MultiMeshMeat>("MultiMeshMeat").Save();
+		Godot.Collections.Array globalTimeArray = GetParent().GetNode<SpeciesHolder>("SpeciesHolder").GetGlobalTimeArray();
+		Godot.Collections.Dictionary<String, object> saveData = new Godot.Collections.Dictionary<String, object>() {
+			{"WorldSize", Global.worldSize},
+			{"PlantGrowthRate", Global.biomeGrowthRate},
+			{"GloablTimeArray", globalTimeArray},
+			{"BiomeTiles", savedTiles},
+			{"Meat", savedMeat}
+		};
+		saveFile.StoreLine(JSON.Print(saveData));
 	}
 
 }
