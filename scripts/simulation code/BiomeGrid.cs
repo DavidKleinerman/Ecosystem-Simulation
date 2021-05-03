@@ -103,7 +103,6 @@ public class BiomeGrid : GridMap
 			MultiMeshPlants.Multimesh.InstanceCount = Global.LoadedTiles.Count;
 			foreach (Godot.Collections.Dictionary t in Global.LoadedTiles){
 				GroundTile newTile = new GroundTile();
-				GD.Print("type of first param: " + t["BiomeType"].GetType());
 				newTile.type = (BiomeType)((int)((float)t["BiomeType"]));
 				newTile.plantSpatial = (Spatial) new Spatial();
 				newTile.plantSpatial.Translation = new Vector3((float)t["PlantTranslationX"], (float)t["PlantTranslationY"], (float)t["PlantTranslationZ"]);

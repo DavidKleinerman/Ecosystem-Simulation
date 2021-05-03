@@ -16,6 +16,10 @@ public class SpeciesHolder : Spatial
 	public override void _Ready()
 	{
 		SimulationStarted = Global.IsLoaded;
+		if(Global.IsLoaded){
+			GlobalTimeArray = Global.LoadedGlobalTime;
+			GD.Print(GlobalTimeArray);
+		}
 	}
 
 	
