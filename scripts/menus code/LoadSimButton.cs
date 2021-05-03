@@ -19,8 +19,12 @@ public class LoadSimButton : Button
 				return;
 			}
 			saveFile.Open(path, File.ModeFlags.Read);
-			var loadedData = new Godot.Collections.Array((Godot.Collections.Array)JSON.Parse(saveFile.GetLine()).Result);
-			Global.LoadedArray = loadedData;
+			var loadedData = new Godot.Collections.Dictionary((Godot.Collections.Dictionary)JSON.Parse(saveFile.GetLine()).Result);
+			Global.LoadedTiles = (Godot.Collections.Array)loadedData["BiomeTiles"];
+			Global.LoadedMeat = (Godot.Collections.Array)loadedData["Meat"];
+			Global.worldSize = (int)((float)loadedData["WorldSize"]);
+			Global.biomeGrowthRate = (float)loadedData["PlantGrowthRate"];
+			Global.LoadedGlobalTime = (Godot.Collections.Array)loadedData["GloablTimeArray"];
 			GetTree().ChangeScene("res://assets/Simulation.tscn");
 		} catch (Exception e) {
 			return;

@@ -99,9 +99,9 @@ public class BiomeGrid : GridMap
 
 		if (Global.IsLoaded){
 			int i = 0;
-			GD.Print("type of tile: " + Global.LoadedArray[0].GetType());
-			MultiMeshPlants.Multimesh.InstanceCount = Global.LoadedArray.Count;
-			foreach (Godot.Collections.Dictionary t in Global.LoadedArray){
+			GD.Print("type of tile: " + Global.LoadedTiles[0].GetType());
+			MultiMeshPlants.Multimesh.InstanceCount = Global.LoadedTiles.Count;
+			foreach (Godot.Collections.Dictionary t in Global.LoadedTiles){
 				GroundTile newTile = new GroundTile();
 				GD.Print("type of first param: " + t["BiomeType"].GetType());
 				newTile.type = (BiomeType)((int)((float)t["BiomeType"]));

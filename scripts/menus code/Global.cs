@@ -15,5 +15,7 @@ public class Global : Node
 	public static bool borderlessWindow = false;
 
 	public static bool IsLoaded = false;
-	public static Godot.Collections.Array LoadedArray = null;
+	public static Godot.Collections.Array LoadedTiles = null;
+	public static Godot.Collections.Array LoadedMeat = null;
+	public static Godot.Collections.Array LoadedGlobalTime = null;
 }
