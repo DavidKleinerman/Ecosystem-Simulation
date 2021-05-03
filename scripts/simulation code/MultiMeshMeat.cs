@@ -21,7 +21,27 @@ public class MultiMeshMeat : MultiMeshInstance
 
 	public override void _Ready()
 	{
+		int i = 0;
 		this.Multimesh.InstanceCount = 0;
+		if (Global.IsLoaded){
+			this.Multimesh.InstanceCount = Global.LoadedMeat.Count;
+			foreach (Godot.Collections.Dictionary m in Global.LoadedMeat){
+				Meat newMeat = new Meat();
+				newMeat.meatSpatial = (Spatial) new Spatial();
+				newMeat.meatSpatial.Translation = new Vector3((float)m["MeatTranslationX"], (float)m["MeatTranslationY"], (float)m["MeatTranslationZ"]);
+				newMeat.meatSpatial.Scale = new Vector3((float)m["MeatScaleX"], (float)m["MeatScaleY"], (float)m["MeatScaleZ"]);
+				newMeat.timeOnGround = (float)m["TimeOnGround"];
+				newMeat.EatersCount = (int)((float)m["EatersCount"]);
+				newMeat.Collider = (CreatureCollider) new CreatureCollider();
+				newMeat.Collider.MyMeat = newMeat;
+				newMeat.Collider.MyCreatureAlive = false;
+				newMeat.decay = (int)((float)m["Decay"]);
+				newMeat.meatGone = (bool)m["MeatGone"];
+				MeatArray.Add(newMeat);
+				Multimesh.SetInstanceTransform(i, newMeat.meatSpatial.Transform);
+				i++;
+			}
+		}
 	}
 	
 	public override void _Process(float delta)
@@ -88,16 +108,16 @@ public class MultiMeshMeat : MultiMeshInstance
 			{"MeatTranslationX", array[i].meatSpatial.Translation.x},
 			{"MeatTranslationY", array[i].meatSpatial.Translation.y},
 			{"MeatTranslationZ", array[i].meatSpatial.Translation.z},
-			{"MeatScaleX",  array[i].meatSpatial.Scale.x},
-			{"MeatScaleY",  array[i].meatSpatial.Scale.y},
-			{"MeatScaleZ",  array[i].meatSpatial.Scale.z},
-			{"TimeOnGround",  array[i].timeOnGround},
-			{"EatersCount",  array[i].EatersCount},
-			{"ColliderTranslationX",  array[i].Collider.Translation.x},
-			{"ColliderTranslationY",  array[i].Collider.Translation.y},
-			{"ColliderTranslationZ",  array[i].Collider.Translation.z},
-			{"Decay",  array[i].decay},
-			{"MeatGone",  array[i].meatGone}
+			{"MeatScaleX", array[i].meatSpatial.Scale.x},
+			{"MeatScaleY", array[i].meatSpatial.Scale.y},
+			{"MeatScaleZ", array[i].meatSpatial.Scale.z},
+			{"TimeOnGround", array[i].timeOnGround},
+			{"EatersCount", array[i].EatersCount},
+			{"ColliderTranslationX", array[i].Collider.Translation.x},
+			{"ColliderTranslationY", array[i].Collider.Translation.y},
+			{"ColliderTranslationZ", array[i].Collider.Translation.z},
+			{"Decay", array[i].decay},
+			{"MeatGone", array[i].meatGone}
 		};
 		return meatDictionary;
 	}
