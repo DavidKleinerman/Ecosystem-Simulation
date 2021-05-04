@@ -88,6 +88,9 @@ public class SpeciesHolder : Spatial
 		return GlobalTimeArray;
 	}
 	
+	public float GetCurrentWaitingTime(){
+		return CurrentWaitingTime;
+	}
 
 }
 

@@ -446,6 +446,10 @@ public class BiomeGrid : GridMap
 			break;
 		}
 	}
+
+	public float GetCurrentWaitingTime(){
+		return CurrentWaitingTime;
+	}
 }
 
 
