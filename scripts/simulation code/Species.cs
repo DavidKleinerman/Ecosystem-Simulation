@@ -640,6 +640,7 @@ public class Species : MultiMeshInstance
 				creature.TargetMeat.EatersCount--;
 			} else if (SpeciesDiet == Diet.CarnivorePredator && creature.TargetMeat != null){
 				creature.TargetMeat.EatersCount--;
+				creature.TargetMeat = null;
 			}
 		}
 	}
@@ -704,7 +705,7 @@ public class Species : MultiMeshInstance
 					StopGoingTo(creature, State.ExploringTheEnvironment);
 				}
 			} else if (creature.MyState == State.Hunting){
-				if (creature.GoingToTime > 5){ //failed hunting attempt
+				if (creature.GoingToTime > 6){ //failed hunting attempt
 					UpdateMemoryList(creature, creature.FailedHunts, creature.TargetCreature, false);
 					StopGoingTo(creature, State.ExploringTheEnvironment);
 					// GD.Print("failed hunt!");
