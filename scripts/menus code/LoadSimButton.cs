@@ -25,6 +25,8 @@ public class LoadSimButton : Button
 			Global.worldSize = (int)((float)loadedData["WorldSize"]);
 			Global.biomeGrowthRate = (float)loadedData["PlantGrowthRate"];
 			Global.LoadedGlobalTime = (Godot.Collections.Array)loadedData["GloablTimeArray"];
+			Global.LoadedGlobalWaitingTime = (float)loadedData["GlobalWaitingTime"];
+			Global.LoadedBiomesWaitingTime = (float)loadedData["BiomesWaitingTime"];
 			GetTree().ChangeScene("res://assets/Simulation.tscn");
 		} catch (Exception e) {
 			return;

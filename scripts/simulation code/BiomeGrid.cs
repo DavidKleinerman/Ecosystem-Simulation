@@ -99,6 +99,8 @@ public class BiomeGrid : GridMap
 
 		if (Global.IsLoaded){
 			int i = 0;
+			CurrentWaitingTime = Global.LoadedBiomesWaitingTime;
+			GD.Print(CurrentWaitingTime);
 			GD.Print("type of tile: " + Global.LoadedTiles[0].GetType());
 			MultiMeshPlants.Multimesh.InstanceCount = Global.LoadedTiles.Count;
 			foreach (Godot.Collections.Dictionary t in Global.LoadedTiles){

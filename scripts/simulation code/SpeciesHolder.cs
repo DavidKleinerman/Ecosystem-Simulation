@@ -18,7 +18,8 @@ public class SpeciesHolder : Spatial
 		SimulationStarted = Global.IsLoaded;
 		if(Global.IsLoaded){
 			GlobalTimeArray = Global.LoadedGlobalTime;
-			GD.Print(GlobalTimeArray);
+			CurrentWaitingTime = Global.LoadedGlobalWaitingTime;
+			GD.Print(CurrentWaitingTime);
 		}
 	}
 

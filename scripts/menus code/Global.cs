@@ -18,4 +18,6 @@ public class Global : Node
 	public static Godot.Collections.Array LoadedTiles = null;
 	public static Godot.Collections.Array LoadedMeat = null;
 	public static Godot.Collections.Array LoadedGlobalTime = null;
+	public static float LoadedGlobalWaitingTime;
+	public static float LoadedBiomesWaitingTime;
 }
