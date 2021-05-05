@@ -25,7 +25,14 @@ public class SpeciesHolder : Spatial
 		}
 	}
 
-	
+	public Godot.Collections.Array Save(){
+		Godot.Collections.Array existingSpecies = GetTree().GetNodesInGroup("Species");
+		Godot.Collections.Array savedSpecies = new Godot.Collections.Array();
+		foreach (Species s in existingSpecies){
+			savedSpecies.Add(s.Save());
+		}
+		return savedSpecies;
+	}
 
 	public void AddSpecies(String speciesName, int popSize, Color color, Godot.Collections.Array initialValues, float geneticVariation, int diet){
 		Node newSpeciesInst = Species.Instance();
@@ -77,7 +84,7 @@ public class SpeciesHolder : Spatial
 				TimeMultiplier = 2f;
 			break;
 			case 2:
-				TimeMultiplier =4f;
+				TimeMultiplier = 4f;
 			break;
 		}
 		GetTree().CallGroup("Species", "UpdateTimeMultiplier", TimeMultiplier);

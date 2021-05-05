@@ -156,6 +156,17 @@ public class Species : MultiMeshInstance
 		TimeMultiplier = GetParent<SpeciesHolder>().GetTimeMultiplier();
 	}
 
+	public Godot.Collections.Dictionary<String, object> Save(){
+		Godot.Collections.Dictionary<String, object> speciesDictionary = new Godot.Collections.Dictionary<String, object>() {
+			{"SpeciesName", SpeciesName},
+			{"SpeciesColorR", SpeciesColor.r},
+			{"SpeciesColorG", SpeciesColor.g},
+			{"SpeciesColorB", SpeciesColor.b},
+			{"SpeciesDiet", (int)SpeciesDiet}
+		};
+		return speciesDictionary;
+	}
+
 	// public override void _PhysicsProcess(float delta)
 	// {
 	// 	Vector3 collisionDetector;
