@@ -70,11 +70,9 @@ public class DataCollector
 				FreezingArray.Add(0.0f);
 				SleepDeprivationArray.Add(0.0f);
 			}
-		} else {
-			SpeciesCreationTime = initArray.Count - 1;
 		}
-
 		CurrentTimeTick = initArray.Count - 1;
+		SpeciesCreationTime = CurrentTimeTick;
 	}
 
 	public void LoadData(Godot.Collections.Dictionary loadedData){
