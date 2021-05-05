@@ -162,7 +162,42 @@ public class Species : MultiMeshInstance
 			{"SpeciesColorR", SpeciesColor.r},
 			{"SpeciesColorG", SpeciesColor.g},
 			{"SpeciesColorB", SpeciesColor.b},
-			{"SpeciesDiet", (int)SpeciesDiet}
+			{"SpeciesDiet", (int)SpeciesDiet},
+
+			{"PopulationSize", SpeciesDataCollector.GetPopulationSizeData()},
+			{"MaleFitness", SpeciesDataCollector.GetMaleFitnessData()},
+
+			{"Speed", SpeciesDataCollector.GetSpeedData()},
+			{"Perception", SpeciesDataCollector.GetPerceptionData()},
+			{"MatingCycle", SpeciesDataCollector.GetMatingCycleData()},
+			{"HungerResistance", SpeciesDataCollector.GetHungerResistanceData()},
+			{"ThirstResistance", SpeciesDataCollector.GetThirstResistanceData()},
+			{"Gestation", SpeciesDataCollector.GetGestationData()},
+			{"LitterSize", SpeciesDataCollector.GetLitterSizeData()},
+			{"Longevity", SpeciesDataCollector.GetLongevityData()},
+			{"Intelligence", SpeciesDataCollector.GetIntelligenceData()},
+			{"Memory", SpeciesDataCollector.GetMemoryData()},
+			{"Strength", SpeciesDataCollector.GetStrengthData()},
+			{"HeatResistance", SpeciesDataCollector.GetHeatResistanceData()},
+			{"ColdResistance", SpeciesDataCollector.GetColdResistanceData()},
+			{"Stamina", SpeciesDataCollector.GetStaminaData()},
+			{"SleepCycle", SpeciesDataCollector.GetSleepCycleData()},
+
+			{"Starvation", SpeciesDataCollector.GetStarvationData()},
+			{"Dehydration", SpeciesDataCollector.GetDehydrationData()},
+			{"OldAge", SpeciesDataCollector.GetOldAgeData()},
+			{"BeingHunted", SpeciesDataCollector.GetBeingHuntedData()},
+			{"HeatStroke", SpeciesDataCollector.GetHeatStrokeData()},
+			{"Freezing", SpeciesDataCollector.GetFreezingData()},
+			{"SleepDeprivation", SpeciesDataCollector.GetSleepDeprivationData()},
+
+			{"CurrentStarvation", SpeciesDataCollector.GetCurrentStarvation()},
+			{"CurrentDehydration", SpeciesDataCollector.GetCurrentDehydration()},
+			{"CurrentOldAge", SpeciesDataCollector.GetCurrentOldAge()},
+			{"CurrentBeingHunted", SpeciesDataCollector.GetCurrentBeingHunted()},
+			{"CurrentHeatStroke", SpeciesDataCollector.GetCurrentHeatStroke()},
+			{"CurrentFreezing", SpeciesDataCollector.GetCurrentFreezing()},
+			{"CurrentSleepDeprivation", SpeciesDataCollector.GetCurrentSleepDeprivation()}
 		};
 		return speciesDictionary;
 	}

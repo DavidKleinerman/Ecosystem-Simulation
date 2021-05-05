@@ -176,9 +176,41 @@ public class DataCollector
 		CurrentSleepDeprivationAmount++;
 	}
 
+	public float GetCurrentStarvation(){
+		return CurrentStarvationAmount;
+	}
+
+	public float GetCurrentDehydration(){
+		return CurrentDehydrationAmount;
+	}
+	public float GetCurrentOldAge(){
+		return CurrentOldAgeAmount;
+	}
+
+	public float GetCurrentBeingHunted(){
+		return CurrentBeingHuntedAmount;
+	}
+
+	public float GetCurrentHeatStroke(){
+		return CurrentHeatStrokeAmount;
+	}
+
+	public float GetCurrentFreezing(){
+		return CurrentFreezingAmount;
+	}
+
+	public float GetCurrentSleepDeprivation(){
+		return CurrentSleepDeprivationAmount;
+	}
+
 	public float GetCurrentMaleFitness()
 	{
 		return (float)MaleFitness[CurrentTimeTick];
+	}
+
+	public Godot.Collections.Array GetMaleFitnessData()
+	{
+		return MaleFitness;
 	}
 
 	public Godot.Collections.Array GetSpeedData()
@@ -233,7 +265,7 @@ public class DataCollector
 		return HeatResistanceArray;
 	}
 
-	public Godot.Collections.Array GetColdResistancehData()
+	public Godot.Collections.Array GetColdResistanceData()
 	{
 		return ColdResistanceArray;
 	}

@@ -110,7 +110,7 @@ public class GradientControl : Control
 			MemoryArray = speciesData.GetMemoryData();
 			StrengthArray = speciesData.GetStrengthData();
 			HeatResistanceArray = speciesData.GetHeatResistanceData();
-			ColdResistanceArray = speciesData.GetColdResistancehData();
+			ColdResistanceArray = speciesData.GetColdResistanceData();
 			StaminaArray = speciesData.GetStaminaData();
 			SleepCycleArray = speciesData.GetSleepCycleData();
 
