@@ -41,41 +41,40 @@ public class DataCollector
 
 	public DataCollector(Godot.Collections.Array initArray)
 	{
-		if (!Global.IsLoaded){
-			for (int i = 0; i < initArray.Count; i++)
-			{
-				PopulationSizeArray.Add(0.0f);
-				MaleFitness.Add(0.0f);
-				SpeedArray.Add(0.0f);
-				PerceptionArray.Add(0.0f);
-				MatingCycleArray.Add(0.0f);
-				HungerResistanceArray.Add(0.0f);
-				ThirstResistanceArray.Add(0.0f);
-				GestationArray.Add(0.0f);
-				LongevityArray.Add(0.0f);
-				LitterSizeArray.Add(0.0f);
-				IntelligenceArray.Add(0.0f);
-				MemoryArray.Add(0.0f);
-				StrengthArray.Add(0.0f);
-				HeatResistanceArray.Add(0.0f);
-				ColdResistanceArray.Add(0.0f);
-				StaminaArray.Add(0.0f);
-				SleepCycleArray.Add(0.0f);
+		for (int i = 0; i < initArray.Count; i++)
+		{
+			PopulationSizeArray.Add(0.0f);
+			MaleFitness.Add(0.0f);
+			SpeedArray.Add(0.0f);
+			PerceptionArray.Add(0.0f);
+			MatingCycleArray.Add(0.0f);
+			HungerResistanceArray.Add(0.0f);
+			ThirstResistanceArray.Add(0.0f);
+			GestationArray.Add(0.0f);
+			LongevityArray.Add(0.0f);
+			LitterSizeArray.Add(0.0f);
+			IntelligenceArray.Add(0.0f);
+			MemoryArray.Add(0.0f);
+			StrengthArray.Add(0.0f);
+			HeatResistanceArray.Add(0.0f);
+			ColdResistanceArray.Add(0.0f);
+			StaminaArray.Add(0.0f);
+			SleepCycleArray.Add(0.0f);
 
-				StarvationArray.Add(0.0f);
-				DehydrationArray.Add(0.0f);
-				OldAgeArray.Add(0.0f);
-				BeingHuntedArray.Add(0.0f);
-				HeatStrokeArray.Add(0.0f);
-				FreezingArray.Add(0.0f);
-				SleepDeprivationArray.Add(0.0f);
-			}
+			StarvationArray.Add(0.0f);
+			DehydrationArray.Add(0.0f);
+			OldAgeArray.Add(0.0f);
+			BeingHuntedArray.Add(0.0f);
+			HeatStrokeArray.Add(0.0f);
+			FreezingArray.Add(0.0f);
+			SleepDeprivationArray.Add(0.0f);
 		}
+		
 		CurrentTimeTick = initArray.Count - 1;
 		SpeciesCreationTime = CurrentTimeTick;
 	}
 
-	public void LoadData(Godot.Collections.Dictionary loadedData){
+	public DataCollector(Godot.Collections.Dictionary loadedData){
 
 		PopulationSizeArray = ConvertToFloatArray((Godot.Collections.Array)loadedData["PopulationSize"]);
 		MaleFitness = ConvertToFloatArray((Godot.Collections.Array)loadedData["MaleFitness"]);
@@ -112,6 +111,7 @@ public class DataCollector
 		CurrentSleepDeprivationAmount = (int)((float)loadedData["CurrentSleepDeprivation"]);
 
 		SpeciesCreationTime = (int)((float)loadedData["CreationTime"]);
+		CurrentTimeTick = MaleFitness.Count - 1;
 	}
 
 	public Godot.Collections.Array ConvertToFloatArray(Godot.Collections.Array sourceArray){

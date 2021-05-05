@@ -204,11 +204,6 @@ public class Species : MultiMeshInstance
 		return speciesDictionary;
 	}
 
-	public void LoadData(Godot.Collections.Dictionary loadedData){
-		if (SpeciesDataCollector != null)
-			SpeciesDataCollector.LoadData(loadedData);
-	}
-
 	// public override void _PhysicsProcess(float delta)
 	// {
 	// 	Vector3 collisionDetector;
@@ -845,10 +840,13 @@ public class Species : MultiMeshInstance
 	}
 
 	
-	public void InitSpecies (String speciesName, Color color, Godot.Collections.Array initArray, int diet){
+	public void InitSpecies (String speciesName, Color color, Godot.Collections.Array initArray, int diet, bool isNewlyLoaded, Godot.Collections.Dictionary loadedData){
 		this.SpeciesName = speciesName;
 		SpeciesColor = color;
-		SpeciesDataCollector = (DataCollector) new DataCollector(initArray);
+		if (isNewlyLoaded)
+			SpeciesDataCollector = (DataCollector) new DataCollector(loadedData);
+		else
+			SpeciesDataCollector = (DataCollector) new DataCollector(initArray);
 		SpeciesDiet = (Diet)diet;
 	}
 
