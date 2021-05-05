@@ -17,8 +17,10 @@ public class SpeciesHolder : Spatial
 	{
 		SimulationStarted = Global.IsLoaded;
 		if(Global.IsLoaded){
-			GlobalTimeArray = Global.LoadedGlobalTime;
+			for (int i = 0; i < Global.LoadedGlobalTime.Count; i++)
+				GlobalTimeArray.Add((float)Global.LoadedGlobalTime[i]);
 			CurrentWaitingTime = Global.LoadedGlobalWaitingTime;
+			GD.Print("the array: " + GlobalTimeArray);
 			GD.Print(CurrentWaitingTime);
 		}
 	}
