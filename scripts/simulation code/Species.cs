@@ -164,6 +164,8 @@ public class Species : MultiMeshInstance
 			{"SpeciesColorB", SpeciesColor.b},
 			{"SpeciesDiet", (int)SpeciesDiet},
 
+			{"CreationTime", SpeciesDataCollector.GetSpeciesCreationTime()},
+
 			{"PopulationSize", SpeciesDataCollector.GetPopulationSizeData()},
 			{"MaleFitness", SpeciesDataCollector.GetMaleFitnessData()},
 
@@ -200,6 +202,11 @@ public class Species : MultiMeshInstance
 			{"CurrentSleepDeprivation", SpeciesDataCollector.GetCurrentSleepDeprivation()}
 		};
 		return speciesDictionary;
+	}
+
+	public void LoadData(Godot.Collections.Dictionary loadedData){
+		if (SpeciesDataCollector != null)
+			SpeciesDataCollector.LoadData(loadedData);
 	}
 
 	// public override void _PhysicsProcess(float delta)
@@ -838,16 +845,16 @@ public class Species : MultiMeshInstance
 	}
 
 	
-	public void InitSpecies (String speciesName, Godot.Collections.Array initArray, int diet){
+	public void InitSpecies (String speciesName, Color color, Godot.Collections.Array initArray, int diet){
 		this.SpeciesName = speciesName;
+		SpeciesColor = color;
 		SpeciesDataCollector = (DataCollector) new DataCollector(initArray);
 		SpeciesDiet = (Diet)diet;
 	}
 
-	public void AddNewCreatures(int popSize, Color color, Godot.Collections.Array initialValues, float geneticVariation){
+	public void AddNewCreatures(int popSize, Godot.Collections.Array initialValues, float geneticVariation){
 		int creatureIndex = 0;
 		Multimesh.InstanceCount = popSize;
-		SpeciesColor = color;
 		foreach (BiomeGrid.GroundTile gt in ReshuffledGroundTiles()){
 			Vector3 position = TileGrid.MapToWorld((int)gt.gridIndex.x, (int)gt.gridIndex.y, (int)gt.gridIndex.z);
 			position.y = 2.2f;

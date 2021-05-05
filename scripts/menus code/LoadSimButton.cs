@@ -22,6 +22,7 @@ public class LoadSimButton : Button
 			var loadedData = new Godot.Collections.Dictionary((Godot.Collections.Dictionary)JSON.Parse(saveFile.GetLine()).Result);
 			Global.LoadedTiles = (Godot.Collections.Array)loadedData["BiomeTiles"];
 			Global.LoadedMeat = (Godot.Collections.Array)loadedData["Meat"];
+			Global.LoadedSpecies = (Godot.Collections.Array)loadedData["Species"];
 			Global.worldSize = (int)((float)loadedData["WorldSize"]);
 			Global.biomeGrowthRate = (float)loadedData["PlantGrowthRate"];
 			Global.LoadedGlobalTime = (Godot.Collections.Array)loadedData["GloablTimeArray"];

@@ -22,7 +22,18 @@ public class SpeciesHolder : Spatial
 			CurrentWaitingTime = Global.LoadedGlobalWaitingTime;
 			GD.Print("the array: " + GlobalTimeArray);
 			GD.Print(CurrentWaitingTime);
+			foreach (Godot.Collections.Dictionary s in Global.LoadedSpecies){
+				String speciesName = (String)s["SpeciesName"];
+				Color color = new Color((float)s["SpeciesColorR"], (float)s["SpeciesColorG"], (float)s["SpeciesColorB"]);
+				int diet = (int)((float)s["SpeciesDiet"]);
+				Node newSpeciesInst = Species.Instance();
+				((Species)newSpeciesInst).InitSpecies(speciesName, color, GlobalTimeArray, diet);
+				((Species)newSpeciesInst).LoadData(s);
+				AddChild(newSpeciesInst);
+				GetParent().GetNode<ItemList2>("DisplayChartsMenu/ItemList2").AddNewSpecies(speciesName);
+			}
 		}
+
 	}
 
 	public Godot.Collections.Array Save(){
@@ -37,8 +48,8 @@ public class SpeciesHolder : Spatial
 	public void AddSpecies(String speciesName, int popSize, Color color, Godot.Collections.Array initialValues, float geneticVariation, int diet){
 		Node newSpeciesInst = Species.Instance();
 		AddChild(newSpeciesInst);
-		((Species)newSpeciesInst).InitSpecies(speciesName, GlobalTimeArray, diet);
-		((Species)newSpeciesInst).AddNewCreatures(popSize, color, initialValues, geneticVariation);
+		((Species)newSpeciesInst).InitSpecies(speciesName, color, GlobalTimeArray, diet);
+		((Species)newSpeciesInst).AddNewCreatures(popSize, initialValues, geneticVariation);
 		GetParent().GetNode<ItemList2>("DisplayChartsMenu/ItemList2").AddNewSpecies(speciesName);
 	}
 
