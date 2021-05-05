@@ -24,7 +24,7 @@ public class NewSimMenu : Control
 			GetNode<Godot.ItemList>("WorldSizePicker").Select(0);
 		}
 		GetNode<Godot.ItemList>("BiomeType").Select(BiomeType);
-		//GetNode<VSlider>("VSlider").Select(BiomeGrowthRate);
+		GetNode<VSlider>("VSlider").Value = BiomeGrowthRate;
 		GetViewport().Size = Global.Resolution;
 	}
 
