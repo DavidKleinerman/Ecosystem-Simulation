@@ -115,4 +115,16 @@ public class Genome
 		return chromosomeSet;
 	}
 
+	public Godot.Collections.Array getMaternal(){
+		return MaternalChromosomeSet;
+	}
+
+	public Godot.Collections.Array getPaternal(){
+		return PaternalChromosomeSet;
+	}
+
+	public Godot.Collections.Array getDominanceMask(){
+		return DominanceMask;
+	}
+
 }

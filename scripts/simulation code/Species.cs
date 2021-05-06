@@ -156,13 +156,120 @@ public class Species : MultiMeshInstance
 		TimeMultiplier = GetParent<SpeciesHolder>().GetTimeMultiplier();
 	}
 
+	private Godot.Collections.Dictionary<String, object> SaveCreature(Creature creature){
+		State stateToSave;
+		if (creature.MyState == State.ExploringTheEnvironment || creature.MyState == State.Drinking || creature.MyState == State.GivingBirth || creature.MyState == State.Sleeping){
+			stateToSave = creature.MyState;
+		} else {
+			stateToSave = State.ExploringTheEnvironment;
+		}
+
+		Godot.Collections.Array PregnantWithGenomMaternal = new Godot.Collections.Array();
+		Godot.Collections.Array PregnantWithGenomPaternal = new Godot.Collections.Array();
+		if (creature.PregnantWithGenome != null){
+			PregnantWithGenomMaternal = creature.PregnantWithGenome.getMaternal();
+			PregnantWithGenomPaternal = creature.PregnantWithGenome.getPaternal();
+		}
+
+		Godot.Collections.Dictionary<String, object> creatureDictionary = new Godot.Collections.Dictionary<String, object>() {
+			{"SpeciesName", SpeciesName},
+			{"VelocityX", creature.Velocity.x},
+			{"VelocityY", creature.Velocity.y},
+			{"VelocityZ", creature.Velocity.z},
+			{"TranslationX", creature.MySpatial.Translation.x},
+			{"TranslationY", creature.MySpatial.Translation.y},
+			{"TranslationZ", creature.MySpatial.Translation.z},
+			{"ScaleX", creature.MySpatial.Scale.x},
+			{"ScaleY", creature.MySpatial.Scale.y},
+			{"ScaleZ", creature.MySpatial.Scale.z},
+			{"RotationX", creature.MySpatial.Rotation.x},
+			{"RotationY", creature.MySpatial.Rotation.y},
+			{"RotationZ", creature.MySpatial.Rotation.z},
+			{"ColliderTranslationX", creature.Collider.Translation.x},
+			{"ColliderTranslationY", creature.Collider.Translation.y},
+			{"ColliderTranslationZ", creature.Collider.Translation.z},
+			{"CurrentRotationTime", creature.CurrentRotationTime},
+			{"NextRotationTime", creature.NextRotationTime},
+			{"RotationRate", creature.RotationRate},
+			{"RotationDirection", creature.RotationDirection},
+			{"MaternalChromosome", creature.MyGenome.getMaternal()},
+			{"PaternalChromosome", creature.MyGenome.getPaternal()},
+			{"DominanceMask", creature.MyGenome.getDominanceMask()},
+			{"Gender", (int)creature.MyGender},
+			{"Fitness", creature.Fitness},
+			{"State", stateToSave},
+			{"Diet", (int)creature.CreatureDiet},
+			{"TimeSinceLastScan", creature.TimeSinceLastScan},
+			{"HuntedDown", creature.HuntedDown},
+
+			{"Speed", creature.Speed},
+			{"Perception", creature.Perception},
+			{"MatingCycle", creature.MatingCycle},
+			{"HungerResistance", creature.HungerResistance},
+			{"ThirstResistance", creature.ThirstResistance},
+			{"Gestation", creature.Gestation},
+			{"LitterSize", creature.LitterSize},
+			{"Longevity", creature.Longevity},
+			{"Intelligence", creature.Intelligence},
+			{"Memory", creature.Memory},
+			{"Strength", creature.Strength},
+			{"HeatResistance", creature.HeatResistance},
+			{"ColdResistance", creature.ColdResistance},
+			{"Stamina", creature.Stamina},
+			{"SleepCycle", creature.SleepCycle},
+
+			{"MaxSpeed", creature.MaxSpeed},
+			{"MaxPerception", creature.MaxPerception},
+			{"MaxMatingCycle", creature.MaxMatingCycle},
+			{"MaxHungerResistance", creature.MaxHungerResistance},
+			{"MaxThirstResistance", creature.MaxThirstResistance},
+			{"MaxGestation", creature.MaxGestation},
+			{"MaxLitterSize", creature.MaxLitterSize},
+			{"MaxIntelligence", creature.MaxIntelligence},
+			{"MaxStrength", creature.MaxStrength},
+			{"MaxHeatResistance", creature.MaxHeatResistance},
+			{"MaxColdResistance", creature.MaxColdResistance},
+			{"MaxStamina", creature.MaxStamina},
+
+			{"energy", creature.Energy},
+			{"Thirst", creature.Thirst},
+			{"ReproductiveUrge", creature.ReproductiveUrge},
+			{"Age", creature.Age},
+			{"Temperature", creature.Temperature},
+			{"Sleepiness", creature.Sleepiness},
+
+			{"Pregnant", creature.Pregnant},
+			{"Growing", creature.Growing},
+
+			{"PregnantWithGenomeMaternal", PregnantWithGenomMaternal},
+			{"PregnantWithGenomepaternal", PregnantWithGenomPaternal},
+			{"PregnancyTime", creature.PregnancyTime},
+			{"PreviousPregnancyTime", creature.PreviousPregnancyTime},
+			{"BornChildren", creature.BornChildren},
+			{"BirthingTime", creature.BirthingTime}
+		};
+		return creatureDictionary;
+	}
+
 	public Godot.Collections.Dictionary<String, object> Save(){
+		Godot.Collections.Array creaturesToSave = new Godot.Collections.Array();
+		for (int i = 0; i < Creatures.Count; i++){
+			if(!DeadArray.Contains(i)){
+				creaturesToSave.Add(SaveCreature(Creatures[i]));
+			}
+		}
+
+		for (int i = 0; i < NewBorn.Count; i++){
+			creaturesToSave.Add(SaveCreature(NewBorn[i]));
+		}
+
 		Godot.Collections.Dictionary<String, object> speciesDictionary = new Godot.Collections.Dictionary<String, object>() {
 			{"SpeciesName", SpeciesName},
 			{"SpeciesColorR", SpeciesColor.r},
 			{"SpeciesColorG", SpeciesColor.g},
 			{"SpeciesColorB", SpeciesColor.b},
 			{"SpeciesDiet", (int)SpeciesDiet},
+			{"Creatures", creaturesToSave},
 
 			{"CreationTime", SpeciesDataCollector.GetSpeciesCreationTime()},
 
