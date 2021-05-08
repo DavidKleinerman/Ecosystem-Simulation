@@ -265,8 +265,11 @@ public class Species : MultiMeshInstance
 			newCreature.MySpatial.Translation = new Vector3((float)c["TranslationX"], (float)c["TranslationY"], (float)c["TranslationZ"]);
 			newCreature.MySpatial.Scale = new Vector3((float)c["ScaleX"], (float)c["ScaleY"], (float)c["ScaleZ"]);
 			newCreature.MySpatial.Rotation = new Vector3((float)c["RotationX"], (float)c["RotationY"], (float)c["RotationZ"]);
-			newCreature.Collider = new CreatureCollider();
+			newCreature.Collider = (CreatureCollider)(Collider.Instance());
 			newCreature.Collider.Translation = new Vector3((float)c["ColliderTranslationX"], (float)c["ColliderTranslationY"], (float)c["ColliderTranslationZ"]);
+			newCreature.Collider.MyCreatureAlive = true;
+			newCreature.Collider.MyCreature = newCreature;
+			AddChild(newCreature.Collider);
 			newCreature.CurrentRotationTime = (float)c["CurrentRotationTime"];
 			newCreature.NextRotationTime = (float)c["NextRotationTime"];
 			newCreature.RotationRate = (float)c["RotationRate"];
