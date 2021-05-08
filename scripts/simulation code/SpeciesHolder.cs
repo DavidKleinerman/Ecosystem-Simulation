@@ -29,6 +29,7 @@ public class SpeciesHolder : Spatial
 				Node newSpeciesInst = Species.Instance();
 				((Species)newSpeciesInst).InitSpecies(speciesName, color, GlobalTimeArray, diet, true, s);
 				AddChild(newSpeciesInst);
+				((Species)newSpeciesInst).LoadCreatures((Godot.Collections.Array)s["Creatures"]);
 				GetParent().GetNode<ItemList2>("DisplayChartsMenu/ItemList2").AddNewSpecies(speciesName);
 			}
 		}

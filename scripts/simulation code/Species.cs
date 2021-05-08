@@ -176,6 +176,9 @@ public class Species : MultiMeshInstance
 			{"VelocityX", creature.Velocity.x},
 			{"VelocityY", creature.Velocity.y},
 			{"VelocityZ", creature.Velocity.z},
+			{"FrontX", creature.FrontVector.x},
+			{"FrontY", creature.FrontVector.y},
+			{"FrontZ", creature.FrontVector.z},
 			{"TranslationX", creature.MySpatial.Translation.x},
 			{"TranslationY", creature.MySpatial.Translation.y},
 			{"TranslationZ", creature.MySpatial.Translation.z},
@@ -231,7 +234,7 @@ public class Species : MultiMeshInstance
 			{"MaxColdResistance", creature.MaxColdResistance},
 			{"MaxStamina", creature.MaxStamina},
 
-			{"energy", creature.Energy},
+			{"Energy", creature.Energy},
 			{"Thirst", creature.Thirst},
 			{"ReproductiveUrge", creature.ReproductiveUrge},
 			{"Age", creature.Age},
@@ -242,13 +245,97 @@ public class Species : MultiMeshInstance
 			{"Growing", creature.Growing},
 
 			{"PregnantWithGenomeMaternal", PregnantWithGenomMaternal},
-			{"PregnantWithGenomepaternal", PregnantWithGenomPaternal},
+			{"PregnantWithGenomePaternal", PregnantWithGenomPaternal},
 			{"PregnancyTime", creature.PregnancyTime},
 			{"PreviousPregnancyTime", creature.PreviousPregnancyTime},
 			{"BornChildren", creature.BornChildren},
 			{"BirthingTime", creature.BirthingTime}
 		};
 		return creatureDictionary;
+	}
+
+	public void LoadCreatures(Godot.Collections.Array loadedCretures){
+		int i = 0;
+		Multimesh.InstanceCount = loadedCretures.Count;
+		foreach (Godot.Collections.Dictionary c in loadedCretures){
+			Creature newCreature = new Creature();
+			newCreature.SpeciesName = (String)c["SpeciesName"];
+			newCreature.Velocity = new Vector3((float)c["VelocityX"], (float)c["VelocityY"], (float)c["VelocityZ"]);
+			newCreature.FrontVector = new Vector3((float)c["FrontX"], (float)c["FrontY"], (float)c["FrontZ"]);
+			newCreature.MySpatial.Translation = new Vector3((float)c["TranslationX"], (float)c["TranslationY"], (float)c["TranslationZ"]);
+			newCreature.MySpatial.Scale = new Vector3((float)c["ScaleX"], (float)c["ScaleY"], (float)c["ScaleZ"]);
+			newCreature.MySpatial.Rotation = new Vector3((float)c["RotationX"], (float)c["RotationY"], (float)c["RotationZ"]);
+			newCreature.Collider = new CreatureCollider();
+			newCreature.Collider.Translation = new Vector3((float)c["ColliderTranslationX"], (float)c["ColliderTranslationY"], (float)c["ColliderTranslationZ"]);
+			newCreature.CurrentRotationTime = (float)c["CurrentRotationTime"];
+			newCreature.NextRotationTime = (float)c["NextRotationTime"];
+			newCreature.RotationRate = (float)c["RotationRate"];
+			newCreature.RotationDirection = (int)((float)c["RotationDirection"]);
+			Godot.Collections.Array maternal = (Godot.Collections.Array)c["MaternalChromosome"];
+			Godot.Collections.Array paternal = (Godot.Collections.Array)c["PaternalChromosome"];
+			Godot.Collections.Array dominanceMask = (Godot.Collections.Array)c["DominanceMask"];
+			newCreature.MyGenome = new Genome(maternal, paternal, dominanceMask);
+			newCreature.MyGender = (Gender)((int)((float)c["Gender"]));
+			newCreature.Fitness = (float)c["Fitness"];
+			newCreature.MyState = (State)((int)((float)c["State"]));
+			newCreature.CreatureDiet = (Diet)((int)((float)c["Diet"]));
+			newCreature.TimeSinceLastScan = (float)c["TimeSinceLastScan"];
+			newCreature.HuntedDown = (bool)c["HuntedDown"];
+
+			newCreature.Speed = (float)c["Speed"];
+			newCreature.Perception = (float)c["Perception"];
+			newCreature.MatingCycle = (float)c["MatingCycle"];
+			newCreature.HungerResistance = (float)c["HungerResistance"];
+			newCreature.ThirstResistance = (float)c["ThirstResistance"];
+			newCreature.Gestation = (float)c["Gestation"];
+			newCreature.LitterSize = (int)((float)c["LitterSize"]);
+			newCreature.Longevity = (float)c["Longevity"];
+			newCreature.Intelligence = (float)c["Intelligence"];
+			newCreature.Memory = (int)((float)c["Memory"]);
+			newCreature.Strength = (float)c["Strength"];
+			newCreature.HeatResistance = (float)c["HeatResistance"];
+			newCreature.ColdResistance = (float)c["ColdResistance"];
+			newCreature.Stamina = (float)c["Stamina"];
+			newCreature.SleepCycle = (float)c["SleepCycle"];
+
+			newCreature.MaxSpeed = (float)c["MaxSpeed"];
+			newCreature.MaxPerception = (float)c["MaxPerception"];
+			newCreature.MaxMatingCycle = (float)c["MaxMatingCycle"];
+			newCreature.MaxHungerResistance = (float)c["MaxHungerResistance"];
+			newCreature.MaxThirstResistance = (float)c["MaxThirstResistance"];
+			newCreature.MaxGestation = (float)c["MaxGestation"];
+			newCreature.MaxLitterSize = (int)((float)c["MaxLitterSize"]);
+			newCreature.MaxIntelligence = (float)c["MaxIntelligence"];
+			newCreature.MaxStrength = (float)c["MaxStrength"];
+			newCreature.MaxHeatResistance = (float)c["MaxHeatResistance"];
+			newCreature.MaxColdResistance = (float)c["MaxColdResistance"];
+			newCreature.MaxStamina = (float)c["MaxStamina"];
+
+			newCreature.Energy = (float)c["Energy"];
+			newCreature.Thirst = (float)c["Thirst"];
+			newCreature.ReproductiveUrge = (float)c["ReproductiveUrge"];
+			newCreature.Age = (float)c["Age"];
+			newCreature.Temperature = (float)c["Temperature"];
+			newCreature.Sleepiness = (float)c["Sleepiness"];
+
+			newCreature.Pregnant = (bool)c["Pregnant"];
+			newCreature.Growing = (bool)c["Growing"];
+
+			Godot.Collections.Array pregnantMaternal = (Godot.Collections.Array)c["PregnantWithGenomeMaternal"];
+			Godot.Collections.Array pregnantPaternal = (Godot.Collections.Array)c["PregnantWithGenomePaternal"];
+			if (pregnantMaternal.Count > 0){
+				newCreature.PregnantWithGenome = new Genome(pregnantMaternal, pregnantPaternal);
+				newCreature.PregnancyTime = (float)c["PregnancyTime"];
+				newCreature.PreviousPregnancyTime = (float)c["PreviousPregnancyTime"];
+				newCreature.BornChildren = (int)((float)c["BornChildren"]);
+				newCreature.BirthingTime = (float)c["BirthingTime"];
+			}
+
+			Creatures.Add(newCreature);
+			Multimesh.SetInstanceTransform(i, newCreature.MySpatial.Transform);
+			Multimesh.SetInstanceColor(i, SpeciesColor);
+			i++;
+		}
 	}
 
 	public Godot.Collections.Dictionary<String, object> Save(){

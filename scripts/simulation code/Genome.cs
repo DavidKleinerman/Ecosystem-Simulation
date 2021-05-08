@@ -25,19 +25,34 @@ public class Genome
 		Maternal,
 		Paternal
 	}
-	private Godot.Collections.Array MaternalChromosomeSet;
-	private Godot.Collections.Array PaternalChromosomeSet;
-	private Godot.Collections.Array DominanceMask;
-	private Godot.Collections.Array TotalGenome;
+	private Godot.Collections.Array MaternalChromosomeSet = (Godot.Collections.Array) new Godot.Collections.Array();
+	private Godot.Collections.Array PaternalChromosomeSet = (Godot.Collections.Array) new Godot.Collections.Array();
+	private Godot.Collections.Array DominanceMask = (Godot.Collections.Array) new Godot.Collections.Array();
+	private Godot.Collections.Array TotalGenome = (Godot.Collections.Array) new Godot.Collections.Array();
 
 	private const float MinMutationRate = 0.35f;
 
 	public Genome(){
-		MaternalChromosomeSet = (Godot.Collections.Array) new Godot.Collections.Array();
-		PaternalChromosomeSet = (Godot.Collections.Array) new Godot.Collections.Array();
-		DominanceMask = (Godot.Collections.Array) new Godot.Collections.Array();
-		TotalGenome = (Godot.Collections.Array) new Godot.Collections.Array();
 
+	}
+
+	public Genome(Godot.Collections.Array maternal, Godot.Collections.Array paternal, Godot.Collections.Array dominance){
+		for (int i = 0; i < maternal.Count; i++)
+			MaternalChromosomeSet.Add((float)maternal[i]);
+		for (int i = 0; i < paternal.Count; i++)
+			PaternalChromosomeSet.Add((float)paternal[i]);
+		for (int i = 0; i < dominance.Count; i++)
+			DominanceMask.Add((int)((float)dominance[i]));
+		TotalGenome = (Godot.Collections.Array) new Godot.Collections.Array();
+		CombineSets();
+	}
+	public Genome(Godot.Collections.Array maternal, Godot.Collections.Array paternal){
+		for (int i = 0; i < maternal.Count; i++)
+			MaternalChromosomeSet.Add((float)maternal[i]);
+		for (int i = 0; i < paternal.Count; i++)
+			PaternalChromosomeSet.Add((float)paternal[i]);
+		TotalGenome = (Godot.Collections.Array) new Godot.Collections.Array();
+		CombineSets();
 	}
 
 	private void CombineSets(){
