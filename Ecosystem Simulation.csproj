@@ -3,4 +3,9 @@
     <TargetFramework>net472</TargetFramework>
     <RootNamespace>EcosystemSimulation</RootNamespace>
   </PropertyGroup>
+  <ItemGroup>
+    <Content Include="addons\WAT\core\assertions\Assertions.cs"/>
+    <Content Include="addons\WAT\core\test\Recorder.cs"/>
+    <Content Include="addons\WAT\core\test\Test.cs"/>
+  </ItemGroup>
 </Project>

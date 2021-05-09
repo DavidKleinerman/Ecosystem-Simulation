@@ -1,4 +1,0 @@
-[gd_scene format=2]
-
-[node name="DesertTile" type="MeshInstance"]
-transform = Transform( 2, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0 )
