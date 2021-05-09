@@ -3,16 +3,6 @@ using System;
 
 public class Simulation : Spatial
 {
-	private PackedScene WaterTile = (PackedScene)GD.Load("res://assets/biomes/WaterTile.tscn");
-	private PackedScene ForestTile = (PackedScene)GD.Load("res://assets/biomes/ForestTile.tscn");
-	private PackedScene DesertTile = (PackedScene)GD.Load("res://assets/biomes/DesertTile.tscn");
-	private PackedScene GrasslandTile = (PackedScene)GD.Load("res://assets/biomes/GrasslandTile.tscn");
-	private PackedScene TundraTile = (PackedScene)GD.Load("res://assets/biomes/TundraTile.tscn");
-
-	private PackedScene TileSelector = (PackedScene)GD.Load("res://assets/TileSelector.tscn");
-
-	private PackedScene wallCollider = (PackedScene)GD.Load("res://assets/biomes/WallCollider.tscn");
-
 	private Vector3 lastValidCameraPos;
 	private Node TileSelectInst;
 
@@ -67,38 +57,6 @@ public class Simulation : Spatial
 			AddTile(wallCollider, position);
 			position.z += 4;
 		}*/
-	}
-
-	private void AddWall(int side){
-		Vector3 position = (Vector3) new Vector3(0,0,0);
-		Vector3 scale = (Vector3) new Vector3(2,2,2);
-		switch(side){
-			case 0:
-				position.x = -66;
-				position.z = 0;
-				scale.z = 64;
-			break;
-			case 1:
-				position.x = 0;
-				position.z = 66;
-				scale.x = 64;
-			break;
-			case 2:
-				position.x = 0;
-				position.z = -66;
-				scale.x = 64;
-			break;
-			case 3:
-				position.x = 66;
-				position.z = 0;
-				scale.z = 64;
-			break;
-		}
-		Node newWall = wallCollider.Instance();
-		newWall.RemoveFromGroup("Water");
-		((Spatial)newWall).Scale = scale;
-		((Spatial)newWall).Translation = position;
-		AddChild(newWall);
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
