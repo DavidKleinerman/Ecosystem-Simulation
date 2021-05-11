@@ -31,6 +31,7 @@ public class GradientControl : Control
 	private Line2D lineSleepDeprivation;
 	//gloabl
 	private Line2D LinePlantBiomass;
+	private Line2D LineMeatBiomass;
 	//*****************
 	private float MaxYvalue = 0;
 	//pop size arrays
@@ -61,6 +62,7 @@ public class GradientControl : Control
 	public Godot.Collections.Array SleepDeprivationArray;
 	//global
 	private Godot.Collections.Array PlantBiomassArray;
+	private Godot.Collections.Array MeatBiomassArray;
 	//**********
 	private bool OpenedUp = false;
 	private int selectedSpecies;
@@ -95,6 +97,7 @@ public class GradientControl : Control
 		lineSleepDeprivation = GetNode<Line2D>("SleepDeprivationGraph");
 
 		LinePlantBiomass = GetNode<Line2D>("PlantBiomassGraph");
+		LineMeatBiomass = GetNode<Line2D>("MeatBiomassGraph");
 	}
 	public void RefreshGraphs(){
 		
@@ -131,6 +134,7 @@ public class GradientControl : Control
 				SleepDeprivationArray = speciesData.GetSleepDeprivationData();
 			}
 			PlantBiomassArray = GetParent().GetParent().GetNode<BiomeGrid>("BiomeGrid").GetPlantBiomassArray();
+			MeatBiomassArray = GetParent().GetParent().GetNode<MultiMeshMeat>("MultiMeshMeat").GetMeatBiomassArray();
 
 			CalculateMax();
 			GetNode<Label>("MidLabel").Text = "" + MaxYvalue/2;
@@ -162,6 +166,7 @@ public class GradientControl : Control
 				DrawGraph(SleepDeprivationArray, lineSleepDeprivation, speciesCreationTime);
 			}
 			DrawGraph(PlantBiomassArray, LinePlantBiomass, 0);
+			DrawGraph(MeatBiomassArray, LineMeatBiomass, 0);
 		}
 	}
 
@@ -189,6 +194,8 @@ public class GradientControl : Control
 		}
 		if(LinePlantBiomass.Visible)
 			arrayOfMaxes.Add(FindMaxInArray(PlantBiomassArray));
+		if(LineMeatBiomass.Visible)
+			arrayOfMaxes.Add(FindMaxInArray(MeatBiomassArray));
 		if(arrayOfMaxes.Count > 0)
 			MaxYvalue = FindMaxInArray(arrayOfMaxes);
 		// if (linePopSize.Visible){

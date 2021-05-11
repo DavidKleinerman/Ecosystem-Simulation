@@ -1,4 +1,4 @@
-[gd_scene load_steps=103 format=2]
+[gd_scene load_steps=104 format=2]
 
 [ext_resource path="res://scripts/simulation code/Simulation.cs" type="Script" id=1]
 [ext_resource path="res://scripts/simulation code/CameraHolder.cs" type="Script" id=2]
@@ -47,6 +47,7 @@
 [ext_resource path="res://scripts/sim UI code/SimulationRate.cs" type="Script" id=45]
 [ext_resource path="res://scripts/menus code/SaveMenu.cs" type="Script" id=46]
 [ext_resource path="res://scripts/gradients code/PlantBiomassGraph.cs" type="Script" id=47]
+[ext_resource path="res://scripts/gradients code/MeatBiomassGraph.cs" type="Script" id=48]
 
 [sub_resource type="SphereShape" id=1]
 
@@ -639,10 +640,10 @@ margin_bottom = 1500.0
 rect_min_size = Vector2( 0, 420 )
 
 [node name="ColorPicker" type="ColorPicker" parent="NewSpeciesMenu/NewSpeciesScroll/NewSpeciesContent/RepresentationsPicker"]
-margin_left = 54.0
-margin_top = 24.0
-margin_right = 554.0
-margin_bottom = 444.0
+margin_left = 50.0
+margin_top = 20.0
+margin_right = 550.0
+margin_bottom = 440.0
 rect_min_size = Vector2( 500, 420 )
 edit_alpha = false
 presets_enabled = false
@@ -956,10 +957,21 @@ custom_colors/font_color_pressed = Color( 0, 0.52549, 0.0313726, 1 )
 text = "PlantBiomass"
 flat = true
 
-[node name="PopulationSizeCheckButton" type="CheckButton" parent="DisplayChartsMenu/RunningSimGridContainer"]
+[node name="MeatBiomassCheckButton" type="CheckButton" parent="DisplayChartsMenu/RunningSimGridContainer"]
 margin_top = 46.0
 margin_right = 300.0
 margin_bottom = 88.0
+rect_min_size = Vector2( 300, 0 )
+custom_fonts/font = SubResource( 33 )
+custom_colors/font_color = Color( 0.980392, 0.192157, 0.0117647, 1 )
+custom_colors/font_color_pressed = Color( 0.980392, 0.192157, 0.0117647, 1 )
+text = "MeatBiomass"
+flat = true
+
+[node name="PopulationSizeCheckButton" type="CheckButton" parent="DisplayChartsMenu/RunningSimGridContainer"]
+margin_top = 92.0
+margin_right = 300.0
+margin_bottom = 134.0
 rect_min_size = Vector2( 300, 0 )
 custom_fonts/font = SubResource( 34 )
 custom_colors/font_color = Color( 0.823529, 0.835294, 0.584314, 1 )
@@ -1403,6 +1415,12 @@ default_color = Color( 0, 0.52549, 0.0313726, 1 )
 antialiased = true
 script = ExtResource( 47 )
 
+[node name="MeatBiomassGraph" type="Line2D" parent="DisplayChartsMenu/GradientControl"]
+width = 3.0
+default_color = Color( 0.980392, 0.192157, 0.0117647, 1 )
+antialiased = true
+script = ExtResource( 48 )
+
 [node name="MultiMeshPlants" type="MultiMeshInstance" parent="."]
 multimesh = SubResource( 52 )
 
@@ -1573,6 +1591,7 @@ dialog_text = "The '.save' file type will be appended automatically."
 [connection signal="toggled" from="DisplayChartsMenu/DeathsGridContainer/DeathsFromStarvationCheckButton" to="DisplayChartsMenu/GradientControl/StarvationGraph" method="_on_DeathsFromStarvationCheckButton_toggled"]
 [connection signal="toggled" from="DisplayChartsMenu/DeathsGridContainer/DeathsFromOldAgeCheckButton" to="DisplayChartsMenu/GradientControl/OldAgeGraph" method="_on_DeathsFromOldAgeCheckButton_toggled"]
 [connection signal="toggled" from="DisplayChartsMenu/RunningSimGridContainer/PlantBiomassCheckButton" to="DisplayChartsMenu/GradientControl/PlantBiomassGraph" method="_on_PlantBiomassCheckButton_toggled"]
+[connection signal="toggled" from="DisplayChartsMenu/RunningSimGridContainer/MeatBiomassCheckButton" to="DisplayChartsMenu/GradientControl/MeatBiomassGraph" method="_on_MeatBiomassCheckButton_toggled"]
 [connection signal="toggled" from="DisplayChartsMenu/RunningSimGridContainer/PopulationSizeCheckButton" to="DisplayChartsMenu/GradientControl/PopulationSizeGraph" method="_on_PopulationSizeCheckButton_toggled"]
 [connection signal="toggled" from="DisplayChartsMenu/GeneValuesGridContainer/SleepCycleCheckButton" to="DisplayChartsMenu/GradientControl/SleepCycleGraph" method="_on_SleepCycleCheckButton_toggled"]
 [connection signal="toggled" from="DisplayChartsMenu/GeneValuesGridContainer/StaminaCheckButton" to="DisplayChartsMenu/GradientControl/StaminaGraph" method="_on_StaminaCheckButton_toggled"]

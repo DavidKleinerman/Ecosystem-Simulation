@@ -18,6 +18,7 @@ public class MultiMeshMeat : MultiMeshInstance
 	private Godot.Collections.Array<Meat> MeatToAdd = (Godot.Collections.Array<Meat>) new Godot.Collections.Array<Meat>();
 	private Godot.Collections.Array MeatToRemove = new Godot.Collections.Array();
 	private Godot.Collections.Array<Meat> temp = (Godot.Collections.Array<Meat>) new Godot.Collections.Array<Meat>();
+	private Godot.Collections.Array MeatBiomassArray = new Godot.Collections.Array();
 
 	public override void _Ready()
 	{
@@ -43,7 +44,22 @@ public class MultiMeshMeat : MultiMeshInstance
 				Multimesh.SetInstanceTransform(i, newMeat.meatSpatial.Transform);
 				i++;
 			}
+		} else {
+			MeatBiomassArray.Add(0.0f);
 		}
+	}
+
+	public void UpdateMeatBiomass(){
+		float currentMeatBiomass = 0.0f;
+		for (int i = 0; i < MeatArray.Count; i++){
+			if (!MeatArray[i].meatGone)
+				currentMeatBiomass += MeatArray[i].meatSpatial.Scale.x;
+		}
+		MeatBiomassArray.Add(currentMeatBiomass);
+	}
+
+	public Godot.Collections.Array GetMeatBiomassArray(){
+		return MeatBiomassArray;
 	}
 	
 	public override void _Process(float delta)

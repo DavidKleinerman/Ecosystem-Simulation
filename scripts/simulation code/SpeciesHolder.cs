@@ -83,6 +83,7 @@ public class SpeciesHolder : Spatial
 		GlobalTimeArray.Add(0);
 		GetTree().CallGroup("Species", "CollectData");
 		GetParent().GetNode<BiomeGrid>("BiomeGrid").UpdatePlantBiomass();
+		GetParent().GetNode<MultiMeshMeat>("MultiMeshMeat").UpdateMeatBiomass();
 		GetTree().CallGroup("GraphControl", "RefreshGraphs");
 	}
 
