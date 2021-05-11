@@ -23,6 +23,7 @@ public class LoadSimButton : Button
 			Global.LoadedTiles = (Godot.Collections.Array)loadedData["BiomeTiles"];
 			Global.LoadedMeat = (Godot.Collections.Array)loadedData["Meat"];
 			Global.LoadedSpecies = (Godot.Collections.Array)loadedData["Species"];
+			Global.LoadedPlantBiomass = (Godot.Collections.Array)loadedData["PlantBiomass"];
 			Global.worldSize = (int)((float)loadedData["WorldSize"]);
 			Global.biomeGrowthRate = (float)loadedData["PlantGrowthRate"];
 			Global.LoadedGlobalTime = (Godot.Collections.Array)loadedData["GloablTimeArray"];
