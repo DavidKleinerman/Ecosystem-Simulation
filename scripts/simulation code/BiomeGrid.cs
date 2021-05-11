@@ -38,6 +38,7 @@ public class BiomeGrid : GridMap
 	private const float WaitTime = 5f;
 	private float CurrentWaitingTime = 0.0f;
 	private float TimeMultiplier = 1f;
+	private Godot.Collections.Array PlantBiomassArray = new Godot.Collections.Array();
 	public override void _Ready()
 	{
 		
@@ -236,11 +237,23 @@ public class BiomeGrid : GridMap
 					}
 					MultiMeshPlants.Multimesh.SetInstanceTransform(i, GroundTiles[key].plantSpatial.Transform);
 				}
-
 				i++;
 			}
 
 		}
+	}
+
+	public void UpdatePlantBiomass(){
+		float currentPlantBiomass = 0.0f;
+		foreach (Vector3 key in GroundTiles.Keys){
+			if (GroundTiles[key].isPlantGrowing || GroundTiles[key].hasPlant)
+				currentPlantBiomass += GroundTiles[key].plantSpatial.Scale.x;
+		}
+		PlantBiomassArray.Add(currentPlantBiomass);
+	}
+
+	public Godot.Collections.Array GetPlantBiomassArray(){
+		return PlantBiomassArray;
 	}
 
 	private void SelectBiome(){
@@ -364,6 +377,7 @@ public class BiomeGrid : GridMap
 			position.z = -WorldSize/2;
 		}
 		MultiMeshPlants.Multimesh.InstanceCount = GroundTiles.Count;
+		PlantBiomassArray.Add(0.0f);
 	}
 
 	private float PlantChance(){

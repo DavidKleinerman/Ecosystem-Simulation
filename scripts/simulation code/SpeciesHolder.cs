@@ -82,6 +82,7 @@ public class SpeciesHolder : Spatial
 	{
 		GlobalTimeArray.Add(0);
 		GetTree().CallGroup("Species", "CollectData");
+		GetParent().GetNode<BiomeGrid>("BiomeGrid").UpdatePlantBiomass();
 		GetTree().CallGroup("GraphControl", "RefreshGraphs");
 	}
 

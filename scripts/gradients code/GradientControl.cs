@@ -29,6 +29,8 @@ public class GradientControl : Control
 	private Line2D lineHeatStroke;
 	private Line2D lineFreezing;
 	private Line2D lineSleepDeprivation;
+	//gloabl
+	private Line2D LinePlantBiomass;
 	//*****************
 	private float MaxYvalue = 100;
 	//pop size arrays
@@ -57,6 +59,8 @@ public class GradientControl : Control
 	public Godot.Collections.Array HeatStrokeArray;
 	public Godot.Collections.Array FreezingArray;
 	public Godot.Collections.Array SleepDeprivationArray;
+	//global
+	private Godot.Collections.Array PlantBiomassArray;
 	//**********
 	private bool OpenedUp = false;
 	private int selectedSpecies;
@@ -89,89 +93,102 @@ public class GradientControl : Control
 		lineHeatStroke = GetNode<Line2D>("HeatStrokeGraph");
 		lineFreezing = GetNode<Line2D>("FreezingGraph");
 		lineSleepDeprivation = GetNode<Line2D>("SleepDeprivationGraph");
+
+		LinePlantBiomass = GetNode<Line2D>("PlantBiomassGraph");
 	}
 	public void RefreshGraphs(){
 		
 		//DataCollector sp =  GetParent().GetParent().GetNode<SpeciesHolder>("SpeciesHolder").GetDataOfSpecies(SelectedSpecies);
 		//SpeedArray = GetParent().GetParent().GetNode<SpeciesHolder>("SpeciesHolder").RandomArrData();
-		if(SelectedSpecies != null && OpenedUp){
-			DataCollector speciesData = GetParent().GetParent().GetNode<SpeciesHolder>("SpeciesHolder").GetDataOfSpecies(SelectedSpecies);
-			int speciesCreationTime = speciesData.GetSpeciesCreationTime();
-			PopulationSizeArray = speciesData.GetPopulationSizeData();
-			SpeedArray = speciesData.GetSpeedData();
-			PerceptionArray = speciesData.GetPerceptionData();
-			GestationArray = speciesData.GetGestationData();
-			MatingCycleArray = speciesData.GetMatingCycleData();
-			HungerResistanceArray = speciesData.GetHungerResistanceData();
-			ThirstResistanceArray = speciesData.GetThirstResistanceData();
-			LongevityArray = speciesData.GetLongevityData();
-			LitterSizeArray = speciesData.GetLitterSizeData();
-			IntelligenceArray = speciesData.GetIntelligenceData();
-			MemoryArray = speciesData.GetMemoryData();
-			StrengthArray = speciesData.GetStrengthData();
-			HeatResistanceArray = speciesData.GetHeatResistanceData();
-			ColdResistanceArray = speciesData.GetColdResistanceData();
-			StaminaArray = speciesData.GetStaminaData();
-			SleepCycleArray = speciesData.GetSleepCycleData();
+		if(OpenedUp){
+			int speciesCreationTime = 0;
+			if (SelectedSpecies != null){
+				DataCollector speciesData = GetParent().GetParent().GetNode<SpeciesHolder>("SpeciesHolder").GetDataOfSpecies(SelectedSpecies);
+				speciesCreationTime = speciesData.GetSpeciesCreationTime();
+				PopulationSizeArray = speciesData.GetPopulationSizeData();
+				SpeedArray = speciesData.GetSpeedData();
+				PerceptionArray = speciesData.GetPerceptionData();
+				GestationArray = speciesData.GetGestationData();
+				MatingCycleArray = speciesData.GetMatingCycleData();
+				HungerResistanceArray = speciesData.GetHungerResistanceData();
+				ThirstResistanceArray = speciesData.GetThirstResistanceData();
+				LongevityArray = speciesData.GetLongevityData();
+				LitterSizeArray = speciesData.GetLitterSizeData();
+				IntelligenceArray = speciesData.GetIntelligenceData();
+				MemoryArray = speciesData.GetMemoryData();
+				StrengthArray = speciesData.GetStrengthData();
+				HeatResistanceArray = speciesData.GetHeatResistanceData();
+				ColdResistanceArray = speciesData.GetColdResistanceData();
+				StaminaArray = speciesData.GetStaminaData();
+				SleepCycleArray = speciesData.GetSleepCycleData();
 
-			StarvationArray = speciesData.GetStarvationData();
-			DehydrationArray = speciesData.GetDehydrationData();
-			OldAgeArray = speciesData.GetOldAgeData();
-			BeingHuntedArray = speciesData.GetBeingHuntedData();
-			HeatStrokeArray = speciesData.GetHeatStrokeData();
-			FreezingArray = speciesData.GetFreezingData();
-			SleepDeprivationArray = speciesData.GetSleepDeprivationData();
+				StarvationArray = speciesData.GetStarvationData();
+				DehydrationArray = speciesData.GetDehydrationData();
+				OldAgeArray = speciesData.GetOldAgeData();
+				BeingHuntedArray = speciesData.GetBeingHuntedData();
+				HeatStrokeArray = speciesData.GetHeatStrokeData();
+				FreezingArray = speciesData.GetFreezingData();
+				SleepDeprivationArray = speciesData.GetSleepDeprivationData();
+			}
+			PlantBiomassArray = GetParent().GetParent().GetNode<BiomeGrid>("BiomeGrid").GetPlantBiomassArray();
 
 			CalculateMax();
 			GetNode<Label>("MidLabel").Text = "" + MaxYvalue/2;
 			GetNode<Label>("MaxLabel").Text = "" + MaxYvalue;
-			DrawGraph(PopulationSizeArray, linePopSize, speciesCreationTime);
-			DrawGraph(SpeedArray, lineSpeed, speciesCreationTime);
-			DrawGraph(PerceptionArray, linePerception, speciesCreationTime);
-			DrawGraph(GestationArray, lineGestation, speciesCreationTime);
-			DrawGraph(MatingCycleArray, lineMatingCycle, speciesCreationTime);
-			DrawGraph(HungerResistanceArray, lineHungerResistance, speciesCreationTime);
-			DrawGraph(ThirstResistanceArray, lineThirstResistance, speciesCreationTime);
-			DrawGraph(LongevityArray, lineLongevity, speciesCreationTime);
-			DrawGraph(LitterSizeArray, lineLitterSize, speciesCreationTime);
-			DrawGraph(IntelligenceArray, lineIntelligence, speciesCreationTime);
-			DrawGraph(MemoryArray, lineMemory, speciesCreationTime);
-			DrawGraph(StrengthArray, lineStrength, speciesCreationTime);
-			DrawGraph(HeatResistanceArray, lineHeatResistance, speciesCreationTime);
-			DrawGraph(ColdResistanceArray, lineColdResistance, speciesCreationTime);
-			DrawGraph(StaminaArray, lineStamina, speciesCreationTime);
-			DrawGraph(SleepCycleArray, lineSleepCycle, speciesCreationTime);
+			if (SelectedSpecies != null){
+				DrawGraph(PopulationSizeArray, linePopSize, speciesCreationTime);
+				DrawGraph(SpeedArray, lineSpeed, speciesCreationTime);
+				DrawGraph(PerceptionArray, linePerception, speciesCreationTime);
+				DrawGraph(GestationArray, lineGestation, speciesCreationTime);
+				DrawGraph(MatingCycleArray, lineMatingCycle, speciesCreationTime);
+				DrawGraph(HungerResistanceArray, lineHungerResistance, speciesCreationTime);
+				DrawGraph(ThirstResistanceArray, lineThirstResistance, speciesCreationTime);
+				DrawGraph(LongevityArray, lineLongevity, speciesCreationTime);
+				DrawGraph(LitterSizeArray, lineLitterSize, speciesCreationTime);
+				DrawGraph(IntelligenceArray, lineIntelligence, speciesCreationTime);
+				DrawGraph(MemoryArray, lineMemory, speciesCreationTime);
+				DrawGraph(StrengthArray, lineStrength, speciesCreationTime);
+				DrawGraph(HeatResistanceArray, lineHeatResistance, speciesCreationTime);
+				DrawGraph(ColdResistanceArray, lineColdResistance, speciesCreationTime);
+				DrawGraph(StaminaArray, lineStamina, speciesCreationTime);
+				DrawGraph(SleepCycleArray, lineSleepCycle, speciesCreationTime);
 
-			DrawGraph(StarvationArray, lineStarvation, speciesCreationTime);
-			DrawGraph(DehydrationArray, lineDehydration, speciesCreationTime);
-			DrawGraph(OldAgeArray, lineOldAge, speciesCreationTime);
-			DrawGraph(BeingHuntedArray, lineBeingHunted, speciesCreationTime);
-			DrawGraph(HeatStrokeArray,lineHeatStroke, speciesCreationTime);
-			DrawGraph(FreezingArray, lineFreezing, speciesCreationTime);
-			DrawGraph(SleepDeprivationArray, lineSleepDeprivation, speciesCreationTime);
+				DrawGraph(StarvationArray, lineStarvation, speciesCreationTime);
+				DrawGraph(DehydrationArray, lineDehydration, speciesCreationTime);
+				DrawGraph(OldAgeArray, lineOldAge, speciesCreationTime);
+				DrawGraph(BeingHuntedArray, lineBeingHunted, speciesCreationTime);
+				DrawGraph(HeatStrokeArray,lineHeatStroke, speciesCreationTime);
+				DrawGraph(FreezingArray, lineFreezing, speciesCreationTime);
+				DrawGraph(SleepDeprivationArray, lineSleepDeprivation, speciesCreationTime);
+			}
+			DrawGraph(PlantBiomassArray, LinePlantBiomass, 0);
 		}
 	}
 
 	private void CalculateMax(){
 		Godot.Collections.Array arrayOfMaxes = (Godot.Collections.Array) new Godot.Collections.Array();
-		if (IsAnyGeneticTraitVisible())
-			arrayOfMaxes.Add(100f);
-		if(linePopSize.Visible)
-			arrayOfMaxes.Add(FindMaxInArray(PopulationSizeArray));
-		if(lineStarvation.Visible)
-			arrayOfMaxes.Add(FindMaxInArray(StarvationArray));
-		if(lineDehydration.Visible)
-			arrayOfMaxes.Add(FindMaxInArray(DehydrationArray));
-		if(lineOldAge.Visible)
-			arrayOfMaxes.Add(FindMaxInArray(OldAgeArray));
-		if(lineBeingHunted.Visible)
-			arrayOfMaxes.Add(FindMaxInArray(BeingHuntedArray));
-		if(lineHeatStroke.Visible)
-			arrayOfMaxes.Add(FindMaxInArray(HeatStrokeArray));
-		if(lineFreezing.Visible)
-			arrayOfMaxes.Add(FindMaxInArray(FreezingArray));
-		if(lineSleepDeprivation.Visible)
-			arrayOfMaxes.Add(FindMaxInArray(SleepCycleArray));
+		if (SelectedSpecies != null){
+			if (IsAnyGeneticTraitVisible())
+				arrayOfMaxes.Add(100f);
+			if(linePopSize.Visible)
+				arrayOfMaxes.Add(FindMaxInArray(PopulationSizeArray));
+			if(lineStarvation.Visible)
+				arrayOfMaxes.Add(FindMaxInArray(StarvationArray));
+			if(lineDehydration.Visible)
+				arrayOfMaxes.Add(FindMaxInArray(DehydrationArray));
+			if(lineOldAge.Visible)
+				arrayOfMaxes.Add(FindMaxInArray(OldAgeArray));
+			if(lineBeingHunted.Visible)
+				arrayOfMaxes.Add(FindMaxInArray(BeingHuntedArray));
+			if(lineHeatStroke.Visible)
+				arrayOfMaxes.Add(FindMaxInArray(HeatStrokeArray));
+			if(lineFreezing.Visible)
+				arrayOfMaxes.Add(FindMaxInArray(FreezingArray));
+			if(lineSleepDeprivation.Visible)
+				arrayOfMaxes.Add(FindMaxInArray(SleepDeprivationArray));
+		}
+		if(LinePlantBiomass.Visible)
+			arrayOfMaxes.Add(FindMaxInArray(PlantBiomassArray));
 		if(arrayOfMaxes.Count > 0)
 			MaxYvalue = FindMaxInArray(arrayOfMaxes);
 		// if (linePopSize.Visible){
