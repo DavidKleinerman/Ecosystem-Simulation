@@ -32,7 +32,7 @@ public class GradientControl : Control
 	//gloabl
 	private Line2D LinePlantBiomass;
 	//*****************
-	private float MaxYvalue = 100;
+	private float MaxYvalue = 0;
 	//pop size arrays
 	public Godot.Collections.Array PopulationSizeArray;
 	//genetic trait arrays
