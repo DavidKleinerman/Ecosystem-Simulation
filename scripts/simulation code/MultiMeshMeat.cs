@@ -44,6 +44,7 @@ public class MultiMeshMeat : MultiMeshInstance
 				Multimesh.SetInstanceTransform(i, newMeat.meatSpatial.Transform);
 				i++;
 			}
+			MeatBiomassArray = ConvertToFloatArray(Global.LoadedMeatBiomass);
 		} else {
 			MeatBiomassArray.Add(0.0f);
 		}
@@ -60,6 +61,14 @@ public class MultiMeshMeat : MultiMeshInstance
 
 	public Godot.Collections.Array GetMeatBiomassArray(){
 		return MeatBiomassArray;
+	}
+
+	public Godot.Collections.Array ConvertToFloatArray(Godot.Collections.Array sourceArray){
+		Godot.Collections.Array destArray = (Godot.Collections.Array)new Godot.Collections.Array();
+		for (int i = 0; i < sourceArray.Count; i++){
+			destArray.Add((float)sourceArray[i]);
+		}
+		return destArray;
 	}
 	
 	public override void _Process(float delta)

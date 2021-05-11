@@ -25,6 +25,7 @@ public class SaveMenu : Control
 		Godot.Collections.Array globalTimeArray = GetParent().GetNode<SpeciesHolder>("SpeciesHolder").GetGlobalTimeArray();
 		Godot.Collections.Array savedSpecies = GetParent().GetNode<SpeciesHolder>("SpeciesHolder").Save();
 		Godot.Collections.Array plantBiomass = GetParent().GetNode<BiomeGrid>("BiomeGrid").GetPlantBiomassArray();
+		Godot.Collections.Array meatBiomass = GetParent().GetNode<MultiMeshMeat>("MultiMeshMeat").GetMeatBiomassArray();
 		float GlobalCurrentWaitingTime = GetParent().GetNode<SpeciesHolder>("SpeciesHolder").GetCurrentWaitingTime();
 		float BiomesCurrentWaitingTime = GetParent().GetNode<BiomeGrid>("BiomeGrid").GetCurrentWaitingTime();
 		Godot.Collections.Dictionary<String, object> saveData = new Godot.Collections.Dictionary<String, object>() {
@@ -32,6 +33,7 @@ public class SaveMenu : Control
 			{"PlantGrowthRate", Global.biomeGrowthRate},
 			{"GloablTimeArray", globalTimeArray},
 			{"PlantBiomass", plantBiomass},
+			{"MeatBiomass", meatBiomass},
 			{"BiomeTiles", savedTiles},
 			{"Meat", savedMeat},
 			{"Species", savedSpecies},
