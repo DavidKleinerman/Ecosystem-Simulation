@@ -101,10 +101,11 @@ public class NewSpeciesContent : VBoxContainer
 			InitialValues.Add((float)GetNode<HSlider>("SleepCycle/HSlider").Value);
 			float geneticVariation = (float)GetNode<HSlider>("GeneticVariation/HSlider").Value;
 			int diet = (int)GetNode<OptionButton>("Diet/OptionButton").Selected;
+			int model = (int)GetNode<OptionButton>("ModelsList/OptionButton").Selected;
 			String speciesName = GetNode<LineEdit>("SpeciesName/LineEdit").Text;
 			int popSize = (int)(GetNode<HSlider>("PopulationSize/HSlider").Value);
 			Color speciesColor = GetNode<ColorPicker>("RepresentationsPicker/ColorPicker").Color;
-			GetParent().GetParent().GetParent().GetNode<SpeciesHolder>("SpeciesHolder").AddSpecies(speciesName, popSize, speciesColor, InitialValues, geneticVariation, diet);
+			GetParent().GetParent().GetParent().GetNode<SpeciesHolder>("SpeciesHolder").AddSpecies(speciesName, popSize, speciesColor, InitialValues, geneticVariation, diet, model);
 			GetNode<LineEdit>("SpeciesName/LineEdit").Clear();
 		}
 	}

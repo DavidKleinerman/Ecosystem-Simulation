@@ -7,6 +7,7 @@ public class Species : MultiMeshInstance
 	private RandomNumberGenerator rng;
 	private DataCollector SpeciesDataCollector = null;
 	private Color SpeciesColor;
+	private GraphicModel SpeciesModel;
 	private BiomeGrid TileGrid;
 	private PackedScene Collider = (PackedScene)GD.Load("res://assets/CreatureCollider.tscn");
 	private Area PerceptionCollider;
@@ -21,6 +22,12 @@ public class Species : MultiMeshInstance
 	private const float BaseTempChange = 2f;
 	private const float BaseSleepinessGrowth = 2f;
 	//enums
+	public enum GraphicModel {
+		Cube,
+		Prism,
+		Cylinder,
+		Oval
+	}
 	public enum Diet {
 		Herbivore,
 		CarnivoreScavenger,
@@ -152,7 +159,6 @@ public class Species : MultiMeshInstance
 		Multimesh = new MultiMesh();
 		Multimesh.ColorFormat = Godot.MultiMesh.ColorFormatEnum.Float;
 		Multimesh.TransformFormat = Godot.MultiMesh.TransformFormatEnum.Transform3d;
-		Multimesh.Mesh = (Mesh)GD.Load<Mesh>("res://meshes/CreatureBody.tres");
 		TimeMultiplier = GetParent<SpeciesHolder>().GetTimeMultiplier();
 	}
 
@@ -1037,7 +1043,7 @@ public class Species : MultiMeshInstance
 	}
 
 	
-	public void InitSpecies (String speciesName, Color color, Godot.Collections.Array initArray, int diet, bool isNewlyLoaded, Godot.Collections.Dictionary loadedData){
+	public void InitSpecies (String speciesName, Color color, Godot.Collections.Array initArray, int diet, bool isNewlyLoaded, Godot.Collections.Dictionary loadedData, GraphicModel model){
 		this.SpeciesName = speciesName;
 		SpeciesColor = color;
 		if (isNewlyLoaded)
@@ -1045,6 +1051,21 @@ public class Species : MultiMeshInstance
 		else
 			SpeciesDataCollector = (DataCollector) new DataCollector(initArray);
 		SpeciesDiet = (Diet)diet;
+		SpeciesModel = model;
+		switch(model){
+			case GraphicModel.Cube:
+				Multimesh.Mesh = (Mesh)GD.Load<Mesh>("res://meshes/CreatureCube.tres");
+			break;
+			case GraphicModel.Prism:
+				Multimesh.Mesh = (Mesh)GD.Load<Mesh>("res://meshes/CreaturePrism.tres");
+			break;
+			case GraphicModel.Cylinder:
+				Multimesh.Mesh = (Mesh)GD.Load<Mesh>("res://meshes/CreatureCylinder.tres");
+			break;
+			case GraphicModel.Oval:
+				Multimesh.Mesh = (Mesh)GD.Load<Mesh>("res://meshes/CreatureOval.tres");
+			break;
+		}
 	}
 
 	public void AddNewCreatures(int popSize, Godot.Collections.Array initialValues, float geneticVariation){

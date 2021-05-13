@@ -27,7 +27,7 @@ public class SpeciesHolder : Spatial
 				Color color = new Color((float)s["SpeciesColorR"], (float)s["SpeciesColorG"], (float)s["SpeciesColorB"]);
 				int diet = (int)((float)s["SpeciesDiet"]);
 				Node newSpeciesInst = Species.Instance();
-				((Species)newSpeciesInst).InitSpecies(speciesName, color, GlobalTimeArray, diet, true, s);
+				((Species)newSpeciesInst).InitSpecies(speciesName, color, GlobalTimeArray, diet, true, s, (Species.GraphicModel)0);
 				AddChild(newSpeciesInst);
 				((Species)newSpeciesInst).LoadCreatures((Godot.Collections.Array)s["Creatures"]);
 				GetParent().GetNode<ItemList2>("DisplayChartsMenu/ItemList2").AddNewSpecies(speciesName);
@@ -45,10 +45,10 @@ public class SpeciesHolder : Spatial
 		return savedSpecies;
 	}
 
-	public void AddSpecies(String speciesName, int popSize, Color color, Godot.Collections.Array initialValues, float geneticVariation, int diet){
+	public void AddSpecies(String speciesName, int popSize, Color color, Godot.Collections.Array initialValues, float geneticVariation, int diet, int model){
 		Node newSpeciesInst = Species.Instance();
 		AddChild(newSpeciesInst);
-		((Species)newSpeciesInst).InitSpecies(speciesName, color, GlobalTimeArray, diet, false, null);
+		((Species)newSpeciesInst).InitSpecies(speciesName, color, GlobalTimeArray, diet, false, null, (Species.GraphicModel)model);
 		((Species)newSpeciesInst).AddNewCreatures(popSize, initialValues, geneticVariation);
 		GetParent().GetNode<ItemList2>("DisplayChartsMenu/ItemList2").AddNewSpecies(speciesName);
 	}
