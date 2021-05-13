@@ -26,8 +26,9 @@ public class SpeciesHolder : Spatial
 				String speciesName = (String)s["SpeciesName"];
 				Color color = new Color((float)s["SpeciesColorR"], (float)s["SpeciesColorG"], (float)s["SpeciesColorB"]);
 				int diet = (int)((float)s["SpeciesDiet"]);
+				int model = (int)((float)s["SpeciesModel"]);
 				Node newSpeciesInst = Species.Instance();
-				((Species)newSpeciesInst).InitSpecies(speciesName, color, GlobalTimeArray, diet, true, s, (Species.GraphicModel)0);
+				((Species)newSpeciesInst).InitSpecies(speciesName, color, GlobalTimeArray, diet, true, s, (Species.GraphicModel)model);
 				AddChild(newSpeciesInst);
 				((Species)newSpeciesInst).LoadCreatures((Godot.Collections.Array)s["Creatures"]);
 				GetParent().GetNode<ItemList2>("DisplayChartsMenu/ItemList2").AddNewSpecies(speciesName);

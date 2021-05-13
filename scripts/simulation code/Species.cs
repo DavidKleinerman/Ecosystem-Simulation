@@ -156,9 +156,6 @@ public class Species : MultiMeshInstance
 		AssistSpatial2 = GetNode<Spatial>("AssistSpatial/AssistSpatial2");
 		TileGrid = GetNode<BiomeGrid>("../../BiomeGrid");
 		rng = (RandomNumberGenerator) new RandomNumberGenerator();
-		Multimesh = new MultiMesh();
-		Multimesh.ColorFormat = Godot.MultiMesh.ColorFormatEnum.Float;
-		Multimesh.TransformFormat = Godot.MultiMesh.TransformFormatEnum.Transform3d;
 		TimeMultiplier = GetParent<SpeciesHolder>().GetTimeMultiplier();
 	}
 
@@ -365,6 +362,7 @@ public class Species : MultiMeshInstance
 			{"SpeciesColorG", SpeciesColor.g},
 			{"SpeciesColorB", SpeciesColor.b},
 			{"SpeciesDiet", (int)SpeciesDiet},
+			{"SpeciesModel", (int)SpeciesModel},
 			{"Creatures", creaturesToSave},
 
 			{"CreationTime", SpeciesDataCollector.GetSpeciesCreationTime()},
@@ -1046,6 +1044,9 @@ public class Species : MultiMeshInstance
 	public void InitSpecies (String speciesName, Color color, Godot.Collections.Array initArray, int diet, bool isNewlyLoaded, Godot.Collections.Dictionary loadedData, GraphicModel model){
 		this.SpeciesName = speciesName;
 		SpeciesColor = color;
+		Multimesh = new MultiMesh();
+		Multimesh.ColorFormat = Godot.MultiMesh.ColorFormatEnum.Float;
+		Multimesh.TransformFormat = Godot.MultiMesh.TransformFormatEnum.Transform3d;
 		if (isNewlyLoaded)
 			SpeciesDataCollector = (DataCollector) new DataCollector(loadedData);
 		else
