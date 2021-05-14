@@ -3,7 +3,7 @@ using System;
 
 public class NewSpeciesMenu : Control
 {
-		public override void _Ready()
+	public override void _Ready()
 	{
 		this.Visible = false;
 	}
@@ -18,9 +18,3 @@ public class NewSpeciesMenu : Control
 	}
 
 }
-
-
-
-
-
-

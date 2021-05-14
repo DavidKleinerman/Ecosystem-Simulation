@@ -3,11 +3,7 @@ using System;
 
 public class LoadSimButton : Button
 {
-	public override void _Ready()
-	{
-		
-	}
-
+	
 	private void _on_FileDialog_confirmed()
 	{
 		try{

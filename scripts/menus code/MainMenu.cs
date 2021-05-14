@@ -4,7 +4,7 @@ using System;
 public class MainMenu : Control
 {
 	public int countLine =0;
-	public string path = "res://scripts/menus code/SettingsData/SettingsMenu";
+	public string path = "res://scripts/menus code/SettingsData/SettingsMenu.txt";
 	public string getLine; 
 	public bool enableShadows;
 	public bool enableVSync;

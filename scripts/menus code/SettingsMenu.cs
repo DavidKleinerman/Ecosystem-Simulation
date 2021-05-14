@@ -10,7 +10,7 @@ public class SettingsMenu : Control
 	//public MSAA DispFix;
 	public int Aliasing = 0;
 	public bool enableShadows=false;
-	string path = "res://scripts/menus code/SettingsData/SettingsMenu";
+	string path = "res://scripts/menus code/SettingsData/SettingsMenu.txt";
 	public override void _Ready()
 	{
 		//screenBorder = GetParent().GetNode<Global>("Global");
