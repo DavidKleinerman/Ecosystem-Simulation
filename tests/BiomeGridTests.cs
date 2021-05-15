@@ -5,7 +5,7 @@ public class BiomeGridTests : WAT.Test
 {
 	public override String Title()
 	{
-		return "BiomeGrid Tests";
+		return "BiomeGrid Unit Tests";
 	}
 	
 	[Test]

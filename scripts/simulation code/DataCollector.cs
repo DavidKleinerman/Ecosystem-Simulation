@@ -114,7 +114,7 @@ public class DataCollector
 		CurrentTimeTick = MaleFitness.Count - 1;
 	}
 
-	public Godot.Collections.Array ConvertToFloatArray(Godot.Collections.Array sourceArray){
+	public static Godot.Collections.Array ConvertToFloatArray(Godot.Collections.Array sourceArray){
 		Godot.Collections.Array destArray = (Godot.Collections.Array)new Godot.Collections.Array();
 		for (int i = 0; i < sourceArray.Count; i++){
 			destArray.Add((float)sourceArray[i]);
@@ -198,57 +198,57 @@ public class DataCollector
 			traitArray.Add(0.0f);
 	}
 
-	public void updateStarvation(){
+	public void UpdateStarvation(){
 		CurrentStarvationAmount++;
 	}
 
-	public void updateDehydration(){
+	public void UpdateDehydration(){
 		CurrentDehydrationAmount++;
 	}
-	public void updateOldAge(){
+	public void UpdateOldAge(){
 		CurrentOldAgeAmount++;
 	}
 
-	public void updateBeingHunted(){
+	public void UpdateBeingHunted(){
 		CurrentBeingHuntedAmount++;
 	}
 
-	public void updateHeatStroke(){
+	public void UpdateHeatStroke(){
 		CurrentHeatStrokeAmount++;
 	}
 
-	public void updateFreezing(){
+	public void UpdateFreezing(){
 		CurrentFreezingAmount++;
 	}
 
-	public void updateSleepDeprivation(){
+	public void UpdateSleepDeprivation(){
 		CurrentSleepDeprivationAmount++;
 	}
 
-	public float GetCurrentStarvation(){
+	public int GetCurrentStarvation(){
 		return CurrentStarvationAmount;
 	}
 
-	public float GetCurrentDehydration(){
+	public int GetCurrentDehydration(){
 		return CurrentDehydrationAmount;
 	}
-	public float GetCurrentOldAge(){
+	public int GetCurrentOldAge(){
 		return CurrentOldAgeAmount;
 	}
 
-	public float GetCurrentBeingHunted(){
+	public int GetCurrentBeingHunted(){
 		return CurrentBeingHuntedAmount;
 	}
 
-	public float GetCurrentHeatStroke(){
+	public int GetCurrentHeatStroke(){
 		return CurrentHeatStrokeAmount;
 	}
 
-	public float GetCurrentFreezing(){
+	public int GetCurrentFreezing(){
 		return CurrentFreezingAmount;
 	}
 
-	public float GetCurrentSleepDeprivation(){
+	public int GetCurrentSleepDeprivation(){
 		return CurrentSleepDeprivationAmount;
 	}
 

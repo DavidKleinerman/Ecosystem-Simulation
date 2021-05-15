@@ -6,6 +6,13 @@
 		],
 		"passing": true
 	},
+	"res://tests/DataCollectorTests.cs": {
+		"path": "res://tests/DataCollectorTests.cs",
+		"tags": [
+
+		],
+		"passing": true
+	},
 	"res://tests/TestTheTest.cs": {
 		"path": "res://tests/TestTheTest.cs",
 		"tags": [

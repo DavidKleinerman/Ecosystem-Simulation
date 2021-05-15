@@ -137,17 +137,9 @@ public class BiomeGrid : GridMap
 				i++;
 			}
 			isWorldBuilding = false;
-			PlantBiomassArray = ConvertToFloatArray(Global.LoadedPlantBiomass);
+			PlantBiomassArray = DataCollector.ConvertToFloatArray(Global.LoadedPlantBiomass);
 		}
 		
-	}
-
-	public Godot.Collections.Array ConvertToFloatArray(Godot.Collections.Array sourceArray){
-		Godot.Collections.Array destArray = (Godot.Collections.Array)new Godot.Collections.Array();
-		for (int i = 0; i < sourceArray.Count; i++){
-			destArray.Add((float)sourceArray[i]);
-		}
-		return destArray;
 	}
 
 	public Godot.Collections.Array Save(){

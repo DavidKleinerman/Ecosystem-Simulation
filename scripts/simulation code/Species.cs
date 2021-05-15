@@ -1197,29 +1197,29 @@ public class Species : MultiMeshInstance
 		return SpeciesName;
 	}
 
-	public void AddDead(CauseOfDeath cause, Vector3 position){
+	private void AddDead(CauseOfDeath cause, Vector3 position){
 		//GetTree().CallGroup("SpeciesHolder", "AddDead", position);
 		switch (cause){
 			case CauseOfDeath.Starvation:
-				SpeciesDataCollector.updateStarvation();
+				SpeciesDataCollector.UpdateStarvation();
 				break;
 			case CauseOfDeath.Dehydration:
-				SpeciesDataCollector.updateDehydration();
+				SpeciesDataCollector.UpdateDehydration();
 				break;
 			case CauseOfDeath.OldAge:
-				SpeciesDataCollector.updateOldAge();
+				SpeciesDataCollector.UpdateOldAge();
 				break;
 			case CauseOfDeath.BeingHunted:
-				SpeciesDataCollector.updateBeingHunted();
+				SpeciesDataCollector.UpdateBeingHunted();
 				break;
 			case CauseOfDeath.HeatStroke:
-				SpeciesDataCollector.updateHeatStroke();
+				SpeciesDataCollector.UpdateHeatStroke();
 				break;
 			case CauseOfDeath.Freezing:
-				SpeciesDataCollector.updateFreezing();
+				SpeciesDataCollector.UpdateFreezing();
 				break;
 			case CauseOfDeath.SleepDeprivation:
-				SpeciesDataCollector.updateSleepDeprivation();
+				SpeciesDataCollector.UpdateSleepDeprivation();
 				break;
 		}
 	}

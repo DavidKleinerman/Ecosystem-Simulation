@@ -1,12 +1,15 @@
 <?xml version="1.0" ?>
 <testsuites failures="0" name="TestXML" tests="1" time="0">
-	<testsuite name="BiomeGrid Tests" failures="0"  tests="6" time="0">
-		<testcase name="UpdatePlantBiomassEmptyDictionary" time="0"></testcase>
-		<testcase name="UpdatePlantBiomassOneElementDictionaryWholeNumbers" time="0"></testcase>
-		<testcase name="UpdatePlantBiomassOneElementDictionaryFractions" time="0"></testcase>
-		<testcase name="UpdatePlantBiomassMultiElementDictionaryWholeNumbers" time="0"></testcase>
-		<testcase name="UpdatePlantBiomassMultiElementDictionaryFractions" time="0"></testcase>
-		<testcase name="UpdatePlantBiomassMultiElementDictionaryFractions2" time="0"></testcase>
+	<testsuite name="DataCollector Unit Tests" failures="0"  tests="9" time="0">
+		<testcase name="UpdateStarvationTest" time="0"></testcase>
+		<testcase name="UpdateDehydrationTest" time="0"></testcase>
+		<testcase name="UpdateOldAgeTest" time="0"></testcase>
+		<testcase name="UpdateBeingHuntedTest" time="0"></testcase>
+		<testcase name="UpdateHeatStrokeTest" time="0"></testcase>
+		<testcase name="UpdateFreezingTest" time="0"></testcase>
+		<testcase name="UpdateSleepDeprivationTest" time="0"></testcase>
+		<testcase name="ConvertToFloatArrayEmptyArrayTest" time="0"></testcase>
+		<testcase name="ConvertToFloatArrayNotEmptyArrayTest" time="0"></testcase>
 	</testsuite>
 
 </testsuites>
