@@ -72,4 +72,28 @@ public class BiomeGridTests : WAT.Test
 		bg.UpdatePlantBiomass();
 		Assert.IsEqual(Z, bg.GetPlantBiomassArray()[0], "Then it passes");
 	}
+	[Test]
+	public void SaveFromEmptyArray(){
+		BiomeGrid bg = new BiomeGrid();
+		Assert.IsEqual(0, bg.Save().Count, "Then it passes");
+	}
+	[Test]
+	public void SaveFromNotEmptyArray(){
+		const int X = 1;
+		const int Y = 14;
+		BiomeGrid bg = new BiomeGrid();
+		BiomeGrid.GroundTile newTile = new BiomeGrid.GroundTile();
+		newTile.type = BiomeGrid.BiomeType.grassland;
+		newTile.plantSpatial = (Spatial) new Spatial();
+		newTile.plantGrowthTime = 0f;
+		newTile.EatersCount = 0;
+		newTile.isPlantGrowing = false;
+		newTile.hasPlant = false;
+		newTile.gridIndex = new Vector3(0,0,0);
+		bg.GetGroundTiles().Add(newTile.gridIndex, newTile);
+		Assert.IsEqual(X, bg.Save().Count, "Then it passes");
+		Assert.IsTrue(bg.Save()[0] is Godot.Collections.Dictionary, "Then it passes");
+		Assert.IsEqual(Y, ((Godot.Collections.Dictionary)bg.Save()[0]).Count, "Then it passes");
+	}
+
 }
