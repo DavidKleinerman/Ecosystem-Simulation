@@ -119,6 +119,30 @@ public class MultiMeshMeatTests : WAT.Test
         Assert.IsEqual(2, MMM.GetMeatToAdd().Count, "Then it Passes!");
         Assert.IsEqual(new Vector3(1,1,1), ((Godot.Collections.Array<MultiMeshMeat.Meat>)MMM.GetMeatToAdd())[1].meatSpatial.Translation, "Then it Passes!");
     }
+
+
+    [Test]
+	public void SaveFromEmptyArray(){
+		MultiMeshMeat MMM = new MultiMeshMeat();
+		Assert.IsEqual(0, MMM.Save().Count, "Then it passes");
+	}
+	[Test]
+	public void SaveFromNotEmptyArray(){
+		const int X = 1;
+		const int Y = 13;
+		MultiMeshMeat MMM = new MultiMeshMeat();
+		MultiMeshMeat.Meat newMeat = (MultiMeshMeat.Meat) new MultiMeshMeat.Meat();
+        CreatureCollider collider = new CreatureCollider();
+        Spatial meatSpatial = new Spatial();
+		collider.MyMeat = newMeat;
+		collider.MyCreatureAlive = false;
+		newMeat.meatSpatial = meatSpatial;
+		newMeat.Collider = collider;
+		MMM.GetMeatArray().Add(newMeat);
+		Assert.IsEqual(X, MMM.Save().Count, "Then it passes");
+		Assert.IsTrue(MMM.Save()[0] is Godot.Collections.Dictionary, "Then it passes");
+		Assert.IsEqual(Y, ((Godot.Collections.Dictionary)MMM.Save()[0]).Count, "Then it passes");
+	}
    
 	
 }
