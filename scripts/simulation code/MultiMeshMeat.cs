@@ -125,7 +125,9 @@ public class MultiMeshMeat : MultiMeshInstance
 		}
 		return savedMeat;
 	}
-
+	public Godot.Collections.Array<Meat> GetMeatToAdd(){
+		return MeatToAdd;
+	}
 	private Godot.Collections.Dictionary<String, object> MeatToDictionary(int i, Godot.Collections.Array<Meat> array){
 		Godot.Collections.Dictionary<String, object> meatDictionary = new Godot.Collections.Dictionary<String, object>() {
 			{"MeatTranslationX", array[i].meatSpatial.Translation.x},

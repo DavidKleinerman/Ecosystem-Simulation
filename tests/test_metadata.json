@@ -13,6 +13,13 @@
 		],
 		"passing": true
 	},
+	"res://tests/MultiMeshMeatTests.cs": {
+		"path": "res://tests/MultiMeshMeatTests.cs",
+		"tags": [
+
+		],
+		"passing": true
+	},
 	"res://tests/TestTheTest.cs": {
 		"path": "res://tests/TestTheTest.cs",
 		"tags": [
