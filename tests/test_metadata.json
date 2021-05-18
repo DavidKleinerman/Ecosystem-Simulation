@@ -13,6 +13,13 @@
 		],
 		"passing": true
 	},
+	"res://tests/GenomeTests.cs": {
+		"path": "res://tests/GenomeTests.cs",
+		"tags": [
+
+		],
+		"passing": false
+	},
 	"res://tests/MultiMeshMeatTests.cs": {
 		"path": "res://tests/MultiMeshMeatTests.cs",
 		"tags": [
