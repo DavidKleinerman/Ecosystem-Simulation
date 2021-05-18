@@ -11,7 +11,6 @@ public class GenomeTests : WAT.Test
     private bool CheckChromosome(Godot.Collections.Array Chromosome){
         bool flag = true;
         for(int i=0; i< Chromosome.Count; i++){
-            GD.Print("i is: ",i);
             if((float)Chromosome[i] > 100 || (float)Chromosome[i]<0){
                 flag = false;
             }
@@ -167,6 +166,65 @@ public class GenomeTests : WAT.Test
         Assert.IsTrue(Z,"Then it Passes");
         
     }
-    
 
+
+     private bool CheckDominanceMask(Godot.Collections.Array dominanceMask){
+        bool flag = true;
+        for(int i=0; i< dominanceMask.Count; i++){
+            if(!((int)dominanceMask[i] == 1 || (int)dominanceMask[i] == 0)){
+                flag = false;
+            }
+        }
+        return flag;
+    }
+       [Test]
+       public void RecombinationMinLengthTest(){
+        const int X = 0;
+        bool Y = true;
+        Godot.Collections.Array maternal = new Godot.Collections.Array();
+        Godot.Collections.Array paternal = new Godot.Collections.Array();
+        Genome gen = new Genome();
+        for(int i=0; i<X; i++){
+            maternal.Add(X);
+            paternal.Add(X);
+        }
+        gen.Recombination(maternal,paternal);
+        Y = CheckDominanceMask(gen.getDominanceMask());
+        Assert.IsEqual(X,gen.getDominanceMask().Count,"Then it Passes");
+        Assert.IsTrue(Y,"Then it Passes");
+    }
+
+     [Test]
+       public void RecombinationMiddleLengthTest(){
+        const int X = 10;
+        bool Y = true;
+        Godot.Collections.Array maternal = new Godot.Collections.Array();
+        Godot.Collections.Array paternal = new Godot.Collections.Array();
+        Genome gen = new Genome();
+        for(int i=0; i<X; i++){
+            maternal.Add(X);
+            paternal.Add(X);
+        }
+        gen.Recombination(maternal,paternal);
+        Y = CheckDominanceMask(gen.getDominanceMask());
+        Assert.IsEqual(X,gen.getDominanceMask().Count,"Then it Passes");
+        Assert.IsTrue(Y,"Then it Passes");
+    }
+
+      [Test]
+       public void RecombinationMaxLengthTest(){
+        const int X = 15;
+        bool Y = true;
+        Godot.Collections.Array maternal = new Godot.Collections.Array();
+        Godot.Collections.Array paternal = new Godot.Collections.Array();
+        Genome gen = new Genome();
+        for(int i=0; i<X; i++){
+            maternal.Add(X);
+            paternal.Add(X);
+        }
+        gen.Recombination(maternal,paternal);
+        Y = CheckDominanceMask(gen.getDominanceMask());
+        Assert.IsEqual(X,gen.getDominanceMask().Count,"Then it Passes");
+        Assert.IsTrue(Y,"Then it Passes");
+    }
 }
