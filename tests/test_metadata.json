@@ -18,7 +18,7 @@
 		"tags": [
 
 		],
-		"passing": false
+		"passing": true
 	},
 	"res://tests/MultiMeshMeatTests.cs": {
 		"path": "res://tests/MultiMeshMeatTests.cs",

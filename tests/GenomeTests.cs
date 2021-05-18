@@ -227,4 +227,60 @@ public class GenomeTests : WAT.Test
         Assert.IsEqual(X,gen.getDominanceMask().Count,"Then it Passes");
         Assert.IsTrue(Y,"Then it Passes");
     }
+
+     [Test]
+    public void GetTraitMinIndexTest(){
+        const int X = 0;
+        const float Y = 50;
+        Godot.Collections.Array initialValues = new Godot.Collections.Array();
+        Genome gen = new Genome();
+        for(int i=0; i<15; i++){
+            if(i != X){
+                initialValues.Add(0.0f);
+            }
+            else{
+                initialValues.Add(Y);
+            }
+        }
+        gen.ArtificialCombine(initialValues,0);
+       
+        Assert.IsEqual(Y,gen.GetTrait((Genome.GeneticTrait)X),"Then it Passes");
+    }
+
+       [Test]
+    public void GetTraitMiddleIndexTest(){
+        const int X = 10;
+        const float Y = 50;
+        Godot.Collections.Array initialValues = new Godot.Collections.Array();
+        Genome gen = new Genome();
+        for(int i=0; i<15; i++){
+            if(i != X){
+                initialValues.Add(0.0f);
+            }
+            else{
+                initialValues.Add(Y);
+            }
+        }
+        gen.ArtificialCombine(initialValues,0);
+       
+        Assert.IsEqual(Y,gen.GetTrait((Genome.GeneticTrait)X),"Then it Passes");
+    }
+       [Test]
+    public void GetTraitMaxIndexTest(){
+        const int X = 14;
+        const float Y = 50;
+        Godot.Collections.Array initialValues = new Godot.Collections.Array();
+        Genome gen = new Genome();
+        for(int i=0; i<15; i++){
+            if(i != X){
+                initialValues.Add(0.0f);
+            }
+            else{
+                initialValues.Add(Y);
+            }
+        }
+        gen.ArtificialCombine(initialValues,0);
+       
+        Assert.IsEqual(Y,gen.GetTrait((Genome.GeneticTrait)X),"Then it Passes");
+    }
 }
