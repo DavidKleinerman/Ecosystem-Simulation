@@ -283,4 +283,20 @@ public class GenomeTests : WAT.Test
        
         Assert.IsEqual(Y,gen.GetTrait((Genome.GeneticTrait)X),"Then it Passes");
     }
+
+     [Test]
+    public void MeiosisTest(){
+        bool flag = true;
+        Godot.Collections.Array initialValues = new Godot.Collections.Array();
+        Genome gen = new Genome();
+        for(int i=0; i<15; i++){
+            initialValues.Add(50.0f);
+        }
+        gen.ArtificialCombine(initialValues,20);
+        Godot.Collections.Array newChromosome = gen.Meiosis();
+        flag = CheckChromosome(newChromosome);
+        Assert.IsEqual(15,newChromosome.Count,"Then it Passes");
+        Assert.IsTrue(flag,"Then it Passes");
+        
+    }
 }
