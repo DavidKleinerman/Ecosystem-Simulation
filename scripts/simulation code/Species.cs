@@ -3,7 +3,7 @@ using System;
 
 public class Species : MultiMeshInstance
 {
-	public String SpeciesName;
+	private String SpeciesName;
 	private RandomNumberGenerator rng;
 	private DataCollector SpeciesDataCollector = null;
 	private Color SpeciesColor;
@@ -990,7 +990,7 @@ public class Species : MultiMeshInstance
 		}
 	}
 
-	public void UpdateMemoryList(Creature listOwner, Godot.Collections.Array list, Creature creature, bool isRejectList){
+	private void UpdateMemoryList(Creature listOwner, Godot.Collections.Array list, Creature creature, bool isRejectList){
 		if (list.Count < listOwner.Memory)
 			list.Add(creature);
 		else if (isRejectList){
@@ -1019,11 +1019,11 @@ public class Species : MultiMeshInstance
 		else return false;
 	}
 
-	public void SetState(Creature creature, State state){
+	private void SetState(Creature creature, State state){
 		creature.MyState = state;
 	}
 
-	public void StopGoingTo(Creature creature, State state){
+	private void StopGoingTo(Creature creature, State state){
 		creature.GoingToTime = 0;
 		SetState(creature, state);
 		if (creature.MyState != State.ExploringTheEnvironment)
@@ -1148,7 +1148,7 @@ public class Species : MultiMeshInstance
 		creature.Fitness += creature.MyGenome.GetTrait(Genome.GeneticTrait.SleepCycle);
 	}
 
-	public void AddCreature(Genome genome, Vector3 position, Godot.Collections.Array<Creature> list, bool isBaby, float pregnancyTime){
+	private void AddCreature(Genome genome, Vector3 position, Godot.Collections.Array<Creature> list, bool isBaby, float pregnancyTime){
 		Creature creature = new Creature();
 		Spatial creatureSpatial = new Spatial();
 		creatureSpatial.Translation = position;
@@ -1236,5 +1236,17 @@ public class Species : MultiMeshInstance
 
 	public DataCollector GetDataCollector(){
 		return SpeciesDataCollector;
+	}
+
+	public Color GetSpeciesColor(){
+		return SpeciesColor;
+	}
+
+	public Diet GetSpeciesDiet(){
+		return SpeciesDiet;
+	}
+
+	public GraphicModel GetSpeciesModel(){
+		return SpeciesModel;
 	}
 }

@@ -15,12 +15,12 @@ public class SimulationRate : ItemList
 		MakeVisible();
 	}
 
-	void MakeVisible(){
+	private void MakeVisible(){
 		Visible = true;
 		GetParent().GetNode<Label>("Label").Visible = true;
 	}
 
-	void MakeInvisible(){
+	private void MakeInvisible(){
 		Visible = false;
 		GetParent().GetNode<Label>("Label").Visible = false;
 	}

@@ -180,7 +180,7 @@ public class GenomeTests : WAT.Test
        [Test]
        public void RecombinationMinLengthTest(){
         const int X = 0;
-        bool Y = true;
+        bool Z = true;
         Godot.Collections.Array maternal = new Godot.Collections.Array();
         Godot.Collections.Array paternal = new Godot.Collections.Array();
         Genome gen = new Genome();
@@ -189,15 +189,15 @@ public class GenomeTests : WAT.Test
             paternal.Add(X);
         }
         gen.Recombination(maternal,paternal);
-        Y = CheckDominanceMask(gen.getDominanceMask());
-        Assert.IsEqual(X,gen.getDominanceMask().Count,"Then it Passes");
-        Assert.IsTrue(Y,"Then it Passes");
+        Z = CheckDominanceMask(gen.getDominanceMask());
+        Assert.IsEqual(X, gen.getDominanceMask().Count,"Then it Passes");
+        Assert.IsTrue(Z,"Then it Passes");
     }
 
      [Test]
        public void RecombinationMiddleLengthTest(){
         const int X = 10;
-        bool Y = true;
+        bool Z = true;
         Godot.Collections.Array maternal = new Godot.Collections.Array();
         Godot.Collections.Array paternal = new Godot.Collections.Array();
         Genome gen = new Genome();
@@ -206,15 +206,15 @@ public class GenomeTests : WAT.Test
             paternal.Add(X);
         }
         gen.Recombination(maternal,paternal);
-        Y = CheckDominanceMask(gen.getDominanceMask());
-        Assert.IsEqual(X,gen.getDominanceMask().Count,"Then it Passes");
-        Assert.IsTrue(Y,"Then it Passes");
+        Z = CheckDominanceMask(gen.getDominanceMask());
+        Assert.IsEqual(X, gen.getDominanceMask().Count,"Then it Passes");
+        Assert.IsTrue(Z,"Then it Passes");
     }
 
       [Test]
        public void RecombinationMaxLengthTest(){
         const int X = 15;
-        bool Y = true;
+        bool Z = true;
         Godot.Collections.Array maternal = new Godot.Collections.Array();
         Godot.Collections.Array paternal = new Godot.Collections.Array();
         Genome gen = new Genome();
@@ -223,9 +223,9 @@ public class GenomeTests : WAT.Test
             paternal.Add(X);
         }
         gen.Recombination(maternal,paternal);
-        Y = CheckDominanceMask(gen.getDominanceMask());
-        Assert.IsEqual(X,gen.getDominanceMask().Count,"Then it Passes");
-        Assert.IsTrue(Y,"Then it Passes");
+        Z = CheckDominanceMask(gen.getDominanceMask());
+        Assert.IsEqual(X, gen.getDominanceMask().Count,"Then it Passes");
+        Assert.IsTrue(Z,"Then it Passes");
     }
 
      [Test]
@@ -244,7 +244,7 @@ public class GenomeTests : WAT.Test
         }
         gen.ArtificialCombine(initialValues,0);
        
-        Assert.IsEqual(Y,gen.GetTrait((Genome.GeneticTrait)X),"Then it Passes");
+        Assert.IsEqual(Y, gen.GetTrait((Genome.GeneticTrait)X),"Then it Passes");
     }
 
        [Test]

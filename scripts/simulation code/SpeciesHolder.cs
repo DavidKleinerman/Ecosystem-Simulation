@@ -116,6 +116,10 @@ public class SpeciesHolder : Spatial
 		return CurrentWaitingTime;
 	}
 
+	public void MockSimulationStarted(){ //for tests only
+		SimulationStarted = true;
+	}
+
 }
 
 
