@@ -97,6 +97,8 @@ public class MultiMeshMeat : MultiMeshInstance
 				if (MeatArray[i].meatSpatial.Scale.x < 0.05f){
 					MeatArray[i].meatGone = true;
 					MeatArray[i].Collider.QueueFree();
+					AddChild(MeatArray[i].meatSpatial);
+					MeatArray[i].meatSpatial.QueueFree();
 					MeatToRemove.Add(i);
 				}
 			}

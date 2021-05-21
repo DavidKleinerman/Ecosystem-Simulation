@@ -25,7 +25,7 @@
 		"tags": [
 
 		],
-		"passing": false
+		"passing": true
 	},
 	"res://tests/SpeciesHolderTests.cs": {
 		"path": "res://tests/SpeciesHolderTests.cs",
@@ -40,12 +40,5 @@
 
 		],
 		"passing": true
-	},
-	"res://tests/TestTheTest.cs": {
-		"path": "res://tests/TestTheTest.cs",
-		"tags": [
-
-		],
-		"passing": false
 	}
 }
