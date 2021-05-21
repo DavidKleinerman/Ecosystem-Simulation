@@ -135,7 +135,10 @@ margin_right = 1200.0
 margin_bottom = 817.0
 window_title = "Open a File"
 mode = 0
+access = 2
 filters = PoolStringArray( "*.save" )
+current_dir = "/Users/PC/Documents/Ecosystem Simulation/Ecosystem-Simulation"
+current_path = "/Users/PC/Documents/Ecosystem Simulation/Ecosystem-Simulation/"
 __meta__ = {
 "_edit_use_anchors_": false
 }
