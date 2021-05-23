@@ -954,7 +954,10 @@ public class Species : MultiMeshInstance
 					StopGoingTo(creature, State.ExploringTheEnvironment);
 				}
 			} else if (creature.MyState == State.Hunting){
-				if (creature.GoingToTime > 6){ //failed hunting attempt
+				if (!creature.TargetCreature.Collider.MyCreatureAlive && creature.TargetCreature.Collider.MyMeat != null && creature.TargetCreature.Collider.MyMeat.meatGone){
+						StopGoingTo(creature, State.ExploringTheEnvironment);
+				}
+				else if (creature.GoingToTime > 6){ //failed hunting attempt
 					UpdateMemoryList(creature, creature.FailedHunts, creature.TargetCreature, false);
 					StopGoingTo(creature, State.ExploringTheEnvironment);
 					// GD.Print("failed hunt!");
@@ -967,6 +970,8 @@ public class Species : MultiMeshInstance
 					creature.CurrentTarget = creature.TargetCreature.MySpatial.Translation;
 					RotateToTarget(creature, creature.TargetCreature.MySpatial.Translation);
 				}
+					
+				
 			} else if (creature.MyState == State.RunningFromPredators){
 				Vector3 allPredators = new Vector3();
 				int numOfPredators = 0;
