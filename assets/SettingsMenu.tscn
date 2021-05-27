@@ -102,9 +102,9 @@ __meta__ = {
 
 [node name="Label2" type="Label" parent="."]
 margin_left = 650.0
-margin_top = 680.0
+margin_top = 620.0
 margin_right = 800.0
-margin_bottom = 740.0
+margin_bottom = 680.0
 custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Screen:"
@@ -114,9 +114,9 @@ __meta__ = {
 
 [node name="Label11" type="Label" parent="."]
 margin_left = 650.0
-margin_top = 730.0
+margin_top = 700.0
 margin_right = 820.0
-margin_bottom = 790.0
+margin_bottom = 760.0
 custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Resolution:"
@@ -126,9 +126,9 @@ __meta__ = {
 
 [node name="Label20" type="Label" parent="."]
 margin_left = 650.0
-margin_top = 580.0
+margin_top = 460.0
 margin_right = 852.0
-margin_bottom = 640.0
+margin_bottom = 520.0
 custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Anti Aliasing:"
@@ -150,9 +150,9 @@ __meta__ = {
 
 [node name="Label4" type="Label" parent="."]
 margin_left = 650.0
-margin_top = 630.0
+margin_top = 540.0
 margin_right = 950.0
-margin_bottom = 690.0
+margin_bottom = 600.0
 custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Camera Velocity:"
@@ -162,9 +162,9 @@ __meta__ = {
 
 [node name="Label25" type="Label" parent="."]
 margin_left = 650.0
-margin_top = 530.0
+margin_top = 380.0
 margin_right = 950.001
-margin_bottom = 590.0
+margin_bottom = 440.0
 custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Shadows:"
@@ -174,9 +174,9 @@ __meta__ = {
 
 [node name="ItemList" type="ItemList" parent="."]
 margin_left = 940.0
-margin_top = 680.0
+margin_top = 620.0
 margin_right = 1300.0
-margin_bottom = 740.0
+margin_bottom = 680.0
 custom_styles/selected_focus = SubResource( 4 )
 custom_styles/bg_focus = SubResource( 5 )
 custom_styles/selected = SubResource( 6 )
@@ -195,9 +195,9 @@ __meta__ = {
 
 [node name="ShadowQuality" type="ItemList" parent="."]
 margin_left = 940.0
-margin_top = 530.0
+margin_top = 380.0
 margin_right = 1300.0
-margin_bottom = 590.0
+margin_bottom = 440.0
 custom_styles/selected_focus = SubResource( 4 )
 custom_styles/bg_focus = SubResource( 5 )
 custom_styles/selected = SubResource( 6 )
@@ -216,9 +216,9 @@ __meta__ = {
 
 [node name="ItemList2" type="ItemList" parent="."]
 margin_left = 940.0
-margin_top = 630.0
+margin_top = 540.0
 margin_right = 1300.0
-margin_bottom = 690.0
+margin_bottom = 600.0
 custom_styles/selected_focus = SubResource( 4 )
 custom_styles/bg_focus = SubResource( 5 )
 custom_styles/selected = SubResource( 6 )
@@ -237,9 +237,9 @@ __meta__ = {
 
 [node name="ItemList3" type="ItemList" parent="."]
 margin_left = 940.0
-margin_top = 730.0
+margin_top = 700.0
 margin_right = 1300.0
-margin_bottom = 790.0
+margin_bottom = 760.0
 custom_styles/selected_focus = SubResource( 4 )
 custom_styles/bg_focus = SubResource( 5 )
 custom_styles/selected = SubResource( 6 )
@@ -258,9 +258,9 @@ __meta__ = {
 
 [node name="ItemList5" type="ItemList" parent="."]
 margin_left = 940.0
-margin_top = 580.0
+margin_top = 460.0
 margin_right = 1300.0
-margin_bottom = 640.0
+margin_bottom = 520.0
 custom_styles/selected_focus = SubResource( 4 )
 custom_styles/bg_focus = SubResource( 5 )
 custom_styles/selected = SubResource( 6 )
@@ -271,7 +271,7 @@ custom_colors/font_color_selected = Color( 0.0784314, 0.156863, 0.8, 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 items = [ "0x", null, false, "2x", null, false, "4x", null, false ]
 max_columns = 3
-fixed_column_width = 100
+fixed_column_width = 102
 icon_mode = 0
 __meta__ = {
 "_edit_use_anchors_": false
@@ -300,9 +300,9 @@ __meta__ = {
 
 [node name="Label3" type="Label" parent="."]
 margin_left = 1108.85
-margin_top = 680.0
+margin_top = 620.0
 margin_right = 1119.85
-margin_bottom = 734.0
+margin_bottom = 674.0
 custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0.0784314, 0.156863, 0.8, 1 )
 text = "|"
@@ -348,9 +348,9 @@ __meta__ = {
 
 [node name="Label7" type="Label" parent="."]
 margin_left = 1272.0
-margin_top = 630.0
+margin_top = 540.0
 margin_right = 1283.0
-margin_bottom = 690.0
+margin_bottom = 600.0
 custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0.0784314, 0.156863, 0.8, 1 )
 text = "|"
@@ -360,9 +360,9 @@ __meta__ = {
 
 [node name="Label8" type="Label" parent="."]
 margin_left = 1150.0
-margin_top = 630.0
+margin_top = 540.0
 margin_right = 1161.0
-margin_bottom = 690.0
+margin_bottom = 600.0
 custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0.0784314, 0.156863, 0.8, 1 )
 text = "|"
@@ -372,9 +372,9 @@ __meta__ = {
 
 [node name="Label5" type="Label" parent="."]
 margin_left = 930.0
-margin_top = 680.0
+margin_top = 620.0
 margin_right = 941.0
-margin_bottom = 734.0
+margin_bottom = 674.0
 custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0.0784314, 0.156863, 0.8, 1 )
 text = "|"
@@ -384,9 +384,9 @@ __meta__ = {
 
 [node name="Label24" type="Label" parent="."]
 margin_left = 1272.0
-margin_top = 580.0
+margin_top = 460.0
 margin_right = 1283.0
-margin_bottom = 634.0
+margin_bottom = 514.0
 custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0.0784314, 0.156863, 0.8, 1 )
 text = "|"
@@ -396,9 +396,9 @@ __meta__ = {
 
 [node name="Label23" type="Label" parent="."]
 margin_left = 1150.2
-margin_top = 580.0
+margin_top = 460.0
 margin_right = 1161.2
-margin_bottom = 635.478
+margin_bottom = 515.478
 custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0.0784314, 0.156863, 0.8, 1 )
 text = "|"
@@ -408,9 +408,9 @@ __meta__ = {
 
 [node name="Label22" type="Label" parent="."]
 margin_left = 1038.0
-margin_top = 580.0
+margin_top = 460.0
 margin_right = 1049.0
-margin_bottom = 634.0
+margin_bottom = 514.0
 custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0.0784314, 0.156863, 0.8, 1 )
 text = "|"
@@ -420,9 +420,9 @@ __meta__ = {
 
 [node name="Label21" type="Label" parent="."]
 margin_left = 930.0
-margin_top = 580.0
+margin_top = 460.0
 margin_right = 941.0
-margin_bottom = 634.0
+margin_bottom = 514.0
 custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0.0784314, 0.156863, 0.8, 1 )
 text = "|"
@@ -432,9 +432,9 @@ __meta__ = {
 
 [node name="Label27" type="Label" parent="."]
 margin_left = 1098.0
-margin_top = 530.0
+margin_top = 380.0
 margin_right = 1109.0
-margin_bottom = 584.0
+margin_bottom = 434.0
 custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0.0784314, 0.156863, 0.8, 1 )
 text = "|"
@@ -444,9 +444,9 @@ __meta__ = {
 
 [node name="Label28" type="Label" parent="."]
 margin_left = 1272.0
-margin_top = 530.0
+margin_top = 380.0
 margin_right = 1283.0
-margin_bottom = 584.0
+margin_bottom = 434.0
 custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0.0784314, 0.156863, 0.8, 1 )
 text = "|"
@@ -456,9 +456,9 @@ __meta__ = {
 
 [node name="Label26" type="Label" parent="."]
 margin_left = 930.0
-margin_top = 530.0
+margin_top = 380.0
 margin_right = 941.0
-margin_bottom = 584.0
+margin_bottom = 434.0
 custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0.0784314, 0.156863, 0.8, 1 )
 text = "|"
@@ -468,9 +468,9 @@ __meta__ = {
 
 [node name="Label9" type="Label" parent="."]
 margin_left = 1038.0
-margin_top = 630.0
+margin_top = 540.0
 margin_right = 1049.0
-margin_bottom = 684.0
+margin_bottom = 594.0
 custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0.0784314, 0.156863, 0.8, 1 )
 text = "|"
@@ -480,9 +480,9 @@ __meta__ = {
 
 [node name="Label10" type="Label" parent="."]
 margin_left = 930.0
-margin_top = 630.0
+margin_top = 540.0
 margin_right = 941.0
-margin_bottom = 684.0
+margin_bottom = 594.0
 custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0.0784314, 0.156863, 0.8, 1 )
 text = "|"
@@ -492,9 +492,9 @@ __meta__ = {
 
 [node name="Label12" type="Label" parent="."]
 margin_left = 930.0
-margin_top = 730.0
+margin_top = 700.0
 margin_right = 941.0
-margin_bottom = 784.0
+margin_bottom = 754.0
 custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0.0784314, 0.156863, 0.8, 1 )
 text = "|"
@@ -504,9 +504,9 @@ __meta__ = {
 
 [node name="Label6" type="Label" parent="."]
 margin_left = 1272.0
-margin_top = 680.0
+margin_top = 620.0
 margin_right = 1283.0
-margin_bottom = 734.0
+margin_bottom = 674.0
 custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0.0784314, 0.156863, 0.8, 1 )
 text = "|"
@@ -516,9 +516,9 @@ __meta__ = {
 
 [node name="Label14" type="Label" parent="."]
 margin_left = 1156.0
-margin_top = 730.0
+margin_top = 700.0
 margin_right = 1167.0
-margin_bottom = 784.0
+margin_bottom = 754.0
 custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0.0784314, 0.156863, 0.8, 1 )
 text = "|"
@@ -528,9 +528,9 @@ __meta__ = {
 
 [node name="Label15" type="Label" parent="."]
 margin_left = 1272.0
-margin_top = 730.0
+margin_top = 700.0
 margin_right = 1283.0
-margin_bottom = 784.0
+margin_bottom = 754.0
 custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0.0784314, 0.156863, 0.8, 1 )
 text = "|"
@@ -540,9 +540,9 @@ __meta__ = {
 
 [node name="Label13" type="Label" parent="."]
 margin_left = 1047.0
-margin_top = 730.0
+margin_top = 700.0
 margin_right = 1058.0
-margin_bottom = 784.0
+margin_bottom = 754.0
 custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0.0784314, 0.156863, 0.8, 1 )
 text = "|"
