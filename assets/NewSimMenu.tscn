@@ -70,10 +70,14 @@ __meta__ = {
 }
 
 [node name="LaunchSim" type="Button" parent="."]
-margin_left = 712.488
-margin_top = 395.266
-margin_right = 1212.49
-margin_bottom = 455.266
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -173.0
+margin_top = -220.0
+margin_right = 173.0
+margin_bottom = -160.0
 focus_mode = 0
 custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
@@ -88,17 +92,21 @@ __meta__ = {
 }
 
 [node name="BackToMainMenu" type="Button" parent="."]
-margin_left = 778.355
-margin_top = 884.94
-margin_right = 1178.35
-margin_bottom = 944.94
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -123.0
+margin_top = -160.0
+margin_right = 123.0
+margin_bottom = -99.9999
 focus_mode = 0
 custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_color_hover = Color( 0.0784314, 0.156863, 0.8, 1 )
 custom_colors/font_color_pressed = Color( 0.921569, 0.937255, 0.521569, 1 )
 enabled_focus_mode = 0
-text = "Back To Main Menu"
+text = "Main Menu"
 flat = true
 script = ExtResource( 3 )
 __meta__ = {
@@ -107,9 +115,9 @@ __meta__ = {
 
 [node name="Label2" type="Label" parent="."]
 margin_left = 586.52
-margin_top = 470.0
+margin_top = 400.0
 margin_right = 786.52
-margin_bottom = 553.369
+margin_bottom = 483.369
 custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "World Size"
@@ -119,65 +127,63 @@ __meta__ = {
 
 [node name="Label7" type="Label" parent="."]
 margin_left = 1156.99
-margin_top = 470.0
+margin_top = 400.0
 margin_right = 1356.99
-margin_bottom = 548.207
+margin_bottom = 478.207
 custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "Biome Type"
+text = "Initial Biome"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Label9" type="Label" parent="."]
 margin_left = 930.0
-margin_top = 787.0
-margin_right = 995.68
-margin_bottom = 937.905
+margin_top = 711.0
+margin_right = 996.0
+margin_bottom = 765.0
 custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "Low
-"
+text = "Low"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Label11" type="Label" parent="."]
 margin_left = 925.0
-margin_top = 550.0
-margin_right = 998.164
-margin_bottom = 638.115
+margin_top = 478.0
+margin_right = 999.0
+margin_bottom = 532.0
 custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "High
-"
+text = "High"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Label8" type="Label" parent="."]
 margin_left = 861.41
-margin_top = 470.0
+margin_top = 400.0
 margin_right = 1072.41
-margin_bottom = 546.212
+margin_bottom = 476.212
 custom_fonts/font = SubResource( 4 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "Growth Rate"
+text = "Plant Growth"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="WorldSizePicker" type="ItemList" parent="."]
-margin_left = 616.315
-margin_top = 550.0
-margin_right = 728.315
-margin_bottom = 912.406
+margin_left = 616.0
+margin_top = 478.0
+margin_right = 728.0
+margin_bottom = 829.0
 custom_styles/selected_focus = SubResource( 5 )
 custom_styles/bg_focus = SubResource( 6 )
 custom_styles/selected = SubResource( 7 )
 custom_styles/bg = SubResource( 8 )
 custom_fonts/font = SubResource( 9 )
-custom_colors/guide_color = Color( 0, 0, 0, 1 )
+custom_colors/guide_color = Color( 0, 0, 0, 0 )
 custom_colors/font_color_selected = Color( 0.0784314, 0.156863, 0.8, 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 items = [ "16X16", null, false, "24X24", null, false, "32X32", null, false ]
@@ -188,20 +194,19 @@ __meta__ = {
 }
 
 [node name="BiomeType" type="ItemList" parent="."]
-margin_left = 1199.67
-margin_top = 550.0
-margin_right = 1307.67
-margin_bottom = 861.184
+margin_left = 1200.0
+margin_top = 477.0
+margin_right = 1308.0
+margin_bottom = 774.0
 custom_styles/selected_focus = SubResource( 5 )
 custom_styles/bg_focus = SubResource( 6 )
 custom_styles/selected = SubResource( 7 )
 custom_styles/bg = SubResource( 8 )
 custom_fonts/font = SubResource( 9 )
-custom_colors/guide_color = Color( 0, 0, 0, 1 )
+custom_colors/guide_color = Color( 0, 0, 0, 0 )
 custom_colors/font_color_selected = Color( 0.0784314, 0.156863, 0.8, 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 items = [ "Water", null, false, "Forest", null, false, "Desert", null, false, "Grass", null, false, "Tundra", null, false ]
-icon_mode = 0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -220,9 +225,9 @@ __meta__ = {
 
 [node name="VSlider" type="VSlider" parent="."]
 margin_left = 954.0
-margin_top = 604.0
+margin_top = 538.0
 margin_right = 970.0
-margin_bottom = 799.0
+margin_bottom = 718.0
 min_value = 3.0
 max_value = 5.0
 step = 0.1

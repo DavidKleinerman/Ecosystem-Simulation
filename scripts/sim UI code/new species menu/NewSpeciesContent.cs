@@ -18,7 +18,7 @@ public class NewSpeciesContent : VBoxContainer
 		GetNode<Label>("ThirstResistance/Label").HintTooltip = "Reduces the passive growth of the creature's thirst.\nLarger number = larger the reduction to the thirst growth.";
 		GetNode<Label>("Gestation/Label").Text = "Gestation";
 		GetNode<Label>("Gestation/Label").HintTooltip = "Females Only. Determines the length of the pregnancy period.\nLarger number = longer pregnancies but with stronger offsprings.";
-		GetNode<Label>("LitterSize/Label").Text = "LitterSize";
+		GetNode<Label>("LitterSize/Label").Text = "Litter Size";
 		GetNode<Label>("LitterSize/Label").HintTooltip = "Females Only. How many offsprings are born in a single clutch.\nEach child born reduces the mother's energy.\nLarger number = more children born per clutch.";
 		GetNode<Label>("Longevity/Label").Text = "Longevity";
 		GetNode<Label>("Longevity/Label").HintTooltip = "How long the creature will live.\nLarger number = longer lifespan.";
