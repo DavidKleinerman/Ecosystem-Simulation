@@ -137,8 +137,8 @@ window_title = "Open a File"
 mode = 0
 access = 2
 filters = PoolStringArray( "*.save" )
-current_dir = "/Users/PC/Documents/Ecosystem Simulation/Ecosystem-Simulation"
-current_path = "/Users/PC/Documents/Ecosystem Simulation/Ecosystem-Simulation/"
+current_dir = "/Users"
+current_path = "/Users/"
 __meta__ = {
 "_edit_use_anchors_": false
 }
