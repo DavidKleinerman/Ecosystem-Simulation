@@ -27,7 +27,6 @@ public class BiomeGrid : GridMap
 	private SpatialMaterial GrasslandMaterial = (SpatialMaterial)GD.Load<SpatialMaterial>("res://materials/forest_material.tres");
 	private SpatialMaterial TundraMaterial = (SpatialMaterial)GD.Load<SpatialMaterial>("res://materials/tundraPlant_material.tres");
 	private PackedScene TileSelector = (PackedScene)GD.Load("res://assets/TileSelector.tscn");
-	private PackedScene WallCollider = (PackedScene)GD.Load("res://assets/biomes/WallCollider.tscn");
 	private PackedScene TileCollider = (PackedScene)GD.Load("res://assets/biomes/TileCollider.tscn");
 	private int selectedBiome = 4; //forest = 0, grassland = 1, desert = 2, tundra = 3, water = 4
 	private bool mouseOnGUI = false;
