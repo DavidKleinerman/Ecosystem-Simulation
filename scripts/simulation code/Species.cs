@@ -934,24 +934,30 @@ public class Species : MultiMeshInstance
 			}
 			else if (creature.MyState == State.GoingToPotentialPartner){
 				try{
-					if (creature.MySpatial.Translation.DistanceTo(creature.TargetCreature.MySpatial.Translation) <= 2){
-							if (creature.MyGender == Gender.Female){ //female only
-								if(CheckMale(creature.TargetCreature)){
-									StopGoingTo(creature, State.Reproducing);
-									StopGoingTo(creature.TargetCreature, State.Reproducing);
-								} else {
-									UpdateMemoryList(creature, creature.RejectList, creature.TargetCreature, true);
-									UpdateMemoryList(creature.TargetCreature, creature.TargetCreature.RejectList, creature, true);
-									StopGoingTo(creature, State.ExploringTheEnvironment);
-									StopGoingTo(creature.TargetCreature, State.ExploringTheEnvironment);
+					if (!creature.TargetCreature.HuntedDown){
+						if (creature.MySpatial.Translation.DistanceTo(creature.TargetCreature.MySpatial.Translation) <= 2){
+								if (creature.MyGender == Gender.Female){ //female only
+									if(CheckMale(creature.TargetCreature)){
+										StopGoingTo(creature, State.Reproducing);
+										StopGoingTo(creature.TargetCreature, State.Reproducing);
+									} else {
+										UpdateMemoryList(creature, creature.RejectList, creature.TargetCreature, true);
+										UpdateMemoryList(creature.TargetCreature, creature.TargetCreature.RejectList, creature, true);
+										StopGoingTo(creature, State.ExploringTheEnvironment);
+										StopGoingTo(creature.TargetCreature, State.ExploringTheEnvironment);
+									}
 								}
-							}
+						} else {
+							creature.CurrentTarget = creature.TargetCreature.MySpatial.Translation;
+							RotateToTarget(creature, creature.TargetCreature.MySpatial.Translation);
+						}
 					} else {
-						creature.CurrentTarget = creature.TargetCreature.MySpatial.Translation;
-						RotateToTarget(creature, creature.TargetCreature.MySpatial.Translation);
+						StopGoingTo(creature, State.ExploringTheEnvironment);
+						StopGoingTo(creature.TargetCreature, State.ExploringTheEnvironment);
 					}
 				} catch (Exception e) {
 					StopGoingTo(creature, State.ExploringTheEnvironment);
+					StopGoingTo(creature.TargetCreature, State.ExploringTheEnvironment);
 				}
 			} else if (creature.MyState == State.Hunting){
 				if (!creature.TargetCreature.Collider.MyCreatureAlive && creature.TargetCreature.Collider.MyMeat != null && creature.TargetCreature.Collider.MyMeat.meatGone){
